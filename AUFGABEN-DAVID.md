@@ -21,7 +21,10 @@ iOS-Simulator-Runtime laden lassen.
 **Zuliefern:** Xcode-Version (Menü Xcode → About Xcode).
 **Aufwand:** 30 bis 60 Minuten, davon fast alles Download.~~
 
-### Aufgabe 1a: GitHub-Repository für Cloud-Builds
+### Aufgabe 1a: GitHub-Repository für Cloud-Builds ✅ erledigt (22.09.2026)
+**Ergebnis:** öffentliches Repo https://github.com/DtB1804/familienplaner, Workflow
+`Build` baut bei jedem Push auf `main`; Log liegt im Branch `ci-log`.
+
 **Was:** GitHub-Account (falls nicht vorhanden), Repository anlegen, Claude einen
 Zugang zum Pushen geben (Personal Access Token mit Rechten nur auf dieses Repo).
 **Entscheidung:** privat (macOS-Minuten kosten laut GitHub 0,062 USD/Minute; ob und wie
@@ -116,7 +119,11 @@ Einstellungen → Apple Intelligence & Siri die Funktion verfügbar und aktivier
 
 ## Block C – nach dem ersten Build
 
-### Aufgabe 9: Erster Build und Rückmeldung der Fehler
+### Aufgabe 9: Erster Build und Rückmeldung der Fehler – ✅ übernimmt Claude per CI
+**Ergebnis 22.09.2026:** Simulator-Build mit Xcode 26.6 / iOS-Simulator-SDK 26.5
+erfolgreich (`BUILD SUCCEEDED`, alle 11 Swift-Dateien plus Core-Data-Modell kompiliert).
+Nicht getestet: Start der App, Verhalten zur Laufzeit.
+
 **Was:** `xcodegen generate`, Projekt öffnen, Build starten.
 **Realistische Erwartung:** Der Code ist ohne Swift-Compiler geschrieben. Rechnen Sie
 mit einer Handvoll Fehler, meist Tippfehler oder API-Signaturen, die sich in iOS 26
