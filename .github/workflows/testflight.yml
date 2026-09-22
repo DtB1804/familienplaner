@@ -1,0 +1,100 @@
+# Archiviert, signiert (von Apple verwaltete Zertifikate) und lädt zu TestFlight hoch.
+# Auslöser: Push auf den Branch "testflight". Braucht die Secrets ASC_KEY_ID,
+# ASC_ISSUER_ID und ASC_KEY_P8 (siehe AUFGABEN-DAVID.md, Aufgaben 14 und 15).
+name: TestFlight
+
+on:
+  push:
+    branches: [testflight]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # für den Log-Branch ci-log-testflight
+
+jobs:
+  upload:
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Werkzeuge
+        run: |
+          xcodebuild -version
+          brew install xcodegen
+
+      - name: Projekt erzeugen
+        run: xcodegen generate
+
+      - name: API-Schlüssel ablegen
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          test -n "$ASC_KEY_ID" || { echo "Secret ASC_KEY_ID fehlt"; exit 1; }
+          test -n "$ASC_ISSUER_ID" || { echo "Secret ASC_ISSUER_ID fehlt"; exit 1; }
+          test -n "$ASC_KEY_P8" || { echo "Secret ASC_KEY_P8 fehlt"; exit 1; }
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+      - name: Archivieren
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project Familienplaner.xcodeproj \
+            -scheme Familienplaner \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Familienplaner.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            2>&1 | tee archive.log
+
+      - name: Exportieren und hochladen
+        run: |
+          set -o pipefail
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>KF96Z9PD9Q</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+          </dict>
+          </plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Familienplaner.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            2>&1 | tee export.log
+
+      - name: Schlüssel entfernen
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
+
+      # Claude liest das Ergebnis per Git aus diesem Branch.
+      - name: Log in Branch ci-log-testflight ablegen
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog
+          cp archive.log export.log /tmp/cilog/ 2>/dev/null || true
+          cat archive.log export.log 2>/dev/null | grep -E "error|warning: .*(sign|profile|certificate)|EXPORT|ARCHIVE|Upload" | sort -u > /tmp/cilog/errors.txt || true
+          echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID} build=${GITHUB_RUN_NUMBER}" > /tmp/cilog/STATUS
+          cd /tmp/cilog
+          git init -q -b ci-log-testflight
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "TestFlight-Log ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-log-testflight

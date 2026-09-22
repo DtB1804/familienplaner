@@ -34,8 +34,10 @@ targets:
     platform: iOS
     sources:
       - path: Sources
+      - path: Assets            # Asset-Katalog mit App-Icon (Pflicht für TestFlight)
       - path: Resources
         buildPhase: none
+    scheme: {}                  # geteiltes Schema, nötig für xcodebuild archive
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner
