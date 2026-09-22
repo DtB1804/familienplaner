@@ -1,0 +1,47 @@
+# Simulator-Build ohne Signierung auf einem GitHub-macOS-Runner.
+# Ersetzt den lokalen Mac: Fehlerprotokoll steht im Log und als Artefakt build.log.
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode-Version
+        run: xcodebuild -version
+
+      - name: XcodeGen installieren
+        run: brew install xcodegen
+
+      - name: Projekt erzeugen
+        run: xcodegen generate
+
+      - name: Build (Simulator, ohne Signierung)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Familienplaner.xcodeproj \
+            -target Familienplaner \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | tee build.log
+
+      - name: Fehler zusammenfassen
+        if: always()
+        run: grep -E "error:|warning:" build.log | sort -u > errors.txt || true
+
+      - name: Log hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: |
+            build.log
+            errors.txt

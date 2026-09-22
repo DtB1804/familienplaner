@@ -1,0 +1,90 @@
+# Architekturregeln – Familienplaner
+
+Diese Datei ist verbindlich. Sie gilt für jede weitere Codeänderung, egal ob von Hand
+oder mit KI-Unterstützung geschrieben. Wer eine dieser Regeln brechen will, ändert
+zuerst diese Datei und begründet es.
+
+## 1. Core Data, niemals SwiftData
+
+Apples Developer Technical Support hat im Entwicklerforum (Thread 765776) bestätigt,
+dass SwiftData das Teilen von Daten zwischen mehreren iCloud-Nutzern nicht unterstützt,
+und empfiehlt für Objektgraphen mit Beziehungen `NSPersistentCloudKitContainer`.
+Die Familien-App steht und fällt mit dem Teilen. Also Core Data.
+
+Core Data und SwiftData werden nicht gemischt.
+
+## 2. Das Projektionsprinzip
+
+CloudKit kennt keine Berechtigungen auf Feldebene. Wer eine geteilte Zone lesen darf,
+liest jedes Feld jedes Datensatzes darin.
+
+Daraus folgt: **Was jemand nicht sehen soll, wird nicht in die geteilte Zone geschrieben.**
+
+Ein Termin aus einem Kalender mit `visibility == .busyOnly` wird auf dem Gerät des
+Eigentümers reduziert, bevor er gespeichert wird: Titel wird zu "Belegt", Notizen und
+Ort entfallen. Der Originaltitel verlässt das Gerät nie. Ein Feld `istPrivat` wäre eine
+Bitte an die eigene App, kein Schutz.
+
+## 3. Drei Stores, keine Beziehungen über Store-Grenzen
+
+- `private.sqlite` – Cloud-Konfiguration, CloudKit-Scope `.private`
+- `shared.sqlite` – Cloud-Konfiguration, CloudKit-Scope `.shared`
+- `local.sqlite` – Local-Konfiguration, kein CloudKit
+
+`CDCalendarSource`, `CDLocalEventMirror` und `CDDeviceRegistration` liegen im lokalen
+Store und verweisen über UUID-Felder auf Cloud-Entitäten, nicht über Relationships.
+Core Data kann Beziehungen nicht über Store-Grenzen auflösen. Das ist Absicht.
+
+## 4. Kein KI-Vorschlag wird automatisch zum Termin
+
+`CDSuggestionDraft` ist eine eigene Entität. Es gibt genau einen Weg von einem Vorschlag
+zu einem Termin: eine ausdrückliche Bestätigung durch einen Erwachsenen im UI.
+Kein Hintergrundjob, kein "wenn Konfidenz über 0,9", keine Ausnahme.
+
+Der Originalausschnitt (`sourceAsset`) bleibt am Vorschlag hängen, damit die
+Bestätigung nachprüfbar ist.
+
+## 5. Zuständigkeiten werden angelegt, nicht geändert
+
+Eine offene Zuständigkeit ist **kein Datensatz** mit leerem Mitglied, sondern die
+Differenz zwischen `CDEvent.requiredRolesRaw` und den vorhandenen Beteiligungen.
+
+Übernimmt jemand eine Zuständigkeit, wird ein **neuer** `CDEventParticipation`-Datensatz
+angelegt. Grund: CloudKit löst Konflikte auf Datensatzebene nach "letzter Schreiber
+gewinnt". Würden zwei Eltern gleichzeitig denselben Datensatz beschreiben, ginge ein
+Claim verloren, ohne dass jemand es merkt. Zwei Datensätze gehen nicht verloren; die
+App entscheidet deterministisch über den frühesten `claimedAt`, bei Gleichstand über
+die UUID.
+
+> Abweichung vom Datenmodell-Dokument v1: dort stand `ifServerRecordUnchanged`.
+> Das setzt die direkte CloudKit-API voraus und ist mit `NSPersistentCloudKitContainer`
+> nicht erreichbar. Die Lösung oben erreicht dasselbe Ziel ohne diese Abhängigkeit.
+
+## 6. Weiches Löschen
+
+Termine werden über `deletedAt` gelöscht, nie hart. Ein hart gelöschter Datensatz kehrt
+über ein Gerät zurück, das länger offline war.
+
+## 7. Alle Core-Data-Attribute sind optional
+
+CloudKit verlangt das. Pflichtfelder werden in den Service-Funktionen durchgesetzt,
+nicht im Modell. Unique Constraints sind mit CloudKit nicht erlaubt; Eindeutigkeit von
+Importen läuft über `externalIdentifier` plus Haushalt.
+
+## 8. Farben nur über Tokens
+
+Kein Hex-Wert in einem View. `Palette.color("person2")` liefert für Hell- und
+Dunkelmodus unterschiedliche Werte mit gleicher Bedeutung. "Anna ist grün" muss in
+beiden Modi stimmen.
+
+## 9. Die App darf beim Start nicht sterben
+
+`loadPersistentStores` schlägt im Auslieferungsstand nicht mit `fatalError` fehl.
+Eine App, die wegen eines defekten Stores nicht startet, ist für die Familie nicht mehr
+reparierbar. Fehler werden protokolliert, im Debug-Build zusätzlich als Assertion.
+
+## 10. Jeder KI-Pfad hat einen Pfad ohne KI
+
+Die App muss auf einem Gerät ohne Apple Intelligence vollständig bedienbar bleiben.
+Verfügbarkeit wird geprüft und in `CDDeviceRegistration.supportsOnDeviceModel` gehalten,
+nicht angenommen.

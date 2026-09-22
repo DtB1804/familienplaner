@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>de_DE</string>
+	<key>CFBundleDisplayName</key>
+	<string>Familienplaner</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Automatic</string>
+
+	<!-- Berechtigungstexte. Diese Sätze liest die Familie, nicht Apple.
+	     Sie erklären den Nutzen, nicht die Technik. -->
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Der Familienplaner liest Ihre Kalender, um Termine in der gemeinsamen Übersicht anzuzeigen, und schreibt Familientermine zurück, wenn Sie das für einen Kalender erlauben.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>Der Familienplaner legt Familientermine in Ihrem Kalender an. Bestehende Termine werden dabei nicht gelesen.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Der Familienplaner kann Aufgaben zu Terminen mit Ihren Erinnerungen abgleichen.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Der Familienplaner liest ausgewählte Screenshots und Fotos, um daraus Terminvorschläge zu erzeugen. Die Auswertung geschieht auf dem Gerät.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Der Familienplaner fotografiert Aushänge und Elternbriefe, um daraus Terminvorschläge zu erzeugen.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Der Familienplaner berechnet Fahrzeiten zwischen Terminen, damit Wegzeiten realistisch eingeplant werden.</string>
+
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>processing</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>de.barg.familienplaner.calendarRefresh</string>
+	</array>
+</dict>
+</plist>

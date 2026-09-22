@@ -1,0 +1,14 @@
+# Generiert – gehört nicht ins Repository
+Familienplaner.xcodeproj/
+*.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+
+# Xcode
+xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
+.swiftpm/
+
+# macOS
+.DS_Store

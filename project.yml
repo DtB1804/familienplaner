@@ -1,0 +1,50 @@
+# XcodeGen-Spezifikation.
+# Erzeugt Familienplaner.xcodeproj aus diesem Verzeichnis:
+#   brew install xcodegen
+#   xcodegen generate
+#
+# Die .xcodeproj-Datei wird bewusst NICHT eingecheckt: sie ist generiert,
+# erzeugt bei jedem Umbenennen riesige Diffs und ist die häufigste Ursache
+# für Merge-Konflikte in Xcode-Projekten.
+
+name: Familienplaner
+
+options:
+  bundleIdPrefix: de.barg
+  deploymentTarget:
+    iOS: "26.0"          # Foundation Models (On-Device-KI) setzt iOS 26 voraus
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"              # bewusst Swift-5-Sprachmodus: Core Data und
+                                      # strikte Swift-6-Concurrency vertragen sich
+                                      # in einem Erstaufbau schlecht
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: "KF96Z9PD9Q"   # Team-ID David Barg, Apple Developer Program
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: minimal
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+targets:
+  Familienplaner:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+        buildPhase: none
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner
+        PRODUCT_NAME: Familienplaner
+        INFOPLIST_FILE: Resources/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Resources/Familienplaner.entitlements
+        TARGETED_DEVICE_FAMILY: "1"    # nur iPhone im MVP
+        SUPPORTS_MACCATALYST: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    # Kein `info:`-Block: XcodeGen würde damit Resources/Info.plist neu erzeugen.
+    # Die Datei wird von Hand gepflegt (BGTaskScheduler u. a.), INFOPLIST_FILE reicht.
