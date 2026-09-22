@@ -47,12 +47,16 @@ jobs:
             -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath "$RUNNER_TEMP/Familienplaner.xcarchive" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY=- \
+            PROVISIONING_PROFILE_SPECIFIER= \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
             CURRENT_PROJECT_VERSION=${{ github.run_number }} \
             2>&1 | tee archive.log
+          # Archiv nur ad hoc signiert (mit Entitlements). Die echte Signierung für
+          # TestFlight übernimmt der Export mit von Apple verwalteten Zertifikaten.
+          # So braucht es weder ein registriertes Gerät noch ein Entwicklerzertifikat.
+          codesign -d --entitlements - "$RUNNER_TEMP/Familienplaner.xcarchive/Products/Applications/Familienplaner.app" 2>&1 | tee -a archive.log
 
       - name: Exportieren und hochladen
         run: |
