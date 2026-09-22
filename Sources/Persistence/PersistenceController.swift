@@ -108,6 +108,34 @@ public final class PersistenceController {
         #endif
     }
 
+    // MARK: - Stores
+
+    /// Store mit den eigenen Daten. Wer den Haushalt hier hat, ist dessen Owner.
+    public var privateStore: NSPersistentStore? { store(named: "private.sqlite") }
+
+    /// Store mit Daten, die andere mit diesem Gerät geteilt haben.
+    public var sharedStore: NSPersistentStore? { store(named: "shared.sqlite") }
+
+    private func store(named fileName: String) -> NSPersistentStore? {
+        container.persistentStoreCoordinator.persistentStores.first {
+            $0.url?.lastPathComponent == fileName
+        }
+    }
+
+    /// Legt ein neues Objekt in denselben Store wie sein Bezugsobjekt.
+    ///
+    /// Pflicht für jedes neue Objekt, das an einem Haushalt hängt: Core Data kann
+    /// keine Beziehungen über Store-Grenzen speichern. Ohne diese Zuordnung landet
+    /// ein neues Objekt im ersten passenden Store (privat), während der Haushalt
+    /// eines eingeladenen Mitglieds im geteilten Store liegt – das Speichern schlägt
+    /// dann fehl. Ist das Bezugsobjekt selbst noch ungespeichert, entscheidet Core Data.
+    public static func assign(_ object: NSManagedObject, toStoreOf anchor: NSManagedObject) {
+        guard let context = object.managedObjectContext,
+              object.objectID.isTemporaryID,
+              let store = anchor.objectID.persistentStore else { return }
+        context.assign(object, to: store)
+    }
+
     // MARK: - Kontexte
 
     public var viewContext: NSManagedObjectContext { container.viewContext }

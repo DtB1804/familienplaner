@@ -94,3 +94,17 @@ reparierbar. Fehler werden protokolliert, im Debug-Build zusätzlich als Asserti
 Die App muss auf einem Gerät ohne Apple Intelligence vollständig bedienbar bleiben.
 Verfügbarkeit wird geprüft und in `CDDeviceRegistration.supportsOnDeviceModel` gehalten,
 nicht angenommen.
+
+## 11. Neue Objekte gehören in den Store ihres Haushalts
+
+Bei eingeladenen Mitgliedern liegt der Haushalt im geteilten Store, beim Owner im
+privaten. Jedes neue Objekt, das an einem Haushalt oder Termin hängt, wird vor dem
+Speichern mit `PersistenceController.assign(_:toStoreOf:)` demselben Store zugeordnet.
+Sonst landet es im privaten Store, und das Speichern scheitert an der Store-Grenze
+(Regel 3). Die Service-Funktionen in `HouseholdService` und `EventService` tun das
+bereits; neue Anlage-Funktionen müssen es auch.
+
+## 12. "Ich" ist gerätelokal
+
+Welches Mitglied ein Gerät benutzt, steht in `UserDefaults` (`CurrentMember`), nicht in
+CloudKit. Jedes iPhone hat sein eigenes "ich".

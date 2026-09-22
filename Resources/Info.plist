@@ -46,6 +46,10 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Der Familienplaner berechnet Fahrzeiten zwischen Terminen, damit Wegzeiten realistisch eingeplant werden.</string>
 
+	<!-- Ohne diesen Schlüssel öffnet iOS Einladungslinks nicht in der App. -->
+	<key>CKSharingSupported</key>
+	<true/>
+
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -4,6 +4,9 @@ import CoreData
 @main
 struct FamilienplanerApp: App {
 
+    /// Nur für die Annahme von Einladungslinks, siehe ShareAcceptance.swift.
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     private let persistence = PersistenceController.shared
 
     var body: some Scene {
@@ -19,12 +22,24 @@ struct RootView: View {
     @Environment(\.managedObjectContext) private var context
     @State private var household: CDHousehold?
     @State private var didCheck = false
+    @State private var awaitingSharedHousehold = false
+    @AppStorage(CurrentMember.storageKey) private var currentMemberID: String?
 
     var body: some View {
         Group {
             if let household {
-                TodayScreen()
-                    .environment(\.household, household)
+                if hasIdentity(in: household) {
+                    TodayScreen()
+                        .environment(\.household, household)
+                } else {
+                    IdentityPickerScreen(household: household) { member in
+                        currentMemberID = member.id?.uuidString
+                    }
+                }
+            } else if awaitingSharedHousehold {
+                ContentUnavailableView("Einladung angenommen",
+                                       systemImage: "icloud.and.arrow.down",
+                                       description: Text("Der Familienkalender wird aus iCloud geladen. Das kann beim ersten Mal etwas dauern."))
             } else if didCheck {
                 SetupScreen { name, owner, shortName in
                     household = try? HouseholdService.bootstrapIfNeeded(
@@ -32,15 +47,38 @@ struct RootView: View {
                         householdName: name,
                         ownerDisplayName: owner,
                         ownerShortName: shortName)
+                    if let ownerID = household?.ownerMemberID {
+                        currentMemberID = ownerID.uuidString
+                    }
                 }
             } else {
                 ProgressView().task { load() }
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .householdShareAccepted)) { _ in
+            awaitingSharedHousehold = true
+            load()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)) { _ in
+            // Daten eines geteilten Haushalts kommen asynchron. Neu laden, solange
+            // noch kein Haushalt da ist oder gerade eine Einladung angenommen wurde.
+            if household == nil || awaitingSharedHousehold { load() }
+        }
+    }
+
+    private func hasIdentity(in household: CDHousehold) -> Bool {
+        _ = currentMemberID   // Abhängigkeit für SwiftUI, damit die Auswahl sofort greift
+        return CurrentMember.resolve(in: context, household: household) != nil
     }
 
     private func load() {
-        household = try? HouseholdService.fetchHousehold(in: context)
+        let loaded = try? HouseholdService.fetchHousehold(in: context)
+        if awaitingSharedHousehold,
+           let loaded,
+           loaded.objectID.persistentStore == PersistenceController.shared.sharedStore {
+            awaitingSharedHousehold = false
+        }
+        household = loaded
         didCheck = true
     }
 }

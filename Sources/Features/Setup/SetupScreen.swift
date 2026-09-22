@@ -37,6 +37,11 @@ struct SetupScreen: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
+                Section("Eingeladen?") {
+                    Text("Wenn Sie eine Einladung zu einem bestehenden Familienkalender bekommen haben, legen Sie hier nichts an. Tippen Sie stattdessen auf den Link in der Einladung.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
             }
             .navigationTitle("Einrichten")
             .toolbar {

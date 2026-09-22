@@ -76,6 +76,7 @@ public enum EventService {
                                  locationName: String? = nil) -> CDEvent {
         let now = Date()
         let event = CDEvent(context: context)
+        PersistenceController.assign(event, toStoreOf: household)
         event.id = UUID()
         event.household = household
         event.kindRaw = kind.rawValue
@@ -107,6 +108,7 @@ public enum EventService {
                                         status: ParticipationStatus = .claimed) -> CDEventParticipation {
         let now = Date()
         let participation = CDEventParticipation(context: context)
+        PersistenceController.assign(participation, toStoreOf: event)
         participation.id = UUID()
         participation.event = event
         participation.member = member

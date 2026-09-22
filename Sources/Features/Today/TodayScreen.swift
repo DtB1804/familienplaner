@@ -4,6 +4,7 @@ import CoreData
 public struct TodayScreen: View {
 
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.household) private var household
 
     @FetchRequest(fetchRequest: HouseholdService.activeMembersRequest())
     private var members: FetchedResults<CDMember>
@@ -12,6 +13,7 @@ public struct TodayScreen: View {
     @State private var zoom: DayZoom = .normal
     @State private var selectedMemberIDs: Set<NSManagedObjectID> = []
     @State private var openResponsibilities: [OpenResponsibility] = []
+    @State private var showMembers = false
 
     public init() {}
 
@@ -33,6 +35,16 @@ public struct TodayScreen: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { shiftDay(1) } label: { Image(systemName: "chevron.right") }
+                }
+                ToolbarItem(placement: .bottomBar) {
+                    Button { showMembers = true } label: {
+                        Label("Familie", systemImage: "person.2")
+                    }
+                }
+            }
+            .sheet(isPresented: $showMembers) {
+                if let household {
+                    MembersScreen(household: household)
                 }
             }
             .task(id: day) { await reloadResponsibilities() }

@@ -52,11 +52,28 @@ public enum HouseholdService {
         return household
     }
 
-    public static func fetchHousehold(in context: NSManagedObjectContext) throws -> CDHousehold? {
+    /// Liefert den Haushalt dieses Geräts.
+    ///
+    /// Ein geteilter Haushalt (Einladung angenommen) hat Vorrang vor einem eigenen.
+    /// Das deckt den Fall ab, dass jemand die App erst selbst eingerichtet und danach
+    /// die Einladung angenommen hat.
+    public static func fetchHousehold(in context: NSManagedObjectContext,
+                                      persistence: PersistenceController = .shared) throws -> CDHousehold? {
         let request = NSFetchRequest<CDHousehold>(entityName: "CDHousehold")
-        request.fetchLimit = 1
         request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
-        return try context.fetch(request).first
+        let all = try context.fetch(request)
+        if let sharedStore = persistence.sharedStore,
+           let shared = all.first(where: { $0.objectID.persistentStore == sharedStore }) {
+            return shared
+        }
+        return all.first
+    }
+
+    /// Owner ist, wer den Haushalt im privaten Store hat. Nur der Owner kann einladen.
+    public static func isOwner(of household: CDHousehold,
+                               persistence: PersistenceController = .shared) -> Bool {
+        guard let store = household.objectID.persistentStore else { return true }
+        return store != persistence.sharedStore
     }
 
     // MARK: - Mitglieder
@@ -72,6 +89,7 @@ public enum HouseholdService {
                                   sortIndex: Int) -> CDMember {
         let now = Date()
         let member = CDMember(context: context)
+        PersistenceController.assign(member, toStoreOf: household)
         member.id = UUID()
         member.household = household
         member.displayName = displayName
