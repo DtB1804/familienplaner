@@ -250,7 +250,12 @@ Build darf sie benutzen.
 ### Aufgabe 16a: Erster TestFlight-Test ✅ erfolgreich (23.09.2026)
 App über TestFlight installiert, Haushalt angelegt, zweiten Erwachsenen angelegt.
 
-### Aufgabe 17: CloudKit-Management-Token (ersetzt Aufgabe 10)
+### Aufgabe 17: CloudKit-Management-Token (ersetzt Aufgabe 10) ✅ erledigt (23.09.2026)
+**Ergebnis:** Schema per `cktool` geprüft ("Schema is valid") und in Development
+angelegt: 6 Record-Typen CD_CDHousehold, CD_CDMember, CD_CDEvent,
+CD_CDEventParticipation, CD_CDTag, CD_CDSuggestionDraft. Stand in
+`CloudKit/schema-development.ckdb`. Production enthält noch nur `Users`.
+
 **Warum:** TestFlight nutzt immer CloudKit-Production. Dort muss das Schema vorher
 bereitgestellt sein. Ohne Mac legt der GitHub-Build es per `cktool` in Development an;
 dafür braucht er einen Management-Token.
