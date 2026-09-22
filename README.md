@@ -42,6 +42,16 @@ hineinziehen (Option "Create groups"). Danach in den Target-Einstellungen unter
 Signing & Capabilities iCloud mit CloudKit, Push Notifications und Background Modes
 aktivieren und den Container `iCloud.de.barg.familienplaner` auswählen.
 
+## Bauen ohne Mac (GitHub Actions)
+
+| Workflow | Auslöser | Ergebnis | Log für Claude |
+|---|---|---|---|
+| `Build` | Push auf `main` | Simulator-Build ohne Signierung | Branch `ci-log` |
+| `TestFlight` | Push auf `testflight` | Archiv, Signierung, Upload zu TestFlight | Branch `ci-log-testflight` |
+
+Neue TestFlight-Version: `git push origin main:testflight`. Die Build-Nummer ist die
+Laufnummer des Workflows.
+
 ## Verzeichnisse
 
 ```

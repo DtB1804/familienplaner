@@ -193,7 +193,7 @@ aber nicht mehr entfernen oder umtypen.
 Ergänzt am 22.09.2026. Weg: GitHub Actions baut, signiert und lädt die App zu
 TestFlight hoch. Dafür braucht der Build drei Dinge von Ihnen. Alles im Browser.
 
-### Aufgabe 13: App-Eintrag in App Store Connect anlegen
+### Aufgabe 13: App-Eintrag in App Store Connect anlegen ✅ erledigt (23.09.2026)
 **Wo:** https://appstoreconnect.apple.com → Apps → Plus-Symbol oben links → Neue App
 **Eintragen:**
 - Plattform: iOS
@@ -208,7 +208,7 @@ TestFlight hoch. Dafür braucht der Build drei Dinge von Ihnen. Alles im Browser
 sonst lässt App Store Connect keinen App-Eintrag zu.
 **Zuliefern:** Bestätigung und der gewählte Name.
 
-### Aufgabe 14: API-Schlüssel erzeugen
+### Aufgabe 14: API-Schlüssel erzeugen ✅ erledigt (23.09.2026)
 **Wo:** App Store Connect → Benutzer und Zugriff → Reiter "Integrationen" →
 links "App Store Connect API" → "Team-Schlüssel" → Plus / "API-Schlüssel generieren"
 **Eintragen:** Name z. B. `github-build`, Zugriff: **Admin**.
@@ -218,7 +218,12 @@ Verteilzertifikate. Laut Entwicklerforum klappt das per API-Schlüssel nur mit A
 keine Kopie auf). Notieren: **Key-ID** (in der Tabelle) und **Issuer-ID** (über der Tabelle).
 **Nicht** in den Chat und nicht ins Repo kopieren – siehe Aufgabe 15.
 
-### Aufgabe 15: Schlüssel als GitHub-Secrets hinterlegen
+### Aufgabe 15: Schlüssel als GitHub-Secrets hinterlegen ✅ erledigt (23.09.2026)
+**Ergebnis:** Erster Upload zu TestFlight erfolgreich (Build 2, Version 0.1.0,
+Workflow `TestFlight`, ausgelöst durch Push auf Branch `testflight`).
+Signierung: Archiv ad hoc signiert, echte Signierung beim Export mit von Apple
+verwalteten Zertifikaten. Kein registriertes Gerät und kein Mac nötig.
+
 **Wo:** github.com/DtB1804/familienplaner → Settings → links "Secrets and variables"
 → "Actions" → "New repository secret". Drei Secrets anlegen:
 
