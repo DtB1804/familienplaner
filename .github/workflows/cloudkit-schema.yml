@@ -1,0 +1,64 @@
+# Legt das CloudKit-Schema in der Development-Umgebung an (Ersatz für
+# initializeCloudKitSchema, das ein Gerät mit Apple-ID braucht).
+# Auslöser: Push auf Branch "cloudkit-schema". Secret: CK_MANAGEMENT_TOKEN.
+# Die Übernahme nach Production macht David im CloudKit-Dashboard.
+name: CloudKit-Schema
+
+on:
+  push:
+    branches: [cloudkit-schema]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # für den Log-Branch ci-log-cloudkit
+
+jobs:
+  schema:
+    runs-on: macos-26
+    timeout-minutes: 15
+    env:
+      CLOUDKIT_MANAGEMENT_TOKEN: ${{ secrets.CK_MANAGEMENT_TOKEN }}
+      TEAM: KF96Z9PD9Q
+      CONTAINER: iCloud.de.barg.familienplaner
+      MODEL: Sources/Persistence/Familienplaner.xcdatamodeld/Familienplaner.xcdatamodel/contents
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Token prüfen
+        run: test -n "$CLOUDKIT_MANAGEMENT_TOKEN" || { echo "Secret CK_MANAGEMENT_TOKEN fehlt"; exit 1; }
+
+      - name: Aktuelles Development-Schema exportieren
+        run: |
+          mkdir -p out
+          xcrun cktool export-schema --team-id "$TEAM" --container-id "$CONTAINER" \
+            --environment development --output-file out/before-development.ckdb 2>&1 | tee out/log.txt
+          xcrun cktool export-schema --team-id "$TEAM" --container-id "$CONTAINER" \
+            --environment production --output-file out/production.ckdb 2>&1 | tee -a out/log.txt || true
+
+      - name: Schema aus dem Core-Data-Modell erzeugen
+        run: python3 tools/generate_ckdb.py "$MODEL" out/before-development.ckdb > out/schema.ckdb
+
+      - name: Prüfen
+        run: |
+          set -o pipefail
+          xcrun cktool validate-schema --team-id "$TEAM" --container-id "$CONTAINER" \
+            --environment development --file out/schema.ckdb 2>&1 | tee -a out/log.txt
+
+      - name: In Development importieren
+        run: |
+          set -o pipefail
+          xcrun cktool import-schema --team-id "$TEAM" --container-id "$CONTAINER" \
+            --environment development --file out/schema.ckdb 2>&1 | tee -a out/log.txt
+          xcrun cktool export-schema --team-id "$TEAM" --container-id "$CONTAINER" \
+            --environment development --output-file out/after-development.ckdb 2>&1 | tee -a out/log.txt
+
+      - name: Log in Branch ci-log-cloudkit ablegen
+        if: always()
+        run: |
+          echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID}" > out/STATUS
+          cd out
+          git init -q -b ci-log-cloudkit
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "CloudKit-Log ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-log-cloudkit

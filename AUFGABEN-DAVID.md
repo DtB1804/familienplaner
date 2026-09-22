@@ -247,13 +247,28 @@ Build darf sie benutzen.
   dafür prüft Apple den Build einmal vorab (Beta App Review).
 - Auf jedem iPhone die App "TestFlight" aus dem App Store installieren.
 
-### Offener Punkt: CloudKit-Schema
-TestFlight-Builds nutzen immer die **Production**-Umgebung von CloudKit. Dort muss das
-Schema vorher bereitgestellt sein, und dafür muss es erst in Development existieren
-(Aufgaben 10 und 12). Ohne Mac klärt Claude den Weg dorthin (Kandidat: Schema per
-`cktool` auf dem GitHub-Mac hochladen, dann im CloudKit-Dashboard nach Production
-übernehmen). Bis das gelöst ist, startet die App aus TestFlight, aber der Abgleich
-über iCloud funktioniert noch nicht.
+### Aufgabe 16a: Erster TestFlight-Test ✅ erfolgreich (23.09.2026)
+App über TestFlight installiert, Haushalt angelegt, zweiten Erwachsenen angelegt.
+
+### Aufgabe 17: CloudKit-Management-Token (ersetzt Aufgabe 10)
+**Warum:** TestFlight nutzt immer CloudKit-Production. Dort muss das Schema vorher
+bereitgestellt sein. Ohne Mac legt der GitHub-Build es per `cktool` in Development an;
+dafür braucht er einen Management-Token.
+**Wo:** https://icloud.developer.apple.com (CloudKit Console) → oben rechts auf das
+Profil/Konto → **Settings** (bzw. "Tokens") → **CloudKit Management Token** →
+neu erzeugen, Name z. B. `github-schema`. Token sofort kopieren, er wird nur einmal
+angezeigt.
+**Dann:** GitHub-Repo → Settings → Secrets and variables → Actions →
+New repository secret: Name `CK_MANAGEMENT_TOKEN`, Inhalt der Token.
+**Zuliefern:** "Token hinterlegt".
+
+### Aufgabe 18: Schema nach Production übernehmen (ersetzt Aufgabe 12)
+**Erst wenn Claude meldet, dass das Schema in Development angelegt ist.**
+**Wo:** CloudKit Console → Container `iCloud.de.barg.familienplaner` → links
+"Schema" bzw. Bereich Development → **Deploy Schema Changes…** → prüfen → bestätigen.
+**Einbahnstraße:** In Production lassen sich Felder später ergänzen, aber nicht
+löschen oder umtypen.
+**Zuliefern:** Bestätigung.
 
 ---
 
