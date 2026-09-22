@@ -267,7 +267,9 @@ angezeigt.
 New repository secret: Name `CK_MANAGEMENT_TOKEN`, Inhalt der Token.
 **Zuliefern:** "Token hinterlegt".
 
-### Aufgabe 18: Schema nach Production übernehmen (ersetzt Aufgabe 12)
+### Aufgabe 18: Schema nach Production übernehmen (ersetzt Aufgabe 12) ✅ erledigt (23.09.2026)
+**Geprüft per cktool-Export:** Production enthält die 6 CD_-Typen plus Users.
+
 **Erst wenn Claude meldet, dass das Schema in Development angelegt ist.**
 **Wo:** CloudKit Console → Container `iCloud.de.barg.familienplaner` → links
 "Schema" bzw. Bereich Development → **Deploy Schema Changes…** → prüfen → bestätigen.
