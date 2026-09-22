@@ -139,7 +139,7 @@ private struct MemberRow: View {
                         .foregroundStyle(tint)
                 )
             VStack(alignment: .leading, spacing: 2) {
-                Text(member.displayName ?? "") + Text(isMe ? "  (ich)" : "").foregroundColor(.secondary)
+                Text(isMe ? "\(member.displayName ?? "") (ich)" : (member.displayName ?? ""))
                 Text("\(member.role.label) · \(member.accountKind.label)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
