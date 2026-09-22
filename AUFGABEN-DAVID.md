@@ -118,13 +118,13 @@ Einstellungen → Apple Intelligence & Siri die Funktion verfügbar und aktivier
    Kalenderverbindung oder kein Export möglich ist, werden Dienste **manuell**
    eingetragen.
 2. Kinder sehen Termine der Erwachsenen **mit Titel oder nur als "Belegt"**, per
-   Schalter umstellbar. Offen: technische Umsetzung, siehe Hinweis unten.
+   Schalter umstellbar (Anzeige-Einstellung, siehe Hinweis unten).
 3. Kinder sehen die Termine des jeweils anderen Kindes: **ja**.
 
 **Hinweis zu 2:** CloudKit kennt keine Rechte auf Feldebene (CLAUDE.md, Regel 2).
 Liegen Erwachsenentermine mit Titel in der Zone, die ein Kinderaccount liest, ist
-"nur Belegt" eine Anzeige-Einstellung, kein Schutz. Echter Schutz braucht eine
-eigene Kinder-Zone mit reduzierten Kopien. Entscheidung durch David ausstehend.
+"nur Belegt" eine Anzeige-Einstellung, kein Schutz.
+**Entschieden (22.09.2026):** Anzeige-Schalter reicht, keine eigene Kinder-Zone.
 
 **Was:** Drei Festlegungen, die ich als Vorgabewerte in den Code schreibe:
 1. Soll Ihr Dienstkalender für die Familie sichtbar sein als "Belegt" oder gar nicht?

@@ -25,6 +25,12 @@ Eigentümers reduziert, bevor er gespeichert wird: Titel wird zu "Belegt", Notiz
 Ort entfallen. Der Originaltitel verlässt das Gerät nie. Ein Feld `istPrivat` wäre eine
 Bitte an die eigene App, kein Schutz.
 
+**Bewusste Ausnahme (Entscheidung David, 22.09.2026):** Ob Kinder die Termine der
+Erwachsenen mit Titel oder nur als "Belegt" sehen, ist ein reiner **Anzeige-Schalter**.
+Die Kinder sind Teilnehmer derselben Freigabe und erhalten die Titel technisch mit.
+Das ist akzeptiert. Kalender, deren Inhalt das Gerät gar nicht verlassen darf
+(z. B. Dienstkalender), laufen weiter über die Projektion oben.
+
 ## 3. Drei Stores, keine Beziehungen über Store-Grenzen
 
 - `private.sqlite` – Cloud-Konfiguration, CloudKit-Scope `.private`
