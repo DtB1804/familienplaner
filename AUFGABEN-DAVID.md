@@ -65,7 +65,12 @@ Familienmitglieds.
 
 ## Block B – Daten, die ich für den Code brauche
 
-### Aufgabe 5: Familienmitglieder benennen
+### Aufgabe 5: Familienmitglieder benennen ✅ erledigt (22.09.2026)
+**Ergebnis:** 2 Erwachsene, 2 Kinder; ein Kind ohne eigene Apple-ID (→ verwaltetes
+Profil, `MemberAccountKind.managed`). Namen und Details bewusst **nicht** in diesem
+öffentlichen Repo, sondern nur im privaten Claude-Projekt (`FAMILIE-PRIVAT.md`).
+Die App erfasst die Personen beim Erststart, nicht im Code.
+
 **Was:** Für jede Person: Anzeigename, zwei- bis dreistelliges Kürzel für den
 Spaltenkopf, Rolle (Erwachsener oder Kind), und ob die Person ein eigenes iPhone mit
 eigener Apple-ID hat.
@@ -80,7 +85,10 @@ eigener Apple-ID hat.
 **Zuliefern:** Die ausgefüllte Tabelle.
 **Aufwand:** 10 Minuten.
 
-### Aufgabe 6: CKShare-Test mit einem Kinderaccount ⚠️ kritisch
+### Aufgabe 6: CKShare-Test mit einem Kinderaccount ✅ erledigt (22.09.2026)
+**Ergebnis:** Freigabe über Notizen hat mit dem Kinderaccount funktioniert.
+Kinder mit eigener Apple-ID werden echte CloudKit-Teilnehmer (`participant`).
+
 **Was:** Praktisch prüfen, ob ein Apple-Account eines Kindes unter 13 aus Ihrer
 Familienfreigabe eine CloudKit-Freigabe annehmen kann.
 
@@ -104,7 +112,20 @@ Einstellungen → Apple Intelligence & Siri die Funktion verfügbar und aktivier
 **Zuliefern:** Liste.
 **Aufwand:** 10 Minuten.
 
-### Aufgabe 8: Familienentscheidung "wer sieht was"
+### Aufgabe 8: Familienentscheidung "wer sieht was" ✅ entschieden (22.09.2026)
+**Ergebnis:**
+1. Dienstkalender: für die Familie **"Belegt" oder gar nicht** (wählbar). Wo keine
+   Kalenderverbindung oder kein Export möglich ist, werden Dienste **manuell**
+   eingetragen.
+2. Kinder sehen Termine der Erwachsenen **mit Titel oder nur als "Belegt"**, per
+   Schalter umstellbar. Offen: technische Umsetzung, siehe Hinweis unten.
+3. Kinder sehen die Termine des jeweils anderen Kindes: **ja**.
+
+**Hinweis zu 2:** CloudKit kennt keine Rechte auf Feldebene (CLAUDE.md, Regel 2).
+Liegen Erwachsenentermine mit Titel in der Zone, die ein Kinderaccount liest, ist
+"nur Belegt" eine Anzeige-Einstellung, kein Schutz. Echter Schutz braucht eine
+eigene Kinder-Zone mit reduzierten Kopien. Entscheidung durch David ausstehend.
+
 **Was:** Drei Festlegungen, die ich als Vorgabewerte in den Code schreibe:
 1. Soll Ihr Dienstkalender für die Familie sichtbar sein als "Belegt" oder gar nicht?
 2. Sollen die Kinder die Termine der Erwachsenen sehen, und wenn ja, mit Titel oder nur
