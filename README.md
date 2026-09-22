@@ -76,7 +76,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 - Ob ein Kinderaccount unter 13 aus einer Familienfreigabe eine CKShare-Einladung
   annehmen kann, ist nicht belegt. Dafür gibt es `MemberAccountKind.managed` als
   zweiten Pfad. Der Test steht als Aufgabe 6 in `AUFGABEN-DAVID.md`.
-- Der App-Name ist ein Arbeitstitel.
+- Anzeigename auf dem Homescreen: "Family Planner". Technischer Name bleibt `Familienplaner`.
 - Die Bundle-ID `de.barg.familienplaner` ist ein Vorschlag und an vier Stellen
   hinterlegt: `project.yml`, `Resources/Info.plist` (BGTaskScheduler),
   `Resources/Familienplaner.entitlements` und `PersistenceController.swift`.

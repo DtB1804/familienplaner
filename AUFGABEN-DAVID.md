@@ -54,7 +54,11 @@ Beim App-ID-Eintrag die Capabilities **iCloud (mit CloudKit)** und
 **Zuliefern:** Bestätigung, dass beide Einträge existieren, oder die abweichenden Namen.
 **Aufwand:** 15 Minuten.
 
-### Aufgabe 4: Entscheidung über den App-Namen
+### Aufgabe 4: Entscheidung über den App-Namen ✅ erledigt (22.09.2026)
+**Ergebnis:** Anzeigename auf dem Homescreen **"Family Planner"**
+(`CFBundleDisplayName` in `Resources/Info.plist`). Target, Modul, Core-Data-Modell
+und Bundle-ID bleiben technisch `Familienplaner` bzw. `de.barg.familienplaner`.
+
 **Was:** `Familienplaner` ist ein Arbeitstitel. Der Name steht auf dem Homescreen jedes
 Familienmitglieds.
 **Warum nur Sie:** Geschmacksfrage, und Ihre Familie sieht ihn täglich.
@@ -105,7 +109,11 @@ anders. Deshalb vor dem UI-Ausbau klären.
 Meldung.
 **Aufwand:** 15 Minuten.
 
-### Aufgabe 7: Geräteinventar
+### Aufgabe 7: Geräteinventar ✅ erledigt (22.09.2026)
+**Ergebnis laut David:** Alle iPhones der Familie haben alle gewünschten Funktionen
+(inkl. Apple Intelligence). Modell und iOS-Version je Gerät wurden nicht einzeln
+erfasst. Regel 10 in CLAUDE.md (Pfad ohne KI) gilt trotzdem weiter.
+
 **Was:** Für jedes iPhone in der Familie: Modell, iOS-Version, und ob unter
 Einstellungen → Apple Intelligence & Siri die Funktion verfügbar und aktiviert ist.
 **Warum nur Sie:** Braucht die Geräte in der Hand.
