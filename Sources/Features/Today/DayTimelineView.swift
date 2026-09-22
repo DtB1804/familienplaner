@@ -29,14 +29,22 @@ public struct DayTimelineView: View {
         GeometryReader { geometry in
             let laneWidth = max(laneMinWidth,
                                 (geometry.size.width - gutterWidth) / CGFloat(max(members.count, 1)))
-            VStack(spacing: 0) {
-                laneHeaders(laneWidth: laneWidth)
-                Divider().overlay(Palette.hairline)
-                ScrollView(.vertical, showsIndicators: false) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        timelineBody(laneWidth: laneWidth)
-                    }
+            // Kopfzeile fest oben, darunter genau ein Scrollbereich für beide Achsen.
+            // Vorher: verschachtelte ScrollViews. Auf iOS 26 hat das die Kopfzeile
+            // aufgebläht und den Zeitstrahl ans Ende gescrollt (Screenshot 23.09.2026).
+            ScrollViewReader { proxy in
+                ScrollView([.vertical, .horizontal], showsIndicators: false) {
+                    timelineBody(laneWidth: laneWidth)
                 }
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    VStack(spacing: 0) {
+                        laneHeaders(laneWidth: laneWidth)
+                        Rectangle().fill(Palette.hairline).frame(height: 0.5)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                .onAppear { scrollToStart(proxy) }
+                .onChange(of: day) { _, _ in scrollToStart(proxy) }
             }
         }
         .background(Palette.surfaceSunken)
@@ -57,11 +65,23 @@ public struct DayTimelineView: View {
                         .font(TypeScale.laneHeader)
                         .foregroundStyle(.primary)
                 }
-                .frame(width: laneWidth)
-                .padding(.vertical, Spacing.s)
+                .frame(width: laneWidth, height: 40)
             }
+            Spacer(minLength: 0)
         }
+        .padding(.vertical, Spacing.xs)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Palette.surface)
+    }
+
+    /// Heute: eine Stunde vor jetzt. Andere Tage: 7 Uhr.
+    private func scrollToStart(_ proxy: ScrollViewProxy) {
+        var hour = 7
+        if Calendar.current.isDateInToday(day) {
+            hour = Calendar.current.component(.hour, from: Date()) - 1
+        }
+        hour = min(max(hour, startHour), endHour - 1)
+        proxy.scrollTo(hour, anchor: .top)
     }
 
     // MARK: - Zeitstrahl
@@ -90,6 +110,7 @@ public struct DayTimelineView: View {
         VStack(spacing: 0) {
             ForEach(startHour..<endHour, id: \.self) { hour in
                 Text(String(format: "%02d", hour))
+                    .id(hour)
                     .font(TypeScale.hourLabel)
                     .foregroundStyle(.tertiary)
                     .frame(height: zoom.pointsPerHour, alignment: .top)
