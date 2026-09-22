@@ -188,6 +188,70 @@ aber nicht mehr entfernen oder umtypen.
 
 ---
 
+## Block D – App ohne Mac auf die iPhones (TestFlight)
+
+Ergänzt am 22.09.2026. Weg: GitHub Actions baut, signiert und lädt die App zu
+TestFlight hoch. Dafür braucht der Build drei Dinge von Ihnen. Alles im Browser.
+
+### Aufgabe 13: App-Eintrag in App Store Connect anlegen
+**Wo:** https://appstoreconnect.apple.com → Apps → Plus-Symbol oben links → Neue App
+**Eintragen:**
+- Plattform: iOS
+- Name: `Family Planner`. Ist der Name schon vergeben, eine Variante wählen
+  (z. B. `Family Planner Barg`). Der Name auf dem Homescreen bleibt trotzdem
+  "Family Planner", der kommt aus der App selbst.
+- Primäre Sprache: Deutsch
+- Bundle-ID: `de.barg.familienplaner` aus der Liste wählen
+- SKU: frei wählbar, z. B. `familienplaner-001`
+- Nutzerzugriff: Voller Zugriff
+**Hinweis:** Vorher ggf. unter "Business" die aktuelle Vereinbarung bestätigen,
+sonst lässt App Store Connect keinen App-Eintrag zu.
+**Zuliefern:** Bestätigung und der gewählte Name.
+
+### Aufgabe 14: API-Schlüssel erzeugen
+**Wo:** App Store Connect → Benutzer und Zugriff → Reiter "Integrationen" →
+links "App Store Connect API" → "Team-Schlüssel" → Plus / "API-Schlüssel generieren"
+**Eintragen:** Name z. B. `github-build`, Zugriff: **Admin**.
+Warum Admin: Das Signieren für TestFlight ohne Mac nutzt von Apple verwaltete
+Verteilzertifikate. Laut Entwicklerforum klappt das per API-Schlüssel nur mit Admin.
+**Danach:** Schlüssel **einmal** herunterladen (Datei `AuthKey_XXXX.p8`, Apple bewahrt
+keine Kopie auf). Notieren: **Key-ID** (in der Tabelle) und **Issuer-ID** (über der Tabelle).
+**Nicht** in den Chat und nicht ins Repo kopieren – siehe Aufgabe 15.
+
+### Aufgabe 15: Schlüssel als GitHub-Secrets hinterlegen
+**Wo:** github.com/DtB1804/familienplaner → Settings → links "Secrets and variables"
+→ "Actions" → "New repository secret". Drei Secrets anlegen:
+
+| Name | Inhalt |
+|---|---|
+| `ASC_KEY_ID` | Key-ID aus Aufgabe 14 |
+| `ASC_ISSUER_ID` | Issuer-ID aus Aufgabe 14 |
+| `ASC_KEY_P8` | kompletter Inhalt der `.p8`-Datei (mit Editor öffnen, alles kopieren inkl. `-----BEGIN PRIVATE KEY-----` und `-----END PRIVATE KEY-----`) |
+
+Secrets sind auch im öffentlichen Repo nicht lesbar, auch nicht für Claude. Nur der
+Build darf sie benutzen.
+**Zuliefern:** "Secrets angelegt".
+
+### Aufgabe 16: Tester eintragen (erst wenn der erste Build in TestFlight liegt)
+- David: automatisch als Account Holder.
+- Jana: in App Store Connect unter "Benutzer und Zugriff" als Benutzer einladen
+  (Rolle z. B. "Developer" oder "Marketing"), danach als interne Testerin eintragen.
+  Interne Tests brauchen keine Beta-Prüfung durch Apple.
+- Josh: offen. Interne Tester müssen App-Store-Connect-Benutzer sein; ob das mit
+  einem Kinderaccount geht, ist ungeklärt. Alternative: externe Tester per Einladung,
+  dafür prüft Apple den Build einmal vorab (Beta App Review).
+- Auf jedem iPhone die App "TestFlight" aus dem App Store installieren.
+
+### Offener Punkt: CloudKit-Schema
+TestFlight-Builds nutzen immer die **Production**-Umgebung von CloudKit. Dort muss das
+Schema vorher bereitgestellt sein, und dafür muss es erst in Development existieren
+(Aufgaben 10 und 12). Ohne Mac klärt Claude den Weg dorthin (Kandidat: Schema per
+`cktool` auf dem GitHub-Mac hochladen, dann im CloudKit-Dashboard nach Production
+übernehmen). Bis das gelöst ist, startet die App aus TestFlight, aber der Abgleich
+über iCloud funktioniert noch nicht.
+
+---
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:
