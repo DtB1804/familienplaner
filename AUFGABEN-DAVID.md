@@ -279,6 +279,16 @@ löschen oder umtypen.
 
 ---
 
+### Aufgabe 19: Neues Schemafeld nach Production übernehmen
+**Anlass:** Schalter "Kinder sehen Titel der Erwachsenen-Termine" (Modellversion 2,
+Feld `CD_childrenSeeAdultTitles` im Typ `CD_CDHousehold`). In Development angelegt
+am 23.09.2026.
+**Wo:** CloudKit Console → Container → Deploy Schema Changes… → bestätigen.
+**Wichtig:** Vor dem nächsten TestFlight-Update erledigen (CLAUDE.md Regel 13).
+**Zuliefern:** Bestätigung.
+
+---
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:

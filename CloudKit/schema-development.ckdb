@@ -77,6 +77,7 @@ DEFINE SCHEMA
     );
 
     RECORD TYPE CD_CDHousehold (
+        CD_childrenSeeAdultTitles     INT64,
         CD_createdAt                  TIMESTAMP,
         CD_entityName                 STRING,
         CD_id                         STRING,

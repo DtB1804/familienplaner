@@ -108,3 +108,16 @@ bereits; neue Anlage-Funktionen müssen es auch.
 
 Welches Mitglied ein Gerät benutzt, steht in `UserDefaults` (`CurrentMember`), nicht in
 CloudKit. Jedes iPhone hat sein eigenes "ich".
+
+## 13. Modelländerungen: neue Version, erst Schema, dann App
+
+Das Core-Data-Modell wird nie in place geändert, sondern als neue Modellversion
+(`Familienplaner N.xcdatamodel`, `.xccurrentversion` umstellen). Nur Ergänzungen
+(neue optionale Attribute/Entitäten), nie Umbenennen, Löschen oder Umtypen: CloudKit
+Production erlaubt das nicht.
+
+Reihenfolge: (1) Workflow `CloudKit-Schema` (Branch `cloudkit-schema`) legt die neuen
+Felder in Development an, (2) David übernimmt sie im CloudKit-Dashboard nach
+Production, (3) erst dann ein TestFlight-Build. Sonst lehnt Production die Datensätze
+mit den neuen Feldern ab.
+
