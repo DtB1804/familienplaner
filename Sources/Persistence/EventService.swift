@@ -73,7 +73,8 @@ public enum EventService {
                                  kind: EventKind = .appointment,
                                  visibility: EventVisibility = .household,
                                  tag: CDTag? = nil,
-                                 locationName: String? = nil) -> CDEvent {
+                                 locationName: String? = nil,
+                                 notes: String? = nil) -> CDEvent {
         let now = Date()
         let event = CDEvent(context: context)
         PersistenceController.assign(event, toStoreOf: household)
@@ -82,13 +83,13 @@ public enum EventService {
         event.kindRaw = kind.rawValue
         event.originRaw = EventOrigin.manual.rawValue
         event.visibilityRaw = visibility.rawValue
-        event.title = visibility == .busyOnly ? "Belegt" : title
         event.startAt = startAt
         event.endAt = endAt
         event.isAllDay = false
         event.timeZoneIdentifier = TimeZone.current.identifier
-        event.locationName = locationName
         event.tag = tag
+        applyContent(to: event, title: title, visibility: visibility,
+                     locationName: locationName, notes: notes)
         event.requiredRolesRaw = RequiredRoles.encode(requiredRoles)
         event.createdByMemberID = createdBy.id
         event.createdAt = now
@@ -98,6 +99,68 @@ public enum EventService {
             addParticipation(in: context, event: event, member: subject, role: .subject)
         }
         return event
+    }
+
+    /// Ändert einen vorhandenen Termin. Betroffene Personen werden abgeglichen:
+    /// neue bekommen eine Beteiligung, entfernte verlieren sie. Zuständigkeiten
+    /// (Bringen, Holen, Begleiten) bleiben unberührt, siehe CLAUDE.md Regel 5.
+    public static func update(_ event: CDEvent,
+                              in context: NSManagedObjectContext,
+                              title: String,
+                              startAt: Date,
+                              endAt: Date,
+                              subjects: [CDMember],
+                              requiredRoles: [ParticipationRole],
+                              kind: EventKind,
+                              visibility: EventVisibility,
+                              tag: CDTag?,
+                              locationName: String?,
+                              notes: String?) {
+        event.kindRaw = kind.rawValue
+        event.visibilityRaw = visibility.rawValue
+        event.startAt = startAt
+        event.endAt = endAt
+        event.tag = tag
+        event.requiredRolesRaw = RequiredRoles.encode(requiredRoles)
+        applyContent(to: event, title: title, visibility: visibility,
+                     locationName: locationName, notes: notes)
+        event.updatedAt = Date()
+
+        let current = ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .filter { $0.roleRaw == ParticipationRole.subject.rawValue }
+        let wanted = Set(subjects.map(\.objectID))
+        for participation in current where !wanted.contains(participation.member?.objectID ?? NSManagedObjectID()) {
+            context.delete(participation)
+        }
+        let present = Set(current.compactMap { $0.member?.objectID })
+        for member in subjects where !present.contains(member.objectID) {
+            addParticipation(in: context, event: event, member: member, role: .subject)
+        }
+    }
+
+    /// Projektionsprinzip (CLAUDE.md Regel 2): Bei "nur Belegt" verlassen Titel,
+    /// Ort und Notizen das Gerät nicht, sie werden gar nicht erst gespeichert.
+    private static func applyContent(to event: CDEvent,
+                                     title: String,
+                                     visibility: EventVisibility,
+                                     locationName: String?,
+                                     notes: String?) {
+        if visibility == .busyOnly {
+            event.title = "Belegt"
+            event.locationName = nil
+            event.notes = nil
+        } else {
+            event.title = title
+            event.locationName = locationName?.isEmpty == true ? nil : locationName
+            event.notes = notes?.isEmpty == true ? nil : notes
+        }
+    }
+
+    /// Betroffene Personen eines Termins (Rolle "Betrifft").
+    public static func subjects(of event: CDEvent) -> [CDMember] {
+        ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .filter { $0.roleRaw == ParticipationRole.subject.rawValue }
+            .compactMap(\.member)
     }
 
     @discardableResult

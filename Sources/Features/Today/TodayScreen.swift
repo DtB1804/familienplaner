@@ -9,11 +9,18 @@ public struct TodayScreen: View {
     @FetchRequest(fetchRequest: HouseholdService.activeMembersRequest())
     private var members: FetchedResults<CDMember>
 
+    /// Aktualisiert sich selbst bei jeder Änderung, auch bei Sync von anderen Geräten.
+    @FetchRequest(fetchRequest: EventService.eventsRequest(on: Date()))
+    private var dayEvents: FetchedResults<CDEvent>
+
+    @AppStorage(CurrentMember.storageKey) private var currentMemberID: String?
+
     @State private var day = Date()
     @State private var zoom: DayZoom = .normal
     @State private var selectedMemberIDs: Set<NSManagedObjectID> = []
     @State private var openResponsibilities: [OpenResponsibility] = []
     @State private var showMembers = false
+    @State private var editorTarget: EditorTarget?
 
     public init() {}
 
@@ -41,6 +48,25 @@ public struct TodayScreen: View {
                         Label("Familie", systemImage: "person.2")
                     }
                 }
+                if canEdit {
+                    ToolbarSpacer(.flexible, placement: .bottomBar)
+                    ToolbarItem(placement: .bottomBar) {
+                        Button { editorTarget = .new } label: {
+                            Label("Neuer Termin", systemImage: "plus")
+                        }
+                    }
+                }
+            }
+            .sheet(item: $editorTarget) { target in
+                if let household, let me {
+                    EventEditorSheet(household: household,
+                                     author: me,
+                                     event: target.event,
+                                     initialDay: day)
+                }
+            }
+            .onChange(of: day, initial: true) { _, new in
+                dayEvents.nsPredicate = EventService.eventsRequest(on: new).predicate
             }
             .sheet(isPresented: $showMembers) {
                 if let household {
@@ -48,14 +74,23 @@ public struct TodayScreen: View {
                 }
             }
             .task(id: day) { await reloadResponsibilities() }
+            .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange,
+                                                            object: context)) { _ in
+                Task { await reloadResponsibilities() }
+            }
         }
     }
 
     private var dayTimeline: some View {
         DayTimelineView(day: day,
                         members: visibleMembers,
-                        events: eventsOfDay,
-                        zoom: $zoom)
+                        events: Array(dayEvents),
+                        zoom: $zoom,
+                        viewer: me,
+                        household: household,
+                        onSelect: { event in
+                            if canEdit { editorTarget = .existing(event) }
+                        })
     }
 
     private var visibleMembers: [CDMember] {
@@ -64,12 +99,15 @@ public struct TodayScreen: View {
             : members.filter { selectedMemberIDs.contains($0.objectID) }
     }
 
-    /// Bewusst ein direkter Fetch statt eines zweiten @FetchRequest:
-    /// Der Tag wechselt, und ein @FetchRequest mit veränderlichem Prädikat
-    /// erzeugt in SwiftUI mehr Sonderfälle als er spart.
-    private var eventsOfDay: [CDEvent] {
-        (try? context.fetch(EventService.eventsRequest(on: day))) ?? []
+    /// Das Mitglied, das dieses Gerät benutzt.
+    private var me: CDMember? {
+        _ = currentMemberID
+        guard let household else { return nil }
+        return CurrentMember.resolve(in: context, household: household)
     }
+
+    /// Termine anlegen und ändern dürfen nur Erwachsene.
+    private var canEdit: Bool { me?.role == .adult }
 
     private var title: String {
         let formatter = DateFormatter()
@@ -117,5 +155,24 @@ struct OpenResponsibilityBanner: View {
         .overlay(alignment: .bottom) {
             Rectangle().fill(Palette.hairline).frame(height: 0.5)
         }
+    }
+}
+
+// MARK: - Ziel des Editors
+
+enum EditorTarget: Identifiable {
+    case new
+    case existing(CDEvent)
+
+    var id: String {
+        switch self {
+        case .new: return "new"
+        case .existing(let event): return event.objectID.uriRepresentation().absoluteString
+        }
+    }
+
+    var event: CDEvent? {
+        if case .existing(let event) = self { return event }
+        return nil
     }
 }

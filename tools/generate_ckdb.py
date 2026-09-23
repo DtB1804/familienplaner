@@ -8,7 +8,7 @@ Abbildung nach Apple, "Reading CloudKit Records for Core Data":
 - To-one      CD_<beziehung> als STRING (recordName des Ziels); to-many ohne Feld
 Nur Entitäten der Konfiguration "Cloud".
 
-Aufruf: generate_ckdb.py <modell/contents> <baseline.ckdb|-> > schema.ckdb
+Aufruf: generate_ckdb.py <Modell.xcdatamodeld|contents> <baseline.ckdb|-> > schema.ckdb
 Die Baseline (Export aus Development) wird übernommen, vorhandene CD_-Typen werden
 durch die neu erzeugten ersetzt, alles andere (z. B. Users) bleibt unverändert.
 """
@@ -74,8 +74,18 @@ def baseline_statements(text):
     return keep
 
 
+def resolve_model(path):
+    """Akzeptiert die contents-Datei oder das .xcdatamodeld (dann aktuelle Version)."""
+    import os, plistlib
+    if path.endswith(".xcdatamodeld"):
+        with open(os.path.join(path, ".xccurrentversion"), "rb") as f:
+            current = plistlib.load(f)["_XCCurrentVersionName"]
+        return os.path.join(path, current, "contents")
+    return path
+
+
 def main():
-    model, baseline = sys.argv[1], sys.argv[2]
+    model, baseline = resolve_model(sys.argv[1]), sys.argv[2]
     stmts = []
     if baseline != "-":
         stmts += baseline_statements(open(baseline, encoding="utf-8").read())

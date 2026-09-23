@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDHousehold" representedClassName="CDHousehold" syncable="YES" codeGenerationType="class">
+        <attribute name="childrenSeeAdultTitles" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ownerMemberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="timeZoneIdentifier" optional="YES" attributeType="String" defaultValueString="Europe/Berlin"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weekStartsOn" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDEvent" inverseName="household" inverseEntity="CDEvent"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDMember" inverseName="household" inverseEntity="CDMember"/>
+        <relationship name="suggestions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSuggestionDraft" inverseName="household" inverseEntity="CDSuggestionDraft"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDTag" inverseName="household" inverseEntity="CDTag"/>
+    </entity>
+    <entity name="CDMember" representedClassName="CDMember" syncable="YES" codeGenerationType="class">
+        <attribute name="accountKindRaw" optional="YES" attributeType="String" defaultValueString="managed"/>
+        <attribute name="avatarData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="birthdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="cloudKitUserRecordName" optional="YES" attributeType="String"/>
+        <attribute name="colorToken" optional="YES" attributeType="String" defaultValueString="person1"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="displayName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="roleRaw" optional="YES" attributeType="String" defaultValueString="adult"/>
+        <attribute name="shortName" optional="YES" attributeType="String"/>
+        <attribute name="sortIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="household" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDHousehold" inverseName="members" inverseEntity="CDHousehold"/>
+        <relationship name="participations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDEventParticipation" inverseName="member" inverseEntity="CDEventParticipation"/>
+    </entity>
+    <entity name="CDEvent" representedClassName="CDEvent" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdByMemberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="deletedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="exceptionDatesJSON" optional="YES" attributeType="String"/>
+        <attribute name="externalIdentifier" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isAllDay" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kindRaw" optional="YES" attributeType="String" defaultValueString="appointment"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="locationName" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="originRaw" optional="YES" attributeType="String" defaultValueString="manual"/>
+        <attribute name="recurrenceRule" optional="YES" attributeType="String"/>
+        <attribute name="requiredRolesRaw" optional="YES" attributeType="String"/>
+        <attribute name="seriesParentID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sourceCalendarSourceID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timeZoneIdentifier" optional="YES" attributeType="String" defaultValueString="Europe/Berlin"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="travelBufferAfter" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="travelBufferBefore" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="visibilityRaw" optional="YES" attributeType="String" defaultValueString="household"/>
+        <relationship name="household" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDHousehold" inverseName="events" inverseEntity="CDHousehold"/>
+        <relationship name="participations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDEventParticipation" inverseName="event" inverseEntity="CDEventParticipation"/>
+        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDTag" inverseName="events" inverseEntity="CDTag"/>
+    </entity>
+    <entity name="CDEventParticipation" representedClassName="CDEventParticipation" syncable="YES" codeGenerationType="class">
+        <attribute name="claimedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="roleRaw" optional="YES" attributeType="String" defaultValueString="subject"/>
+        <attribute name="statusRaw" optional="YES" attributeType="String" defaultValueString="claimed"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDEvent" inverseName="participations" inverseEntity="CDEvent"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDMember" inverseName="participations" inverseEntity="CDMember"/>
+    </entity>
+    <entity name="CDTag" representedClassName="CDTag" syncable="YES" codeGenerationType="class">
+        <attribute name="colorToken" optional="YES" attributeType="String" defaultValueString="tagNeutral"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isSystem" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="sortIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="symbolName" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDEvent" inverseName="tag" inverseEntity="CDEvent"/>
+        <relationship name="household" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDHousehold" inverseName="tags" inverseEntity="CDHousehold"/>
+    </entity>
+    <entity name="CDSuggestionDraft" representedClassName="CDSuggestionDraft" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdByMemberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="extractedPayload" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="modelConfidence" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="resultingEventID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="reviewedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="reviewedByMemberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sourceAsset" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="sourceKindRaw" optional="YES" attributeType="String" defaultValueString="screenshot"/>
+        <attribute name="sourceTextExcerpt" optional="YES" attributeType="String"/>
+        <attribute name="statusRaw" optional="YES" attributeType="String" defaultValueString="pending"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="household" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDHousehold" inverseName="suggestions" inverseEntity="CDHousehold"/>
+    </entity>
+    <entity name="CDCalendarSource" representedClassName="CDCalendarSource" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="ekCalendarIdentifier" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isEnabled" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="kindRaw" optional="YES" attributeType="String" defaultValueString="ekLocal"/>
+        <attribute name="lastSyncedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="memberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="syncDirectionRaw" optional="YES" attributeType="String" defaultValueString="readOnly"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="visibilityRaw" optional="YES" attributeType="String" defaultValueString="busyOnly"/>
+        <attribute name="writeTargetCalendarID" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CDLocalEventMirror" representedClassName="CDLocalEventMirror" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="directionRaw" optional="YES" attributeType="String" defaultValueString="import"/>
+        <attribute name="ekEventIdentifier" optional="YES" attributeType="String"/>
+        <attribute name="eventID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastError" optional="YES" attributeType="String"/>
+        <attribute name="lastSyncedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="memberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="stateRaw" optional="YES" attributeType="String" defaultValueString="pending"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="CDDeviceRegistration" representedClassName="CDDeviceRegistration" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deviceName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastSeenAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="memberID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="osVersion" optional="YES" attributeType="String"/>
+        <attribute name="supportsOnDeviceModel" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <configuration name="Cloud">
+        <memberEntity name="CDHousehold"/>
+        <memberEntity name="CDMember"/>
+        <memberEntity name="CDEvent"/>
+        <memberEntity name="CDEventParticipation"/>
+        <memberEntity name="CDTag"/>
+        <memberEntity name="CDSuggestionDraft"/>
+    </configuration>
+    <configuration name="Local">
+        <memberEntity name="CDCalendarSource"/>
+        <memberEntity name="CDLocalEventMirror"/>
+        <memberEntity name="CDDeviceRegistration"/>
+    </configuration>
+</model>

@@ -15,6 +15,7 @@ struct MembersScreen: View {
 
     @State private var share: CKShare?
     @State private var showAddMember = false
+    @State private var editedMember: CDMember?
     @State private var isPreparingInvite = false
     @State private var errorMessage: String?
 
@@ -29,8 +30,14 @@ struct MembersScreen: View {
             List {
                 Section("Mitglieder") {
                     ForEach(members, id: \.objectID) { member in
-                        MemberRow(member: member,
-                                  isMe: member.id == CurrentMember.id)
+                        if canManage {
+                            Button { editedMember = member } label: {
+                                MemberRow(member: member, isMe: member.id == CurrentMember.id)
+                            }
+                            .foregroundStyle(.primary)
+                        } else {
+                            MemberRow(member: member, isMe: member.id == CurrentMember.id)
+                        }
                     }
                     if canManage {
                         Button {
@@ -38,6 +45,22 @@ struct MembersScreen: View {
                         } label: {
                             Label("Mitglied hinzufügen", systemImage: "person.badge.plus")
                         }
+                    }
+                }
+
+                if canManage {
+                    Section {
+                        Toggle("Kinder sehen Titel der Erwachsenen-Termine", isOn: Binding(
+                            get: { household.childrenSeeAdultTitles },
+                            set: { newValue in
+                                household.childrenSeeAdultTitles = newValue
+                                household.updatedAt = Date()
+                                PersistenceController.shared.save(context)
+                            }))
+                    } header: {
+                        Text("Kinderansicht")
+                    } footer: {
+                        Text("Aus: Kinder sehen Termine der Erwachsenen nur als „Belegt“. Termine, die ein Kind betreffen, bleiben lesbar. Das ist eine Anzeige-Einstellung: Die Daten liegen auch auf den Kinder-iPhones.")
                     }
                 }
 
@@ -60,6 +83,9 @@ struct MembersScreen: View {
             }
             .sheet(isPresented: $showAddMember) {
                 AddMemberSheet(household: household)
+            }
+            .sheet(item: $editedMember) { member in
+                AddMemberSheet(household: household, member: member)
             }
             .alert("Einladung nicht möglich",
                    isPresented: Binding(get: { errorMessage != nil },
@@ -186,6 +212,8 @@ private struct ParticipantRow: View {
 struct AddMemberSheet: View {
 
     let household: CDHousehold
+    /// nil = neues Mitglied, sonst Bearbeiten
+    var member: CDMember? = nil
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -194,6 +222,8 @@ struct AddMemberSheet: View {
     @State private var shortName = ""
     @State private var role: MemberRole = .child
     @State private var hasOwnPhone = false
+    @State private var didLoad = false
+    @State private var confirmRemove = false
 
     private var canSave: Bool { !name.trimmed.isEmpty && !shortName.trimmed.isEmpty }
 
@@ -222,8 +252,19 @@ struct AddMemberSheet: View {
                          ? "Diese Person bekommt anschließend eine Einladung und sieht den Familienkalender auf ihrem iPhone."
                          : "Diese Person erscheint im Kalender, ihre Termine tragen die Erwachsenen ein.")
                 }
+                if let member, member.id != CurrentMember.id {
+                    Section {
+                        Button("Aus dem Haushalt entfernen", role: .destructive) { confirmRemove = true }
+                    } footer: {
+                        Text("Die Person verschwindet aus Kalender und Auswahl. Vergangene Termine bleiben erhalten.")
+                    }
+                }
             }
-            .navigationTitle("Neues Mitglied")
+            .navigationTitle(member == nil ? "Neues Mitglied" : "Mitglied bearbeiten")
+            .onAppear(perform: load)
+            .confirmationDialog("Mitglied entfernen?", isPresented: $confirmRemove, titleVisibility: .visible) {
+                Button("Entfernen", role: .destructive) { deactivate() }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -237,7 +278,34 @@ struct AddMemberSheet: View {
         }
     }
 
+    private func load() {
+        guard !didLoad, let member else { return }
+        didLoad = true
+        name = member.displayName ?? ""
+        shortName = member.shortName ?? ""
+        role = member.role
+        hasOwnPhone = member.accountKind == .participant
+    }
+
+    private func deactivate() {
+        guard let member else { return }
+        member.isActive = false
+        member.updatedAt = Date()
+        PersistenceController.shared.save(context)
+        dismiss()
+    }
+
     private func save() {
+        if let member {
+            member.displayName = name.trimmed
+            member.shortName = String(shortName.trimmed.prefix(3))
+            member.roleRaw = role.rawValue
+            member.accountKindRaw = (hasOwnPhone ? MemberAccountKind.participant : .managed).rawValue
+            member.updatedAt = Date()
+            PersistenceController.shared.save(context)
+            dismiss()
+            return
+        }
         let count = (household.members as? Set<CDMember>)?.count ?? 0
         HouseholdService.makeMember(in: context,
                                     household: household,

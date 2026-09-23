@@ -12,17 +12,25 @@ public struct DayTimelineView: View {
     let members: [CDMember]
     let events: [CDEvent]
     @Binding var zoom: DayZoom
+    var viewer: CDMember? = nil
+    var household: CDHousehold? = nil
+    var onSelect: ((CDEvent) -> Void)? = nil
 
     private let laneMinWidth: CGFloat = 96
     private let gutterWidth: CGFloat = 44
     private let startHour = 6
     private let endHour = 23
 
-    public init(day: Date, members: [CDMember], events: [CDEvent], zoom: Binding<DayZoom>) {
+    public init(day: Date, members: [CDMember], events: [CDEvent], zoom: Binding<DayZoom>,
+                viewer: CDMember? = nil, household: CDHousehold? = nil,
+                onSelect: ((CDEvent) -> Void)? = nil) {
         self.day = day
         self.members = members
         self.events = events
         self._zoom = zoom
+        self.viewer = viewer
+        self.household = household
+        self.onSelect = onSelect
     }
 
     public var body: some View {
@@ -167,15 +175,17 @@ public struct DayTimelineView: View {
         let top = yOffset(for: event.startAt ?? day)
         let bottom = yOffset(for: event.endAt ?? day)
         let duration = (event.endAt ?? day).timeIntervalSince(event.startAt ?? day)
-        let isBusyOnly = EventVisibility(rawValue: event.visibilityRaw ?? "") == .busyOnly
+        let isBusyOnly = EventPresentation.isBusyOnly(event, for: viewer, in: household)
         let tint = isBusyOnly ? Palette.busy : Palette.color(member.colorToken ?? "person1")
+        let title = EventPresentation.title(of: event, for: viewer, in: household)
+        let location = EventPresentation.location(of: event, for: viewer, in: household)
 
         return VStack(alignment: .leading, spacing: Spacing.hair) {
             if duration >= zoom.minimumLabelDuration {
-                Text(event.title ?? "Ohne Titel")
+                Text(title)
                     .font(TypeScale.eventTitle)
                     .lineLimit(2)
-                if duration >= zoom.minimumLabelDuration * 2, let location = event.locationName, !location.isEmpty {
+                if duration >= zoom.minimumLabelDuration * 2, let location, !location.isEmpty {
                     Text(location)
                         .font(TypeScale.eventMeta)
                         .foregroundStyle(.secondary)
@@ -196,6 +206,10 @@ public struct DayTimelineView: View {
                 .frame(width: 3)
                 .padding(.vertical, 1)
         }
+        .contentShape(RoundedRectangle(cornerRadius: 6))
+        .onTapGesture { onSelect?(event) }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
         .offset(x: Spacing.xs, y: max(top, 0))
     }
 

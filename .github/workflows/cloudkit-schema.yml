@@ -20,7 +20,7 @@ jobs:
       CLOUDKIT_MANAGEMENT_TOKEN: ${{ secrets.CK_MANAGEMENT_TOKEN }}
       TEAM: KF96Z9PD9Q
       CONTAINER: iCloud.de.barg.familienplaner
-      MODEL: Sources/Persistence/Familienplaner.xcdatamodeld/Familienplaner.xcdatamodel/contents
+      MODEL: Sources/Persistence/Familienplaner.xcdatamodeld
     steps:
       - uses: actions/checkout@v4
 
