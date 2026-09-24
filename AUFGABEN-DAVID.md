@@ -279,7 +279,11 @@ löschen oder umtypen.
 
 ---
 
-### Aufgabe 19: Neues Schemafeld nach Production übernehmen
+### Aufgabe 19: Neues Schemafeld nach Production übernehmen ✅ erledigt (24.09.2026)
+**Geprüft per cktool-Export:** `CD_childrenSeeAdultTitles` in Production vorhanden.
+**Hinweis:** "Deploy Schema Changes" ist nur klickbar, wenn oben die Umgebung
+**Development** ausgewählt ist bzw. nach Neuladen der Seite.
+
 **Anlass:** Schalter "Kinder sehen Titel der Erwachsenen-Termine" (Modellversion 2,
 Feld `CD_childrenSeeAdultTitles` im Typ `CD_CDHousehold`). In Development angelegt
 am 23.09.2026.
