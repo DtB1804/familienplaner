@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreData
 import EventKit
+import PhotosUI
 
 public struct TodayScreen: View {
 
@@ -25,6 +26,13 @@ public struct TodayScreen: View {
     @State private var editorTarget: EditorTarget?
     @State private var showResponsibilities = false
     @State private var importedNotice = false
+    @State private var showPhotoPicker = false
+    @State private var photoItem: PhotosPickerItem?
+    @State private var photoImport: PhotoImport?
+    @State private var showSuggestions = false
+
+    @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
+    private var pendingSuggestions: FetchedResults<CDSuggestionDraft>
 
     public init() {}
 
@@ -58,8 +66,22 @@ public struct TodayScreen: View {
                 if canEdit {
                     ToolbarSpacer(.flexible, placement: .bottomBar)
                     ToolbarItem(placement: .bottomBar) {
-                        Button { editorTarget = .new } label: {
-                            Label("Neuer Termin", systemImage: "plus")
+                        Menu {
+                            Button { editorTarget = .new } label: {
+                                Label("Neuer Termin", systemImage: "calendar.badge.plus")
+                            }
+                            Button { showPhotoPicker = true } label: {
+                                Label("Termine aus Foto", systemImage: "doc.text.viewfinder")
+                            }
+                            if !pendingSuggestions.isEmpty {
+                                Button { showSuggestions = true } label: {
+                                    Label("Offene Vorschläge (\(pendingSuggestions.count))", systemImage: "tray")
+                                }
+                            }
+                        } label: {
+                            Label("Neu", systemImage: "plus")
+                        } primaryAction: {
+                            editorTarget = .new
                         }
                     }
                 }
@@ -80,6 +102,24 @@ public struct TodayScreen: View {
                     MembersScreen(household: household)
                 }
             }
+            .photosPicker(isPresented: $showPhotoPicker, selection: $photoItem, matching: .images)
+            .onChange(of: photoItem) { _, item in
+                guard let item else { return }
+                Task {
+                    if let data = try? await item.loadTransferable(type: Data.self) {
+                        photoImport = PhotoImport(data: data)
+                    }
+                    photoItem = nil
+                }
+            }
+            .sheet(item: $photoImport) { photo in
+                if let household, let me {
+                    PhotoImportSheet(imageData: photo.data, household: household, me: me)
+                }
+            }
+            .sheet(isPresented: $showSuggestions) {
+                if let me { PendingSuggestionsScreen(me: me) }
+            }
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
             }
@@ -90,7 +130,10 @@ public struct TodayScreen: View {
                 Text("Diesen Termin ändern Sie in der Kalender-App. Die Änderung kommt automatisch hierher.")
             }
             .task(id: day) { await reloadResponsibilities() }
-            .task { syncCalendars() }
+            .task {
+                syncCalendars()
+                DeviceRegistrationService.refresh(memberID: me?.id, in: context)
+            }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active { syncCalendars() }
             }
@@ -223,4 +266,10 @@ enum EditorTarget: Identifiable {
         if case .existing(let event) = self { return event }
         return nil
     }
+}
+
+/// Ein ausgewähltes Foto, das eingelesen werden soll.
+struct PhotoImport: Identifiable {
+    let id = UUID()
+    let data: Data
 }
