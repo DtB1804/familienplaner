@@ -20,7 +20,7 @@ struct EventEditorSheet: View {
     @State private var title = ""
     @State private var startAt = Date()
     @State private var endAt = Date()
-    @State private var duration: TimeInterval = 3600
+    @State private var duration: TimeInterval = EventService.defaultDuration
     @State private var subjectIDs: Set<NSManagedObjectID> = []
     @State private var busyOnly = false
     @State private var requiredRoles: Set<ParticipationRole> = []
@@ -68,12 +68,12 @@ struct EventEditorSheet: View {
                 Section("Zeit") {
                     DatePicker("Beginn", selection: $startAt)
                         .onChange(of: startAt) { _, new in
-                            // Dauer beibehalten, wenn der Beginn verschoben wird.
-                            endAt = new.addingTimeInterval(duration)
+                            // Dauer beibehalten, mindestens aber 30 Minuten vorschlagen.
+                            endAt = new.addingTimeInterval(max(duration, EventService.defaultDuration))
                         }
                     DatePicker("Ende", selection: $endAt, in: startAt...)
                         .onChange(of: endAt) { _, new in
-                            duration = max(new.timeIntervalSince(startAt), 15 * 60)
+                            duration = max(new.timeIntervalSince(startAt), 5 * 60)
                         }
                 }
 
@@ -194,7 +194,7 @@ struct EventEditorSheet: View {
             title = busyOnly ? "" : (event.title ?? "")
             startAt = event.startAt ?? Date()
             endAt = event.endAt ?? startAt.addingTimeInterval(3600)
-            duration = max(endAt.timeIntervalSince(startAt), 15 * 60)
+            duration = max(endAt.timeIntervalSince(startAt), 5 * 60)
             subjectIDs = Set(EventService.subjects(of: event).map(\.objectID))
             requiredRoles = Set(RequiredRoles.decode(event.requiredRolesRaw))
             tagID = event.tag?.objectID
@@ -202,7 +202,7 @@ struct EventEditorSheet: View {
             notes = event.notes ?? ""
         } else {
             startAt = Self.nextFullHour(on: initialDay)
-            endAt = startAt.addingTimeInterval(3600)
+            endAt = startAt.addingTimeInterval(EventService.defaultDuration)
             subjectIDs = [author.objectID]
         }
     }

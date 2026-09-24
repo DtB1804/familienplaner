@@ -88,7 +88,7 @@ enum SuggestionExtractor {
 
     @Generable(description: "Ein einzelner Termin")
     struct ModelEvent {
-        @Guide(description: "Kurzer Titel auf Deutsch, höchstens fünf Wörter")
+        @Guide(description: "Kurzer deutscher Titel mit Worten aus dem Text, nicht übersetzen, höchstens fünf Wörter")
         var title: String
         @Guide(description: "Datum im Format JJJJ-MM-TT")
         var date: String
@@ -106,25 +106,56 @@ enum SuggestionExtractor {
             Du liest Texte aus Elternbriefen, Schulaushängen und Screenshots und findest darin Termine.
             Heute ist der \(today). Fehlt eine Jahreszahl, nimm das nächste passende Datum ab heute.
             Erfinde nichts: Nur Termine, die im Text stehen.
+            Titel immer auf Deutsch und möglichst mit den Worten aus dem Text. Niemals ins Englische übersetzen.
+            Uhrzeiten nur angeben, wenn sie im Text stehen. Ganztägige Termine ohne Uhrzeit.
             """)
         let response = try await session.respond(
             to: "Finde alle Termine in diesem Text:\n\n\(text.prefix(3500))",
             generating: ModelOutput.self)
 
-        return response.content.events.compactMap { item in
+        let items: [SuggestedEvent] = response.content.events.compactMap { item in
             guard let day = dayFormatter.date(from: item.date.trimmingCharacters(in: .whitespaces)) else {
                 return nil
             }
-            let start = combine(day, item.startTime)
-            let end = combine(day, item.endTime).flatMap { $0 > (start ?? day) ? $0 : nil }
-            let guessed = start == nil
-            let begin = start ?? Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: day) ?? day
+            var start = combine(day, item.startTime)
+            var end = combine(day, item.endTime)
+            // "00:00" bis "23:59" oder ähnliche Ganztagsangaben gelten als "keine Uhrzeit".
+            if let s = start, Calendar.current.component(.hour, from: s) == 0,
+               Calendar.current.component(.minute, from: s) == 0 {
+                start = nil
+                end = nil
+            }
             let title = item.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            return SuggestedEvent(title: title.isEmpty ? "Termin" : title,
-                                  start: begin,
-                                  end: end ?? begin.addingTimeInterval(3600),
-                                  location: item.location.isEmpty ? nil : item.location,
-                                  timeIsGuessed: guessed)
+            let location = item.location.trimmingCharacters(in: .whitespacesAndNewlines)
+            return makeSuggestion(title: title, day: day, start: start, end: end,
+                                  location: location.isEmpty ? nil : location)
+        }
+        return deduplicated(items)
+    }
+
+    /// Einheitliche Regeln für Beginn und Ende:
+    /// ohne Uhrzeit 8:00 (als "bitte prüfen" markiert); Ende fehlt, liegt vor dem Beginn,
+    /// ist weniger als 30 Minuten entfernt oder mehr als 12 Stunden → Beginn + 30 Minuten.
+    static func makeSuggestion(title: String, day: Date, start: Date?, end: Date?,
+                               location: String?) -> SuggestedEvent {
+        let begin = start
+            ?? Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: day)
+            ?? day
+        var finish = end ?? begin.addingTimeInterval(EventService.defaultDuration)
+        let length = finish.timeIntervalSince(begin)
+        if length < EventService.defaultDuration || length > 12 * 3600 {
+            finish = begin.addingTimeInterval(EventService.defaultDuration)
+        }
+        return SuggestedEvent(title: title.isEmpty ? "Termin" : String(title.prefix(60)),
+                              start: begin, end: finish,
+                              location: location, timeIsGuessed: start == nil)
+    }
+
+    private static func deduplicated(_ items: [SuggestedEvent]) -> [SuggestedEvent] {
+        var seen = Set<String>()
+        return items.filter { item in
+            let key = "\(item.title.lowercased())|\(Int(item.start.timeIntervalSince1970))"
+            return seen.insert(key).inserted
         }
     }
 
@@ -144,20 +175,18 @@ enum SuggestionExtractor {
                 var title = line
                 if let r = Range(match.range, in: line) { title.removeSubrange(r) }
                 title = title.trimmingCharacters(in: CharacterSet(charactersIn: " :-–,.;").union(.whitespaces))
-                let hasTime = calendar.component(.hour, from: date) != 12
-                    || calendar.component(.minute, from: date) != 0
-                let start = hasTime
-                    ? date
-                    : calendar.date(bySettingHour: 8, minute: 0, second: 0, of: date) ?? date
-                let duration = match.duration > 0 ? match.duration : 3600
-                result.append(SuggestedEvent(title: title.isEmpty ? "Termin" : String(title.prefix(60)),
-                                             start: start,
-                                             end: start.addingTimeInterval(duration),
-                                             location: nil,
-                                             timeIsGuessed: !hasTime))
+                // NSDataDetector setzt bei reinen Datumsangaben 12:00 bzw. 0:00.
+                let hour = calendar.component(.hour, from: date)
+                let minute = calendar.component(.minute, from: date)
+                let hasTime = !((hour == 12 || hour == 0) && minute == 0)
+                let end = match.duration > 0 ? date.addingTimeInterval(match.duration) : nil
+                result.append(makeSuggestion(title: title, day: date,
+                                             start: hasTime ? date : nil,
+                                             end: hasTime ? end : nil,
+                                             location: nil))
             }
         }
-        return result
+        return deduplicated(result)
     }
 
     // MARK: - Hilfen

@@ -6,12 +6,31 @@ public enum EventService {
 
     // MARK: - Abfragen
 
+    /// Standarddauer neuer Termine und Mindestabstand beim Verschieben des Beginns.
+    public static let defaultDuration: TimeInterval = 30 * 60
+
     /// Termine eines Tages, ohne weich gelöschte Einträge.
     public static func eventsRequest(on day: Date,
                                      calendar: Calendar = .current) -> NSFetchRequest<CDEvent> {
         let start = calendar.startOfDay(for: day)
         let end = calendar.date(byAdding: .day, value: 1, to: start) ?? start
+        return eventsRequest(from: start, to: end)
+    }
 
+    /// Volltextsuche über Titel, Ort und Notizen im gesamten Kalender.
+    public static func searchRequest(_ text: String) -> NSFetchRequest<CDEvent> {
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "deletedAt == nil AND (title CONTAINS[cd] %@ OR locationName CONTAINS[cd] %@ OR notes CONTAINS[cd] %@)",
+            text, text, text)
+        request.sortDescriptors = [NSSortDescriptor(key: "startAt", ascending: true)]
+        request.fetchLimit = 200
+        request.relationshipKeyPathsForPrefetching = ["participations", "participations.member"]
+        return request
+    }
+
+    /// Termine, die den Zeitraum [start, end) berühren.
+    public static func eventsRequest(from start: Date, to end: Date) -> NSFetchRequest<CDEvent> {
         let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
         request.predicate = NSPredicate(
             format: "deletedAt == nil AND startAt < %@ AND endAt > %@",

@@ -180,7 +180,10 @@ struct SuggestionReviewList: View {
             }
             DatePicker("Beginn", selection: item.start)
                 .onChange(of: item.wrappedValue.start) { old, new in
-                    item.wrappedValue.end = item.wrappedValue.end.addingTimeInterval(new.timeIntervalSince(old))
+                    // Dauer beibehalten, mindestens 30 Minuten.
+                    let length = max(item.wrappedValue.end.timeIntervalSince(old), EventService.defaultDuration)
+                    item.wrappedValue.end = new.addingTimeInterval(length)
+                    item.wrappedValue.timeIsGuessed = false
                 }
             DatePicker("Ende", selection: item.end, in: item.wrappedValue.start...)
             if item.wrappedValue.timeIsGuessed {

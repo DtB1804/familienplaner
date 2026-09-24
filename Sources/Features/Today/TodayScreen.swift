@@ -19,6 +19,11 @@ public struct TodayScreen: View {
     @AppStorage(CurrentMember.storageKey) private var currentMemberID: String?
 
     @State private var day = Date()
+    @State private var mode: CalendarMode = .day
+    @State private var showSearch = false
+
+    @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
+    private var weekEvents: FetchedResults<CDEvent>
     @State private var zoom: DayZoom = .normal
     @State private var selectedMemberIDs: Set<NSManagedObjectID> = []
     @State private var openResponsibilities: [OpenResponsibility] = []
@@ -46,21 +51,39 @@ public struct TodayScreen: View {
                     }
                     .buttonStyle(.plain)
                 }
-                dayTimeline
+                Picker("Ansicht", selection: $mode) {
+                    Text("Tag").tag(CalendarMode.day)
+                    Text("Woche").tag(CalendarMode.week)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, Spacing.l)
+                .padding(.vertical, Spacing.s)
+                .background(Palette.surface)
+                if mode == .day {
+                    dayTimeline
+                } else {
+                    weekTimeline
+                }
             }
             .background(Palette.surfaceSunken)
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { shiftDay(-1) } label: { Image(systemName: "chevron.left") }
+                    Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { shiftDay(1) } label: { Image(systemName: "chevron.right") }
+                    Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button { showMembers = true } label: {
                         Label("Familie", systemImage: "person.2")
+                    }
+                }
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+                ToolbarItem(placement: .bottomBar) {
+                    Button { showSearch = true } label: {
+                        Label("Suche", systemImage: "magnifyingglass")
                     }
                 }
                 if canEdit {
@@ -96,6 +119,15 @@ public struct TodayScreen: View {
             }
             .onChange(of: day, initial: true) { _, new in
                 dayEvents.nsPredicate = EventService.eventsRequest(on: new).predicate
+                let start = Self.weekStart(of: new)
+                let end = Calendar.current.date(byAdding: .day, value: 7, to: start) ?? start
+                weekEvents.nsPredicate = EventService.eventsRequest(from: start, to: end).predicate
+            }
+            .sheet(isPresented: $showSearch) {
+                SearchScreen(viewer: me, household: household) { target in
+                    day = target
+                    mode = .day
+                }
             }
             .sheet(isPresented: $showMembers) {
                 if let household {
@@ -169,6 +201,44 @@ public struct TodayScreen: View {
                         onSwipeDay: { offset in shiftDay(offset) })
     }
 
+    private var weekTimeline: some View {
+        WeekTimelineView(weekStart: Self.weekStart(of: day),
+                         events: weekEvents.filter(isVisibleInFilter),
+                         zoom: $zoom,
+                         viewer: me,
+                         household: household,
+                         onSelect: { event in
+                             if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
+                                 editorTarget = .existing(event)
+                             } else if let start = event.startAt {
+                                 day = start
+                                 mode = .day
+                             }
+                         },
+                         onOpenDay: { target in
+                             day = target
+                             mode = .day
+                         },
+                         onSwipeWeek: { offset in shiftDay(offset * 7) })
+    }
+
+    /// Personenfilter gilt auch in der Woche: Termine mit mindestens einer gewählten Person.
+    private func isVisibleInFilter(_ event: CDEvent) -> Bool {
+        guard !selectedMemberIDs.isEmpty else { return true }
+        let participants = ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .compactMap { $0.member?.objectID }
+        return participants.contains { selectedMemberIDs.contains($0) }
+    }
+
+    /// Montag der Woche (Haushalt: Woche beginnt am Montag).
+    static func weekStart(of date: Date) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 2
+        calendar.timeZone = .current
+        return calendar.dateInterval(of: .weekOfYear, for: date)?.start
+            ?? Calendar.current.startOfDay(for: date)
+    }
+
     private var visibleMembers: [CDMember] {
         selectedMemberIDs.isEmpty
             ? Array(members)
@@ -186,6 +256,15 @@ public struct TodayScreen: View {
     private var canEdit: Bool { me?.role == .adult }
 
     private var title: String {
+        if mode == .week {
+            let start = Self.weekStart(of: day)
+            let end = Calendar.current.date(byAdding: .day, value: 6, to: start) ?? start
+            var iso = Calendar(identifier: .iso8601)
+            iso.timeZone = .current
+            let week = iso.component(.weekOfYear, from: start)
+            let de = Locale(identifier: "de_DE")
+            return "KW \(week) · \(start.formatted(.dateTime.day().month(.abbreviated).locale(de))) – \(end.formatted(.dateTime.day().month(.abbreviated).locale(de)))"
+        }
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "de_DE")
         formatter.dateFormat = Calendar.current.isDateInToday(day) ? "'Heute', d. MMMM" : "EEEE, d. MMMM"
@@ -272,4 +351,8 @@ enum EditorTarget: Identifiable {
 struct PhotoImport: Identifiable {
     let id = UUID()
     let data: Data
+}
+
+enum CalendarMode: Hashable {
+    case day, week
 }
