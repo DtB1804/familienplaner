@@ -250,6 +250,11 @@ Build darf sie benutzen.
 ### Aufgabe 16a: Erster TestFlight-Test ✅ erfolgreich (23.09.2026)
 App über TestFlight installiert, Haushalt angelegt, zweiten Erwachsenen angelegt.
 
+### Aufgabe 16b: Funktionstest Build 7 ✅ erfolgreich (24.09.2026)
+Termine/Dienste anlegen und bearbeiten, Kalenderübernahme (nur Belegt), Zuständigkeit
+übernehmen/abgeben inkl. Anzeige, Verschieben per Ziehen, Tage wischen: alles i. O.
+Offen: Einladungstest mit Jana (Aufgabe 16), Kinderansicht mit Josh.
+
 ### Aufgabe 17: CloudKit-Management-Token (ersetzt Aufgabe 10) ✅ erledigt (23.09.2026)
 **Ergebnis:** Schema per `cktool` geprüft ("Schema is valid") und in Development
 angelegt: 6 Record-Typen CD_CDHousehold, CD_CDMember, CD_CDEvent,
