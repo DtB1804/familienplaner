@@ -56,7 +56,12 @@ struct EventEditorSheet: View {
                     }
 
                     if !busyOnly {
-                        TextField(kind == .statusBlock ? "Bezeichnung, z. B. Frühdienst" : "Titel", text: $title)
+                        // Mit Beschriftung, damit das Feld auch ausgefüllt erkennbar bleibt.
+                        LabeledContent(kind == .statusBlock ? "Bezeichnung" : "Titel") {
+                            TextField(kind == .statusBlock ? "z. B. Frühdienst" : "z. B. Schwimmen",
+                                      text: $title)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                 }
 
@@ -86,10 +91,12 @@ struct EventEditorSheet: View {
                                 Spacer()
                                 if subjectIDs.contains(member.objectID) {
                                     Image(systemName: "checkmark")
-                                        .foregroundStyle(.tint)
+                                        .foregroundStyle(.blue)
                                 }
                             }
+                            .contentShape(Rectangle())
                         }
+                        .buttonStyle(.plain)
                     }
                 }
 
@@ -141,8 +148,13 @@ struct EventEditorSheet: View {
                                     .tag(Optional(tag.objectID))
                             }
                         }
-                        TextField("Ort", text: $locationName)
-                        TextField("Notizen", text: $notes, axis: .vertical)
+                        LabeledContent("Ort") {
+                            TextField("optional", text: $locationName)
+                                .multilineTextAlignment(.trailing)
+                        }
+                    }
+                    Section("Notizen") {
+                        TextField("optional", text: $notes, axis: .vertical)
                             .lineLimit(2...5)
                     }
                 }
