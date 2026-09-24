@@ -1,10 +1,12 @@
 import SwiftUI
 import CoreData
+import EventKit
 
 public struct TodayScreen: View {
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.household) private var household
+    @Environment(\.scenePhase) private var scenePhase
 
     @FetchRequest(fetchRequest: HouseholdService.activeMembersRequest())
     private var members: FetchedResults<CDMember>
@@ -21,6 +23,8 @@ public struct TodayScreen: View {
     @State private var openResponsibilities: [OpenResponsibility] = []
     @State private var showMembers = false
     @State private var editorTarget: EditorTarget?
+    @State private var showResponsibilities = false
+    @State private var importedNotice = false
 
     public init() {}
 
@@ -29,7 +33,10 @@ public struct TodayScreen: View {
             VStack(spacing: 0) {
                 MemberFilterBar(members: Array(members), selection: $selectedMemberIDs)
                 if !openResponsibilities.isEmpty {
-                    OpenResponsibilityBanner(items: openResponsibilities)
+                    Button { showResponsibilities = true } label: {
+                        OpenResponsibilityBanner(items: openResponsibilities)
+                    }
+                    .buttonStyle(.plain)
                 }
                 dayTimeline
             }
@@ -73,7 +80,23 @@ public struct TodayScreen: View {
                     MembersScreen(household: household)
                 }
             }
+            .sheet(isPresented: $showResponsibilities) {
+                ResponsibilitiesSheet(me: me)
+            }
+            .alert("Aus Ihrem Kalender übernommen",
+                   isPresented: $importedNotice) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Diesen Termin ändern Sie in der Kalender-App. Die Änderung kommt automatisch hierher.")
+            }
             .task(id: day) { await reloadResponsibilities() }
+            .task { syncCalendars() }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active { syncCalendars() }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in
+                syncCalendars()
+            }
             .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange,
                                                             object: context)) { _ in
                 Task { await reloadResponsibilities() }
@@ -89,7 +112,12 @@ public struct TodayScreen: View {
                         viewer: me,
                         household: household,
                         onSelect: { event in
-                            if canEdit { editorTarget = .existing(event) }
+                            guard canEdit else { return }
+                            if EventOrigin(rawValue: event.originRaw ?? "") == .imported {
+                                importedNotice = true
+                            } else {
+                                editorTarget = .existing(event)
+                            }
                         })
     }
 
@@ -120,6 +148,12 @@ public struct TodayScreen: View {
         withAnimation(.snappy(duration: 0.2)) {
             day = Calendar.current.date(byAdding: .day, value: offset, to: day) ?? day
         }
+    }
+
+    /// Kalender dieses Geräts abgleichen (nur, wenn Zugriff erteilt und Kalender gewählt).
+    private func syncCalendars() {
+        guard let household, let me else { return }
+        CalendarImportService.shared.sync(household: household, member: me, in: context)
     }
 
     private func reloadResponsibilities() async {

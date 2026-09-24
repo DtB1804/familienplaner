@@ -48,6 +48,18 @@ struct MembersScreen: View {
                     }
                 }
 
+                if let me = CurrentMember.resolve(in: context, household: household) {
+                    Section {
+                        NavigationLink {
+                            CalendarSourcesScreen(household: household, member: me)
+                        } label: {
+                            Label("Meine Kalender", systemImage: "calendar")
+                        }
+                    } footer: {
+                        Text("Termine aus den Kalendern dieses iPhones in den Familienplaner übernehmen, z. B. den Dienstkalender nur als „Belegt“.")
+                    }
+                }
+
                 if canManage {
                     Section {
                         Toggle("Kinder sehen Titel der Erwachsenen-Termine", isOn: Binding(
