@@ -2,6 +2,7 @@ import Foundation
 import Vision
 import CoreGraphics
 import FoundationModels
+import NaturalLanguage
 import os
 
 /// Ein aus einem Foto erkannter Terminvorschlag. Noch kein Termin (CLAUDE.md Regel 4).
@@ -88,7 +89,7 @@ enum SuggestionExtractor {
 
     @Generable(description: "Ein einzelner Termin")
     struct ModelEvent {
-        @Guide(description: "Kurzer deutscher Titel mit Worten aus dem Text, nicht übersetzen, höchstens fünf Wörter")
+        @Guide(description: "Kurzer Titel mit den Worten aus dem Text, in der Sprache des Textes, nie übersetzen, höchstens fünf Wörter")
         var title: String
         @Guide(description: "Datum im Format JJJJ-MM-TT")
         var date: String
@@ -102,11 +103,14 @@ enum SuggestionExtractor {
 
     private static func extractWithModel(text: String, now: Date) async throws -> [SuggestedEvent] {
         let today = dayFormatter.string(from: now)
+        let languageRule = isClearlyEnglish(text)
+            ? "Der Text ist auf Englisch. Titel englisch lassen, wie sie im Text stehen. Nicht ins Deutsche übersetzen."
+            : "Titel auf Deutsch, mit den Worten aus dem Text. Englische Begriffe aus dem Text bleiben englisch. Nichts übersetzen."
         let session = LanguageModelSession(instructions: """
             Du liest Texte aus Elternbriefen, Schulaushängen und Screenshots und findest darin Termine.
             Heute ist der \(today). Fehlt eine Jahreszahl, nimm das nächste passende Datum ab heute.
             Erfinde nichts: Nur Termine, die im Text stehen.
-            Titel immer auf Deutsch und möglichst mit den Worten aus dem Text. Niemals ins Englische übersetzen.
+            \(languageRule)
             Uhrzeiten nur angeben, wenn sie im Text stehen. Ganztägige Termine ohne Uhrzeit.
             """)
         let response = try await session.respond(
@@ -157,6 +161,16 @@ enum SuggestionExtractor {
             let key = "\(item.title.lowercased())|\(Int(item.start.timeIntervalSince1970))"
             return seen.insert(key).inserted
         }
+    }
+
+    /// Nur wenn der Text eindeutig englisch ist (≥ 80 % laut Spracherkennung auf dem Gerät),
+    /// bleiben Titel englisch. Sonst gilt Deutsch; übersetzt wird in keinem Fall.
+    static func isClearlyEnglish(_ text: String) -> Bool {
+        let recognizer = NLLanguageRecognizer()
+        recognizer.languageConstraints = [.english, .german]
+        recognizer.processString(text)
+        let english = recognizer.languageHypotheses(withMaximum: 2)[.english] ?? 0
+        return english >= 0.8
     }
 
     // MARK: - Weg 2: ohne KI
