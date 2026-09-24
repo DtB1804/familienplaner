@@ -15,15 +15,28 @@ public struct DayTimelineView: View {
     var viewer: CDMember? = nil
     var household: CDHousehold? = nil
     var onSelect: ((CDEvent) -> Void)? = nil
+    /// Verschieben per Gedrückthalten und Ziehen. Liefert die Verschiebung in Sekunden.
+    var onMove: ((CDEvent, TimeInterval) -> Void)? = nil
+    var canMove: (CDEvent) -> Bool = { _ in false }
+    /// Wischen nach links (+1) oder rechts (−1) blättert den Tag.
+    var onSwipeDay: ((Int) -> Void)? = nil
 
-    private let laneMinWidth: CGFloat = 96
+    @State private var draggingID: NSManagedObjectID?
+    @State private var dragDY: CGFloat = 0
+
+    /// Raster beim Verschieben.
+    private let snapMinutes = 15
+    private let laneMinWidth: CGFloat = 64
     private let gutterWidth: CGFloat = 44
     private let startHour = 6
     private let endHour = 23
 
     public init(day: Date, members: [CDMember], events: [CDEvent], zoom: Binding<DayZoom>,
                 viewer: CDMember? = nil, household: CDHousehold? = nil,
-                onSelect: ((CDEvent) -> Void)? = nil) {
+                onSelect: ((CDEvent) -> Void)? = nil,
+                onMove: ((CDEvent, TimeInterval) -> Void)? = nil,
+                canMove: @escaping (CDEvent) -> Bool = { _ in false },
+                onSwipeDay: ((Int) -> Void)? = nil) {
         self.day = day
         self.members = members
         self.events = events
@@ -31,19 +44,26 @@ public struct DayTimelineView: View {
         self.viewer = viewer
         self.household = household
         self.onSelect = onSelect
+        self.onMove = onMove
+        self.canMove = canMove
+        self.onSwipeDay = onSwipeDay
     }
 
     public var body: some View {
         GeometryReader { geometry in
             let laneWidth = max(laneMinWidth,
                                 (geometry.size.width - gutterWidth) / CGFloat(max(members.count, 1)))
+            // Bis etwa fünf Personen passt alles in die Breite; dann nur vertikal
+            // scrollen, damit Wischen nach links/rechts den Tag wechseln kann.
+            let needsHorizontal = gutterWidth + laneWidth * CGFloat(members.count) > geometry.size.width + 1
             // Kopfzeile fest oben, darunter genau ein Scrollbereich für beide Achsen.
             // Vorher: verschachtelte ScrollViews. Auf iOS 26 hat das die Kopfzeile
             // aufgebläht und den Zeitstrahl ans Ende gescrollt (Screenshot 23.09.2026).
             ScrollViewReader { proxy in
-                ScrollView([.vertical, .horizontal], showsIndicators: false) {
+                ScrollView(needsHorizontal ? [.vertical, .horizontal] : .vertical, showsIndicators: false) {
                     timelineBody(laneWidth: laneWidth)
                 }
+                .simultaneousGesture(daySwipe)
                 .safeAreaInset(edge: .top, spacing: 0) {
                     VStack(spacing: 0) {
                         laneHeaders(laneWidth: laneWidth)
@@ -57,6 +77,17 @@ public struct DayTimelineView: View {
         }
         .background(Palette.surfaceSunken)
         .gesture(magnification)
+        .sensoryFeedback(.selection, trigger: draggingID)
+    }
+
+    private var daySwipe: some Gesture {
+        DragGesture(minimumDistance: 40)
+            .onEnded { value in
+                guard draggingID == nil else { return }
+                let dx = value.translation.width, dy = value.translation.height
+                guard abs(dx) > 80, abs(dx) > abs(dy) * 2 else { return }
+                onSwipeDay?(dx < 0 ? 1 : -1)
+            }
     }
 
     // MARK: - Kopfzeile
@@ -177,14 +208,32 @@ public struct DayTimelineView: View {
         let duration = (event.endAt ?? day).timeIntervalSince(event.startAt ?? day)
         let isBusyOnly = EventPresentation.isBusyOnly(event, for: viewer, in: household)
         let tint = isBusyOnly ? Palette.busy : Palette.color(member.colorToken ?? "person1")
-        let title = EventPresentation.title(of: event, for: viewer, in: household)
+        let baseTitle = EventPresentation.title(of: event, for: viewer, in: household)
         let location = EventPresentation.location(of: event, for: viewer, in: household)
+        // In der Spalte des Fahrers steht die Aufgabe vor dem Titel, z. B. "Holt · Schwimmen".
+        let ownRoles = roles(of: member, in: event)
+        let title = ownRoles.contains(.subject) || ownRoles.isEmpty
+            ? baseTitle
+            : ownRoles.map(\.label).joined(separator: ", ") + " · " + baseTitle
+        let assignments = ownRoles.contains(.subject) ? assignmentLine(for: event) : nil
+        let isDragging = draggingID == event.objectID
+        let movable = canMove(event)
 
         return VStack(alignment: .leading, spacing: Spacing.hair) {
+            if isDragging {
+                Text(movedStart(event).formatted(date: .omitted, time: .shortened))
+                    .font(TypeScale.eventMeta.weight(.semibold))
+            }
             if duration >= zoom.minimumLabelDuration {
                 Text(title)
                     .font(TypeScale.eventTitle)
                     .lineLimit(2)
+                if duration >= zoom.minimumLabelDuration * 2, let assignments {
+                    Text(assignments)
+                        .font(TypeScale.eventMeta)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
                 if duration >= zoom.minimumLabelDuration * 2, let location, !location.isEmpty {
                     Text(location)
                         .font(TypeScale.eventMeta)
@@ -208,9 +257,67 @@ public struct DayTimelineView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
+        .gesture(moveGesture(for: event), including: movable ? .all : .subviews)
+        .shadow(color: .black.opacity(isDragging ? 0.25 : 0), radius: 6, y: 2)
+        .scaleEffect(isDragging ? 1.03 : 1)
+        .zIndex(isDragging ? 1 : 0)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
-        .offset(x: Spacing.xs, y: max(top, 0))
+        .offset(x: Spacing.xs, y: max(top, 0) + (isDragging ? dragDY : 0))
+    }
+
+    // MARK: - Verschieben
+
+    private func moveGesture(for event: CDEvent) -> some Gesture {
+        LongPressGesture(minimumDuration: 0.35)
+            .sequenced(before: DragGesture(minimumDistance: 0))
+            .onChanged { value in
+                if case .second(true, let drag) = value {
+                    draggingID = event.objectID
+                    dragDY = drag?.translation.height ?? 0
+                }
+            }
+            .onEnded { value in
+                if case .second(true, let drag?) = value {
+                    let minutes = snappedMinutes(for: drag.translation.height)
+                    if minutes != 0 { onMove?(event, TimeInterval(minutes * 60)) }
+                }
+                draggingID = nil
+                dragDY = 0
+            }
+    }
+
+    private func snappedMinutes(for dy: CGFloat) -> Int {
+        let minutes = Double(dy / zoom.pointsPerHour * 60)
+        return Int((minutes / Double(snapMinutes)).rounded()) * snapMinutes
+    }
+
+    private func movedStart(_ event: CDEvent) -> Date {
+        (event.startAt ?? day).addingTimeInterval(TimeInterval(snappedMinutes(for: dragDY) * 60))
+    }
+
+    // MARK: - Zuständigkeiten
+
+    private func roles(of member: CDMember, in event: CDEvent) -> [ParticipationRole] {
+        ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .filter { $0.member?.objectID == member.objectID
+                      && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined }
+            .compactMap { ParticipationRole(rawValue: $0.roleRaw ?? "") }
+            .sorted { $0.rawValue < $1.rawValue }
+    }
+
+    /// z. B. "Bringt DB · Holt ?" – wer welche Zuständigkeit übernommen hat.
+    private func assignmentLine(for event: CDEvent) -> String? {
+        let required = RequiredRoles.decode(event.requiredRolesRaw)
+        guard !required.isEmpty else { return nil }
+        let participations = (event.participations as? Set<CDEventParticipation>) ?? []
+        return required.map { role in
+            let candidates = participations.filter {
+                $0.roleRaw == role.rawValue && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined
+            }
+            let who = EventService.earliest(of: candidates)?.member?.shortName ?? "?"
+            return "\(role.label) \(who)"
+        }.joined(separator: " · ")
     }
 
     // MARK: - Hilfsrechnungen

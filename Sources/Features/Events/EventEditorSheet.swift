@@ -117,6 +117,21 @@ struct EventEditorSheet: View {
                     }
                 }
 
+                if let event, !assignments(of: event).isEmpty {
+                    Section("Übernommen") {
+                        ForEach(assignments(of: event), id: \.objectID) { participation in
+                            HStack {
+                                Text("\(ParticipationRole(rawValue: participation.roleRaw ?? "")?.label ?? ""): \(participation.member?.displayName ?? "")")
+                                Spacer()
+                                if participation.member?.objectID == author.objectID {
+                                    Button("Abgeben", role: .destructive) { giveBack(participation) }
+                                        .buttonStyle(.borderless)
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if !busyOnly {
                     Section("Details") {
                         Picker("Kategorie", selection: $tagID) {
@@ -210,6 +225,22 @@ struct EventEditorSheet: View {
         EventService.softDelete(event)
         PersistenceController.shared.save(context)
         dismiss()
+    }
+
+    /// Übernommene Zuständigkeiten (ohne "Betrifft", ohne abgegebene).
+    private func assignments(of event: CDEvent) -> [CDEventParticipation] {
+        ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .filter { $0.roleRaw != ParticipationRole.subject.rawValue
+                      && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined }
+            .sorted { ($0.roleRaw ?? "", $0.claimedAt ?? .distantPast) < ($1.roleRaw ?? "", $1.claimedAt ?? .distantPast) }
+    }
+
+    /// Eigene Übernahme zurückgeben. Nur der eigene Datensatz wird geändert,
+    /// deshalb kein Konflikt mit gleichzeitigen Übernahmen anderer (Regel 5).
+    private func giveBack(_ participation: CDEventParticipation) {
+        participation.statusRaw = ParticipationStatus.declined.rawValue
+        participation.updatedAt = Date()
+        PersistenceController.shared.save(context)
     }
 
     private func toggleSubject(_ member: CDMember) {

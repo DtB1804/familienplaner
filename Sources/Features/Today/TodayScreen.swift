@@ -118,7 +118,12 @@ public struct TodayScreen: View {
                             } else {
                                 editorTarget = .existing(event)
                             }
-                        })
+                        },
+                        onMove: { event, delta in move(event, by: delta) },
+                        canMove: { event in
+                            canEdit && EventOrigin(rawValue: event.originRaw ?? "") != .imported
+                        },
+                        onSwipeDay: { offset in shiftDay(offset) })
     }
 
     private var visibleMembers: [CDMember] {
@@ -148,6 +153,15 @@ public struct TodayScreen: View {
         withAnimation(.snappy(duration: 0.2)) {
             day = Calendar.current.date(byAdding: .day, value: offset, to: day) ?? day
         }
+    }
+
+    /// Verschieben per Ziehen: Dauer bleibt, Beginn und Ende wandern gemeinsam.
+    private func move(_ event: CDEvent, by delta: TimeInterval) {
+        guard let start = event.startAt, let end = event.endAt else { return }
+        event.startAt = start.addingTimeInterval(delta)
+        event.endAt = end.addingTimeInterval(delta)
+        event.updatedAt = Date()
+        PersistenceController.shared.save(context)
     }
 
     /// Kalender dieses Geräts abgleichen (nur, wenn Zugriff erteilt und Kalender gewählt).
