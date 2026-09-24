@@ -18,7 +18,6 @@ struct SuggestedEvent: Codable, Hashable, Identifiable {
     var resultingEventID: UUID? = nil
 }
 
-extension SuggestionStatus: Codable {}
 
 /// Foto → Text (Vision, auf dem Gerät) → Terminvorschläge.
 ///
