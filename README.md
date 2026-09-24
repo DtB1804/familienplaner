@@ -81,6 +81,17 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 4. Sync-Test über zwei echte Apple-IDs
 5. Kalenderimport über EventKit
 
+## Backlog (Stand 24.09.2026)
+
+| Thema | Stand | Notiz |
+|---|---|---|
+| Termine aus Fotos | Grundfunktion da (Build 8) | **Nicht vergessen (David):** Qualität mit echten Elternbriefen weiter testen und nachschärfen, Kamera direkt aus der App, ggf. Teilen-Erweiterung aus Fotos/Mail |
+| Ganztägige Termine | offen | Leiste über dem Zeitstrahl, auch aus iPhone-Kalendern |
+| Erinnerungen | offen | vor Terminen und bei offenen Zuständigkeiten |
+| Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |
+| Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
+| Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
+
 ## Bekannte offene Punkte
 
 - Ob ein Kinderaccount unter 13 aus einer Familienfreigabe eine CKShare-Einladung
