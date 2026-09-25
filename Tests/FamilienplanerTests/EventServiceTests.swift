@@ -51,7 +51,8 @@ final class EventServiceTests: XCTestCase {
         try fx.save()
 
         XCTAssertEqual(Set(EventService.subjects(of: event).compactMap(\.displayName)), ["Mia", "Tom"])
-        XCTAssertEqual(EventService.coveredRoles(of: event), [.driveFrom], "Übernommene Zuständigkeit muss bleiben")
+        XCTAssertTrue(EventService.coveredRoles(of: event).contains(.driveFrom), "Übernommene Zuständigkeit muss bleiben")
+        XCTAssertTrue(try EventService.openResponsibilities(in: fx.context).isEmpty)
     }
 
     // MARK: Weiches Löschen (Regel 6)

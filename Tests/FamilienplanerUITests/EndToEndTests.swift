@@ -46,6 +46,9 @@ final class EndToEndTests: XCTestCase {
 
         // Löschen (weich) über den Editor
         tap("event.Schwimmen", in: app)
+        XCTAssertTrue(app.navigationBars["Termin"].waitForExistence(timeout: 5), "Editor öffnet nicht")
+        var swipes = 0
+        while !app.buttons["editor.delete"].exists && swipes < 6 { app.swipeUp(); swipes += 1 }
         tap("editor.delete", in: app)
         // Bestätigungsdialog: der zweite "Löschen"-Knopf, nicht der im Formular.
         let confirm = app.buttons.matching(NSPredicate(format: "label == 'Löschen' AND identifier != 'editor.delete'")).firstMatch

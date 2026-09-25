@@ -9,7 +9,7 @@ final class SmokeTests: XCTestCase {
     func testLaunchSetupAndMainScreen() {
         let app = launchFreshApp()
         XCTAssertTrue(app.navigationBars["Einrichten"].waitForExistence(timeout: 15))
-        XCTAssertFalse(element("setup.create", in: app).isEnabled, "Anlegen ohne Eingaben muss gesperrt sein")
+        XCTAssertFalse(app.buttons["setup.create"].isEnabled, "Anlegen ohne Eingaben muss gesperrt sein")
 
         completeSetup(in: app)
         for id in ["toolbar.family", "toolbar.search", "toolbar.new", "mode", "nav.previous", "nav.next"] {

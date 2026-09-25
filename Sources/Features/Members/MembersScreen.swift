@@ -5,7 +5,8 @@ import CloudKit
 /// Familie verwalten: Mitglieder anlegen und den Haushalt teilen.
 struct MembersScreen: View {
 
-    let household: CDHousehold
+    /// Beobachtet, damit Schalter wie die Kinderansicht sofort den neuen Stand zeigen.
+    @ObservedObject var household: CDHousehold
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
