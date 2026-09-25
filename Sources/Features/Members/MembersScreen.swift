@@ -55,8 +55,15 @@ struct MembersScreen: View {
                         } label: {
                             Label("Meine Kalender", systemImage: "calendar")
                         }
+                        NavigationLink {
+                            ReminderSettingsScreen(isAdult: me.role == .adult) {
+                                NotificationCenter.default.post(name: .remindersNeedReschedule, object: nil)
+                            }
+                        } label: {
+                            Label("Erinnerungen", systemImage: "bell")
+                        }
                     } footer: {
-                        Text("Termine aus den Kalendern dieses iPhones in den Familienplaner übernehmen, z. B. den Dienstkalender nur als „Belegt“.")
+                        Text("Einstellungen für dieses Gerät: Termine aus den eigenen Kalendern übernehmen (z. B. den Dienstkalender nur als „Belegt“) und Erinnerungen.")
                     }
                 }
 

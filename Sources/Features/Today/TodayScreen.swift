@@ -21,6 +21,7 @@ public struct TodayScreen: View {
     @State private var day = Date()
     @State private var mode: CalendarMode = .day
     @State private var showSearch = false
+    @State private var reminderTask: Task<Void, Never>?
 
     @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
     private var weekEvents: FetchedResults<CDEvent>
@@ -162,12 +163,28 @@ public struct TodayScreen: View {
                 Text("Diesen Termin ändern Sie in der Kalender-App. Die Änderung kommt automatisch hierher.")
             }
             .task(id: day) { await reloadResponsibilities() }
+            .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)) { _ in
+                scheduleReminders()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .remindersNeedReschedule)) { _ in
+                scheduleReminders()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openDayFromReminder)) { note in
+                if let target = note.userInfo?["day"] as? Date {
+                    day = target
+                    mode = .day
+                }
+            }
             .task {
+                scheduleReminders()
                 syncCalendars()
                 DeviceRegistrationService.refresh(memberID: me?.id, in: context)
             }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active { syncCalendars() }
+                if phase == .active {
+                    syncCalendars()
+                    scheduleReminders()
+                }
             }
             .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in
                 syncCalendars()
@@ -284,6 +301,17 @@ public struct TodayScreen: View {
         event.endAt = end.addingTimeInterval(delta)
         event.updatedAt = Date()
         PersistenceController.shared.save(context)
+    }
+
+    /// Erinnerungen neu planen, gebündelt: mehrere Speichervorgänge kurz hintereinander
+    /// lösen nur eine Neuberechnung aus.
+    private func scheduleReminders() {
+        reminderTask?.cancel()
+        reminderTask = Task {
+            try? await Task.sleep(for: .seconds(1.5))
+            guard !Task.isCancelled else { return }
+            await ReminderService.reschedule(me: me, household: household, in: context)
+        }
     }
 
     /// Kalender dieses Geräts abgleichen (nur, wenn Zugriff erteilt und Kalender gewählt).

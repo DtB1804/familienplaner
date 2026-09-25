@@ -1,6 +1,7 @@
 import CloudKit
 import CoreData
 import UIKit
+import UserNotifications
 import os
 
 /// Annahme einer Einladung.
@@ -34,7 +35,30 @@ enum ShareAcceptance {
 
 /// SwiftUI bietet keinen eigenen Einstieg für CloudKit-Einladungen.
 /// Deshalb ein schlanker Scene-Delegate, der nur diese eine Aufgabe hat.
-final class AppDelegate: NSObject, UIApplicationDelegate {
+final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+
+    /// Erinnerungen auch zeigen, wenn die App gerade offen ist.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [.banner, .sound, .list]
+    }
+
+    /// Angetippte Erinnerung öffnet den passenden Tag.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        let info = response.notification.request.content.userInfo
+        guard let stamp = info[ReminderService.dayKey] as? Double else { return }
+        await MainActor.run {
+            NotificationCenter.default.post(name: .openDayFromReminder, object: nil,
+                                            userInfo: ["day": Date(timeIntervalSince1970: stamp)])
+        }
+    }
 
     func application(_ application: UIApplication,
                      configurationForConnecting connectingSceneSession: UISceneSession,

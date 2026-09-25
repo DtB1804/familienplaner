@@ -45,7 +45,7 @@ targets:
         INFOPLIST_FILE: Resources/Info.plist
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_ENTITLEMENTS: Resources/Familienplaner.entitlements
-        TARGETED_DEVICE_FAMILY: "1"    # nur iPhone im MVP
+        TARGETED_DEVICE_FAMILY: "1,2"  # iPhone und iPad (seit 25.09.2026)
         SUPPORTS_MACCATALYST: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     # Kein `info:`-Block: XcodeGen würde damit Resources/Info.plist neu erzeugen.
