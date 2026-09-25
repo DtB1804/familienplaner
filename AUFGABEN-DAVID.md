@@ -242,9 +242,10 @@ Build darf sie benutzen.
 - Jana: in App Store Connect unter "Benutzer und Zugriff" als Benutzer einladen
   (Rolle z. B. "Developer" oder "Marketing"), danach als interne Testerin eintragen.
   Interne Tests brauchen keine Beta-Prüfung durch Apple.
-- Josh: offen. Interne Tester müssen App-Store-Connect-Benutzer sein; ob das mit
-  einem Kinderaccount geht, ist ungeklärt. Alternative: externe Tester per Einladung,
-  dafür prüft Apple den Build einmal vorab (Beta App Review).
+- Josh: **als interner Tester nicht möglich** (25.09.2026: App Store Connect verlangt
+  Mindestalter 13, in der EU 16). Wege: (a) iPad mit iCloud = Josh, App Store/Medien &
+  Käufe = David (nicht verifiziert), (b) externe Testgruppe per Einladung an Joshs
+  Apple-ID, braucht einmalig TestFlight App Review.
 - Auf jedem iPhone die App "TestFlight" aus dem App Store installieren.
 
 ### Aufgabe 16a: Erster TestFlight-Test ✅ erfolgreich (23.09.2026)
