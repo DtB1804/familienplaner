@@ -15,6 +15,7 @@ struct CalendarSourcesScreen: View {
     @State private var denied = CalendarImportService.shared.accessWasDenied
     @State private var calendars: [EKCalendar] = []
     @State private var selection: [String: CalendarVisibility] = [:]
+    @State private var otherImporters: [String: [String]] = [:]
 
     private var service: CalendarImportService { .shared }
 
@@ -60,7 +61,14 @@ struct CalendarSourcesScreen: View {
             Circle()
                 .fill(Color(cgColor: calendar.cgColor))
                 .frame(width: 10, height: 10)
-            Text(calendar.title)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(calendar.title)
+                if let names = otherImporters[calendar.calendarIdentifier], !names.isEmpty {
+                    Text("Auch von \(names.joined(separator: ", ")) übernommen – gleiche Termine werden zusammengeführt")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
             Spacer()
             Picker("", selection: Binding(
                 get: { selection[calendar.calendarIdentifier] ?? .hidden },
@@ -101,6 +109,9 @@ struct CalendarSourcesScreen: View {
         calendars = service.calendars()
         selection = Dictionary(uniqueKeysWithValues: calendars.map {
             ($0.calendarIdentifier, service.visibility(of: $0, member: member, in: context))
+        })
+        otherImporters = Dictionary(uniqueKeysWithValues: calendars.map {
+            ($0.calendarIdentifier, service.otherImporters(of: $0, member: member, in: context))
         })
     }
 }

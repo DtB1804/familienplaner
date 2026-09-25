@@ -100,7 +100,13 @@ final class CalendarImportService {
         let sources = (try? context.fetch(sourcesRequest)) ?? []
 
         var mirrors = existingMirrors(memberID: memberID, in: context)
-        var created = 0, updated = 0, removed = 0
+        var created = 0, updated = 0, removed = 0, joined = 0
+        let mySourceIDs = Set(sources.compactMap(\.id))
+        // Alle übernommenen Termine des Haushalts im Fenster, nach Schlüssel. Damit
+        // erkennt der Abgleich Termine aus gemeinsamen Kalendern (z. B. iCloud-Familienkalender),
+        // die ein anderes Mitglied schon übernommen hat.
+        var byKey = importedByKey(from: windowStart, to: windowEnd, in: context)
+        var seenAll = Set<String>()
 
         for source in sources {
             guard let sourceID = source.id else { continue }
@@ -123,7 +129,11 @@ final class CalendarImportService {
             for ekEvent in store.events(matching: predicate) where !ekEvent.isAllDay {
                 guard let start = ekEvent.startDate, let end = ekEvent.endDate, end > start else { continue }
                 let key = Self.occurrenceKey(ekEvent)
+                // Derselbe Termin in zwei eigenen Kalendern (z. B. eingeladen und im
+                // gemeinsamen Kalender): nur einmal übernehmen.
+                if seenAll.contains(key) && !seen.contains(key) { continue }
                 seen.insert(key)
+                seenAll.insert(key)
                 let title = (ekEvent.title?.isEmpty == false) ? ekEvent.title! : "Termin"
 
                 if let mirror = mirrors[key],
@@ -132,12 +142,21 @@ final class CalendarImportService {
                                    location: ekEvent.location, visibility: eventVisibility) {
                         EventService.update(event, in: context,
                                             title: title, startAt: start, endAt: end,
-                                            subjects: [member], requiredRoles: [],
+                                            subjects: Array(Set(EventService.subjects(of: event)).union([member])),
+                                            requiredRoles: [],
                                             kind: .appointment, visibility: eventVisibility,
                                             tag: event.tag, locationName: ekEvent.location, notes: nil)
                         updated += 1
                     }
                     mirror.lastSyncedAt = Date()
+                } else if let foreign = byKey[key]?.first(where: {
+                    !mySourceIDs.contains($0.sourceCalendarSourceID ?? UUID()) && $0.deletedAt == nil
+                }) {
+                    // Schon von einem anderen Mitglied übernommen: anhängen statt doppeln.
+                    ensureSubject(member, in: foreign, context: context)
+                    upsertMirror(&mirrors, key: key, eventID: foreign.id, memberID: memberID,
+                                 state: .joined, in: context)
+                    joined += 1
                 } else {
                     let event = EventService.makeEvent(in: context, household: household,
                                                        title: title, startAt: start, endAt: end,
@@ -147,20 +166,9 @@ final class CalendarImportService {
                     event.originRaw = EventOrigin.imported.rawValue
                     event.sourceCalendarSourceID = sourceID
                     event.externalIdentifier = key
-
-                    let mirror = mirrors[key] ?? CDLocalEventMirror(context: context)
-                    if mirror.id == nil {
-                        mirror.id = UUID()
-                        mirror.createdAt = Date()
-                    }
-                    mirror.memberID = memberID
-                    mirror.ekEventIdentifier = key
-                    mirror.eventID = event.id
-                    mirror.directionRaw = MirrorDirection.import.rawValue
-                    mirror.stateRaw = MirrorState.synced.rawValue
-                    mirror.lastSyncedAt = Date()
-                    mirror.updatedAt = Date()
-                    mirrors[key] = mirror
+                    byKey[key, default: []].append(event)
+                    upsertMirror(&mirrors, key: key, eventID: event.id, memberID: memberID,
+                                 state: .synced, in: context)
                     created += 1
                 }
             }
@@ -173,17 +181,113 @@ final class CalendarImportService {
             source.lastSyncedAt = Date()
         }
 
+        // Angehängte Termine, die im eigenen Kalender nicht mehr vorkommen: nur die eigene
+        // Beteiligung lösen, der Termin gehört dem anderen Mitglied.
+        for (key, mirror) in mirrors where mirror.stateRaw == MirrorState.joined.rawValue && !seenAll.contains(key) {
+            if let event = byKey[key]?.first(where: { $0.id == mirror.eventID }) {
+                removeSubject(member, from: event, context: context)
+            }
+            context.delete(mirror)
+            mirrors[key] = nil
+        }
+
+        // Haben zwei Geräte denselben Termin gleichzeitig übernommen, bevor der Abgleich
+        // über iCloud lief, gibt es ihn doppelt. Alle Geräte entscheiden gleich: Es bleibt
+        // der mit der kleinsten UUID, die anderen hängen sich an ihn an.
+        for key in seenAll {
+            let candidates = (byKey[key] ?? []).filter { $0.deletedAt == nil }
+            guard candidates.count > 1,
+                  let winner = candidates.min(by: { ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "") })
+            else { continue }
+            for loser in candidates where loser !== winner
+                && mySourceIDs.contains(loser.sourceCalendarSourceID ?? UUID()) {
+                EventService.softDelete(loser)
+                ensureSubject(member, in: winner, context: context)
+                upsertMirror(&mirrors, key: key, eventID: winner.id, memberID: memberID,
+                             state: .joined, in: context)
+                removed += 1
+            }
+        }
+
         if context.hasChanges {
             PersistenceController.shared.save(context)
         }
-        logger.info("Kalenderabgleich: \(created) neu, \(updated) geändert, \(removed) entfernt")
+        logger.info("Kalenderabgleich: \(created) neu, \(updated) geändert, \(joined) angehängt, \(removed) entfernt")
     }
 
     // MARK: - Hilfsfunktionen
 
+    /// Schlüssel eines Vorkommens. Basis ist die Kennung des Kalenderservers
+    /// (`calendarItemExternalIdentifier`), die laut Apple auf allen Geräten gleich ist;
+    /// nur so lassen sich Termine aus gemeinsamen Kalendern verschiedener Mitglieder
+    /// zusammenführen. Bei Wiederholungen ist sie für alle Vorkommen gleich, deshalb
+    /// kommt das Datum des Vorkommens dazu. Ausnahme laut Apple: Exchange-Kalender.
     static func occurrenceKey(_ event: EKEvent) -> String {
         let occurrence = event.occurrenceDate ?? event.startDate ?? Date.distantPast
-        return "\(event.calendarItemIdentifier)|\(Int(occurrence.timeIntervalSince1970))"
+        let base = event.calendarItemExternalIdentifier ?? event.calendarItemIdentifier
+        return "\(base)|\(Int(occurrence.timeIntervalSince1970))"
+    }
+
+    /// Wer aus dem Haushalt übernimmt Termine dieses Kalenders bereits?
+    /// Für den Hinweis "wird zusammengeführt" in "Meine Kalender".
+    func otherImporters(of calendar: EKCalendar, member: CDMember,
+                        in context: NSManagedObjectContext) -> [String] {
+        guard hasFullAccess, let memberID = member.id else { return [] }
+        let now = Date()
+        let end = Calendar.current.date(byAdding: .day, value: daysAhead, to: now) ?? now
+        let predicate = store.predicateForEvents(withStart: now, end: end, calendars: [calendar])
+        let keys = store.events(matching: predicate).prefix(200).map(Self.occurrenceKey)
+        guard !keys.isEmpty else { return [] }
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "externalIdentifier IN %@ AND deletedAt == nil AND createdByMemberID != %@",
+            Array(keys), memberID as CVarArg)
+        let ids = Set(((try? context.fetch(request)) ?? []).compactMap(\.createdByMemberID))
+        guard !ids.isEmpty else { return [] }
+        let members = NSFetchRequest<CDMember>(entityName: "CDMember")
+        members.predicate = NSPredicate(format: "id IN %@", Array(ids))
+        return ((try? context.fetch(members)) ?? []).compactMap(\.displayName).sorted()
+    }
+
+    private func importedByKey(from start: Date, to end: Date,
+                               in context: NSManagedObjectContext) -> [String: [CDEvent]] {
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "originRaw == %@ AND externalIdentifier != nil AND deletedAt == nil AND endAt > %@ AND startAt < %@",
+            EventOrigin.imported.rawValue, start as NSDate, end as NSDate)
+        let events = (try? context.fetch(request)) ?? []
+        return Dictionary(grouping: events) { $0.externalIdentifier ?? "" }
+    }
+
+    private func ensureSubject(_ member: CDMember, in event: CDEvent, context: NSManagedObjectContext) {
+        guard !EventService.subjects(of: event).contains(where: { $0.objectID == member.objectID }) else { return }
+        EventService.addParticipation(in: context, event: event, member: member, role: .subject)
+    }
+
+    private func removeSubject(_ member: CDMember, from event: CDEvent, context: NSManagedObjectContext) {
+        let participations = (event.participations as? Set<CDEventParticipation>) ?? []
+        for participation in participations
+        where participation.member?.objectID == member.objectID
+            && participation.roleRaw == ParticipationRole.subject.rawValue {
+            context.delete(participation)
+        }
+    }
+
+    private func upsertMirror(_ mirrors: inout [String: CDLocalEventMirror], key: String, eventID: UUID?,
+                              memberID: UUID, state: MirrorState, in context: NSManagedObjectContext) {
+        let mirror = mirrors[key] ?? CDLocalEventMirror(context: context)
+        if mirror.id == nil {
+            mirror.id = UUID()
+            mirror.createdAt = Date()
+        }
+        mirror.memberID = memberID
+        mirror.ekEventIdentifier = key
+        mirror.eventID = eventID
+        mirror.directionRaw = MirrorDirection.import.rawValue
+        mirror.stateRaw = state.rawValue
+        mirror.lastSyncedAt = Date()
+        mirror.updatedAt = Date()
+        mirrors[key] = mirror
     }
 
     private func source(for calendarIdentifier: String, member: CDMember,

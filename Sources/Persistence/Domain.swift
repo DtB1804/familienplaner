@@ -100,7 +100,9 @@ public enum CalendarSyncDirection: String, CaseIterable, Codable {
 }
 
 public enum MirrorDirection: String, Codable { case `import`, export }
-public enum MirrorState: String, Codable { case pending, synced, failed }
+/// `joined`: Der Termin wurde schon von einem anderen Familienmitglied aus einem
+/// gemeinsamen Kalender übernommen; dieses Gerät hängt sich nur als Betroffener an.
+public enum MirrorState: String, Codable { case pending, synced, failed, joined }
 
 public enum SuggestionSourceKind: String, CaseIterable, Codable {
     case screenshot, photo, pdf, sharedText, dictation
