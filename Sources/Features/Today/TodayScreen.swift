@@ -17,6 +17,8 @@ public struct TodayScreen: View {
     private var dayEvents: FetchedResults<CDEvent>
 
     @AppStorage(CurrentMember.storageKey) private var currentMemberID: String?
+    /// Vorschau "So sieht ein Kind die App" (nur Anzeige, gerätelokal).
+    @AppStorage(CurrentMember.previewKey) private var previewMemberID: String?
 
     @State private var day = Date()
     @State private var mode: CalendarMode = .day
@@ -45,6 +47,19 @@ public struct TodayScreen: View {
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                if let preview = previewMember {
+                    HStack {
+                        Label("Vorschau: So sieht \(preview.displayName ?? "das Kind") die App",
+                              systemImage: "eye")
+                            .font(.footnote.weight(.semibold))
+                        Spacer()
+                        Button("Beenden") { previewMemberID = nil }
+                            .font(.footnote.weight(.semibold))
+                    }
+                    .padding(.horizontal, Spacing.l)
+                    .padding(.vertical, Spacing.s)
+                    .background(Palette.color("person5").opacity(0.25))
+                }
                 MemberFilterBar(members: Array(members), selection: $selectedMemberIDs)
                 if !openResponsibilities.isEmpty {
                     Button { showResponsibilities = true } label: {
@@ -125,7 +140,7 @@ public struct TodayScreen: View {
                 weekEvents.nsPredicate = EventService.eventsRequest(from: start, to: end).predicate
             }
             .sheet(isPresented: $showSearch) {
-                SearchScreen(viewer: me, household: household) { target in
+                SearchScreen(viewer: viewer, household: household) { target in
                     day = target
                     mode = .day
                 }
@@ -201,7 +216,7 @@ public struct TodayScreen: View {
                         members: visibleMembers,
                         events: Array(dayEvents),
                         zoom: $zoom,
-                        viewer: me,
+                        viewer: viewer,
                         household: household,
                         onSelect: { event in
                             guard canEdit else { return }
@@ -222,7 +237,7 @@ public struct TodayScreen: View {
         WeekTimelineView(weekStart: Self.weekStart(of: day),
                          events: weekEvents.filter(isVisibleInFilter),
                          zoom: $zoom,
-                         viewer: me,
+                         viewer: viewer,
                          household: household,
                          onSelect: { event in
                              if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
@@ -270,7 +285,17 @@ public struct TodayScreen: View {
     }
 
     /// Termine anlegen und ändern dürfen nur Erwachsene.
-    private var canEdit: Bool { me?.role == .adult }
+    private var canEdit: Bool { previewMember == nil && me?.role == .adult }
+
+    /// Kind, dessen Sicht ein Erwachsener gerade als Vorschau ansieht.
+    private var previewMember: CDMember? {
+        guard let raw = previewMemberID, let id = UUID(uuidString: raw), me?.role == .adult,
+              let household else { return nil }
+        return ((household.members as? Set<CDMember>) ?? []).first { $0.id == id && $0.isActive }
+    }
+
+    /// Aus wessen Sicht Titel und Orte gezeigt werden.
+    private var viewer: CDMember? { previewMember ?? me }
 
     private var title: String {
         if mode == .week {

@@ -21,6 +21,8 @@ struct MembersScreen: View {
 
     private var isOwner: Bool { HouseholdService.isOwner(of: household) }
 
+    private var children: [CDMember] { members.filter { $0.role == .child } }
+
     private var canManage: Bool {
         CurrentMember.resolve(in: context, household: household)?.role == .adult
     }
@@ -82,6 +84,24 @@ struct MembersScreen: View {
                         Text("Aus: Kinder sehen Termine der Erwachsenen nur als „Belegt“. Termine, die ein Kind betreffen, bleiben lesbar. Das ist eine Anzeige-Einstellung: Die Daten liegen auch auf den Kinder-iPhones.")
                     }
                 }
+
+                if canManage, !children.isEmpty {
+                    Section {
+                        ForEach(children, id: \.objectID) { child in
+                            Button {
+                                UserDefaults.standard.set(child.id?.uuidString, forKey: CurrentMember.previewKey)
+                                dismiss()
+                            } label: {
+                                Label("Als \(child.displayName ?? "Kind") ansehen", systemImage: "eye")
+                            }
+                        }
+                    } header: {
+                        Text("Vorschau")
+                    } footer: {
+                        Text("Zeigt diese App so, wie das Kind sie sieht, inklusive Einstellung zur Kinderansicht. Oben erscheint ein Hinweis mit „Beenden“. Bearbeiten ist in der Vorschau gesperrt.")
+                    }
+                }
+
 
                 if isOwner && canManage {
                     inviteSection

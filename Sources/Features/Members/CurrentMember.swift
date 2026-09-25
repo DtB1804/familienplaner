@@ -9,6 +9,8 @@ import Foundation
 enum CurrentMember {
 
     static let storageKey = "currentMemberID"
+    /// Nur Anzeige: Erwachsene sehen die App vorübergehend aus Sicht eines Kindes.
+    static let previewKey = "previewMemberID"
 
     static var id: UUID? {
         get { UserDefaults.standard.string(forKey: storageKey).flatMap(UUID.init(uuidString:)) }
