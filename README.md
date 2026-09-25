@@ -81,13 +81,19 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 4. Sync-Test über zwei echte Apple-IDs
 5. Kalenderimport über EventKit
 
-## Backlog (Stand 24.09.2026)
+## Backlog (Stand 25.09.2026)
 
 | Thema | Stand | Notiz |
 |---|---|---|
 | Termine aus Fotos | Grundfunktion da (Build 8) | **Nicht vergessen (David):** Qualität mit echten Elternbriefen weiter testen und nachschärfen, Kamera direkt aus der App, ggf. Teilen-Erweiterung aus Fotos/Mail |
 | Ganztägige Termine | offen | Leiste über dem Zeitstrahl, auch aus iPhone-Kalendern |
-| Erinnerungen | offen | vor Terminen und bei offenen Zuständigkeiten |
+| Erinnerungen | Grundfunktion da (Build 12) | lokal je Gerät; im Hintergrund noch kein Neuplanen bei Änderungen anderer (braucht Hintergrundabgleich) |
+| iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
+| Wiederkehrende Termine | offen | Feld im Modell vorhanden, Eingabe fehlt |
+| Freiraum-Finder | offen | |
+| Hintergrundabgleich (Kalender, Erinnerungen) | offen | BGTask-Kennung eingetragen |
+| Familientermine in iPhone-Kalender zurückschreiben | offen | Option im Modell angelegt |
+| Widgets | offen | |
 | Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |
 | Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
 | Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
