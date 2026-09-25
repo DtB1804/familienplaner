@@ -99,7 +99,7 @@ struct WeekTimelineView: View {
                 dayColumn(day, width: columnWidth, height: height)
             }
         }
-        .padding(.bottom, Spacing.xxl)
+        .padding(.bottom, 110)   // Platz unter der schwebenden Werkzeugleiste
     }
 
     private func dayColumn(_ day: Date, width: CGFloat, height: CGFloat) -> some View {

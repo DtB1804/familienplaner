@@ -279,8 +279,11 @@ public struct TodayScreen: View {
             var iso = Calendar(identifier: .iso8601)
             iso.timeZone = .current
             let week = iso.component(.weekOfYear, from: start)
-            let de = Locale(identifier: "de_DE")
-            return "KW \(week) · \(start.formatted(.dateTime.day().month(.abbreviated).locale(de))) – \(end.formatted(.dateTime.day().month(.abbreviated).locale(de)))"
+            // Kurz, damit der Titel zwischen die Pfeile passt: "KW 39 · 21.–27.9."
+            let cal = Calendar.current
+            let d1 = cal.component(.day, from: start), m1 = cal.component(.month, from: start)
+            let d2 = cal.component(.day, from: end), m2 = cal.component(.month, from: end)
+            return m1 == m2 ? "KW \(week) · \(d1).–\(d2).\(m2)." : "KW \(week) · \(d1).\(m1).–\(d2).\(m2)."
         }
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "de_DE")

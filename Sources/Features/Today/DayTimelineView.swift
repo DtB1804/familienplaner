@@ -142,7 +142,7 @@ public struct DayTimelineView: View {
             }
             .frame(height: height, alignment: .top)
         }
-        .padding(.bottom, Spacing.xxl)
+        .padding(.bottom, 110)   // Platz unter der schwebenden Werkzeugleiste
     }
 
     private func hourGutter(height: CGFloat) -> some View {
