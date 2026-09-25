@@ -129,3 +129,11 @@ mit diesem Schlüssel, den ein anderes Mitglied schon übernommen hat, legt es k
 an, sondern hängt sein Mitglied als Betroffenen an (Spiegel-Status `joined`). Entstehen
 trotzdem Doppelte (zwei Geräte gleichzeitig), bleibt der Termin mit der kleinsten UUID.
 Beim Aktualisieren eigener Übernahmen bleiben angehängte Mitglieder erhalten.
+
+## 15. Die Apple Watch hat keinen eigenen Datenbestand
+
+Die Watch-App bekommt vom iPhone per WatchConnectivity einen fertigen Ausschnitt
+(`WatchSnapshot`, Ordner `Shared/`). Titel und Orte sind darin schon für das Mitglied
+reduziert (Regel 2, Kinderansicht). Aktionen der Watch ("Übernehme ich") gehen als
+Nachricht ans iPhone und werden dort über die Service-Funktionen gespeichert. Kein
+CloudKit, kein Core Data auf der Watch.
