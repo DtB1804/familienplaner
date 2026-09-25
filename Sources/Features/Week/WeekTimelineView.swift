@@ -13,6 +13,7 @@ struct WeekTimelineView: View {
     var viewer: CDMember?
     var household: CDHousehold?
     var onSelect: (CDEvent) -> Void
+    var onShowDetails: (CDEvent) -> Void = { _ in }
     var onOpenDay: (Date) -> Void
     var onSwipeWeek: (Int) -> Void
     /// Verschieben per Gedrückthalten und Ziehen: ganze Tage (seitlich) und Minuten (vertikal).
@@ -21,6 +22,7 @@ struct WeekTimelineView: View {
 
     @State private var draggingID: NSManagedObjectID?
     @State private var dragOffset: CGSize = .zero
+    @State private var lastDragEnd = Date.distantPast
     private let snapMinutes = 15
 
     private let gutterWidth: CGFloat = 36
@@ -104,6 +106,9 @@ struct WeekTimelineView: View {
 
             ForEach(days, id: \.self) { day in
                 dayColumn(day, width: columnWidth, height: height)
+                    // Die Spalte mit dem gezogenen Termin liegt oben, sonst verschwindet er
+                    // beim seitlichen Ziehen hinter den Nachbarspalten.
+                    .zIndex(eventsOn(day).contains { $0.objectID == draggingID } ? 1 : 0)
             }
         }
         .padding(.bottom, 110)   // Platz unter der schwebenden Werkzeugleiste
@@ -171,6 +176,8 @@ struct WeekTimelineView: View {
             .onTapGesture { onSelect(event) }
             .gesture(moveGesture(for: event, columnWidth: columnWidth),
                      including: canMove(event) ? .all : .subviews)
+            .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails(event) },
+                     including: canMove(event) ? .subviews : .all)
             .shadow(color: .black.opacity(isDragging ? 0.3 : 0), radius: 4, y: 2)
             .zIndex(isDragging ? 10 : 0)
             .offset(x: 1 + slotWidth * CGFloat(item.lane) + (isDragging ? dragOffset.width : 0),
@@ -195,6 +202,7 @@ struct WeekTimelineView: View {
                 }
                 draggingID = nil
                 dragOffset = .zero
+                lastDragEnd = Date()
             }
     }
 
@@ -270,7 +278,8 @@ struct WeekTimelineView: View {
 
     private var swipe: some Gesture {
         DragGesture(minimumDistance: 40).onEnded { value in
-            guard draggingID == nil else { return }
+            // Nach einem Verschieben über Tage darf die Woche nicht zusätzlich umblättern.
+            guard draggingID == nil, Date().timeIntervalSince(lastDragEnd) > 0.6 else { return }
             let dx = value.translation.width, dy = value.translation.height
             guard abs(dx) > 80, abs(dx) > abs(dy) * 2 else { return }
             onSwipeWeek(dx < 0 ? 1 : -1)

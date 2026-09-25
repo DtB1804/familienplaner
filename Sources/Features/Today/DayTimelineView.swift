@@ -15,6 +15,10 @@ public struct DayTimelineView: View {
     var viewer: CDMember? = nil
     var household: CDHousehold? = nil
     var onSelect: ((CDEvent) -> Void)? = nil
+    /// Gedrückthalten auf einem Termin, der nicht verschoben werden kann: Details zeigen.
+    var onShowDetails: ((CDEvent) -> Void)? = nil
+    /// Zeitpunkt des letzten Ziehens; kurz danach wird kein Tageswechsel per Wischen ausgelöst.
+    @State private var lastDragEnd = Date.distantPast
     /// Verschieben per Gedrückthalten und Ziehen. Liefert die Verschiebung in Sekunden.
     var onMove: ((CDEvent, TimeInterval) -> Void)? = nil
     var canMove: (CDEvent) -> Bool = { _ in false }
@@ -34,6 +38,7 @@ public struct DayTimelineView: View {
     public init(day: Date, members: [CDMember], events: [CDEvent], zoom: Binding<DayZoom>,
                 viewer: CDMember? = nil, household: CDHousehold? = nil,
                 onSelect: ((CDEvent) -> Void)? = nil,
+                onShowDetails: ((CDEvent) -> Void)? = nil,
                 onMove: ((CDEvent, TimeInterval) -> Void)? = nil,
                 canMove: @escaping (CDEvent) -> Bool = { _ in false },
                 onSwipeDay: ((Int) -> Void)? = nil) {
@@ -44,6 +49,7 @@ public struct DayTimelineView: View {
         self.viewer = viewer
         self.household = household
         self.onSelect = onSelect
+        self.onShowDetails = onShowDetails
         self.onMove = onMove
         self.canMove = canMove
         self.onSwipeDay = onSwipeDay
@@ -83,7 +89,7 @@ public struct DayTimelineView: View {
     private var daySwipe: some Gesture {
         DragGesture(minimumDistance: 40)
             .onEnded { value in
-                guard draggingID == nil else { return }
+                guard draggingID == nil, Date().timeIntervalSince(lastDragEnd) > 0.6 else { return }
                 let dx = value.translation.width, dy = value.translation.height
                 guard abs(dx) > 80, abs(dx) > abs(dy) * 2 else { return }
                 onSwipeDay?(dx < 0 ? 1 : -1)
@@ -271,6 +277,9 @@ public struct DayTimelineView: View {
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
         .gesture(moveGesture(for: event), including: movable ? .all : .subviews)
+        // Nicht verschiebbare Termine (z. B. aus dem Kalender): Halten zeigt die Details.
+        .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails?(event) },
+                 including: movable ? .subviews : .all)
         .shadow(color: .black.opacity(isDragging ? 0.25 : 0), radius: 6, y: 2)
         .scaleEffect(isDragging ? 1.03 : 1)
         .zIndex(isDragging ? 1 : 0)
@@ -297,6 +306,7 @@ public struct DayTimelineView: View {
                 }
                 draggingID = nil
                 dragDY = 0
+                lastDragEnd = Date()
             }
     }
 

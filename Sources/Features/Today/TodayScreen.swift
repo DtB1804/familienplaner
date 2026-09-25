@@ -33,7 +33,7 @@ public struct TodayScreen: View {
     @State private var showMembers = false
     @State private var editorTarget: EditorTarget?
     @State private var showResponsibilities = false
-    @State private var importedNotice = false
+    @State private var detailEvent: CDEvent?
     @State private var showPhotoPicker = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoImport: PhotoImport?
@@ -188,11 +188,8 @@ public struct TodayScreen: View {
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
             }
-            .alert("Aus Ihrem Kalender übernommen",
-                   isPresented: $importedNotice) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text("Diesen Termin ändern Sie in der Kalender-App. Die Änderung kommt automatisch hierher.")
+            .sheet(item: $detailEvent) { event in
+                EventDetailSheet(event: event, viewer: viewer, household: household)
             }
             .task(id: day) { await reloadResponsibilities() }
             .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)) { _ in
@@ -235,14 +232,8 @@ public struct TodayScreen: View {
                         zoom: $zoom,
                         viewer: viewer,
                         household: household,
-                        onSelect: { event in
-                            guard canEdit else { return }
-                            if EventOrigin(rawValue: event.originRaw ?? "") == .imported {
-                                importedNotice = true
-                            } else {
-                                editorTarget = .existing(event)
-                            }
-                        },
+                        onSelect: { event in open(event) },
+                        onShowDetails: { event in detailEvent = event },
                         onMove: { event, delta in move(event, by: delta) },
                         canMove: { event in
                             canEdit && EventOrigin(rawValue: event.originRaw ?? "") != .imported
@@ -256,14 +247,8 @@ public struct TodayScreen: View {
                          zoom: $zoom,
                          viewer: viewer,
                          household: household,
-                         onSelect: { event in
-                             if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
-                                 editorTarget = .existing(event)
-                             } else if let start = event.startAt {
-                                 day = start
-                                 mode = .day
-                             }
-                         },
+                         onSelect: { event in open(event) },
+                         onShowDetails: { event in detailEvent = event },
                          onOpenDay: { target in
                              day = target
                              mode = .day
@@ -346,6 +331,16 @@ public struct TodayScreen: View {
     /// Verschieben per Ziehen: Dauer bleibt, Beginn und Ende wandern gemeinsam.
     private func move(_ event: CDEvent, by delta: TimeInterval) {
         move(event, days: 0, minutes: Int(delta / 60))
+    }
+
+    /// Antippen: Eigene Termine bearbeiten Erwachsene im Editor. Übernommene Kalendertermine
+    /// und alles für Kinder bzw. in der Vorschau zeigt die Detailansicht mit genauen Zeiten.
+    private func open(_ event: CDEvent) {
+        if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
+            editorTarget = .existing(event)
+        } else {
+            detailEvent = event
+        }
     }
 
     /// Verschieben um ganze Tage (kalendarisch, sommerzeitsicher) und Minuten.
