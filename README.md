@@ -91,9 +91,10 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
 | Wiederkehrende Termine | offen | Feld im Modell vorhanden, Eingabe fehlt |
 | Freiraum-Finder | offen | |
-| Hintergrundabgleich (Kalender, Erinnerungen) | offen | BGTask-Kennung eingetragen |
+| Hintergrundabgleich (Kalender, Erinnerungen) | offen, **als Nächstes** (Voraussetzung für Watch) | BGTask-Kennung eingetragen |
 | Familientermine in iPhone-Kalender zurückschreiben | offen | Option im Modell angelegt |
 | Widgets | offen | |
+| Apple-Watch-App | offen, nach Hintergrundabgleich | Heute-Übersicht, Zifferblatt-Element (nächster Termin / offene Zuständigkeit), „Übernehme ich“; Daten per WatchConnectivity vom iPhone. Erinnerungen kommen schon heute auf die Watch (iPhone gesperrt). |
 | Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |
 | Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
 | Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
