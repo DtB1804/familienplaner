@@ -121,3 +121,11 @@ Felder in Development an, (2) David übernimmt sie im CloudKit-Dashboard nach
 Production, (3) erst dann ein TestFlight-Build. Sonst lehnt Production die Datensätze
 mit den neuen Feldern ab.
 
+## 14. Kalenderübernahme: ein Termin, auch bei gemeinsamen Kalendern
+
+Übernommene Termine tragen als `externalIdentifier` die Serverkennung des Kalenders
+(`calendarItemExternalIdentifier`) plus Datum des Vorkommens. Findet ein Gerät einen Termin
+mit diesem Schlüssel, den ein anderes Mitglied schon übernommen hat, legt es keinen zweiten
+an, sondern hängt sein Mitglied als Betroffenen an (Spiegel-Status `joined`). Entstehen
+trotzdem Doppelte (zwei Geräte gleichzeitig), bleibt der Termin mit der kleinsten UUID.
+Beim Aktualisieren eigener Übernahmen bleiben angehängte Mitglieder erhalten.
