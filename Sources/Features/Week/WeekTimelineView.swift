@@ -15,6 +15,13 @@ struct WeekTimelineView: View {
     var onSelect: (CDEvent) -> Void
     var onOpenDay: (Date) -> Void
     var onSwipeWeek: (Int) -> Void
+    /// Verschieben per Gedrückthalten und Ziehen: ganze Tage (seitlich) und Minuten (vertikal).
+    var onMove: (CDEvent, Int, Int) -> Void = { _, _, _ in }
+    var canMove: (CDEvent) -> Bool = { _ in false }
+
+    @State private var draggingID: NSManagedObjectID?
+    @State private var dragOffset: CGSize = .zero
+    private let snapMinutes = 15
 
     private let gutterWidth: CGFloat = 36
     private let startHour = 6
@@ -135,19 +142,75 @@ struct WeekTimelineView: View {
         let token = EventService.subjects(of: event).first?.colorToken ?? "person1"
         let tint = busy ? Palette.busy : Palette.color(token)
 
-        return Text(EventPresentation.title(of: event, for: viewer, in: household))
-            .font(.system(size: 9, weight: .medium))
-            .lineLimit(3)
+        let isDragging = draggingID == event.objectID
+        let hasOpen = !RequiredRoles.decode(event.requiredRolesRaw)
+            .filter { !EventService.coveredRoles(of: event).contains($0) }.isEmpty
+
+        return VStack(alignment: .leading, spacing: 1) {
+            if isDragging {
+                Text(movedLabel(event, columnWidth: columnWidth))
+                    .font(.system(size: 9, weight: .bold))
+            }
+            Text(EventPresentation.title(of: event, for: viewer, in: household))
+                .font(.system(size: 9, weight: .medium))
+                .lineLimit(3)
+        }
             .padding(2)
             .frame(width: max(slotWidth - 1, 4), height: max(bottom - top, 10), alignment: .topLeading)
-            .background(tint.opacity(0.22), in: RoundedRectangle(cornerRadius: 3))
+            .background(tint.opacity(isDragging ? 0.45 : 0.22), in: RoundedRectangle(cornerRadius: 3))
             .overlay(alignment: .leading) {
                 Rectangle().fill(tint).frame(width: 2)
+            }
+            .overlay(alignment: .topTrailing) {
+                if hasOpen {
+                    Circle().fill(Palette.color("person5")).frame(width: 7, height: 7).padding(2)
+                }
             }
             .clipped()
             .contentShape(Rectangle())
             .onTapGesture { onSelect(event) }
-            .offset(x: 1 + slotWidth * CGFloat(item.lane), y: max(top, 0))
+            .gesture(moveGesture(for: event, columnWidth: columnWidth),
+                     including: canMove(event) ? .all : .subviews)
+            .shadow(color: .black.opacity(isDragging ? 0.3 : 0), radius: 4, y: 2)
+            .zIndex(isDragging ? 10 : 0)
+            .offset(x: 1 + slotWidth * CGFloat(item.lane) + (isDragging ? dragOffset.width : 0),
+                    y: max(top, 0) + (isDragging ? dragOffset.height : 0))
+    }
+
+    // MARK: - Verschieben über Tage
+
+    private func moveGesture(for event: CDEvent, columnWidth: CGFloat) -> some Gesture {
+        LongPressGesture(minimumDuration: 0.35)
+            .sequenced(before: DragGesture(minimumDistance: 0))
+            .onChanged { value in
+                if case .second(true, let drag) = value {
+                    draggingID = event.objectID
+                    dragOffset = drag?.translation ?? .zero
+                }
+            }
+            .onEnded { value in
+                if case .second(true, let drag?) = value {
+                    let (days, minutes) = snapped(drag.translation, columnWidth: columnWidth)
+                    if days != 0 || minutes != 0 { onMove(event, days, minutes) }
+                }
+                draggingID = nil
+                dragOffset = .zero
+            }
+    }
+
+    private func snapped(_ translation: CGSize, columnWidth: CGFloat) -> (Int, Int) {
+        let days = Int((translation.width / max(columnWidth, 1)).rounded())
+        let minutes = Double(translation.height / zoom.pointsPerHour * 60)
+        return (days, Int((minutes / Double(snapMinutes)).rounded()) * snapMinutes)
+    }
+
+    private func movedLabel(_ event: CDEvent, columnWidth: CGFloat) -> String {
+        let (days, minutes) = snapped(dragOffset, columnWidth: columnWidth)
+        let start = event.startAt ?? Date()
+        let shifted = (Calendar.current.date(byAdding: .day, value: days, to: start) ?? start)
+            .addingTimeInterval(TimeInterval(minutes * 60))
+        return shifted.formatted(.dateTime.weekday(.abbreviated).hour().minute()
+                                   .locale(Locale(identifier: "de_DE")))
     }
 
     // MARK: - Überschneidungen
@@ -207,6 +270,7 @@ struct WeekTimelineView: View {
 
     private var swipe: some Gesture {
         DragGesture(minimumDistance: 40).onEnded { value in
+            guard draggingID == nil else { return }
             let dx = value.translation.width, dy = value.translation.height
             guard abs(dx) > 80, abs(dx) > abs(dy) * 2 else { return }
             onSwipeWeek(dx < 0 ? 1 : -1)

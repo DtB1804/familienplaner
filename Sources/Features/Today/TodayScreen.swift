@@ -67,11 +67,28 @@ public struct TodayScreen: View {
                     }
                     .buttonStyle(.plain)
                 }
-                Picker("Ansicht", selection: $mode) {
-                    Text("Tag").tag(CalendarMode.day)
-                    Text("Woche").tag(CalendarMode.week)
+                HStack(spacing: Spacing.m) {
+                    Picker("Ansicht", selection: $mode) {
+                        Text("Tag").tag(CalendarMode.day)
+                        Text("Woche").tag(CalendarMode.week)
+                    }
+                    .pickerStyle(.segmented)
+                    // Zoom auch ohne Zwei-Finger-Geste erreichbar.
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
+                    } label: {
+                        Image(systemName: "minus.magnifyingglass")
+                    }
+                    .disabled(!zoom.canZoomOut)
+                    .accessibilityLabel("Verkleinern")
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedIn() }
+                    } label: {
+                        Image(systemName: "plus.magnifyingglass")
+                    }
+                    .disabled(!zoom.canZoomIn)
+                    .accessibilityLabel("Vergrößern")
                 }
-                .pickerStyle(.segmented)
                 .padding(.horizontal, Spacing.l)
                 .padding(.vertical, Spacing.s)
                 .background(Palette.surface)
@@ -251,7 +268,11 @@ public struct TodayScreen: View {
                              day = target
                              mode = .day
                          },
-                         onSwipeWeek: { offset in shiftDay(offset * 7) })
+                         onSwipeWeek: { offset in shiftDay(offset * 7) },
+                         onMove: { event, days, minutes in move(event, days: days, minutes: minutes) },
+                         canMove: { event in
+                             canEdit && EventOrigin(rawValue: event.originRaw ?? "") != .imported
+                         })
     }
 
     /// Personenfilter gilt auch in der Woche: Termine mit mindestens einer gewählten Person.
@@ -324,9 +345,18 @@ public struct TodayScreen: View {
 
     /// Verschieben per Ziehen: Dauer bleibt, Beginn und Ende wandern gemeinsam.
     private func move(_ event: CDEvent, by delta: TimeInterval) {
+        move(event, days: 0, minutes: Int(delta / 60))
+    }
+
+    /// Verschieben um ganze Tage (kalendarisch, sommerzeitsicher) und Minuten.
+    private func move(_ event: CDEvent, days: Int, minutes: Int) {
         guard let start = event.startAt, let end = event.endAt else { return }
-        event.startAt = start.addingTimeInterval(delta)
-        event.endAt = end.addingTimeInterval(delta)
+        let calendar = Calendar.current
+        let duration = end.timeIntervalSince(start)
+        let shifted = calendar.date(byAdding: .day, value: days, to: start) ?? start
+        let newStart = shifted.addingTimeInterval(TimeInterval(minutes * 60))
+        event.startAt = newStart
+        event.endAt = newStart.addingTimeInterval(duration)
         event.updatedAt = Date()
         PersistenceController.shared.save(context)
     }

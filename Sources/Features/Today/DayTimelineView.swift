@@ -216,6 +216,7 @@ public struct DayTimelineView: View {
             ? baseTitle
             : ownRoles.map(\.label).joined(separator: ", ") + " · " + baseTitle
         let assignments = ownRoles.contains(.subject) ? assignmentLine(for: event) : nil
+        let openCount = ownRoles.contains(.subject) ? openRoleCount(for: event) : 0
         let isDragging = draggingID == event.objectID
         let movable = canMove(event)
 
@@ -254,6 +255,18 @@ public struct DayTimelineView: View {
                 .fill(tint)
                 .frame(width: 3)
                 .padding(.vertical, 1)
+        }
+        .overlay(alignment: .topTrailing) {
+            // Offene Zuständigkeit auch bei kurzen Terminen sichtbar, z. B. "Holt ?".
+            if openCount > 0 {
+                Text(openLabel(for: event))
+                    .font(.system(size: 10, weight: .bold))
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 1)
+                    .background(Palette.color("person5"), in: Capsule())
+                    .foregroundStyle(.black)
+                    .padding(3)
+            }
         }
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
@@ -304,6 +317,18 @@ public struct DayTimelineView: View {
                       && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined }
             .compactMap { ParticipationRole(rawValue: $0.roleRaw ?? "") }
             .sorted { $0.rawValue < $1.rawValue }
+    }
+
+    private func openRoles(for event: CDEvent) -> [ParticipationRole] {
+        let required = RequiredRoles.decode(event.requiredRolesRaw)
+        let covered = EventService.coveredRoles(of: event)
+        return required.filter { !covered.contains($0) }
+    }
+
+    private func openRoleCount(for event: CDEvent) -> Int { openRoles(for: event).count }
+
+    private func openLabel(for event: CDEvent) -> String {
+        openRoles(for: event).map { "\($0.label) ?" }.joined(separator: " · ")
     }
 
     /// z. B. "Bringt DB · Holt ?" – wer welche Zuständigkeit übernommen hat.

@@ -85,39 +85,33 @@ public enum TypeScale {
 // Die Ansicht wird nicht zwischen Tag, Woche und Monat umgeschaltet, sondern
 // verdichtet. Jede Stufe legt fest, wie viele Punkte eine Stunde hoch ist.
 
-public enum DayZoom: CaseIterable {
-    case compact, normal, detailed
+public enum DayZoom: Int, CaseIterable {
+    case overview, compact, normal, detailed, large
 
     public var pointsPerHour: CGFloat {
         switch self {
+        case .overview: return 18
         case .compact: return 28
         case .normal: return 52
         case .detailed: return 92
+        case .large: return 140
         }
     }
 
     /// Unterhalb dieser Dauer wird ein Termin nur noch als Balken ohne Text gezeigt.
     public var minimumLabelDuration: TimeInterval {
         switch self {
+        case .overview: return 90 * 60
         case .compact: return 60 * 60
         case .normal: return 30 * 60
         case .detailed: return 15 * 60
+        case .large: return 10 * 60
         }
     }
 
-    public func zoomedIn() -> DayZoom {
-        switch self {
-        case .compact: return .normal
-        case .normal: return .detailed
-        case .detailed: return .detailed
-        }
-    }
+    public var canZoomIn: Bool { self != Self.allCases.last }
+    public var canZoomOut: Bool { self != Self.allCases.first }
 
-    public func zoomedOut() -> DayZoom {
-        switch self {
-        case .compact: return .compact
-        case .normal: return .compact
-        case .detailed: return .normal
-        }
-    }
+    public func zoomedIn() -> DayZoom { DayZoom(rawValue: rawValue + 1) ?? self }
+    public func zoomedOut() -> DayZoom { DayZoom(rawValue: rawValue - 1) ?? self }
 }
