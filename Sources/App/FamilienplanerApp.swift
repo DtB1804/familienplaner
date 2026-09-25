@@ -12,6 +12,7 @@ struct FamilienplanerApp: App {
 
     init() {
         BackgroundSync.shared.start()
+        WatchSyncService.shared.start()
     }
 
     var body: some Scene {

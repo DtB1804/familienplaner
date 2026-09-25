@@ -43,6 +43,11 @@ public enum Palette {
         })
     }
 
+    /// Dunkelmodus-Wert eines Tokens, für die Apple Watch (immer dunkel).
+    public static func darkRGB(_ token: String) -> UInt32 {
+        definitions[token]?.dark ?? 0x9AA0AE
+    }
+
     public static var surface: Color { color("surface") }
     public static var surfaceSunken: Color { color("surfaceSunken") }
     public static var hairline: Color { color("hairline") }
