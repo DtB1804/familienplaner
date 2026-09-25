@@ -48,6 +48,7 @@ aktivieren und den Container `iCloud.de.barg.familienplaner` auswählen.
 |---|---|---|---|
 | `Build` | Push auf `main` | Simulator-Build ohne Signierung | Branch `ci-log` |
 | `TestFlight` | Push auf `testflight` | Archiv, Signierung, Upload zu TestFlight | Branch `ci-log-testflight` |
+| `Tests` | Push auf `main` oder `tests` | Python-, Unit-, Smoke- und End-to-End-Tests im Simulator, Abdeckung | Branch `ci-log-tests` |
 
 Neue TestFlight-Version: `git push origin main:testflight`. Die Build-Nummer ist die
 Laufnummer des Workflows.
