@@ -47,6 +47,7 @@ struct MembersScreen: View {
                         } label: {
                             Label("Mitglied hinzufügen", systemImage: "person.badge.plus")
                         }
+                        .accessibilityIdentifier("members.add")
                     }
                 }
 
@@ -78,6 +79,7 @@ struct MembersScreen: View {
                                 household.updatedAt = Date()
                                 PersistenceController.shared.save(context)
                             }))
+                        .accessibilityIdentifier("members.kidsSeeTitles")
                     } header: {
                         Text("Kinderansicht")
                     } footer: {
@@ -94,6 +96,7 @@ struct MembersScreen: View {
                             } label: {
                                 Label("Als \(child.displayName ?? "Kind") ansehen", systemImage: "eye")
                             }
+                            .accessibilityIdentifier("members.preview.\(child.displayName ?? "")")
                         }
                     } header: {
                         Text("Vorschau")
@@ -118,6 +121,7 @@ struct MembersScreen: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Fertig") { dismiss() }
+                        .accessibilityIdentifier("members.done")
                 }
             }
             .sheet(isPresented: $showAddMember) {
@@ -271,6 +275,7 @@ struct AddMemberSheet: View {
             Form {
                 Section("Person") {
                     TextField("Vorname", text: $name)
+                        .accessibilityIdentifier("member.name")
                         .textInputAutocapitalization(.words)
                         .onChange(of: name) { _, new in
                             if shortName.isEmpty { shortName = String(new.prefix(2)) }
@@ -312,6 +317,7 @@ struct AddMemberSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Sichern") { save() }
                         .disabled(!canSave)
+                        .accessibilityIdentifier("member.save")
                 }
             }
         }

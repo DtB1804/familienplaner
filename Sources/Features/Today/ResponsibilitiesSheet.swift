@@ -30,6 +30,7 @@ struct ResponsibilitiesSheet: View {
                         Spacer()
                         if canClaim {
                             Button("Übernehme ich") { claim(item) }
+                                .accessibilityIdentifier("claim.\(item.eventTitle)")
                                 .buttonStyle(.borderedProminent)
                                 .controlSize(.small)
                         }
@@ -48,6 +49,7 @@ struct ResponsibilitiesSheet: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Fertig") { dismiss() }
+                        .accessibilityIdentifier("responsibilities.done")
                 }
             }
             .alert("Schon vergeben",

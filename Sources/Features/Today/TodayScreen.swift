@@ -54,6 +54,7 @@ public struct TodayScreen: View {
                             .font(.footnote.weight(.semibold))
                         Spacer()
                         Button("Beenden") { previewMemberID = nil }
+                            .accessibilityIdentifier("preview.end")
                             .font(.footnote.weight(.semibold))
                     }
                     .padding(.horizontal, Spacing.l)
@@ -66,6 +67,7 @@ public struct TodayScreen: View {
                         OpenResponsibilityBanner(items: openResponsibilities)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("banner.open")
                 }
                 HStack(spacing: Spacing.m) {
                     Picker("Ansicht", selection: $mode) {
@@ -73,6 +75,7 @@ public struct TodayScreen: View {
                         Text("Woche").tag(CalendarMode.week)
                     }
                     .pickerStyle(.segmented)
+                    .accessibilityIdentifier("mode")
                     // Zoom auch ohne Zwei-Finger-Geste erreichbar.
                     Button {
                         withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
@@ -104,20 +107,26 @@ public struct TodayScreen: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
+                        .accessibilityLabel("Zurück")
+                        .accessibilityIdentifier("nav.previous")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
+                        .accessibilityLabel("Weiter")
+                        .accessibilityIdentifier("nav.next")
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button { showMembers = true } label: {
                         Label("Familie", systemImage: "person.2")
                     }
+                    .accessibilityIdentifier("toolbar.family")
                 }
                 ToolbarSpacer(.flexible, placement: .bottomBar)
                 ToolbarItem(placement: .bottomBar) {
                     Button { showSearch = true } label: {
                         Label("Suche", systemImage: "magnifyingglass")
                     }
+                    .accessibilityIdentifier("toolbar.search")
                 }
                 if canEdit {
                     ToolbarSpacer(.flexible, placement: .bottomBar)
@@ -139,6 +148,7 @@ public struct TodayScreen: View {
                         } primaryAction: {
                             editorTarget = .new
                         }
+                        .accessibilityIdentifier("toolbar.new")
                     }
                 }
             }

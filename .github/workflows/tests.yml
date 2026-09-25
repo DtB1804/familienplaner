@@ -1,0 +1,89 @@
+# Automatisierte Tests: Python-Werkzeuge, Unit-Tests, Smoke- und End-to-End-Oberflächentests
+# auf dem iOS-Simulator. Ergebnis landet zusätzlich im Branch ci-log-tests (für Claude).
+name: Tests
+
+on:
+  push:
+    branches: [main, tests]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode-Version
+        run: xcodebuild -version
+
+      - name: Python-Tests (Schema-Generator)
+        run: python3 -m unittest discover -s tools/tests -v 2>&1 | tee python-tests.log
+
+      - name: XcodeGen installieren
+        run: brew install xcodegen
+
+      - name: Projekt erzeugen
+        run: xcodegen generate
+
+      - name: Simulator wählen
+        id: sim
+        run: |
+          xcrun simctl list devices available
+          UDID=$(xcrun simctl list devices available | grep -E "^\s+iPhone 1[6-9]( |$)|^\s+iPhone 1[6-9] \(" | head -1 | grep -oE "[0-9A-F-]{36}")
+          if [ -z "$UDID" ]; then UDID=$(xcrun simctl list devices available | grep -E "^\s+iPhone" | head -1 | grep -oE "[0-9A-F-]{36}"); fi
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices available | grep "$UDID" | tee simulator.txt
+
+      - name: Unit-, Smoke- und End-to-End-Tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Familienplaner.xcodeproj \
+            -scheme Familienplaner \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath TestResults.xcresult \
+            -parallel-testing-enabled NO \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee test.log
+
+      - name: Auswertung
+        if: always()
+        run: |
+          mkdir -p report
+          cp python-tests.log test.log simulator.txt report/ 2>/dev/null || true
+          grep -E "error:|warning:" test.log | sort -u > report/errors.txt || true
+          grep -E "Test Case .*(passed|failed)|Executed [0-9]+ test" test.log > report/cases.txt || true
+          if [ -d TestResults.xcresult ]; then
+            xcrun xcresulttool get test-results summary --path TestResults.xcresult > report/summary.json || true
+            xcrun xcresulttool get test-results tests --path TestResults.xcresult > report/tests.json || true
+            xcrun xccov view --report --only-targets TestResults.xcresult > report/coverage.txt || true
+            xcrun xccov view --report --files-for-target Familienplaner.app TestResults.xcresult > report/coverage-files.txt || true
+            xcrun xcresulttool export attachments --path TestResults.xcresult --output-path report/attachments || true
+            # Nur Bildschirmfotos behalten, Größe begrenzen
+            find report/attachments -type f -size +3M -delete 2>/dev/null || true
+          fi
+
+      - name: Ergebnis hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: |
+            report
+            TestResults.xcresult
+
+      - name: Ergebnis in Branch ci-log-tests ablegen
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog && cp -R report/. /tmp/cilog/ 2>/dev/null || true
+          echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID}" > /tmp/cilog/STATUS
+          cd /tmp/cilog
+          git init -q -b ci-log-tests
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "Test-Log ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-log-tests

@@ -16,7 +16,8 @@ import os
 /// und nicht über Relationships. Das ist Absicht, kein Versäumnis.
 public final class PersistenceController {
 
-    public static let shared = PersistenceController()
+    /// In Oberflächentests nur im Arbeitsspeicher, ohne iCloud (siehe TestMode).
+    public static let shared = PersistenceController(inMemory: TestMode.isActive)
 
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Familienplaner",
                                        category: "Persistence")
@@ -27,6 +28,16 @@ public final class PersistenceController {
 
     public let container: NSPersistentCloudKitContainer
 
+    /// Das Modell wird genau einmal geladen. Mehrere Container im selben Prozess
+    /// (App plus Tests) teilen es, sonst meldet Core Data mehrdeutige Entitätsklassen.
+    private static let model: NSManagedObjectModel = {
+        if let url = Bundle.main.url(forResource: "Familienplaner", withExtension: "momd"),
+           let model = NSManagedObjectModel(contentsOf: url) {
+            return model
+        }
+        return NSManagedObjectModel.mergedModel(from: [Bundle.main]) ?? NSManagedObjectModel()
+    }()
+
     /// Nur für Previews und Tests: alles im Arbeitsspeicher, kein CloudKit.
     public static var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
@@ -35,7 +46,7 @@ public final class PersistenceController {
     }()
 
     public init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "Familienplaner")
+        container = NSPersistentCloudKitContainer(name: "Familienplaner", managedObjectModel: Self.model)
 
         let baseURL = inMemory
             ? FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)

@@ -45,6 +45,7 @@ struct SearchScreen: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Fertig") { dismiss() }
+                        .accessibilityIdentifier("search.done")
                 }
             }
         }
@@ -79,6 +80,7 @@ struct SearchScreen: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("search.result.\(EventPresentation.title(of: event, for: viewer, in: household))")
     }
 
     private func subtitle(for event: CDEvent) -> String {

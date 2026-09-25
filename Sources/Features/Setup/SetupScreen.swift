@@ -19,10 +19,12 @@ struct SetupScreen: View {
             Form {
                 Section("Haushalt") {
                     TextField("Name, z. B. Familie Muster", text: $householdName)
+                        .accessibilityIdentifier("setup.household")
                         .textInputAutocapitalization(.words)
                 }
                 Section("Sie selbst") {
                     TextField("Vorname", text: $ownerName)
+                        .accessibilityIdentifier("setup.name")
                         .textInputAutocapitalization(.words)
                         .onChange(of: ownerName) { _, new in
                             if ownerShortName.isEmpty { ownerShortName = String(new.prefix(2)) }
@@ -49,6 +51,7 @@ struct SetupScreen: View {
                     Button("Anlegen") {
                         onCreate(householdName.trimmed, ownerName.trimmed, ownerShortName.trimmed)
                     }
+                    .accessibilityIdentifier("setup.create")
                     .disabled(!canContinue)
                 }
             }

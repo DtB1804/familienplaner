@@ -11,6 +11,7 @@ struct FamilienplanerApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
+        TestMode.resetLocalState()
         BackgroundSync.shared.start()
         WatchSyncService.shared.start()
     }

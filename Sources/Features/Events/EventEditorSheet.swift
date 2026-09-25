@@ -60,6 +60,7 @@ struct EventEditorSheet: View {
                         LabeledContent(kind == .statusBlock ? "Bezeichnung" : "Titel") {
                             TextField(kind == .statusBlock ? "z. B. Frühdienst" : "z. B. Schwimmen",
                                       text: $title)
+                                .accessibilityIdentifier("editor.title")
                                 .multilineTextAlignment(.trailing)
                         }
                     }
@@ -97,6 +98,7 @@ struct EventEditorSheet: View {
                             .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("editor.subject.\(member.displayName ?? "")")
                     }
                 }
 
@@ -116,6 +118,7 @@ struct EventEditorSheet: View {
                                 set: { on in
                                     if on { requiredRoles.insert(role) } else { requiredRoles.remove(role) }
                                 }))
+                            .accessibilityIdentifier("editor.role.\(role.rawValue)")
                         }
                     } header: {
                         Text("Zuständigkeiten")
@@ -162,6 +165,7 @@ struct EventEditorSheet: View {
                 if !isNew {
                     Section {
                         Button("Löschen", role: .destructive) { confirmDelete = true }
+                            .accessibilityIdentifier("editor.delete")
                     }
                 }
             }
@@ -173,6 +177,7 @@ struct EventEditorSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Sichern") { save() }.disabled(!canSave)
+                        .accessibilityIdentifier("editor.save")
                 }
             }
             .confirmationDialog("Eintrag löschen?", isPresented: $confirmDelete, titleVisibility: .visible) {
@@ -201,7 +206,9 @@ struct EventEditorSheet: View {
             locationName = event.locationName ?? ""
             notes = event.notes ?? ""
         } else {
-            startAt = Self.nextFullHour(on: initialDay)
+            startAt = TestMode.isActive
+                ? (Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: initialDay) ?? initialDay)
+                : Self.nextFullHour(on: initialDay)
             endAt = startAt.addingTimeInterval(EventService.defaultDuration)
             subjectIDs = [author.objectID]
         }

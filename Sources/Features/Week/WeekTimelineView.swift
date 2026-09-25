@@ -174,6 +174,9 @@ struct WeekTimelineView: View {
             .clipped()
             .contentShape(Rectangle())
             .onTapGesture { onSelect(event) }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isButton)
+            .accessibilityIdentifier("week.event.\(EventPresentation.title(of: event, for: viewer, in: household))")
             .gesture(moveGesture(for: event, columnWidth: columnWidth),
                      including: canMove(event) ? .all : .subviews)
             .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails(event) },

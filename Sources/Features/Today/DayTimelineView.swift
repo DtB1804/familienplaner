@@ -122,7 +122,7 @@ public struct DayTimelineView: View {
     /// Heute: eine Stunde vor jetzt. Andere Tage: 7 Uhr.
     private func scrollToStart(_ proxy: ScrollViewProxy) {
         var hour = 7
-        if Calendar.current.isDateInToday(day) {
+        if Calendar.current.isDateInToday(day), !TestMode.isActive {
             hour = Calendar.current.component(.hour, from: Date()) - 1
         }
         hour = min(max(hour, startHour), endHour - 1)
@@ -285,6 +285,8 @@ public struct DayTimelineView: View {
         .zIndex(isDragging ? 1 : 0)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("event.\(baseTitle)")
+        .accessibilityValue((event.startAt ?? day).formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)))
         .offset(x: Spacing.xs, y: max(top, 0) + (isDragging ? dragDY : 0))
     }
 
