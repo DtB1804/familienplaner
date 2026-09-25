@@ -87,11 +87,11 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 |---|---|---|
 | Termine aus Fotos | Grundfunktion da (Build 8) | **Nicht vergessen (David):** Qualität mit echten Elternbriefen weiter testen und nachschärfen, Kamera direkt aus der App, ggf. Teilen-Erweiterung aus Fotos/Mail |
 | Ganztägige Termine | offen | Leiste über dem Zeitstrahl, auch aus iPhone-Kalendern |
-| Erinnerungen | Grundfunktion da (Build 12) | lokal je Gerät; im Hintergrund noch kein Neuplanen bei Änderungen anderer (braucht Hintergrundabgleich) |
+| Erinnerungen | da (Build 12, Hintergrund ab Build 18) | lokal je Gerät, Neuplanung auch bei Änderungen anderer |
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
 | Wiederkehrende Termine | offen | Feld im Modell vorhanden, Eingabe fehlt |
 | Freiraum-Finder | offen | |
-| Hintergrundabgleich (Kalender, Erinnerungen) | offen, **als Nächstes** (Voraussetzung für Watch) | BGTask-Kennung eingetragen |
+| Hintergrundabgleich (Kalender, Erinnerungen) | da (Build 18) | stille CloudKit-Mitteilungen + BGAppRefresh; Zeitpunkt bestimmt iOS |
 | Familientermine in iPhone-Kalender zurückschreiben | offen | Option im Modell angelegt |
 | Widgets | offen | |
 | Apple-Watch-App | offen, nach Hintergrundabgleich | Heute-Übersicht, Zifferblatt-Element (nächster Termin / offene Zuständigkeit), „Übernehme ich“; Daten per WatchConnectivity vom iPhone. Erinnerungen kommen schon heute auf die Watch (iPhone gesperrt). |

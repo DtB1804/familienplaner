@@ -40,6 +40,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        // Stille Mitteilungen von CloudKit empfangen: So erfährt die App auch im
+        // Hintergrund von Änderungen anderer Familienmitglieder (Hintergrundabgleich).
+        application.registerForRemoteNotifications()
         return true
     }
 

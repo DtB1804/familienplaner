@@ -8,11 +8,22 @@ struct FamilienplanerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     private let persistence = PersistenceController.shared
+    @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        BackgroundSync.shared.start()
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(\.managedObjectContext, persistence.viewContext)
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .background { BackgroundSync.shared.scheduleRefresh() }
+        }
+        .backgroundTask(.appRefresh(BackgroundSync.refreshIdentifier)) {
+            await BackgroundSync.shared.runRefresh()
         }
     }
 }
