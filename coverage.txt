@@ -1,0 +1,7 @@
+ID Name                         # Source Files Coverage           
+-- ---------------------------- -------------- ------------------ 
+0  Familienplaner.app           34             65.45% (5427/8292) 
+1  FamilienplanerTests.xctest   8              97.81% (984/1006)  
+2  FamilienplanerUITests.xctest 3              87.71% (264/301)   
+3  FamilienplanerWatch.app      4              0.36% (1/276)      
+

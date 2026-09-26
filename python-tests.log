@@ -1,0 +1,12 @@
+test_baseline_keeps_non_cd_types (test_generate_ckdb.GenerateCkdbTests.test_baseline_keeps_non_cd_types) ... ok
+test_deployed_schema_contains_every_model_field (test_generate_ckdb.GenerateCkdbTests.test_deployed_schema_contains_every_model_field)
+Regel 13: Jedes Feld des aktuellen Modells muss im Development-Schema stehen. ... ok
+test_new_field_of_version_2_present (test_generate_ckdb.GenerateCkdbTests.test_new_field_of_version_2_present) ... ok
+test_only_cloud_entities (test_generate_ckdb.GenerateCkdbTests.test_only_cloud_entities) ... ok
+test_resolves_current_model_version (test_generate_ckdb.GenerateCkdbTests.test_resolves_current_model_version) ... ok
+test_type_mapping (test_generate_ckdb.GenerateCkdbTests.test_type_mapping) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.018s
+
+OK

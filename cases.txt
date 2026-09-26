@@ -1,0 +1,72 @@
+Test Case '-[FamilienplanerTests.EventServiceTests testBusyOnlyNeverStoresTitleLocationOrNotes]' passed (0.071 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testConcurrentClaimsResolveDeterministically]' passed (0.004 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testDeclinedParticipationReopensRole]' passed (0.004 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testDefaultDurationIsThirtyMinutes]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testEmptyLocationAndNotesAreStoredAsNil]' passed (0.004 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testEventsRequestIncludesOverlapsAndExcludesTouchingEvents]' passed (0.011 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testOpenResponsibilitiesAreDifferenceOfRequiredAndCovered]' passed (0.009 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testOpenResponsibilitiesRespectTimeWindow]' passed (0.019 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testRequiredRolesRoundTrip]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testSearchIgnoresCaseAndDiacriticsAndCoversLocationAndNotes]' passed (0.003 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testSecondAdultCannotClaimTakenRole]' passed (0.002 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testSoftDeleteHidesEverywhereButKeepsRecord]' passed (0.010 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testUpdateSyncsSubjectsButKeepsResponsibilities]' passed (0.007 seconds).
+Test Case '-[FamilienplanerTests.EventServiceTests testUpdateToBusyOnlyStripsExistingDetails]' passed (0.002 seconds).
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.147 (10.308) seconds
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testBootstrapCreatesOwnerAndSystemTags]' passed (0.005 seconds).
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testBootstrapIsIdempotent]' passed (0.005 seconds).
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testMemberShortNameIsLimitedToThreeCharacters]' passed (0.005 seconds).
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testNextColorTokenSkipsUsedColors]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testOwnHouseholdLivesInPrivateStore]' passed (0.003 seconds).
+Test Case '-[FamilienplanerTests.HouseholdServiceTests testSharedHouseholdIsPreferredAndNewObjectsFollowItsStore]' passed (0.004 seconds).
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.027 (0.065) seconds
+Test Case '-[FamilienplanerTests.PerformanceTests testWeekQueryAndOpenResponsibilitiesWithAYearOfEvents]' passed (0.784 seconds).
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.784 (0.784) seconds
+Test Case '-[FamilienplanerTests.PresentationTests testAdultsAlwaysSeeTitlesButBusyOnlyStaysBusy]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.PresentationTests testChildSeesBusyForAdultEventsWhenSwitchIsOff]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.PresentationTests testChildSeesTitlesWhenSwitchIsOn]' passed (0.003 seconds).
+Test Case '-[FamilienplanerTests.PresentationTests testEventsConcerningAChildStayReadableForChildren]' passed (0.002 seconds).
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.017 (0.021) seconds
+Test Case '-[FamilienplanerTests.SeriesTests testBusyOnlySeriesStaysProjected]' passed (0.018 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testChangingRuleStartsNewSeriesFromThisOccurrence]' passed (0.112 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testClaimFollowingCoversOnlyOpenOccurrences]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testDuplicatesFromConcurrentExtensionAreMergedWithClaims]' passed (0.008 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testEncodingRoundTrip]' passed (0.005 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testEndingSeriesDeletesFollowingAndBlocksExtension]' passed (0.007 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testExtendingAddsLaterDatesButNeverRecreatesDeletedOnes]' passed (0.007 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testMonthlyOnThe31stUsesLastDayOfShortMonths]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testOnlyTheCreatorExtendsWhileActive]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testSeriesWithEndStopsAtUntil]' passed (0.003 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testUntilIsInclusive]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testUpdateFollowingShiftsOnlyLaterOccurrencesAndKeepsClaims]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testWeekdaysSkipWeekend]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testWeeklyKeepsWallClockTimeAcrossDaylightSavingChange]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testWeeklySeriesCopiesContentForTwentySixWeeks]' passed (0.010 seconds).
+Test Case '-[FamilienplanerTests.SeriesTests testYearlyOnLeapDay]' passed (0.001 seconds).
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.193 (0.267) seconds
+Test Case '-[FamilienplanerTests.SmallUnitsTests testOccurrenceKeyCombinesIdentifierAndOccurrence]' passed (1.470 seconds).
+Test Case '-[FamilienplanerTests.SmallUnitsTests testReminderSettingsFallBackToSafeDefaults]' passed (0.273 seconds).
+Test Case '-[FamilienplanerTests.SmallUnitsTests testWatchSnapshotRoundTrip]' passed (0.069 seconds).
+Test Case '-[FamilienplanerTests.SmallUnitsTests testWeekStartsOnMonday]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SmallUnitsTests testZoomLevelsAreOrderedAndBounded]' passed (0.001 seconds).
+	 Executed 5 tests, with 0 failures (0 unexpected) in 1.815 (1.820) seconds
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testDateDetectorFindsFutureDateAndIgnoresPast]' passed (0.196 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testDateDetectorSwallowsDaytimeWords]' passed (0.006 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testEndIsAtLeastThirtyMinutesAfterStart]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testImplausiblyLongEventIsShortened]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testLanguageDetection]' passed (0.092 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testMissingTimeDefaultsToEightAndIsMarkedAsGuess]' passed (0.001 seconds).
+Test Case '-[FamilienplanerTests.SuggestionExtractorTests testTitleFallbackAndLimit]' passed (0.001 seconds).
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.299 (1.328) seconds
+	 Executed 53 tests, with 0 failures (0 unexpected) in 3.281 (18.002) seconds
+	 Executed 53 tests, with 0 failures (0 unexpected) in 3.281 (18.004) seconds
+Test Case '-[FamilienplanerUITests.EndToEndTests testAppointmentLifecycleWithResponsibility]' passed (147.833 seconds).
+Test Case '-[FamilienplanerUITests.EndToEndTests testChildPreviewHidesAdultTitles]' passed (109.566 seconds).
+Test Case '-[FamilienplanerUITests.EndToEndTests testDragMovesAppointmentLater]' passed (50.562 seconds).
+Test Case '-[FamilienplanerUITests.EndToEndTests testSwipeChangesDay]' passed (32.473 seconds).
+Test Case '-[FamilienplanerUITests.EndToEndTests testWeeklySeries]' passed (81.082 seconds).
+	 Executed 5 tests, with 0 failures (0 unexpected) in 421.516 (421.525) seconds
+Test Case '-[FamilienplanerUITests.SmokeTests testLaunchSetupAndMainScreen]' passed (27.580 seconds).
+	 Executed 1 test, with 0 failures (0 unexpected) in 27.580 (27.580) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 449.096 (449.107) seconds
+	 Executed 6 tests, with 0 failures (0 unexpected) in 449.096 (449.109) seconds
