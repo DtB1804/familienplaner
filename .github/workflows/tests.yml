@@ -1,17 +1,52 @@
 # Automatisierte Tests: Python-Werkzeuge, Unit-Tests, Smoke- und End-to-End-Oberflächentests
 # auf dem iOS-Simulator. Ergebnis landet zusätzlich im Branch ci-log-tests (für Claude).
+#
+# Zeitplan (Vorgabe David, 26.09.2026): höchstens einmal täglich nachts zwischen 2 und 3 Uhr
+# (Hamburger Zeit) und nur, wenn seit dem letzten Testlauf ein neuer Build auf main entstanden
+# ist. GitHub-Zeitpläne laufen in UTC, deshalb zwei Einträge (Sommer- und Winterzeit); der
+# Prüfschritt lässt nur den Lauf durch, der in Hamburg in die Stunde 2 fällt.
+# Von Hand jederzeit über "Run workflow" (workflow_dispatch), dann ohne Prüfung.
 name: Tests
 
 on:
-  push:
-    branches: [main, tests]
+  schedule:
+    - cron: "15 0 * * *"   # 02:15 Sommerzeit (MESZ)
+    - cron: "15 1 * * *"   # 02:15 Winterzeit (MEZ)
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Uhrzeit und neuer Build?
+        id: decide
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; echo "Von Hand gestartet"; exit 0
+          fi
+          HOUR=$(TZ=Europe/Berlin date +%H)
+          if [ "$HOUR" != "02" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "Hamburg $HOUR Uhr: nicht im Fenster 2-3 Uhr"; exit 0
+          fi
+          LAST=""
+          if git fetch -q origin ci-log-tests 2>/dev/null; then
+            LAST=$(git show FETCH_HEAD:STATUS | sed -n 's/.*commit=\([0-9a-f]*\).*/\1/p')
+          fi
+          if [ "$LAST" = "$GITHUB_SHA" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "Kein neuer Build seit dem letzten Testlauf ($LAST)"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"; echo "Neuer Stand $GITHUB_SHA (zuletzt getestet: ${LAST:-nie})"
+          fi
+
   test:
+    needs: check
+    if: needs.check.outputs.run == 'true'
     runs-on: macos-26
     timeout-minutes: 60
     steps:

@@ -1,6 +1,8 @@
 # Tests – Familienplaner
 
 Automatisiert im Workflow `Tests` (GitHub Actions, macOS 26, Xcode 26.6, Simulator iPhone 17 Pro).
+Zeitplan: einmal täglich zwischen 2 und 3 Uhr Hamburger Zeit, nur wenn seit dem letzten
+Testlauf ein neuer Stand auf `main` gebaut wurde. Von Hand: GitHub → Actions → Tests → Run workflow.
 Ergebnis, Abdeckung und Bildschirmaufnahmen: Branch `ci-log-tests` und Artefakt `test-report`.
 
 ## Teststufen
@@ -8,10 +10,10 @@ Ergebnis, Abdeckung und Bildschirmaufnahmen: Branch `ci-log-tests` und Artefakt 
 | Stufe | Ort | Umfang |
 |---|---|---|
 | Werkzeug-Tests (Python) | `tools/tests/` | Schema-Generator: Typabbildung, nur Cloud-Entitäten, **jedes Modellfeld steht im CloudKit-Schema** (Regel 13) |
-| Unit- und Integrationstests | `Tests/FamilienplanerTests/` | Core Data im Arbeitsspeicher mit allen drei Stores: Projektion (Regel 2), Zuständigkeiten und Claim-Konflikte (Regel 5), weiches Löschen (Regel 6), Store-Zuordnung beim geteilten Haushalt (Regel 11), Kinderansicht, Suche, Zeitraumabfragen, Foto-Vorschlagsregeln, Spracherkennung, Zoom, Wochenbeginn, Watch-Ausschnitt, Erinnerungs-Voreinstellungen, Kalenderschlüssel (Regel 14) |
+| Unit- und Integrationstests | `Tests/FamilienplanerTests/` | Terminserien (Regeln, Zeitumstellung, 31./29.2., Nachlegen, Löschen, Doppelte), Core Data im Arbeitsspeicher mit allen drei Stores: Projektion (Regel 2), Zuständigkeiten und Claim-Konflikte (Regel 5), weiches Löschen (Regel 6), Store-Zuordnung beim geteilten Haushalt (Regel 11), Kinderansicht, Suche, Zeitraumabfragen, Foto-Vorschlagsregeln, Spracherkennung, Zoom, Wochenbeginn, Watch-Ausschnitt, Erinnerungs-Voreinstellungen, Kalenderschlüssel (Regel 14) |
 | Lasttest | `PerformanceTests` | 1.500 Termine (ein Jahr): Woche laden, offene Zuständigkeiten, Suche |
 | Smoke-Test | `Tests/FamilienplanerUITests/SmokeTests` | Start, Einrichten gesperrt ohne Eingaben, Haushalt anlegen, Hauptbildschirm vollständig |
-| End-to-End | `Tests/FamilienplanerUITests/EndToEndTests` | 1. Termin mit „Holt nötig“ → Hinweis → übernehmen → Suche → Woche → löschen · 2. Drag & Drop verschiebt um ca. 2 h, 15-Minuten-Raster · 3. Wischen blättert Tage · 4. Kindervorschau zeigt „Belegt“, eigene Kindertermine lesbar, keine Bearbeitung |
+| End-to-End | `Tests/FamilienplanerUITests/EndToEndTests` | 1. Termin mit „Holt nötig“ → Hinweis → übernehmen → Suche → Woche → löschen · 2. Drag & Drop verschiebt um ca. 2 h, 15-Minuten-Raster · 3. Wischen blättert Tage · 4. Kindervorschau zeigt „Belegt“, eigene Kindertermine lesbar, keine Bearbeitung · 5. Wöchentliche Serie anlegen, in der Folgewoche sichtbar, „diesen und alle folgenden“ löschen |
 
 Die App erkennt Testläufe (`-uiTesting` bzw. Unit-Test-Host, siehe `Sources/App/TestMode.swift`):
 Daten nur im Arbeitsspeicher, kein iCloud, gerätelokale Einstellungen zurückgesetzt,
