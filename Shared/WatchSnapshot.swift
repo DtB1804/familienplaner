@@ -24,6 +24,8 @@ struct WatchSnapshot: Codable, Equatable {
         /// Offene Zuständigkeiten, z. B. ["Holt"]
         var openRoles: [String]
         var busy: Bool
+        /// Ganztägig (Urlaub, Geburtstag); optional, damit ältere Ausschnitte lesbar bleiben.
+        var allDay: Bool? = nil
     }
 
     struct Open: Codable, Identifiable, Hashable {

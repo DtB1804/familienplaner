@@ -36,6 +36,9 @@ struct EventEditorSheet: View {
     @State private var askSaveScope = false
     @State private var askDeleteScope = false
     @State private var pendingGiveBack: CDEventParticipation?
+    @State private var isAllDay = false
+    /// Letzter Tag eines ganztägigen Termins (einschließlich).
+    @State private var lastDay = Date()
 
     private var isNew: Bool { event == nil }
 
@@ -57,8 +60,16 @@ struct EventEditorSheet: View {
         ((household.tags as? Set<CDTag>) ?? []).sorted { $0.sortIndex < $1.sortIndex }
     }
 
+    /// Gespeicherter Beginn und Ende; ganztägig: 0 Uhr bis 0 Uhr nach dem letzten Tag.
+    private var saveSpan: (Date, Date) {
+        guard isAllDay else { return (startAt, endAt) }
+        let calendar = Calendar.current
+        let after = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: max(lastDay, startAt))) ?? lastDay
+        return EventService.allDaySpan(from: startAt, to: after)
+    }
+
     private var canSave: Bool {
-        endAt > startAt
+        (isAllDay || endAt > startAt)
             && !subjectIDs.isEmpty
             && (busyOnly || !title.trimmed.isEmpty)
     }
@@ -88,15 +99,25 @@ struct EventEditorSheet: View {
                 }
 
                 Section("Zeit") {
-                    DatePicker("Beginn", selection: $startAt)
-                        .onChange(of: startAt) { _, new in
-                            // Dauer beibehalten, mindestens aber 30 Minuten vorschlagen.
-                            endAt = new.addingTimeInterval(max(duration, EventService.defaultDuration))
-                        }
-                    DatePicker("Ende", selection: $endAt, in: startAt...)
-                        .onChange(of: endAt) { _, new in
-                            duration = max(new.timeIntervalSince(startAt), 5 * 60)
-                        }
+                    Toggle("Ganztägig", isOn: $isAllDay)
+                        .accessibilityIdentifier("editor.allDay")
+                    if isAllDay {
+                        DatePicker("Von", selection: $startAt, displayedComponents: .date)
+                            .onChange(of: startAt) { _, new in
+                                if lastDay < new { lastDay = new }
+                            }
+                        DatePicker("Bis", selection: $lastDay, in: startAt..., displayedComponents: .date)
+                    } else {
+                        DatePicker("Beginn", selection: $startAt)
+                            .onChange(of: startAt) { _, new in
+                                // Dauer beibehalten, mindestens aber 30 Minuten vorschlagen.
+                                endAt = new.addingTimeInterval(max(duration, EventService.defaultDuration))
+                            }
+                        DatePicker("Ende", selection: $endAt, in: startAt...)
+                            .onChange(of: endAt) { _, new in
+                                duration = max(new.timeIntervalSince(startAt), 5 * 60)
+                            }
+                    }
                 }
 
                 Section {
@@ -151,7 +172,7 @@ struct EventEditorSheet: View {
                          : "Alle im Haushalt sehen Titel, Ort und Notizen.")
                 }
 
-                if kind == .appointment {
+                if kind == .appointment && !isAllDay {
                     Section {
                         ForEach(ParticipationRole.responsibilityRoles) { role in
                             Toggle(role.label + " nötig", isOn: Binding(
@@ -280,6 +301,13 @@ struct EventEditorSheet: View {
             tagID = event.tag?.objectID
             locationName = event.locationName ?? ""
             notes = event.notes ?? ""
+            isAllDay = event.isAllDay
+            lastDay = EventService.lastDay(of: event) ?? startAt
+            if isAllDay {
+                // Beim Umschalten auf Uhrzeit sinnvoll vorbelegen.
+                endAt = startAt.addingTimeInterval(EventService.defaultDuration)
+                duration = EventService.defaultDuration
+            }
             originalRule = SeriesService.rule(of: event)
             repeatChoice = RepeatChoice(originalRule)
             hasEnd = originalRule?.until != nil
@@ -291,6 +319,7 @@ struct EventEditorSheet: View {
             endAt = startAt.addingTimeInterval(EventService.defaultDuration)
             subjectIDs = [author.objectID]
             untilDate = Self.defaultUntil(after: startAt)
+            lastDay = startAt
         }
     }
 
@@ -307,10 +336,11 @@ struct EventEditorSheet: View {
     private func save(following: Bool) {
         let subjects = members.filter { subjectIDs.contains($0.objectID) }
         let tag = tags.first { $0.objectID == tagID }
-        let roles = kind == .appointment
+        let roles = kind == .appointment && !isAllDay
             ? ParticipationRole.responsibilityRoles.filter { requiredRoles.contains($0) }
             : []
         let visibility: EventVisibility = busyOnly ? .busyOnly : .household
+        let (startAt, endAt) = saveSpan
 
         if let event {
             if isSeries && following && !ruleChanged {
@@ -318,13 +348,13 @@ struct EventEditorSheet: View {
                                               title: title.trimmed, startAt: startAt, endAt: endAt,
                                               subjects: Array(subjects), requiredRoles: roles,
                                               kind: kind, visibility: visibility, tag: tag,
-                                              locationName: locationName.trimmed, notes: notes.trimmed)
+                                              locationName: locationName.trimmed, notes: notes.trimmed, isAllDay: isAllDay)
             } else {
                 EventService.update(event, in: context,
                                     title: title.trimmed, startAt: startAt, endAt: endAt,
                                     subjects: Array(subjects), requiredRoles: roles,
                                     kind: kind, visibility: visibility, tag: tag,
-                                    locationName: locationName.trimmed, notes: notes.trimmed)
+                                    locationName: locationName.trimmed, notes: notes.trimmed, isAllDay: isAllDay)
                 if ruleChanged {
                     // Alte Serie ab hier beenden, dann ggf. neue Serie ab diesem Termin.
                     if isSeries { SeriesService.endSeries(before: event, keepingEvent: true, in: context) }
@@ -337,7 +367,7 @@ struct EventEditorSheet: View {
                                                  title: title.trimmed, startAt: startAt, endAt: endAt,
                                                  createdBy: author, subjects: Array(subjects),
                                                  requiredRoles: roles, kind: kind, visibility: visibility,
-                                                 tag: tag, locationName: locationName.trimmed, notes: notes.trimmed)
+                                                 tag: tag, locationName: locationName.trimmed, notes: notes.trimmed, isAllDay: isAllDay)
             if let rule = currentRule { SeriesService.startSeries(from: created, rule: rule, in: context) }
         }
         PersistenceController.shared.save(context)

@@ -199,4 +199,22 @@ final class EndToEndTests: XCTestCase {
         tap("responsibilities.done", in: app)
         XCTAssertTrue(banner.waitForNonExistence(timeout: 5))
     }
+
+    /// Ganztägig: erscheint in der Leiste über dem Zeitstrahl, nicht als Block.
+    @MainActor
+    func testAllDayEventShowsInStrip() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+        tap("toolbar.new", in: app)
+        type("Urlaub", into: "editor.title", in: app)
+        setSwitch("editor.allDay", on: true, in: app)
+        XCTAssertFalse(app.switches["editor.role.driveFrom"].exists, "Keine Zuständigkeiten bei ganztägig")
+        tap("editor.save", in: app)
+
+        XCTAssertTrue(element("allday.Urlaub", in: app).waitForExistence(timeout: 5), "Leiste fehlt")
+        XCTAssertFalse(element("event.Urlaub", in: app).exists, "Ganztägig darf kein Block im Zeitstrahl sein")
+        app.buttons["Woche"].tap()
+        XCTAssertTrue(element("allday.Urlaub", in: app).waitForExistence(timeout: 5), "Leiste fehlt in der Woche")
+    }
 }

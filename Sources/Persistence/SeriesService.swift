@@ -233,7 +233,7 @@ public enum SeriesService {
                                        title: String, startAt: Date, endAt: Date,
                                        subjects: [CDMember], requiredRoles: [ParticipationRole],
                                        kind: EventKind, visibility: EventVisibility, tag: CDTag?,
-                                       locationName: String?, notes: String?) {
+                                       locationName: String?, notes: String?, isAllDay: Bool? = nil) {
         guard let oldStart = event.startAt else { return }
         let delta = startAt.timeIntervalSince(oldStart)
         let duration = endAt.timeIntervalSince(startAt)
@@ -242,7 +242,8 @@ public enum SeriesService {
             EventService.update(occurrence, in: context, title: title,
                                 startAt: newStart, endAt: newStart.addingTimeInterval(duration),
                                 subjects: subjects, requiredRoles: requiredRoles, kind: kind,
-                                visibility: visibility, tag: tag, locationName: locationName, notes: notes)
+                                visibility: visibility, tag: tag, locationName: locationName, notes: notes,
+                                isAllDay: isAllDay)
         }
     }
 
@@ -422,6 +423,12 @@ public enum SeriesService {
         event.visibilityRaw = template.visibilityRaw
         event.startAt = startAt
         event.endAt = startAt.addingTimeInterval(max(duration, 0))
+        if template.isAllDay {
+            // Ganze Tage, auch wenn dazwischen die Uhr umgestellt wird.
+            let span = EventService.allDaySpan(from: startAt, to: startAt.addingTimeInterval(max(duration, 0)))
+            event.startAt = span.0
+            event.endAt = span.1
+        }
         event.isAllDay = template.isAllDay
         event.timeZoneIdentifier = template.timeZoneIdentifier
         event.tag = template.tag

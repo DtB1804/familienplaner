@@ -59,7 +59,7 @@ struct CalendarSourcesScreen: View {
                 Section {
                     EmptyView()
                 } footer: {
-                    Text("Übernehmen aus Ihren Kalendern: „Nur als Belegtzeit“: Titel, Ort und Notizen bleiben auf diesem iPhone. Ganztägige Termine werden vorerst nicht übernommen. Übernommen wird eine Woche zurück bis drei Monate voraus.")
+                    Text("Übernehmen aus Ihren Kalendern: „Nur als Belegtzeit“: Titel, Ort und Notizen bleiben auf diesem iPhone. Übernommen wird eine Woche zurück bis drei Monate voraus.")
                 }
             }
         }

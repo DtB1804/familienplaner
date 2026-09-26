@@ -79,6 +79,9 @@ struct EventDetailSheet: View {
         guard let start = event.startAt else { return "–" }
         let startDay = start.formatted(.dateTime.weekday(.wide).day().month(.wide).year().locale(de))
         if let end = event.endAt, !Calendar.current.isDate(start, inSameDayAs: end.addingTimeInterval(-1)) {
+            if event.isAllDay, let last = EventService.lastDay(of: event) {
+                return "\(startDay) bis \(last.formatted(.dateTime.weekday(.abbreviated).day().month().locale(de)))"
+            }
             return "\(startDay) bis \(end.formatted(.dateTime.weekday(.abbreviated).day().month().locale(de)))"
         }
         return startDay
@@ -86,12 +89,17 @@ struct EventDetailSheet: View {
 
     private var timeText: String {
         guard let start = event.startAt, let end = event.endAt else { return "–" }
+        if event.isAllDay { return "ganztägig" }
         let time = Date.FormatStyle.dateTime.hour().minute().locale(de)
         return "\(start.formatted(time)) – \(end.formatted(time)) Uhr"
     }
 
     private var durationText: String {
         guard let start = event.startAt, let end = event.endAt else { return "–" }
+        if event.isAllDay {
+            let days = Calendar.current.dateComponents([.day], from: start, to: end).day ?? 1
+            return days == 1 ? "1 Tag" : "\(days) Tage"
+        }
         let minutes = Int(end.timeIntervalSince(start) / 60)
         let hours = minutes / 60, rest = minutes % 60
         switch (hours, rest) {

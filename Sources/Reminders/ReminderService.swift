@@ -88,7 +88,8 @@ enum ReminderService {
         var result: [(Date, UNNotificationRequest)] = []
 
         for event in events {
-            guard let start = event.startAt, start > now, let eventID = event.id else { continue }
+            // Ganztägige Termine (Urlaub, Geburtstag) ohne Uhrzeit-Erinnerung.
+            guard !event.isAllDay, let start = event.startAt, start > now, let eventID = event.id else { continue }
             let roles = myRoles(in: event, me: me)
             guard !roles.isEmpty else { continue }
             let fire = start.addingTimeInterval(-lead)

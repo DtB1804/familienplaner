@@ -85,6 +85,7 @@ final class CalendarExportService {
         var end: Date
         var location: String?
         var notes: String
+        var isAllDay = false
     }
 
     /// Was im iPhone-Kalender steht. Rein, ohne EventKit: testbar.
@@ -125,7 +126,8 @@ final class CalendarExportService {
                        start: event.startAt ?? Date(),
                        end: event.endAt ?? event.startAt ?? Date(),
                        location: EventPresentation.location(of: event, for: me, in: household),
-                       notes: lines.joined(separator: "\n"))
+                       notes: lines.joined(separator: "\n"),
+                       isAllDay: event.isAllDay)
     }
 
     /// Welche Termine eingetragen werden.
@@ -198,8 +200,10 @@ final class CalendarExportService {
                 let isNew = existing[id] == nil
                 guard isNew || differs(ekEvent, content) else { continue }
                 ekEvent.title = content.title
+                ekEvent.isAllDay = content.isAllDay
                 ekEvent.startDate = content.start
-                ekEvent.endDate = content.end
+                // Ganztägig: EventKit erwartet das Ende im letzten Tag, nicht 0 Uhr danach.
+                ekEvent.endDate = content.isAllDay ? content.end.addingTimeInterval(-1) : content.end
                 ekEvent.location = content.location
                 ekEvent.notes = content.notes
                 try store.save(ekEvent, span: .thisEvent, commit: false)
@@ -230,9 +234,17 @@ final class CalendarExportService {
     private func differs(_ ekEvent: EKEvent, _ content: Content) -> Bool {
         // Zeiten mit Toleranz: EventKit speichert ohne Sekundenbruchteile. Ohne Toleranz
         // würde jeder Abgleich neu schreiben und über die Kalenderübernahme den nächsten auslösen.
-        ekEvent.title != content.title
-            || abs((ekEvent.startDate ?? .distantPast).timeIntervalSince(content.start)) >= 1
-            || abs((ekEvent.endDate ?? .distantPast).timeIntervalSince(content.end)) >= 1
+        if ekEvent.isAllDay != content.isAllDay { return true }
+        if content.isAllDay {
+            // Ganztägig nur nach Tagen vergleichen, EventKit gibt das Ende unterschiedlich zurück.
+            let span = EventService.allDaySpan(from: ekEvent.startDate ?? .distantPast,
+                                               to: ekEvent.endDate ?? .distantPast)
+            if span.0 != content.start || span.1 != content.end { return true }
+        } else if abs((ekEvent.startDate ?? .distantPast).timeIntervalSince(content.start)) >= 1
+                    || abs((ekEvent.endDate ?? .distantPast).timeIntervalSince(content.end)) >= 1 {
+            return true
+        }
+        return ekEvent.title != content.title
             || (ekEvent.location ?? "") != (content.location ?? "")
             || (ekEvent.notes ?? "") != content.notes
     }

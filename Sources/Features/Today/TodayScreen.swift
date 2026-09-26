@@ -95,6 +95,13 @@ public struct TodayScreen: View {
                 .padding(.horizontal, Spacing.l)
                 .padding(.vertical, Spacing.s)
                 .background(Palette.surface)
+                let allDay = (mode == .day ? Array(dayEvents) : Array(weekEvents))
+                    .filter { $0.isAllDay && isVisibleInFilter($0) }
+                if !allDay.isEmpty {
+                    AllDayStrip(events: allDay, showsDates: mode == .week,
+                                viewer: viewer, household: household,
+                                onSelect: { event in open(event) })
+                }
                 if mode == .day {
                     dayTimeline
                 } else {
@@ -238,7 +245,7 @@ public struct TodayScreen: View {
     private var dayTimeline: some View {
         DayTimelineView(day: day,
                         members: visibleMembers,
-                        events: Array(dayEvents),
+                        events: dayEvents.filter { !$0.isAllDay },
                         zoom: $zoom,
                         viewer: viewer,
                         household: household,
@@ -253,7 +260,7 @@ public struct TodayScreen: View {
 
     private var weekTimeline: some View {
         WeekTimelineView(weekStart: Self.weekStart(of: day),
-                         events: weekEvents.filter(isVisibleInFilter),
+                         events: weekEvents.filter { !$0.isAllDay && isVisibleInFilter($0) },
                          zoom: $zoom,
                          viewer: viewer,
                          household: household,

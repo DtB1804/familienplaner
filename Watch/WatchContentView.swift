@@ -72,6 +72,7 @@ struct WatchContentView: View {
     }
 
     private func timeText(_ item: WatchSnapshot.Item) -> String {
+        if item.allDay == true { return "ganztägig" }
         let style = Date.FormatStyle.dateTime.hour().minute().locale(de)
         return "\(item.start.formatted(style))–\(item.end.formatted(style))"
     }

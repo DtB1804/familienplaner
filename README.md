@@ -87,7 +87,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Thema | Stand | Notiz |
 |---|---|---|
 | Termine aus Fotos | Grundfunktion da (Build 8) | **Nicht vergessen (David):** Qualität mit echten Elternbriefen weiter testen und nachschärfen, Kamera direkt aus der App, ggf. Teilen-Erweiterung aus Fotos/Mail |
-| Ganztägige Termine | offen | Leiste über dem Zeitstrahl, auch aus iPhone-Kalendern |
+| Ganztägige Termine | da (Build 23) | Leiste über dem Zeitstrahl, mehrtägig, auch als Serie (Geburtstag jährlich), Übernahme aus und Eintrag in iPhone-Kalender |
 | Erinnerungen | da (Build 12, Hintergrund ab Build 18) | lokal je Gerät, Neuplanung auch bei Änderungen anderer |
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
 | Terminserien | da (Build 21, Übernahme/Vorabend ab Build 22) | täglich bis jährlich, 26 Wochen rollierend; Zuständigkeit für ganze Serie; Vorabend-Abfrage mit „Übernehme ich“ in der Mitteilung |

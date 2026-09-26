@@ -73,12 +73,14 @@ final class WatchSyncService: NSObject {
             return WatchSnapshot.Item(
                 id: id.uuidString,
                 title: EventPresentation.title(of: event, for: me, in: household),
-                start: from, end: to,
+                // Mehrtägig ganztägig (Urlaub): unter "Heute" statt am ersten Tag zeigen.
+                start: event.isAllDay ? max(from, start) : from, end: to,
                 location: EventPresentation.location(of: event, for: me, in: household),
                 people: subjects.compactMap(\.shortName).joined(separator: ", "),
                 rgb: busy ? Palette.darkRGB("busy") : Palette.darkRGB(subjects.first?.colorToken ?? "person1"),
                 openRoles: required.filter { !covered.contains($0) }.map(\.label),
-                busy: busy)
+                busy: busy,
+                allDay: event.isAllDay)
         }
 
         let open = me.role == .adult

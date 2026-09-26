@@ -86,8 +86,10 @@ struct SearchScreen: View {
     private func subtitle(for event: CDEvent) -> String {
         var parts: [String] = []
         if let start = event.startAt {
-            parts.append(start.formatted(.dateTime.weekday(.abbreviated).day().month().hour().minute()
-                                          .locale(Locale(identifier: "de_DE"))))
+            let format: Date.FormatStyle = event.isAllDay
+                ? .dateTime.weekday(.abbreviated).day().month()
+                : .dateTime.weekday(.abbreviated).day().month().hour().minute()
+            parts.append(start.formatted(format.locale(Locale(identifier: "de_DE"))) + (event.isAllDay ? " · ganztägig" : ""))
         }
         let names = EventService.subjects(of: event).compactMap(\.shortName)
         if !names.isEmpty { parts.append(names.joined(separator: ", ")) }

@@ -169,6 +169,14 @@ selben iCloud-Kalender) werden entfernt. Dieser Kalender ist von der Übernahme
 ausgenommen (Schleife). Eigene übernommene Termine werden nicht zurückgeschrieben.
 Zeitvergleich mit 1 Sekunde Toleranz, sonst schaukeln sich Übernahme und Eintrag auf.
 
+## 18. Ganztägige Termine
+
+`isAllDay = true`, `startAt` = 0 Uhr des ersten Tages, `endAt` = 0 Uhr nach dem letzten
+Tag (exklusiv), immer über `EventService.allDaySpan` normalisiert (rundet auf ganze Tage,
+damit Zeitumstellung und EventKit-Enden um 23:59:59 passen). Sie erscheinen nicht im
+Zeitstrahl, sondern in der Leiste darüber, haben keine Zuständigkeiten und keine
+Uhrzeit-Erinnerung. Übernahme und Eintrag in iPhone-Kalender vergleichen nach Tagen.
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).

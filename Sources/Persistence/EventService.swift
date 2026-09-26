@@ -93,7 +93,8 @@ public enum EventService {
                                  visibility: EventVisibility = .household,
                                  tag: CDTag? = nil,
                                  locationName: String? = nil,
-                                 notes: String? = nil) -> CDEvent {
+                                 notes: String? = nil,
+                                 isAllDay: Bool = false) -> CDEvent {
         let now = Date()
         let event = CDEvent(context: context)
         PersistenceController.assign(event, toStoreOf: household)
@@ -102,9 +103,10 @@ public enum EventService {
         event.kindRaw = kind.rawValue
         event.originRaw = EventOrigin.manual.rawValue
         event.visibilityRaw = visibility.rawValue
-        event.startAt = startAt
-        event.endAt = endAt
-        event.isAllDay = false
+        let span = isAllDay ? allDaySpan(from: startAt, to: endAt) : (startAt, endAt)
+        event.startAt = span.0
+        event.endAt = span.1
+        event.isAllDay = isAllDay
         event.timeZoneIdentifier = TimeZone.current.identifier
         event.tag = tag
         applyContent(to: event, title: title, visibility: visibility,
@@ -134,11 +136,14 @@ public enum EventService {
                               visibility: EventVisibility,
                               tag: CDTag?,
                               locationName: String?,
-                              notes: String?) {
+                              notes: String?,
+                              isAllDay: Bool? = nil) {
         event.kindRaw = kind.rawValue
         event.visibilityRaw = visibility.rawValue
-        event.startAt = startAt
-        event.endAt = endAt
+        if let isAllDay { event.isAllDay = isAllDay }
+        let span = event.isAllDay ? allDaySpan(from: startAt, to: endAt) : (startAt, endAt)
+        event.startAt = span.0
+        event.endAt = span.1
         event.tag = tag
         event.requiredRolesRaw = RequiredRoles.encode(requiredRoles)
         applyContent(to: event, title: title, visibility: visibility,
@@ -155,6 +160,23 @@ public enum EventService {
         for member in subjects where !present.contains(member.objectID) {
             addParticipation(in: context, event: event, member: member, role: .subject)
         }
+    }
+
+    /// Ganztägig: von 0 Uhr des ersten Tages bis 0 Uhr nach dem letzten Tag (exklusiv).
+    /// `end` ist das (ungefähre) exklusive Ende; gerundet wird auf ganze Tage, damit
+    /// Zeitumstellung (23- oder 25-Stunden-Tag) und EventKit-Enden um 23:59:59 passen.
+    public static func allDaySpan(from start: Date, to end: Date,
+                                  calendar: Calendar = .current) -> (Date, Date) {
+        let first = calendar.startOfDay(for: start)
+        let days = max(1, Int((end.timeIntervalSince(first) / 86_400).rounded()))
+        let after = calendar.date(byAdding: .day, value: days, to: first) ?? first
+        return (first, after)
+    }
+
+    /// Letzter Tag eines ganztägigen Termins (für Anzeige und Editor).
+    public static func lastDay(of event: CDEvent, calendar: Calendar = .current) -> Date? {
+        guard let end = event.endAt else { return nil }
+        return calendar.startOfDay(for: end.addingTimeInterval(-1))
     }
 
     /// Projektionsprinzip (CLAUDE.md Regel 2): Bei "nur Belegt" verlassen Titel,

@@ -13,7 +13,7 @@ import os
 /// Kalenderquellen und Spiegel liegen im lokalen Store (Regel 3). Wiederkehrende
 /// Termine liefert EventKit als einzelne Vorkommen; der Schlüssel eines Vorkommens ist
 /// deshalb Kalendereintrag plus Datum des Vorkommens.
-/// Ganztägige Termine werden vorerst nicht übernommen (Tagesansicht zeigt nur Zeiten).
+/// Ganztägige Termine werden übernommen und in der Leiste über dem Zeitstrahl gezeigt.
 @MainActor
 final class CalendarImportService {
 
@@ -133,8 +133,12 @@ final class CalendarImportService {
                                                      calendars: [ekCalendar])
             var seen = Set<String>()
 
-            for ekEvent in store.events(matching: predicate) where !ekEvent.isAllDay {
-                guard let start = ekEvent.startDate, let end = ekEvent.endDate, end > start else { continue }
+            for ekEvent in store.events(matching: predicate) {
+                guard let ekStart = ekEvent.startDate, let ekEnd = ekEvent.endDate else { continue }
+                // Ganztägig: auf ganze Tage 0 Uhr bis 0 Uhr normalisieren (EventKit liefert
+                // das Ende je nach Kalender als 23:59:59 oder als 0 Uhr des Folgetags).
+                let (start, end) = ekEvent.isAllDay ? EventService.allDaySpan(from: ekStart, to: ekEnd) : (ekStart, ekEnd)
+                guard end > start else { continue }
                 let key = Self.occurrenceKey(ekEvent)
                 // Derselbe Termin in zwei eigenen Kalendern (z. B. eingeladen und im
                 // gemeinsamen Kalender): nur einmal übernehmen.
@@ -146,13 +150,15 @@ final class CalendarImportService {
                 if let mirror = mirrors[key],
                    let event = imported.first(where: { $0.id == mirror.eventID }) {
                     if needsUpdate(event, title: title, start: start, end: end,
-                                   location: ekEvent.location, visibility: eventVisibility) {
+                                   location: ekEvent.location, visibility: eventVisibility)
+                        || event.isAllDay != ekEvent.isAllDay {
                         EventService.update(event, in: context,
                                             title: title, startAt: start, endAt: end,
                                             subjects: Array(Set(EventService.subjects(of: event)).union([member])),
                                             requiredRoles: [],
                                             kind: .appointment, visibility: eventVisibility,
-                                            tag: event.tag, locationName: ekEvent.location, notes: nil)
+                                            tag: event.tag, locationName: ekEvent.location, notes: nil,
+                                            isAllDay: ekEvent.isAllDay)
                         updated += 1
                     }
                     mirror.lastSyncedAt = Date()
@@ -169,7 +175,8 @@ final class CalendarImportService {
                                                        title: title, startAt: start, endAt: end,
                                                        createdBy: member, subjects: [member],
                                                        visibility: eventVisibility,
-                                                       locationName: ekEvent.location)
+                                                       locationName: ekEvent.location,
+                                                       isAllDay: ekEvent.isAllDay)
                     event.originRaw = EventOrigin.imported.rawValue
                     event.sourceCalendarSourceID = sourceID
                     event.externalIdentifier = key
