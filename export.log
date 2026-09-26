@@ -1,0 +1,11 @@
+2026-09-26 10:37:57.290 xcodebuild[5311:19766] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path "/var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/T/Familienplaner_2026-09-26_10-37-57.287.xcdistributionlogs".
+error: exportArchive Authentication failed
+
+error: exportArchive No profiles for 'de.barg.familienplaner' were found
+
+error: exportArchive Authentication failed
+
+error: exportArchive No profiles for 'de.barg.familienplaner.widgets' were found
+
+** EXPORT FAILED **
+

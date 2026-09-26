@@ -1,0 +1,5 @@
+** ARCHIVE SUCCEEDED **
+** EXPORT FAILED **
+error: exportArchive Authentication failed
+error: exportArchive No profiles for 'de.barg.familienplaner.widgets' were found
+error: exportArchive No profiles for 'de.barg.familienplaner' were found
