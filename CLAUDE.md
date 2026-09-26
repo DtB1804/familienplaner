@@ -149,3 +149,11 @@ Mitglieds, das die Serie angelegt hat. Einzeln gelöschte Termine bleiben weich 
 stehen (Regel 6) und werden deshalb nicht neu angelegt. Doppelte aus gleichzeitigem
 Nachlegen: es bleibt die kleinste UUID, Übernahmen wandern mit (wie Regel 14).
 Keine Modelländerung nötig: die Felder stehen seit Version 1 im Schema.
+
+## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
+
+- Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).
+  Während einer solchen Schleife kann Claude nicht antworten. Nach einem Push kurz
+  melden, das Ergebnis später mit einem einzelnen `git fetch` des Log-Branches abholen.
+- Der Workflow `Tests` läuft nur nachts zwischen 2 und 3 Uhr und nur bei neuem Stand
+  auf `main`. Kein Push auf einen Branch, der Tests auslöst.
