@@ -299,6 +299,33 @@ am 23.09.2026.
 
 ---
 
+### Aufgabe 20: App Group für Widgets freigeben (neu, 26.09.2026)
+**Warum:** Die Widgets lesen ihre Daten aus einem gemeinsamen Ordner von App und Widget
+(App Group). Der TestFlight-Build 24 scheiterte beim Signieren: „No profiles for
+'de.barg.familienplaner.widgets' / 'de.barg.familienplaner' were found“, dazu
+„Authentication failed“. Die automatische Signierung hat die App Group also nicht selbst
+angelegt. Ohne diese Freigabe schlägt jeder weitere TestFlight-Build fehl.
+
+**Wo:** developer.apple.com → Account → Certificates, Identifiers & Profiles → Identifiers
+
+1. **App Group anlegen:** oben rechts im Auswahlfeld „App Groups“ wählen → „+“ →
+   „App Groups“ → Continue → Description `Family Planner`, Identifier
+   `group.de.barg.familienplaner` → Continue → Register.
+2. **Haupt-App:** Auswahlfeld zurück auf „App IDs“ → `de.barg.familienplaner` öffnen →
+   bei „App Groups“ Haken setzen → „Configure“ (oder „Edit“) → `group.de.barg.familienplaner`
+   auswählen → Continue → Save. Eine Warnung, dass Profile neu erstellt werden, bestätigen.
+3. **Widget-App-ID:** In der Liste nach `de.barg.familienplaner.widgets` suchen.
+   - Vorhanden: öffnen und wie in Schritt 2 App Groups aktivieren und die Gruppe zuordnen.
+   - Nicht vorhanden: „+“ → „App IDs“ → „App“ → Description `Family Planner Widgets`,
+     Bundle ID „Explicit“ `de.barg.familienplaner.widgets` → App Groups anhaken →
+     Register, danach öffnen und die Gruppe wie in Schritt 2 zuordnen.
+4. **Prüfen, falls es danach noch scheitert:** App Store Connect → Benutzer und Zugriff →
+   Integrationen → App Store Connect API → Rolle des Schlüssels ansehen (Admin,
+   App-Manager oder Entwickler) und mir nennen.
+
+**Zuliefern:** „App Group angelegt“. Ich starte dann den TestFlight-Build neu.
+**Aufwand:** etwa 10 Minuten.
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:
