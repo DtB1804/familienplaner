@@ -177,6 +177,14 @@ damit Zeitumstellung und EventKit-Enden um 23:59:59 passen). Sie erscheinen nich
 Zeitstrahl, sondern in der Leiste darüber, haben keine Zuständigkeiten und keine
 Uhrzeit-Erinnerung. Übernahme und Eintrag in iPhone-Kalender vergleichen nach Tagen.
 
+## 19. Widgets lesen nur den Ausschnitt
+
+Die Widget-Erweiterung hat keinen eigenen Datenbestand. Die App schreibt den für das
+Mitglied dieses Geräts reduzierten Ausschnitt (`WatchSnapshot`, dasselbe Format wie für die
+Watch) als JSON in die App Group `group.de.barg.familienplaner` (`WidgetBridge`) und lässt
+die Widgets neu zeichnen, nur wenn sich der Inhalt geändert hat. Kein Core Data, kein
+CloudKit im Widget. Tippen öffnet den Tag über `familyplanner://day?t=<Unix-Zeit>`.
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).

@@ -46,6 +46,17 @@
 
 	<!-- Berechtigungstexte. Diese Sätze liest die Familie, nicht Apple.
 	     Sie erklären den Nutzen, nicht die Technik. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>de.barg.familienplaner</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>familyplanner</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Der Familienplaner liest Ihre Kalender, um Termine in der gemeinsamen Übersicht anzuzeigen, und schreibt Familientermine zurück, wenn Sie das für einen Kalender erlauben.</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>

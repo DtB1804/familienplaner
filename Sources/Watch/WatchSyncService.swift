@@ -19,9 +19,12 @@ final class WatchSyncService: NSObject {
     private let horizonDays = 3
 
     func start() {
-        guard WCSession.isSupported(), observers.isEmpty else { return }
-        WCSession.default.delegate = self
-        WCSession.default.activate()
+        guard observers.isEmpty else { return }
+        // Die Watch-Verbindung gibt es nur auf dem iPhone; die Widgets auch auf dem iPad.
+        if WCSession.isSupported() {
+            WCSession.default.delegate = self
+            WCSession.default.activate()
+        }
         for name in [Notification.Name.NSManagedObjectContextDidSave, .NSPersistentStoreRemoteChange] {
             observers.append(NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in self?.schedulePush() }
@@ -40,11 +43,13 @@ final class WatchSyncService: NSObject {
     }
 
     func push() {
+        guard let snapshot = makeSnapshot(),
+              let data = try? JSONEncoder().encode(snapshot) else { return }
+        // Widgets auf Home- und Sperrbildschirm (App Group, siehe WidgetBridge)
+        WidgetBridge.publish(snapshot)
         let session = WCSession.default
         guard WCSession.isSupported(), session.activationState == .activated,
-              session.isPaired, session.isWatchAppInstalled,
-              let snapshot = makeSnapshot(),
-              let data = try? JSONEncoder().encode(snapshot) else { return }
+              session.isPaired, session.isWatchAppInstalled else { return }
         do {
             try session.updateApplicationContext([WatchSnapshot.contextKey: data])
         } catch {
@@ -80,7 +85,8 @@ final class WatchSyncService: NSObject {
                 rgb: busy ? Palette.darkRGB("busy") : Palette.darkRGB(subjects.first?.colorToken ?? "person1"),
                 openRoles: required.filter { !covered.contains($0) }.map(\.label),
                 busy: busy,
-                allDay: event.isAllDay)
+                allDay: event.isAllDay,
+                token: busy ? "busy" : (subjects.first?.colorToken ?? "person1"))
         }
 
         let open = me.role == .adult

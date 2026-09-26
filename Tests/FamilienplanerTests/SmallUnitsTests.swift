@@ -76,4 +76,26 @@ final class SmallUnitsTests: XCTestCase {
         XCTAssertTrue(key.hasSuffix("|1790000000"), key)
         XCTAssertFalse(key.hasPrefix("|"), "Kennung darf nicht leer sein: \(key)")
     }
+
+    // MARK: Widgets
+
+    func testWidgetDayLinkRoundTrip() {
+        let date = Date(timeIntervalSince1970: 1_790_000_000)
+        let url = WidgetBridge.dayURL(date)!
+        XCTAssertEqual(url.absoluteString, "familyplanner://day?t=1790000000")
+        XCTAssertEqual(WidgetBridge.day(from: url), date)
+        XCTAssertNil(WidgetBridge.day(from: URL(string: "familyplanner://event/abc")!))
+        XCTAssertNil(WidgetBridge.day(from: URL(string: "https://example.org/day?t=1")!))
+    }
+
+    func testSnapshotWithTokenStillDecodesOldFormat() throws {
+        // Ausschnitt ohne die neuen Felder allDay/token (älterer App-Stand)
+        let json = """
+        {"generatedAt":0,"viewerName":"A","canClaim":true,"open":[],
+         "events":[{"id":"1","title":"T","start":0,"end":60,"people":"","rgb":0,"openRoles":[],"busy":false}]}
+        """
+        let snapshot = try JSONDecoder().decode(WatchSnapshot.self, from: Data(json.utf8))
+        XCTAssertNil(snapshot.events.first?.token)
+        XCTAssertNil(snapshot.events.first?.allDay)
+    }
 }

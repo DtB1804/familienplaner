@@ -46,6 +46,7 @@ targets:
       gatherCoverageData: true
     dependencies:
       - target: FamilienplanerWatch   # Watch-App wird in die iPhone-App eingebettet
+      - target: FamilienplanerWidgets # Widgets für Home- und Sperrbildschirm (seit 26.09.2026)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner
@@ -78,6 +79,28 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "4"
         SKIP_INSTALL: YES
+
+  # Widgets (Home- und Sperrbildschirm). Liest nur den Ausschnitt aus der App Group,
+  # kein Core Data, kein CloudKit (wie die Watch, CLAUDE.md Regel 15).
+  FamilienplanerWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets
+        excludes:
+          - Info.plist
+      - path: Shared
+      - path: Sources/DesignSystem/Theme.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner.widgets
+        PRODUCT_NAME: FamilienplanerWidgets
+        INFOPLIST_FILE: Widgets/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Resources/FamilienplanerWidgets.entitlements
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
 
   # Automatisierte Tests (seit 25.09.2026), laufen im Workflow "Tests" auf dem Simulator.
   FamilienplanerTests:

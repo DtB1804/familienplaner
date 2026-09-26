@@ -26,6 +26,8 @@ struct WatchSnapshot: Codable, Equatable {
         var busy: Bool
         /// Ganztägig (Urlaub, Geburtstag); optional, damit ältere Ausschnitte lesbar bleiben.
         var allDay: Bool? = nil
+        /// Farb-Token der Person (Widgets zeigen Hell und Dunkel richtig, Regel 8).
+        var token: String? = nil
     }
 
     struct Open: Codable, Identifiable, Hashable {

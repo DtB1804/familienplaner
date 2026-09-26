@@ -17,10 +17,30 @@ struct FamilienplanerApp: App {
         CalendarExportService.shared.start()
     }
 
+    /// Links aus Widgets (familyplanner://day?t=…) und aus dem Kalender "Family Planner"
+    /// (familyplanner://event/<UUID>) öffnen den passenden Tag.
+    private func openLink(_ url: URL) {
+        var day = WidgetBridge.day(from: url)
+        if day == nil, url.scheme == WidgetBridge.urlScheme, url.host == "event",
+           let id = UUID(uuidString: url.lastPathComponent) {
+            let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            request.fetchLimit = 1
+            day = (try? persistence.viewContext.fetch(request).first)?.startAt
+        }
+        guard let day else { return }
+        // Kurz warten: beim Kaltstart hört die Tagesansicht sonst noch nicht zu.
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(600))
+            NotificationCenter.default.post(name: .openDayFromReminder, object: nil, userInfo: ["day": day])
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(\.managedObjectContext, persistence.viewContext)
+                .onOpenURL { url in openLink(url) }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { BackgroundSync.shared.scheduleRefresh() }
