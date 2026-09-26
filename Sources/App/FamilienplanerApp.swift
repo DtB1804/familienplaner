@@ -14,6 +14,7 @@ struct FamilienplanerApp: App {
         TestMode.resetLocalState()
         BackgroundSync.shared.start()
         WatchSyncService.shared.start()
+        CalendarExportService.shared.start()
     }
 
     var body: some Scene {
@@ -23,7 +24,10 @@ struct FamilienplanerApp: App {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { BackgroundSync.shared.scheduleRefresh() }
-            if phase == .active { BackgroundSync.shared.extendSeries() }
+            if phase == .active {
+                BackgroundSync.shared.extendSeries()
+                CalendarExportService.shared.scheduleSync()
+            }
         }
         .backgroundTask(.appRefresh(BackgroundSync.refreshIdentifier)) {
             await BackgroundSync.shared.runRefresh()

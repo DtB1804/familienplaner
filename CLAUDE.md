@@ -150,6 +150,25 @@ stehen (Regel 6) und werden deshalb nicht neu angelegt. Doppelte aus gleichzeiti
 Nachlegen: es bleibt die kleinste UUID, Übernahmen wandern mit (wie Regel 14).
 Keine Modelländerung nötig: die Felder stehen seit Version 1 im Schema.
 
+## 17. Serienübernahmen und iPhone-Kalender
+
+**Serienübernahme:** Wer eine Zuständigkeit "für die ganze Serie" übernimmt, bekommt je
+Termin eine eigene Beteiligung (Regel 5) mit `note = "series"`. Beim Nachlegen (Regel 16)
+werden solche Übernahmen des letzten Termins auf die neuen Termine übertragen. Abgeben
+"für alle folgenden" setzt die eigenen Beteiligungen auf "abgelehnt"; damit endet die
+Übertragung. Keine Modelländerung: `note` steht seit Version 1 im Schema.
+
+**Vorabend-Abfrage:** Offene Zuständigkeiten erscheinen am Vorabend als Mitteilung mit
+den Knöpfen "Übernehme ich" und bei Serien "Für die ganze Serie"; gespeichert wird über
+`ClaimActions` (gleicher Weg wie die Watch).
+
+**iPhone-Kalender:** Pro Gerät einstellbar (Aus / meine / alle). `CalendarExportService`
+schreibt in einen eigenen Kalender "Family Planner", nur in diese Richtung. Erkennung über
+die URL `familyplanner://event/<UUID>`; Doppelte (iPhone und iPad derselben Apple-ID im
+selben iCloud-Kalender) werden entfernt. Dieser Kalender ist von der Übernahme
+ausgenommen (Schleife). Eigene übernommene Termine werden nicht zurückgeschrieben.
+Zeitvergleich mit 1 Sekunde Toleranz, sonst schaukeln sich Übernahme und Eintrag auf.
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).

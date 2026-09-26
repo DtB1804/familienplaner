@@ -16,6 +16,7 @@ struct CalendarSourcesScreen: View {
     @State private var calendars: [EKCalendar] = []
     @State private var selection: [String: CalendarVisibility] = [:]
     @State private var otherImporters: [String: [String]] = [:]
+    @State private var exportScope = CalendarExportService.scope
 
     private var service: CalendarImportService { .shared }
 
@@ -36,6 +37,18 @@ struct CalendarSourcesScreen: View {
                     }
                 }
             } else {
+                Section {
+                    Picker("Eintragen", selection: $exportScope) {
+                        ForEach(CalendarExportService.Scope.allCases) { Text($0.label).tag($0) }
+                    }
+                    .accessibilityIdentifier("export.scope")
+                } header: {
+                    Text("In den iPhone-Kalender eintragen")
+                } footer: {
+                    Text(exportScope == .off
+                         ? "Family Planner kann die Familientermine in einen eigenen Kalender „Family Planner“ der Kalender-App eintragen und aktuell halten."
+                         : "Kalender „Family Planner“ in der Kalender-App: \(exportScope == .mine ? "Termine, die Sie betreffen oder die Sie übernommen haben" : "alle Termine der Familie"), eine Woche zurück bis sechs Monate voraus. Änderungen, auch an einzelnen Terminen einer Serie, erscheinen dort automatisch. Bearbeiten Sie Termine in Family Planner, im Kalender werden Änderungen überschrieben.")
+                }
                 ForEach(groupedSources, id: \.0) { sourceTitle, items in
                     Section(sourceTitle) {
                         ForEach(items, id: \.calendarIdentifier) { calendar in
@@ -46,13 +59,22 @@ struct CalendarSourcesScreen: View {
                 Section {
                     EmptyView()
                 } footer: {
-                    Text("„Nur als Belegtzeit“: Titel, Ort und Notizen bleiben auf diesem iPhone. Ganztägige Termine werden vorerst nicht übernommen. Übernommen wird eine Woche zurück bis drei Monate voraus.")
+                    Text("Übernehmen aus Ihren Kalendern: „Nur als Belegtzeit“: Titel, Ort und Notizen bleiben auf diesem iPhone. Ganztägige Termine werden vorerst nicht übernommen. Übernommen wird eine Woche zurück bis drei Monate voraus.")
                 }
             }
         }
         .navigationTitle("Meine Kalender")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: reload)
+        .onChange(of: exportScope) { _, scope in
+            CalendarExportService.scope = scope
+            if scope == .off {
+                CalendarExportService.shared.removeAll()
+            } else {
+                CalendarExportService.shared.sync()
+            }
+            reload()
+        }
     }
 
     private func row(for calendar: EKCalendar) -> some View {

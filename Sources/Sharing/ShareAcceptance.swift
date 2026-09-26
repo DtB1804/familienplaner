@@ -40,6 +40,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        ReminderService.registerCategories()
         // Stille Mitteilungen von CloudKit empfangen: So erfährt die App auch im
         // Hintergrund von Änderungen anderer Familienmitglieder (Hintergrundabgleich).
         application.registerForRemoteNotifications()
@@ -56,6 +57,10 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {
         let info = response.notification.request.content.userInfo
+        if response.actionIdentifier != UNNotificationDefaultActionIdentifier {
+            await ReminderService.handleAction(response.actionIdentifier, userInfo: info)
+            return
+        }
         guard let stamp = info[ReminderService.dayKey] as? Double else { return }
         await MainActor.run {
             NotificationCenter.default.post(name: .openDayFromReminder, object: nil,

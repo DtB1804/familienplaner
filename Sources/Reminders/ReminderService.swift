@@ -118,30 +118,82 @@ enum ReminderService {
 
     // MARK: - Offene Zuständigkeiten am Vorabend
 
+    /// Vorabend-Abfrage: je offene Zuständigkeit eine Mitteilung mit "Übernehme ich"
+    /// (bei Serien zusätzlich "Für die Serie"), direkt aus der Mitteilung heraus.
     private static func openResponsibilityReminders(from now: Date,
                                                     in context: NSManagedObjectContext) -> [(Date, UNNotificationRequest)] {
         let open = (try? EventService.openResponsibilities(within: horizonDays + 1, in: context)) ?? []
         let calendar = Calendar.current
-        let byDay = Dictionary(grouping: open) { calendar.startOfDay(for: $0.startAt) }
+        var perDay: [Date: Int] = [:]
         var result: [(Date, UNNotificationRequest)] = []
 
-        for (day, items) in byDay {
+        for item in open.sorted(by: { $0.startAt < $1.startAt }) {
+            let day = calendar.startOfDay(for: item.startAt)
             guard let eve = calendar.date(byAdding: .day, value: -1, to: day),
                   let fire = calendar.date(bySettingHour: ReminderSettings.openHour, minute: 0, second: 0, of: eve),
-                  fire > now else { continue }
+                  fire > now, perDay[day, default: 0] < maxOpenPerEvening else { continue }
+            perDay[day, default: 0] += 1
+
+            let event = fetchEvent(item.eventID, in: context)
+            let kids = event.map { EventService.subjects(of: $0).compactMap(\.displayName).joined(separator: ", ") } ?? ""
+            let isSeries = event.map(SeriesService.isSeries) ?? false
             let content = UNMutableNotificationContent()
-            content.title = items.count == 1 ? "Morgen noch offen" : "Morgen noch \(items.count) Zuständigkeiten offen"
-            content.body = items.sorted { $0.startAt < $1.startAt }.prefix(4).map {
-                "\($0.role.label): \($0.eventTitle) um \($0.startAt.formatted(date: .omitted, time: .shortened))"
-            }.joined(separator: "\n")
+            content.title = "Wer \(item.role.question) morgen\(kids.isEmpty ? "" : " " + kids)?"
+            content.body = "\(item.eventTitle) um \(item.startAt.formatted(date: .omitted, time: .shortened))"
             content.sound = .default
-            content.userInfo = [dayKey: day.timeIntervalSince1970]
-            let stamp = Int(day.timeIntervalSince1970)
-            result.append((fire, UNNotificationRequest(identifier: "\(identifierPrefix)open.\(stamp)",
-                                                       content: content,
-                                                       trigger: trigger(at: fire))))
+            content.categoryIdentifier = isSeries ? openSeriesCategory : openCategory
+            content.userInfo = [dayKey: day.timeIntervalSince1970,
+                                eventIDKey: item.eventID.uuidString,
+                                roleKey: item.role.rawValue]
+            result.append((fire, UNNotificationRequest(
+                identifier: "\(identifierPrefix)open.\(item.eventID.uuidString).\(item.role.rawValue)",
+                content: content,
+                trigger: trigger(at: fire))))
         }
         return result
+    }
+
+    // MARK: - Aktionen in Mitteilungen
+
+    static let openCategory = "fp.open"
+    static let openSeriesCategory = "fp.open.series"
+    static let claimAction = "fp.claim"
+    static let claimSeriesAction = "fp.claimSeries"
+    static let eventIDKey = "fp.eventID"
+    static let roleKey = "fp.role"
+    private static let maxOpenPerEvening = 6
+
+    /// Einmal beim Start: Knöpfe der Vorabend-Abfrage anmelden.
+    static func registerCategories() {
+        let claim = UNNotificationAction(identifier: claimAction, title: "Übernehme ich", options: [])
+        let series = UNNotificationAction(identifier: claimSeriesAction, title: "Für die ganze Serie", options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([
+            UNNotificationCategory(identifier: openCategory, actions: [claim], intentIdentifiers: []),
+            UNNotificationCategory(identifier: openSeriesCategory, actions: [claim, series], intentIdentifiers: [])
+        ])
+    }
+
+    /// Knopf in der Mitteilung gedrückt: übernehmen und das Ergebnis als kurze Mitteilung zeigen.
+    static func handleAction(_ actionIdentifier: String, userInfo: [AnyHashable: Any]) async {
+        guard actionIdentifier == claimAction || actionIdentifier == claimSeriesAction,
+              let rawID = userInfo[eventIDKey] as? String, let eventID = UUID(uuidString: rawID),
+              let rawRole = userInfo[roleKey] as? String, let role = ParticipationRole(rawValue: rawRole)
+        else { return }
+        let outcome = ClaimActions.claim(eventID: eventID, role: role,
+                                         scope: actionIdentifier == claimSeriesAction ? .series : .single)
+        let content = UNMutableNotificationContent()
+        content.title = outcome.message
+        content.body = "\(role.label)"
+        try? await UNUserNotificationCenter.current().add(
+            UNNotificationRequest(identifier: "\(identifierPrefix)result.\(UUID().uuidString)",
+                                  content: content, trigger: nil))
+    }
+
+    private static func fetchEvent(_ id: UUID, in context: NSManagedObjectContext) -> CDEvent? {
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.fetchLimit = 1
+        return try? context.fetch(request).first
     }
 
     // MARK: - Hilfen

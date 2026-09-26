@@ -56,6 +56,7 @@ final class BackgroundSync {
               let me = CurrentMember.resolve(in: context, household: household) else { return }
         CalendarImportService.shared.sync(household: household, member: me, in: context)
         extendSeries()
+        CalendarExportService.shared.sync()
         await ReminderService.reschedule(me: me, household: household, in: context)
         logger.info("Hintergrundlauf abgeschlossen")
     }

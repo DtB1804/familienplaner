@@ -59,6 +59,17 @@ public enum ParticipationRole: String, CaseIterable, Codable, Identifiable {
 
     /// Rollen, die eine Zuständigkeit bedeuten und offen bleiben können.
     public static var responsibilityRoles: [ParticipationRole] { [.driveTo, .driveFrom, .accompany] }
+
+    /// Für Fragen wie "Wer holt morgen?"
+    public var question: String {
+        switch self {
+        case .driveTo: return "bringt"
+        case .driveFrom: return "holt"
+        case .accompany: return "begleitet"
+        case .subject: return "ist dabei"
+        case .informed: return "ist informiert"
+        }
+    }
 }
 
 public enum ParticipationStatus: String, CaseIterable, Codable {

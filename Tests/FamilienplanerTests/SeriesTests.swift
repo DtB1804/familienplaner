@@ -246,4 +246,94 @@ final class SeriesTests: XCTestCase {
         XCTAssertTrue(EventService.coveredRoles(of: all[0]).isDisjoint(with: [.driveFrom]), "frühere bleiben offen")
         XCTAssertTrue(try EventService.openResponsibilities(within: 400, in: fx.context).allSatisfy { $0.startAt == all[0].startAt })
     }
+
+    // MARK: Serienübernahme
+
+    func testSeriesClaimIsMarkedAndCarriedToExtendedOccurrences() throws {
+        let fx = try Fixture()
+        let first = fx.event("Schwimmen", inHours: 1, roles: [.driveFrom, .driveTo])
+        SeriesService.startSeries(from: first, rule: Recurrence(frequency: .weekly), in: fx.context)
+        let all = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context)
+        XCTAssertEqual(SeriesService.claimFollowing(role: .driveFrom, from: all[0], by: fx.owner, in: fx.context), all.count)
+        try fx.save()
+        let claims = all.flatMap { ($0.participations as? Set<CDEventParticipation>) ?? [] }
+            .filter { $0.roleRaw == "driveFrom" }
+        XCTAssertTrue(claims.allSatisfy(SeriesService.isSeriesClaim))
+
+        let later = Date().addingTimeInterval(10 * 7 * 86_400)
+        XCTAssertEqual(SeriesService.extendAll(household: fx.household, me: fx.owner, in: fx.context, now: later), 10)
+        let extended = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context).suffix(10)
+        for occurrence in extended {
+            XCTAssertTrue(EventService.coveredRoles(of: occurrence).contains(.driveFrom), "Serienübernahme fehlt")
+            XCTAssertFalse(EventService.coveredRoles(of: occurrence).contains(.driveTo), "Bringen bleibt offen")
+        }
+    }
+
+    func testSingleClaimIsNotCarriedButCanBeUpgraded() throws {
+        let fx = try Fixture()
+        let first = fx.event("Schwimmen", inHours: 1, roles: [.driveFrom])
+        SeriesService.startSeries(from: first, rule: Recurrence(frequency: .weekly), in: fx.context)
+        let all = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context)
+        EventService.claim(role: .driveFrom, on: all.last!, by: fx.owner, in: fx.context)
+        XCTAssertTrue(SeriesService.standingClaims(of: all.last!).isEmpty, "Einzelübernahme gilt nicht für die Serie")
+
+        // Später doch für die Serie: vorhandene Einzelübernahme wird markiert, nicht verdoppelt.
+        SeriesService.claimFollowing(role: .driveFrom, from: all[0], by: fx.owner, in: fx.context)
+        let lastClaims = ((all.last!.participations as? Set<CDEventParticipation>) ?? []).filter { $0.roleRaw == "driveFrom" }
+        XCTAssertEqual(lastClaims.count, 1)
+        XCTAssertTrue(SeriesService.isSeriesClaim(lastClaims.first!))
+    }
+
+    func testGivingBackFollowingStopsCarrying() throws {
+        let fx = try Fixture()
+        let first = fx.event("Schwimmen", inHours: 1, roles: [.driveFrom])
+        SeriesService.startSeries(from: first, rule: Recurrence(frequency: .weekly), in: fx.context)
+        let all = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context)
+        SeriesService.claimFollowing(role: .driveFrom, from: all[0], by: fx.owner, in: fx.context)
+        XCTAssertEqual(SeriesService.giveBackFollowing(role: .driveFrom, from: all[4], by: fx.owner, in: fx.context),
+                       all.count - 4)
+        try fx.save()
+        XCTAssertTrue(EventService.coveredRoles(of: all[3]).contains(.driveFrom))
+        XCTAssertFalse(EventService.coveredRoles(of: all[4]).contains(.driveFrom))
+
+        let later = Date().addingTimeInterval(10 * 7 * 86_400)
+        SeriesService.extendAll(household: fx.household, me: fx.owner, in: fx.context, now: later)
+        let extended = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context).suffix(10)
+        XCTAssertTrue(extended.allSatisfy { !EventService.coveredRoles(of: $0).contains(.driveFrom) })
+    }
+
+    // MARK: Übernehmen aus Mitteilung oder Watch
+
+    func testClaimActionsSingleAndSeries() throws {
+        let fx = try Fixture()
+        let saved = CurrentMember.id
+        defer { CurrentMember.id = saved }
+        CurrentMember.id = fx.owner.id
+
+        let first = fx.event("Schwimmen", inHours: 1, roles: [.driveFrom])
+        SeriesService.startSeries(from: first, rule: Recurrence(frequency: .weekly), in: fx.context)
+        try fx.save()
+        let all = SeriesService.occurrences(ofSeries: first.seriesParentID!, in: fx.context)
+
+        XCTAssertEqual(ClaimActions.claim(eventID: all[0].id!, role: .driveFrom, scope: .single, persistence: fx.persistence),
+                       .claimed(count: 1))
+        XCTAssertFalse(EventService.coveredRoles(of: all[1]).contains(.driveFrom))
+        XCTAssertEqual(ClaimActions.claim(eventID: all[1].id!, role: .driveFrom, scope: .series, persistence: fx.persistence),
+                       .claimed(count: all.count - 1))
+        XCTAssertTrue(all.allSatisfy { EventService.coveredRoles(of: $0).contains(.driveFrom) })
+
+        let ben = fx.member("Ben")
+        try fx.save()
+        CurrentMember.id = ben.id
+        XCTAssertEqual(ClaimActions.claim(eventID: all[2].id!, role: .driveFrom, scope: .single, persistence: fx.persistence),
+                       .alreadyTaken(by: "Anna"))
+        XCTAssertEqual(ClaimActions.claim(eventID: all[2].id!, role: .driveFrom, scope: .series, persistence: fx.persistence),
+                       .alreadyTaken(by: "Anna"))
+    }
+
+    func testRoleQuestionWording() {
+        XCTAssertEqual(ParticipationRole.driveFrom.question, "holt")
+        XCTAssertEqual(ParticipationRole.driveTo.question, "bringt")
+        XCTAssertEqual(ParticipationRole.accompany.question, "begleitet")
+    }
 }

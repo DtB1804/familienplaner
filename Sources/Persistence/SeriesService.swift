@@ -181,6 +181,9 @@ public enum SeriesService {
     /// Nachgelegt wird erst, wenn der letzte Termin näher als 20 Wochen liegt,
     /// dann in einem Schritt bis zum Horizont. So entstehen selten gleichzeitige Nachläufe.
     public static let extendBelowWeeks = 20
+    /// Markierung in `CDEventParticipation.note`: Übernahme gilt für die ganze Serie
+    /// und wird beim Nachlegen auf neue Termine übertragen.
+    public static let seriesClaimNote = "series"
 
     static func horizon(from now: Date, calendar: Calendar = .current) -> Date {
         calendar.date(byAdding: .day, value: 7 * horizonWeeks, to: now) ?? now
@@ -294,8 +297,14 @@ public enum SeriesService {
                   let template = events.last(where: { $0.deletedAt == nil }),
                   let rule = Recurrence(encoded: template.recurrenceRule) else { continue }
             if let creator = template.createdByMemberID, creator != me.id, activeIDs.contains(creator) { continue }
+            let standing = standingClaims(of: template)
             for date in rule.occurrences(after: lastStart, through: limit, calendar: calendar) {
-                makeOccurrence(copying: template, startAt: date, in: context)
+                let occurrence = makeOccurrence(copying: template, startAt: date, in: context)
+                for (member, role) in standing {
+                    let participation = EventService.addParticipation(in: context, event: occurrence,
+                                                                      member: member, role: role)
+                    participation.note = seriesClaimNote
+                }
                 created += 1
             }
         }
@@ -330,17 +339,71 @@ public enum SeriesService {
     }
 
     /// Übernimmt eine Zuständigkeit für diesen und alle folgenden Termine der Serie,
-    /// soweit sie dort verlangt und noch offen ist. Liefert die Zahl der Übernahmen.
+    /// soweit sie dort verlangt und noch offen ist. Die Übernahme ist als Serienübernahme
+    /// markiert und gilt damit auch für später nachgelegte Termine. Liefert die Zahl der Übernahmen.
     @discardableResult
     public static func claimFollowing(role: ParticipationRole, from event: CDEvent, by member: CDMember,
                                       in context: NSManagedObjectContext) -> Int {
         var count = 0
         for occurrence in following(event, in: context)
-        where RequiredRoles.decode(occurrence.requiredRolesRaw).contains(role)
-            && !EventService.coveredRoles(of: occurrence).contains(role) {
-            if EventService.claim(role: role, on: occurrence, by: member, in: context) == .claimed { count += 1 }
+        where RequiredRoles.decode(occurrence.requiredRolesRaw).contains(role) {
+            let mine = ((occurrence.participations as? Set<CDEventParticipation>) ?? []).first {
+                $0.roleRaw == role.rawValue && $0.member?.objectID == member.objectID
+                    && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined
+            }
+            if let mine {
+                // Schon einzeln übernommen: als Serienübernahme markieren.
+                if mine.note != seriesClaimNote { mine.note = seriesClaimNote; mine.updatedAt = Date() }
+                continue
+            }
+            guard !EventService.coveredRoles(of: occurrence).contains(role) else { continue }
+            if EventService.claim(role: role, on: occurrence, by: member, in: context) == .claimed,
+               let created = mineParticipation(role: role, member: member, in: occurrence) {
+                created.note = seriesClaimNote
+                count += 1
+            }
         }
         return count
+    }
+
+    /// Serienübernahme abgeben: eigene Übernahmen dieser Rolle ab `event` werden abgegeben
+    /// (Status "abgelehnt", eigener Datensatz, Regel 5). Liefert die Zahl.
+    @discardableResult
+    public static func giveBackFollowing(role: ParticipationRole, from event: CDEvent, by member: CDMember,
+                                         in context: NSManagedObjectContext) -> Int {
+        var count = 0
+        for occurrence in following(event, in: context) {
+            guard let mine = mineParticipation(role: role, member: member, in: occurrence) else { continue }
+            mine.statusRaw = ParticipationStatus.declined.rawValue
+            mine.updatedAt = Date()
+            count += 1
+        }
+        return count
+    }
+
+    /// Ist diese Übernahme Teil einer Serienübernahme?
+    public static func isSeriesClaim(_ participation: CDEventParticipation) -> Bool {
+        participation.note == seriesClaimNote
+    }
+
+    private static func mineParticipation(role: ParticipationRole, member: CDMember,
+                                          in event: CDEvent) -> CDEventParticipation? {
+        ((event.participations as? Set<CDEventParticipation>) ?? []).first {
+            $0.roleRaw == role.rawValue && $0.member?.objectID == member.objectID
+                && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined
+        }
+    }
+
+    /// Serienübernahmen eines Termins, die beim Nachlegen übertragen werden.
+    static func standingClaims(of template: CDEvent) -> [(CDMember, ParticipationRole)] {
+        ((template.participations as? Set<CDEventParticipation>) ?? []).compactMap { participation in
+            guard participation.note == seriesClaimNote,
+                  ParticipationStatus(rawValue: participation.statusRaw ?? "") != .declined,
+                  let member = participation.member, member.isActive,
+                  let role = ParticipationRole(rawValue: participation.roleRaw ?? ""), role != .subject
+            else { return nil }
+            return (member, role)
+        }
     }
 
     // MARK: Intern

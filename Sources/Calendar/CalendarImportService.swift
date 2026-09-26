@@ -46,8 +46,13 @@ final class CalendarImportService {
         }
     }
 
+    /// Kalender zur Auswahl, ohne den Ausgabekalender "Family Planner" (sonst kämen die
+    /// eingetragenen Familientermine als Kopie zurück).
     func calendars() -> [EKCalendar] {
-        store.calendars(for: .event).sorted {
+        let exportID = CalendarExportService.shared.exportCalendarIdentifier
+        return store.calendars(for: .event).filter {
+            $0.calendarIdentifier != exportID && $0.title != CalendarExportService.calendarTitle
+        }.sorted {
             ($0.source?.title ?? "", $0.title) < ($1.source?.title ?? "", $1.title)
         }
     }
@@ -115,7 +120,9 @@ final class CalendarImportService {
 
             guard source.isEnabled, visibility != .hidden,
                   let identifier = source.ekCalendarIdentifier,
-                  let ekCalendar = store.calendar(withIdentifier: identifier) else {
+                  identifier != CalendarExportService.shared.exportCalendarIdentifier,
+                  let ekCalendar = store.calendar(withIdentifier: identifier),
+                  ekCalendar.title != CalendarExportService.calendarTitle else {
                 // Kalender abgewählt oder auf dem Gerät nicht mehr vorhanden.
                 for event in imported { EventService.softDelete(event); removed += 1 }
                 continue

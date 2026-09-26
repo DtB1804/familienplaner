@@ -170,4 +170,33 @@ final class EndToEndTests: XCTestCase {
         tap("nav.previous", in: app)
         XCTAssertTrue(element("week.event.Chor", in: app).waitForExistence(timeout: 5), "Erster Termin darf bleiben")
     }
+
+    /// Serie mit "Holt nötig": Übernehmen fragt nach der Serie, "ganze Serie" schließt
+    /// alle offenen Termine der nächsten 14 Tage.
+    @MainActor
+    func testClaimForWholeSeries() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+
+        tap("toolbar.new", in: app)
+        type("Tanzen", into: "editor.title", in: app)
+        tap("editor.repeat", in: app)
+        app.buttons["Wöchentlich"].firstMatch.tap()
+        setSwitch("editor.role.driveFrom", on: true, in: app)
+        tap("editor.save", in: app)
+
+        let banner = element("banner.open", in: app)
+        XCTAssertTrue(banner.waitForExistence(timeout: 5))
+        XCTAssertTrue(banner.label.contains("2 offene"), "Zwei Serientermine in 14 Tagen erwartet: \(banner.label)")
+        banner.tap()
+        tap("claim.Tanzen", in: app)
+        tap("claimScope.series", in: app)
+        let ok = app.alerts.buttons["OK"].firstMatch
+        XCTAssertTrue(ok.waitForExistence(timeout: 5), "Bestätigung fehlt")
+        ok.tap()
+        XCTAssertTrue(app.staticTexts["Alles vergeben"].waitForExistence(timeout: 5))
+        tap("responsibilities.done", in: app)
+        XCTAssertTrue(banner.waitForNonExistence(timeout: 5))
+    }
 }

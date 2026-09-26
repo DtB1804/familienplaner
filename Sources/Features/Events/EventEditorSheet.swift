@@ -35,6 +35,7 @@ struct EventEditorSheet: View {
     @State private var originalRule: Recurrence?
     @State private var askSaveScope = false
     @State private var askDeleteScope = false
+    @State private var pendingGiveBack: CDEventParticipation?
 
     private var isNew: Bool { event == nil }
 
@@ -172,9 +173,21 @@ struct EventEditorSheet: View {
                         ForEach(assignments(of: event), id: \.objectID) { participation in
                             HStack {
                                 Text("\(ParticipationRole(rawValue: participation.roleRaw ?? "")?.label ?? ""): \(participation.member?.displayName ?? "")")
+                                if SeriesService.isSeriesClaim(participation) {
+                                    Image(systemName: "repeat")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .accessibilityLabel("für die Serie")
+                                }
                                 Spacer()
                                 if participation.member?.objectID == author.objectID {
-                                    Button("Abgeben", role: .destructive) { giveBack(participation) }
+                                    Button("Abgeben", role: .destructive) {
+                                        if SeriesService.isSeriesClaim(participation) {
+                                            pendingGiveBack = participation
+                                        } else {
+                                            giveBack(participation)
+                                        }
+                                    }
                                         .buttonStyle(.borderless)
                                 }
                             }
@@ -230,6 +243,14 @@ struct EventEditorSheet: View {
                     .accessibilityIdentifier("scope.delete.one")
                 Button("Diesen und alle folgenden", role: .destructive) { delete(following: true) }
                     .accessibilityIdentifier("scope.delete.following")
+            }
+            .confirmationDialog("Für die Serie übernommen", isPresented: Binding(
+                get: { pendingGiveBack != nil }, set: { if !$0 { pendingGiveBack = nil } }),
+                titleVisibility: .visible) {
+                if let participation = pendingGiveBack {
+                    Button("Nur diesen Termin abgeben", role: .destructive) { giveBack(participation) }
+                    Button("Diesen und alle folgenden abgeben", role: .destructive) { giveBackFollowing(participation) }
+                }
             }
             .confirmationDialog("Termin einer Serie ändern", isPresented: $askSaveScope, titleVisibility: .visible) {
                 Button("Nur diesen Termin") { save(following: false) }
@@ -347,6 +368,13 @@ struct EventEditorSheet: View {
     private func giveBack(_ participation: CDEventParticipation) {
         participation.statusRaw = ParticipationStatus.declined.rawValue
         participation.updatedAt = Date()
+        PersistenceController.shared.save(context)
+    }
+
+    private func giveBackFollowing(_ participation: CDEventParticipation) {
+        guard let event, let member = participation.member,
+              let role = ParticipationRole(rawValue: participation.roleRaw ?? "") else { return }
+        SeriesService.giveBackFollowing(role: role, from: event, by: member, in: context)
         PersistenceController.shared.save(context)
     }
 

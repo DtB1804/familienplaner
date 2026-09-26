@@ -26,6 +26,8 @@ jobs:
       - name: Projekt erzeugen
         run: xcodegen generate
 
+      # build-for-testing: übersetzt App und Testziele, führt aber keine Tests aus
+      # (Tests laufen nur nachts, Workflow "Tests").
       - name: Build (Simulator, ohne Signierung)
         run: |
           set -o pipefail
@@ -35,7 +37,7 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \
-            build 2>&1 | tee build.log
+            build-for-testing 2>&1 | tee build.log
 
       - name: Fehler zusammenfassen
         if: always()

@@ -82,7 +82,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 4. Sync-Test über zwei echte Apple-IDs
 5. Kalenderimport über EventKit
 
-## Backlog (Stand 25.09.2026)
+## Backlog (Stand 26.09.2026)
 
 | Thema | Stand | Notiz |
 |---|---|---|
@@ -90,10 +90,10 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Ganztägige Termine | offen | Leiste über dem Zeitstrahl, auch aus iPhone-Kalendern |
 | Erinnerungen | da (Build 12, Hintergrund ab Build 18) | lokal je Gerät, Neuplanung auch bei Änderungen anderer |
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
-| Wiederkehrende Termine | offen | Feld im Modell vorhanden, Eingabe fehlt |
+| Terminserien | da (Build 21, Übernahme/Vorabend ab Build 22) | täglich bis jährlich, 26 Wochen rollierend; Zuständigkeit für ganze Serie; Vorabend-Abfrage mit „Übernehme ich“ in der Mitteilung |
 | Freiraum-Finder | offen | |
 | Hintergrundabgleich (Kalender, Erinnerungen) | da (Build 18) | stille CloudKit-Mitteilungen + BGAppRefresh; Zeitpunkt bestimmt iOS |
-| Familientermine in iPhone-Kalender zurückschreiben | offen | Option im Modell angelegt |
+| Familientermine in iPhone-Kalender | da (Build 22) | eigener Kalender „Family Planner“, nur in diese Richtung, je Gerät Aus/meine/alle |
 | Widgets | offen | |
 | Apple-Watch-App | Grundfunktion da (Build 19) | Heute/Morgen/Übermorgen, offene Zuständigkeiten, „Übernehme ich“; **offen:** Zifferblatt-Element (Widget-Erweiterung) |
 | Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |

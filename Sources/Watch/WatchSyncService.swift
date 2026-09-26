@@ -95,24 +95,11 @@ final class WatchSyncService: NSObject {
     // MARK: - "Übernehme ich" von der Watch
 
     fileprivate func handleClaim(eventID: String, role: String) -> String {
-        let context = PersistenceController.shared.viewContext
-        guard let household = try? HouseholdService.fetchHousehold(in: context),
-              let me = CurrentMember.resolve(in: context, household: household), me.role == .adult,
-              let uuid = UUID(uuidString: eventID),
+        guard let uuid = UUID(uuidString: eventID),
               let participationRole = ParticipationRole(rawValue: role) else { return "Nicht möglich" }
-        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
-        request.predicate = NSPredicate(format: "id == %@", uuid as CVarArg)
-        request.fetchLimit = 1
-        guard let event = try? context.fetch(request).first else { return "Termin nicht gefunden" }
-        switch EventService.claim(role: participationRole, on: event, by: me, in: context) {
-        case .claimed:
-            PersistenceController.shared.save(context)
-            push()
-            return "Übernommen"
-        case .alreadyTaken(let name):
-            push()
-            return "Schon vergeben an \(name)"
-        }
+        let outcome = ClaimActions.claim(eventID: uuid, role: participationRole, scope: .single)
+        push()
+        return outcome.message
     }
 }
 

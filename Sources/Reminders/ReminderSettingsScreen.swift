@@ -38,14 +38,14 @@ struct ReminderSettingsScreen: View {
 
             if isAdult {
                 Section {
-                    Toggle("Offene Zuständigkeiten am Vorabend", isOn: $openEnabled)
+                    Toggle("Am Vorabend nachfragen", isOn: $openEnabled)
                     if openEnabled {
                         Picker("Uhrzeit", selection: $openHour) {
                             ForEach(17...22, id: \.self) { Text("\($0):00 Uhr").tag($0) }
                         }
                     }
                 } footer: {
-                    Text("Erinnert am Abend vorher, wenn für den nächsten Tag noch niemand bringt, holt oder begleitet.")
+                    Text("Fragt am Abend vorher, wer bringt, holt oder begleitet, wenn es noch niemand übernommen hat, z. B. „Wer holt morgen?“. Übernehmen geht direkt aus der Mitteilung, bei Serien auch für die ganze Serie.")
                 }
             }
 
