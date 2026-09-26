@@ -232,9 +232,17 @@ public struct DayTimelineView: View {
                     .font(TypeScale.eventMeta.weight(.semibold))
             }
             if duration >= zoom.minimumLabelDuration {
-                Text(title)
-                    .font(TypeScale.eventTitle)
-                    .lineLimit(2)
+                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                    if SeriesService.isSeries(event) {
+                        Image(systemName: "repeat")
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .accessibilityHidden(true)
+                    }
+                    Text(title)
+                        .font(TypeScale.eventTitle)
+                        .lineLimit(2)
+                }
                 if duration >= zoom.minimumLabelDuration * 2, let assignments {
                     Text(assignments)
                         .font(TypeScale.eventMeta)

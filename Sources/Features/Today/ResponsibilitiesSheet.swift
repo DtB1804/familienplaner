@@ -12,6 +12,9 @@ struct ResponsibilitiesSheet: View {
 
     @State private var items: [OpenResponsibility] = []
     @State private var message: String?
+    @State private var info: String?
+    /// Termine in dieser Liste, die zu einer Serie gehören.
+    @State private var seriesEventIDs: Set<UUID> = []
 
     private var canClaim: Bool { me?.role == .adult }
 
@@ -29,10 +32,18 @@ struct ResponsibilitiesSheet: View {
                         }
                         Spacer()
                         if canClaim {
-                            Button("Übernehme ich") { claim(item) }
-                                .accessibilityIdentifier("claim.\(item.eventTitle)")
-                                .buttonStyle(.borderedProminent)
-                                .controlSize(.small)
+                            VStack(alignment: .trailing, spacing: 6) {
+                                Button("Übernehme ich") { claim(item) }
+                                    .accessibilityIdentifier("claim.\(item.eventTitle)")
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.small)
+                                if seriesEventIDs.contains(item.eventID) {
+                                    Button("Alle folgenden") { claimSeries(item) }
+                                        .accessibilityIdentifier("claimSeries.\(item.eventTitle)")
+                                        .buttonStyle(.bordered)
+                                        .controlSize(.small)
+                                }
+                            }
                         }
                     }
                 }
@@ -58,16 +69,34 @@ struct ResponsibilitiesSheet: View {
             } message: {
                 Text(message ?? "")
             }
+            .alert("Übernommen",
+                   isPresented: Binding(get: { info != nil }, set: { if !$0 { info = nil } })) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(info ?? "")
+            }
             .onAppear(perform: reload)
         }
     }
 
-    private func claim(_ item: OpenResponsibility) {
-        guard let me else { return }
+    private func event(for item: OpenResponsibility) -> CDEvent? {
         let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
         request.predicate = NSPredicate(format: "id == %@", item.eventID as CVarArg)
         request.fetchLimit = 1
-        guard let event = try? context.fetch(request).first else { return }
+        return try? context.fetch(request).first
+    }
+
+    /// Serie: diese Zuständigkeit für diesen und alle folgenden Termine übernehmen.
+    private func claimSeries(_ item: OpenResponsibility) {
+        guard let me, let event = event(for: item) else { return }
+        let count = SeriesService.claimFollowing(role: item.role, from: event, by: me, in: context)
+        PersistenceController.shared.save(context)
+        info = "\(item.role.label): \(count) Termine „\(item.eventTitle)“ übernommen. Später ergänzte Termine der Serie erscheinen wieder als offen."
+        reload()
+    }
+
+    private func claim(_ item: OpenResponsibility) {
+        guard let me, let event = event(for: item) else { return }
 
         switch EventService.claim(role: item.role, on: event, by: me, in: context) {
         case .claimed:
@@ -80,5 +109,8 @@ struct ResponsibilitiesSheet: View {
 
     private func reload() {
         items = (try? EventService.openResponsibilities(in: context)) ?? []
+        seriesEventIDs = Set(items.compactMap { item in
+            event(for: item).flatMap { SeriesService.isSeries($0) ? item.eventID : nil }
+        })
     }
 }

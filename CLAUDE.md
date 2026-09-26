@@ -137,3 +137,15 @@ Die Watch-App bekommt vom iPhone per WatchConnectivity einen fertigen Ausschnitt
 reduziert (Regel 2, Kinderansicht). Aktionen der Watch ("Übernehme ich") gehen als
 Nachricht ans iPhone und werden dort über die Service-Funktionen gespeichert. Kein
 CloudKit, kein Core Data auf der Watch.
+
+## 16. Terminserien sind einzelne Termine
+
+Eine Serie ("jeden Dienstag Schwimmen") wird als einzelne `CDEvent`-Datensätze mit
+gemeinsamer `seriesParentID` und der Regel in `recurrenceRule` (Teilmenge von RFC 5545)
+gespeichert, rollierend für 26 Wochen im Voraus (`SeriesService`). Grund: Zuständigkeiten
+gelten pro Termin ("wer holt am 14.10.?"), und Verschieben, Suche, Erinnerungen und Watch
+arbeiten ohne Sonderfall. Nachgelegt wird beim Start und im Hintergrund vom Gerät des
+Mitglieds, das die Serie angelegt hat. Einzeln gelöschte Termine bleiben weich gelöscht
+stehen (Regel 6) und werden deshalb nicht neu angelegt. Doppelte aus gleichzeitigem
+Nachlegen: es bleibt die kleinste UUID, Übernahmen wandern mit (wie Regel 14).
+Keine Modelländerung nötig: die Felder stehen seit Version 1 im Schema.

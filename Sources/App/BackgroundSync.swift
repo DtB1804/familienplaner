@@ -55,8 +55,19 @@ final class BackgroundSync {
         guard let household = try? HouseholdService.fetchHousehold(in: context),
               let me = CurrentMember.resolve(in: context, household: household) else { return }
         CalendarImportService.shared.sync(household: household, member: me, in: context)
+        extendSeries()
         await ReminderService.reschedule(me: me, household: household, in: context)
         logger.info("Hintergrundlauf abgeschlossen")
+    }
+
+    /// Terminserien bis zum Horizont ergänzen (CLAUDE.md Regel 16).
+    func extendSeries() {
+        let context = PersistenceController.shared.viewContext
+        guard let household = try? HouseholdService.fetchHousehold(in: context),
+              let me = CurrentMember.resolve(in: context, household: household) else { return }
+        let created = SeriesService.extendAll(household: household, me: me, in: context)
+        if context.hasChanges { PersistenceController.shared.save(context) }
+        if created > 0 { logger.info("Serien ergänzt: \(created) Termine") }
     }
 
     // MARK: - Intern

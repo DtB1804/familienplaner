@@ -23,6 +23,10 @@ struct EventDetailSheet: View {
                     LabeledContent("Datum", value: dateText)
                     LabeledContent("Zeit", value: timeText)
                     LabeledContent("Dauer", value: durationText)
+                    if let rule = SeriesService.rule(of: event) {
+                        LabeledContent("Wiederholung", value: RepeatChoice(rule).label
+                            + (rule.until.map { " bis " + $0.formatted(.dateTime.day().month().year().locale(de)) } ?? ""))
+                    }
                     if let location = EventPresentation.location(of: event, for: viewer, in: household),
                        !location.isEmpty {
                         LabeledContent("Ort", value: location)

@@ -132,4 +132,42 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(element("event.Zahnarzt", in: app).waitForExistence(timeout: 5))
         XCTAssertTrue(element("toolbar.new", in: app).exists)
     }
+
+    /// Terminserie: wöchentlich anlegen, erscheint in der Folgewoche,
+    /// "diesen und alle folgenden" löschen lässt frühere stehen.
+    @MainActor
+    func testWeeklySeries() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+
+        tap("toolbar.new", in: app)
+        type("Chor", into: "editor.title", in: app)
+        tap("editor.repeat", in: app)
+        let weekly = app.buttons["Wöchentlich"].firstMatch
+        XCTAssertTrue(weekly.waitForExistence(timeout: 5), "Auswahl Wöchentlich fehlt")
+        weekly.tap()
+        tap("editor.save", in: app)
+        XCTAssertTrue(element("event.Chor", in: app).waitForExistence(timeout: 5))
+
+        app.buttons["Woche"].tap()
+        tap("nav.next", in: app)
+        let nextWeek = element("week.event.Chor", in: app)
+        XCTAssertTrue(nextWeek.waitForExistence(timeout: 5), "Serie fehlt in der Folgewoche")
+
+        // Ab der Folgewoche löschen
+        nextWeek.tap()
+        XCTAssertTrue(app.navigationBars["Termin"].waitForExistence(timeout: 5), "Editor öffnet nicht")
+        var swipes = 0
+        while !app.buttons["editor.delete"].exists && swipes < 8 { app.swipeUp(); swipes += 1 }
+        tap("editor.delete", in: app)
+        tap("scope.delete.following", in: app)
+        XCTAssertTrue(nextWeek.waitForNonExistence(timeout: 5), "Folgetermin nicht gelöscht")
+        tap("nav.next", in: app)
+        XCTAssertFalse(element("week.event.Chor", in: app).waitForExistence(timeout: 2), "Spätere Termine nicht gelöscht")
+
+        tap("nav.previous", in: app)
+        tap("nav.previous", in: app)
+        XCTAssertTrue(element("week.event.Chor", in: app).waitForExistence(timeout: 5), "Erster Termin darf bleiben")
+    }
 }

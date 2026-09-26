@@ -23,6 +23,7 @@ struct FamilienplanerApp: App {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { BackgroundSync.shared.scheduleRefresh() }
+            if phase == .active { BackgroundSync.shared.extendSeries() }
         }
         .backgroundTask(.appRefresh(BackgroundSync.refreshIdentifier)) {
             await BackgroundSync.shared.runRefresh()
