@@ -217,4 +217,25 @@ final class EndToEndTests: XCTestCase {
         app.buttons["Woche"].tap()
         XCTAssertTrue(element("allday.Urlaub", in: app).waitForExistence(timeout: 5), "Leiste fehlt in der Woche")
     }
+
+    /// Freiraum-Finder: ein Termin morgen 10:00–10:30 teilt den freien Tag, Tippen legt einen Termin an.
+    @MainActor
+    func testFreeTimeFinder() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+        createEvent("Arzt", in: app)
+
+        tap("toolbar.free", in: app)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let tomorrow = formatter.string(from: Date().addingTimeInterval(86_400))
+        let afterAppointment = app.buttons["free.slot.\(tomorrow).10:30"].firstMatch
+        var swipes = 0
+        while !afterAppointment.exists && swipes < 6 { app.swipeUp(); swipes += 1 }
+        XCTAssertTrue(afterAppointment.exists, "Freie Zeit ab 10:30 fehlt")
+        XCTAssertTrue(app.buttons["free.slot.\(tomorrow).07:00"].exists, "Freie Zeit ab 7:00 fehlt")
+        afterAppointment.tap()
+        XCTAssertTrue(app.navigationBars["Neu"].waitForExistence(timeout: 5), "Editor öffnet nicht")
+    }
 }

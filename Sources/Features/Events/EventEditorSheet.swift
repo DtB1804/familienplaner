@@ -9,6 +9,10 @@ struct EventEditorSheet: View {
     /// nil = neuer Eintrag
     let event: CDEvent?
     let initialDay: Date
+    /// Vorbelegung, z. B. aus dem Freiraum-Finder.
+    var initialStart: Date? = nil
+    var initialEnd: Date? = nil
+    var initialSubjectIDs: Set<NSManagedObjectID>? = nil
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -313,11 +317,17 @@ struct EventEditorSheet: View {
             hasEnd = originalRule?.until != nil
             untilDate = originalRule?.until ?? Self.defaultUntil(after: startAt)
         } else {
-            startAt = TestMode.isActive
-                ? (Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: initialDay) ?? initialDay)
-                : Self.nextFullHour(on: initialDay)
-            endAt = startAt.addingTimeInterval(EventService.defaultDuration)
-            subjectIDs = [author.objectID]
+            if let initialStart {
+                startAt = initialStart
+                endAt = max(initialEnd ?? initialStart, initialStart.addingTimeInterval(EventService.defaultDuration))
+                duration = endAt.timeIntervalSince(startAt)
+            } else {
+                startAt = TestMode.isActive
+                    ? (Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: initialDay) ?? initialDay)
+                    : Self.nextFullHour(on: initialDay)
+                endAt = startAt.addingTimeInterval(EventService.defaultDuration)
+            }
+            subjectIDs = initialSubjectIDs.flatMap { $0.isEmpty ? nil : $0 } ?? [author.objectID]
             untilDate = Self.defaultUntil(after: startAt)
             lastDay = startAt
         }

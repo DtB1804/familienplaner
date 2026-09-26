@@ -91,7 +91,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Erinnerungen | da (Build 12, Hintergrund ab Build 18) | lokal je Gerät, Neuplanung auch bei Änderungen anderer |
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
 | Terminserien | da (Build 21, Übernahme/Vorabend ab Build 22) | täglich bis jährlich, 26 Wochen rollierend; Zuständigkeit für ganze Serie; Vorabend-Abfrage mit „Übernehme ich“ in der Mitteilung |
-| Freiraum-Finder | offen | |
+| Freiraum-Finder | da (Build 25) | gemeinsame freie Zeit ausgewählter Personen, Dauer, Tageszeit, Wochenende/Werktage; Tippen legt Termin an |
 | Hintergrundabgleich (Kalender, Erinnerungen) | da (Build 18) | stille CloudKit-Mitteilungen + BGAppRefresh; Zeitpunkt bestimmt iOS |
 | Familientermine in iPhone-Kalender | da (Build 22) | eigener Kalender „Family Planner“, nur in diese Richtung, je Gerät Aus/meine/alle |
 | Widgets | da (Build 24) | „Nächste Termine“ (klein/mittel/groß, Sperrbildschirm) und „Offene Zuständigkeiten“; **offen:** Zifferblatt-Element Watch |

@@ -38,6 +38,7 @@ public struct TodayScreen: View {
     @State private var photoItem: PhotosPickerItem?
     @State private var photoImport: PhotoImport?
     @State private var showSuggestions = false
+    @State private var showFreeTime = false
 
     @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
     private var pendingSuggestions: FetchedResults<CDSuggestionDraft>
@@ -138,6 +139,15 @@ public struct TodayScreen: View {
                 if canEdit {
                     ToolbarSpacer(.flexible, placement: .bottomBar)
                     ToolbarItem(placement: .bottomBar) {
+                        Button { showFreeTime = true } label: {
+                            Label("Frei", systemImage: "calendar.badge.clock")
+                        }
+                        .accessibilityIdentifier("toolbar.free")
+                    }
+                }
+                if canEdit {
+                    ToolbarSpacer(.flexible, placement: .bottomBar)
+                    ToolbarItem(placement: .bottomBar) {
                         Menu {
                             Button { editorTarget = .new } label: {
                                 Label("Neuer Termin", systemImage: "calendar.badge.plus")
@@ -201,6 +211,11 @@ public struct TodayScreen: View {
             }
             .sheet(isPresented: $showSuggestions) {
                 if let me { PendingSuggestionsScreen(me: me) }
+            }
+            .sheet(isPresented: $showFreeTime) {
+                if let household, let me {
+                    FreeTimeScreen(household: household, author: me)
+                }
             }
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
