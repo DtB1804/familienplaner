@@ -95,7 +95,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Hintergrundabgleich (Kalender, Erinnerungen) | da (Build 18) | stille CloudKit-Mitteilungen + BGAppRefresh; Zeitpunkt bestimmt iOS |
 | Familientermine in iPhone-Kalender | da (Build 22) | eigener Kalender „Family Planner“, nur in diese Richtung, je Gerät Aus/meine/alle |
 | Widgets | da (Build 25) | „Nächste Termine“ (klein/mittel/groß, Sperrbildschirm) und „Offene Zuständigkeiten“; Zifferblatt-Elemente der Watch ab Build 26 (nach Aufgabe 21) |
-| Apple-Watch-App | Grundfunktion da (Build 19) | Heute/Morgen/Übermorgen, offene Zuständigkeiten, „Übernehme ich“; **offen:** Zifferblatt-Element (Widget-Erweiterung) |
+| Apple-Watch-App | Grundfunktion da (Build 19) | Heute/Morgen/Übermorgen, offene Zuständigkeiten, „Übernehme ich“; Zifferblatt-Elemente ab Build 26 (nach Aufgabe 21) |
 | Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |
 | Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
 | Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
