@@ -98,4 +98,18 @@ final class SmallUnitsTests: XCTestCase {
         XCTAssertNil(snapshot.events.first?.token)
         XCTAssertNil(snapshot.events.first?.allDay)
     }
+
+    // MARK: Teilen-Eingang
+
+    func testSharedInboxKeepsOrderAndRemovesTakenFiles() throws {
+        try XCTSkipIf(SharedInbox.folder == nil, "App Group im Simulator ohne Signierung nicht verfügbar")
+        while SharedInbox.takeNext() != nil {}
+        XCTAssertTrue(SharedInbox.save(Data("erstes".utf8)))
+        Thread.sleep(forTimeInterval: 0.01)
+        XCTAssertTrue(SharedInbox.save(Data("zweites".utf8)))
+        XCTAssertEqual(SharedInbox.pendingCount, 2)
+        XCTAssertEqual(SharedInbox.takeNext(), Data("erstes".utf8))
+        XCTAssertEqual(SharedInbox.takeNext(), Data("zweites".utf8))
+        XCTAssertNil(SharedInbox.takeNext())
+    }
 }

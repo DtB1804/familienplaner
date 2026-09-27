@@ -188,4 +188,28 @@ final class EventServiceTests: XCTestCase {
     func testDefaultDurationIsThirtyMinutes() {
         XCTAssertEqual(EventService.defaultDuration, 30 * 60)
     }
+
+    // MARK: Andere Person (seitliches Ziehen)
+
+    func testReassignSubjectMovesEventToOtherPersonAndKeepsDuties() throws {
+        let fx = try Fixture()
+        let mia = fx.member("Mia", role: .child)
+        let tom = fx.member("Tom", role: .child)
+        let event = fx.event("Arzt", subjects: [mia], roles: [.driveTo])
+        EventService.claim(role: .driveTo, on: event, by: fx.owner, in: fx.context)
+
+        XCTAssertTrue(EventService.reassignSubject(event, from: mia, to: tom, in: fx.context))
+        try fx.save()
+        XCTAssertEqual(EventService.subjects(of: event).map(\.displayName), ["Tom"])
+        XCTAssertTrue(EventService.coveredRoles(of: event).contains(.driveTo), "Fahrt bleibt übernommen")
+
+        // Ziel schon betroffen: nur die Quelle fällt weg, kein doppelter Eintrag
+        let both = fx.event("Zahnarzt", subjects: [mia, tom])
+        XCTAssertTrue(EventService.reassignSubject(both, from: mia, to: tom, in: fx.context))
+        XCTAssertEqual(EventService.subjects(of: both).map(\.displayName), ["Tom"])
+
+        // Nicht betroffen: nichts ändern
+        XCTAssertFalse(EventService.reassignSubject(event, from: mia, to: fx.owner, in: fx.context))
+        XCTAssertFalse(EventService.reassignSubject(event, from: tom, to: tom, in: fx.context))
+    }
 }

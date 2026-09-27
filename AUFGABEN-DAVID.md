@@ -345,6 +345,20 @@ schon, sie wird nur zwei weiteren App-IDs zugeordnet:
 **Zuliefern:** „Watch-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
 **Aufwand:** etwa 5 Minuten.
 
+### Aufgabe 22: App Group für den Teilen-Knopf (neu, 27.09.2026)
+**Warum:** „Family Planner“ im Teilen-Menü (Mail, WhatsApp, Fotos) ist eine eigene
+Erweiterung. Sie legt Fotos im gemeinsamen Ordner ab, die App holt sie dort ab.
+
+**Wo:** developer.apple.com → Account → „Kennungen (Englisch)“ (Identifiers)
+
+1. „+“ → „App IDs“ → „App“ → Description `Family Planner Teilen`, Bundle ID „Explicit“
+   `de.barg.familienplaner.share` → „App Groups“ anhaken → Continue → Register.
+2. Die neue App-ID öffnen → bei „App Groups“ „Configure“ → `group.de.barg.familienplaner`
+   auswählen → Continue → Save.
+
+**Zuliefern:** „Teilen-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
+**Aufwand:** etwa 3 Minuten.
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:

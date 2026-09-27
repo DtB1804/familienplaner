@@ -197,6 +197,25 @@ public enum EventService {
         }
     }
 
+    /// Termin einer anderen Person zuordnen (seitliches Ziehen in der Tagesansicht):
+    /// `from` ist nicht mehr betroffen, `to` schon. Zuständigkeiten bleiben unberührt.
+    @discardableResult
+    public static func reassignSubject(_ event: CDEvent, from: CDMember, to: CDMember,
+                                       in context: NSManagedObjectContext) -> Bool {
+        guard from.objectID != to.objectID else { return false }
+        let participations = (event.participations as? Set<CDEventParticipation>) ?? []
+        let fromSubject = participations.filter {
+            $0.roleRaw == ParticipationRole.subject.rawValue && $0.member?.objectID == from.objectID
+        }
+        guard !fromSubject.isEmpty else { return false }
+        if !subjects(of: event).contains(where: { $0.objectID == to.objectID }) {
+            addParticipation(in: context, event: event, member: to, role: .subject)
+        }
+        fromSubject.forEach(context.delete)
+        event.updatedAt = Date()
+        return true
+    }
+
     /// Betroffene Personen eines Termins (Rolle "Betrifft").
     public static func subjects(of event: CDEvent) -> [CDMember] {
         ((event.participations as? Set<CDEventParticipation>) ?? [])

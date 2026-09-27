@@ -47,6 +47,7 @@ targets:
     dependencies:
       - target: FamilienplanerWatch   # Watch-App wird in die iPhone-App eingebettet
       - target: FamilienplanerWidgets # Widgets für Home- und Sperrbildschirm (seit 26.09.2026)
+      - target: FamilienplanerShare   # Teilen-Knopf: Fotos/PDFs aus Mail, WhatsApp (seit 27.09.2026)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner
@@ -121,6 +122,26 @@ targets:
         INFOPLIST_FILE: Widgets/Info.plist
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_ENTITLEMENTS: Resources/FamilienplanerWidgets.entitlements
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
+
+  # Teilen-Erweiterung: Bilder und PDFs landen im Eingang der App Group (SharedInbox).
+  FamilienplanerShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: ShareExtension
+        excludes:
+          - Info.plist
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.barg.familienplaner.share
+        PRODUCT_NAME: FamilienplanerShare
+        INFOPLIST_FILE: ShareExtension/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Resources/FamilienplanerShare.entitlements
         TARGETED_DEVICE_FAMILY: "1,2"
         SKIP_INSTALL: YES
         APPLICATION_EXTENSION_API_ONLY: YES

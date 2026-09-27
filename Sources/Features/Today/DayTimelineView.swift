@@ -24,9 +24,13 @@ public struct DayTimelineView: View {
     var canMove: (CDEvent) -> Bool = { _ in false }
     /// Wischen nach links (+1) oder rechts (−1) blättert den Tag.
     var onSwipeDay: ((Int) -> Void)? = nil
+    /// Seitlich in die Spalte einer anderen Person gezogen: Termin betrifft jetzt diese Person.
+    var onReassign: ((CDEvent, CDMember, CDMember) -> Void)? = nil
 
     @State private var draggingID: NSManagedObjectID?
+    @State private var draggingMemberID: NSManagedObjectID?
     @State private var dragDY: CGFloat = 0
+    @State private var dragDX: CGFloat = 0
 
     /// Raster beim Verschieben.
     private let snapMinutes = 15
@@ -41,7 +45,8 @@ public struct DayTimelineView: View {
                 onShowDetails: ((CDEvent) -> Void)? = nil,
                 onMove: ((CDEvent, TimeInterval) -> Void)? = nil,
                 canMove: @escaping (CDEvent) -> Bool = { _ in false },
-                onSwipeDay: ((Int) -> Void)? = nil) {
+                onSwipeDay: ((Int) -> Void)? = nil,
+                onReassign: ((CDEvent, CDMember, CDMember) -> Void)? = nil) {
         self.day = day
         self.members = members
         self.events = events
@@ -53,6 +58,7 @@ public struct DayTimelineView: View {
         self.onMove = onMove
         self.canMove = canMove
         self.onSwipeDay = onSwipeDay
+        self.onReassign = onReassign
     }
 
     public var body: some View {
@@ -206,6 +212,8 @@ public struct DayTimelineView: View {
             }
         }
         .frame(width: width, height: height, alignment: .top)
+        // Die gezogene Spalte liegt oben, sonst verschwindet der Termin hinter der Nachbarspalte.
+        .zIndex(draggingMemberID == member.objectID ? 1 : 0)
     }
 
     private func eventBlock(_ event: CDEvent, member: CDMember, width: CGFloat) -> some View {
@@ -228,8 +236,13 @@ public struct DayTimelineView: View {
 
         return VStack(alignment: .leading, spacing: Spacing.hair) {
             if isDragging {
-                Text(movedStart(event).formatted(date: .omitted, time: .shortened))
-                    .font(TypeScale.eventMeta.weight(.semibold))
+                HStack(spacing: 4) {
+                    Text(movedStart(event).formatted(date: .omitted, time: .shortened))
+                    if let target = reassignTarget(from: member, laneWidth: width) {
+                        Text("→ \(target.shortName ?? "")")
+                    }
+                }
+                .font(TypeScale.eventMeta.weight(.semibold))
             }
             if duration >= zoom.minimumLabelDuration {
                 HStack(alignment: .firstTextBaseline, spacing: 3) {
@@ -284,7 +297,7 @@ public struct DayTimelineView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
-        .gesture(moveGesture(for: event), including: movable ? .all : .subviews)
+        .gesture(moveGesture(for: event, member: member, laneWidth: width), including: movable ? .all : .subviews)
         // Nicht verschiebbare Termine (z. B. aus dem Kalender): Halten zeigt die Details.
         .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails?(event) },
                  including: movable ? .subviews : .all)
@@ -295,29 +308,53 @@ public struct DayTimelineView: View {
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("event.\(baseTitle)")
         .accessibilityValue((event.startAt ?? day).formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)))
-        .offset(x: Spacing.xs, y: max(top, 0) + (isDragging ? dragDY : 0))
+        .offset(x: Spacing.xs + (isDragging && canReassign(event, from: member) ? dragDX : 0),
+                y: max(top, 0) + (isDragging ? dragDY : 0))
     }
 
     // MARK: - Verschieben
 
-    private func moveGesture(for event: CDEvent) -> some Gesture {
+    private func moveGesture(for event: CDEvent, member: CDMember, laneWidth: CGFloat) -> some Gesture {
         LongPressGesture(minimumDuration: 0.35)
             .sequenced(before: DragGesture(minimumDistance: 0))
             .onChanged { value in
                 if case .second(true, let drag) = value {
                     draggingID = event.objectID
+                    draggingMemberID = member.objectID
                     dragDY = drag?.translation.height ?? 0
+                    dragDX = drag?.translation.width ?? 0
                 }
             }
             .onEnded { value in
                 if case .second(true, let drag?) = value {
                     let minutes = snappedMinutes(for: drag.translation.height)
                     if minutes != 0 { onMove?(event, TimeInterval(minutes * 60)) }
+                    if let target = reassignTarget(from: member, laneWidth: laneWidth, dx: drag.translation.width),
+                       canReassign(event, from: member) {
+                        onReassign?(event, member, target)
+                    }
                 }
                 draggingID = nil
+                draggingMemberID = nil
                 dragDY = 0
+                dragDX = 0
                 lastDragEnd = Date()
             }
+    }
+
+    /// Seitlich ziehen geht nur aus der Spalte einer betroffenen Person
+    /// (nicht aus der Spalte dessen, der bringt oder holt).
+    private func canReassign(_ event: CDEvent, from member: CDMember) -> Bool {
+        onReassign != nil && roles(of: member, in: event).contains(.subject)
+    }
+
+    /// Zielperson nach seitlichem Ziehen um mindestens eine halbe Spaltenbreite.
+    private func reassignTarget(from member: CDMember, laneWidth: CGFloat, dx: CGFloat? = nil) -> CDMember? {
+        let shift = Int(((dx ?? dragDX) / max(laneWidth, 1)).rounded())
+        guard shift != 0, let index = members.firstIndex(where: { $0.objectID == member.objectID }) else { return nil }
+        let target = index + shift
+        guard members.indices.contains(target) else { return nil }
+        return members[target]
     }
 
     private func snappedMinutes(for dy: CGFloat) -> Int {

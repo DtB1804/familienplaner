@@ -184,7 +184,9 @@ Mitglied dieses Geräts reduzierten Ausschnitt (`WatchSnapshot`, dasselbe Format
 Watch) als JSON in die App Group `group.de.barg.familienplaner` (`WidgetBridge`) und lässt
 die Widgets neu zeichnen, nur wenn sich der Inhalt geändert hat. Kein Core Data, kein
 CloudKit im Widget. Tippen öffnet den Tag über `familyplanner://day?t=<Unix-Zeit>`.
-Die Zifferblatt-Elemente der Watch (`WatchWidgets/`) arbeiten genauso: Die Watch-App
+Die Teilen-Erweiterung (`ShareExtension/`) legt geteilte Bilder und PDF-Seiten als JPEG
+im Eingang der App Group ab (`SharedInbox`); die App holt sie beim Öffnen ab und zeigt die
+Vorschläge zur Bestätigung (Regel 4). Die Zifferblatt-Elemente der Watch (`WatchWidgets/`) arbeiten genauso: Die Watch-App
 schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)

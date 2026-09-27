@@ -86,7 +86,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 
 | Thema | Stand | Notiz |
 |---|---|---|
-| Termine aus Fotos | Grundfunktion da (Build 8) | **Nicht vergessen (David):** Qualität mit echten Elternbriefen weiter testen und nachschärfen, Kamera direkt aus der App, ggf. Teilen-Erweiterung aus Fotos/Mail |
+| Termine aus Fotos | Kamera und Teilen-Knopf da (Build 27, nach Aufgabe 22) | Fotos/Screenshots/PDFs aus Mail, WhatsApp, Fotos, Dateien; **offen:** Qualität mit echten Elternbriefen testen, Text teilen |
 | Ganztägige Termine | da (Build 23) | Leiste über dem Zeitstrahl, mehrtägig, auch als Serie (Geburtstag jährlich), Übernahme aus und Eintrag in iPhone-Kalender |
 | Erinnerungen | da (Build 12, Hintergrund ab Build 18) | lokal je Gerät, Neuplanung auch bei Änderungen anderer |
 | iPad | da (Build 12) | gleiche Oberfläche, alle Ausrichtungen |
@@ -96,7 +96,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Familientermine in iPhone-Kalender | da (Build 22) | eigener Kalender „Family Planner“, nur in diese Richtung, je Gerät Aus/meine/alle |
 | Widgets | da (Build 25) | „Nächste Termine“ (klein/mittel/groß, Sperrbildschirm) und „Offene Zuständigkeiten“; Zifferblatt-Elemente der Watch ab Build 26 (nach Aufgabe 21) |
 | Apple-Watch-App | Grundfunktion da (Build 19) | Heute/Morgen/Übermorgen, offene Zuständigkeiten, „Übernehme ich“; Zifferblatt-Elemente ab Build 26 (nach Aufgabe 21) |
-| Termin in andere Personenspalte ziehen | offen | bisher nur zeitlich verschieben |
+| Termin in andere Personenspalte ziehen | da (Build 27) | halten und seitlich ziehen; Zuständigkeiten bleiben |
 | Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
 | Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
 

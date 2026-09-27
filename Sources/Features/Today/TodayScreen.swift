@@ -39,6 +39,8 @@ public struct TodayScreen: View {
     @State private var photoImport: PhotoImport?
     @State private var showSuggestions = false
     @State private var showFreeTime = false
+    @State private var showCamera = false
+    @State private var cameraData: Data?
 
     @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
     private var pendingSuggestions: FetchedResults<CDSuggestionDraft>
@@ -152,6 +154,11 @@ public struct TodayScreen: View {
                             Button { editorTarget = .new } label: {
                                 Label("Neuer Termin", systemImage: "calendar.badge.plus")
                             }
+                            if CameraPicker.isAvailable {
+                                Button { showCamera = true } label: {
+                                    Label("Termine fotografieren", systemImage: "camera")
+                                }
+                            }
                             Button { showPhotoPicker = true } label: {
                                 Label("Termine aus Foto", systemImage: "doc.text.viewfinder")
                             }
@@ -204,7 +211,15 @@ public struct TodayScreen: View {
                     photoItem = nil
                 }
             }
-            .sheet(item: $photoImport) { photo in
+            .fullScreenCover(isPresented: $showCamera, onDismiss: {
+                // Erst nach dem Schließen der Kamera das Prüfblatt zeigen.
+                if let data = cameraData { photoImport = PhotoImport(data: data) }
+                cameraData = nil
+            }) {
+                CameraPicker { data in cameraData = data }
+                    .ignoresSafeArea()
+            }
+            .sheet(item: $photoImport, onDismiss: takeSharedPhoto) { photo in
                 if let household, let me {
                     PhotoImportSheet(imageData: photo.data, household: household, me: me)
                 }
@@ -240,11 +255,13 @@ public struct TodayScreen: View {
                 scheduleReminders()
                 syncCalendars()
                 DeviceRegistrationService.refresh(memberID: me?.id, in: context)
+                takeSharedPhoto()
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active {
                     syncCalendars()
                     scheduleReminders()
+                    takeSharedPhoto()
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in
@@ -270,7 +287,13 @@ public struct TodayScreen: View {
                         canMove: { event in
                             canEdit && EventOrigin(rawValue: event.originRaw ?? "") != .imported
                         },
-                        onSwipeDay: { offset in shiftDay(offset) })
+                        onSwipeDay: { offset in shiftDay(offset) },
+                        onReassign: canEdit ? { event, from, to in
+                            guard EventOrigin(rawValue: event.originRaw ?? "") != .imported else { return }
+                            if EventService.reassignSubject(event, from: from, to: to, in: context) {
+                                PersistenceController.shared.save(context)
+                            }
+                        } : nil)
     }
 
     private var weekTimeline: some View {
@@ -367,6 +390,12 @@ public struct TodayScreen: View {
 
     /// Antippen: Eigene Termine bearbeiten Erwachsene im Editor. Übernommene Kalendertermine
     /// und alles für Kinder bzw. in der Vorschau zeigt die Detailansicht mit genauen Zeiten.
+    /// Über den Teilen-Knopf (Mail, WhatsApp, Fotos) geschickte Bilder nacheinander prüfen.
+    private func takeSharedPhoto() {
+        guard canEdit, photoImport == nil, !showCamera else { return }
+        if let data = SharedInbox.takeNext() { photoImport = PhotoImport(data: data) }
+    }
+
     private func open(_ event: CDEvent) {
         if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
             editorTarget = .existing(event)
