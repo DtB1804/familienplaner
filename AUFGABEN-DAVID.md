@@ -299,7 +299,7 @@ am 23.09.2026.
 
 ---
 
-### Aufgabe 20: App Group für Widgets freigeben (neu, 26.09.2026)
+### Aufgabe 20: App Group für Widgets freigeben ✅ erledigt (27.09.2026, Build 25 signiert und hochgeladen)
 **Warum:** Die Widgets lesen ihre Daten aus einem gemeinsamen Ordner von App und Widget
 (App Group). Der TestFlight-Build 24 scheiterte beim Signieren: „No profiles for
 'de.barg.familienplaner.widgets' / 'de.barg.familienplaner' were found“, dazu
