@@ -17,6 +17,7 @@ final class WatchStore: NSObject, ObservableObject {
         super.init()
         if let data = UserDefaults.standard.data(forKey: cacheKey) {
             snapshot = try? JSONDecoder().decode(WatchSnapshot.self, from: data)
+            if let snapshot { WidgetBridge.publish(snapshot) }
         }
         if WCSession.isSupported() {
             WCSession.default.delegate = self
@@ -50,6 +51,8 @@ final class WatchStore: NSObject, ObservableObject {
               let decoded = try? JSONDecoder().decode(WatchSnapshot.self, from: data) else { return }
         snapshot = decoded
         UserDefaults.standard.set(data, forKey: cacheKey)
+        // Zifferblatt-Elemente lesen denselben Ausschnitt aus der App Group der Watch.
+        WidgetBridge.publish(decoded)
     }
 }
 

@@ -326,6 +326,25 @@ angelegt. Ohne diese Freigabe schlägt jeder weitere TestFlight-Build fehl.
 **Zuliefern:** „App Group angelegt“. Ich starte dann den TestFlight-Build neu.
 **Aufwand:** etwa 10 Minuten.
 
+### Aufgabe 21: App Group für das Watch-Zifferblatt (neu, 27.09.2026)
+**Warum:** Die Zifferblatt-Elemente sind eine eigene Erweiterung der Watch-App und lesen
+ihre Daten wie die Widgets aus der App Group. Wie bei Aufgabe 20 legt die automatische
+Signierung das nicht selbst an.
+
+**Wo:** developer.apple.com → Account → Zertifikate, Kennungen und Profile →
+„Kennungen (Englisch)“ (Identifiers). Die App Group `group.de.barg.familienplaner` gibt es
+schon, sie wird nur zwei weiteren App-IDs zugeordnet:
+
+1. **Watch-App:** `de.barg.familienplaner.watchkitapp` öffnen → „App Groups“ anhaken →
+   „Configure“ → `group.de.barg.familienplaner` auswählen → Continue → Save.
+2. **Zifferblatt-Erweiterung:** „+“ → „App IDs“ → „App“ → Description
+   `Family Planner Watch Widgets`, Bundle ID „Explicit“
+   `de.barg.familienplaner.watchkitapp.widgets` → „App Groups“ anhaken → Continue →
+   Register. Danach öffnen, „Configure“ → Gruppe auswählen → Save.
+
+**Zuliefern:** „Watch-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
+**Aufwand:** etwa 5 Minuten.
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:
