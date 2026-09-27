@@ -326,7 +326,7 @@ angelegt. Ohne diese Freigabe schlägt jeder weitere TestFlight-Build fehl.
 **Zuliefern:** „App Group angelegt“. Ich starte dann den TestFlight-Build neu.
 **Aufwand:** etwa 10 Minuten.
 
-### Aufgabe 21: App Group für das Watch-Zifferblatt (neu, 27.09.2026)
+### Aufgabe 21: App Group für das Watch-Zifferblatt ✅ erledigt (27.09.2026)
 **Warum:** Die Zifferblatt-Elemente sind eine eigene Erweiterung der Watch-App und lesen
 ihre Daten wie die Widgets aus der App Group. Wie bei Aufgabe 20 legt die automatische
 Signierung das nicht selbst an.
