@@ -14,7 +14,8 @@ enum TestMode {
         guard isActive else { return }
         let defaults = UserDefaults.standard
         for key in defaults.dictionaryRepresentation().keys
-        where key.hasPrefix("reminders.") || key == CurrentMember.storageKey || key == CurrentMember.previewKey {
+        where key.hasPrefix("reminders.") || key.hasPrefix("onboarding.") || key.hasPrefix("export.")
+            || key == CurrentMember.storageKey || key == CurrentMember.previewKey {
             defaults.removeObject(forKey: key)
         }
     }

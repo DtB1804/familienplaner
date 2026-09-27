@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreData
 import CloudKit
+import UIKit
 
 /// Familie verwalten: Mitglieder anlegen und den Haushalt teilen.
 struct MembersScreen: View {
@@ -19,6 +20,9 @@ struct MembersScreen: View {
     @State private var editedMember: CDMember?
     @State private var isPreparingInvite = false
     @State private var errorMessage: String?
+    @State private var exportFile: ExportFile?
+    @State private var confirmRemoveHousehold = false
+    @State private var isRemoving = false
 
     private var isOwner: Bool { HouseholdService.isOwner(of: household) }
 
@@ -116,6 +120,50 @@ struct MembersScreen: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+
+                Section {
+                    Button {
+                        exportCalendar()
+                    } label: {
+                        Label("Alle Termine exportieren (.ics)", systemImage: "square.and.arrow.up")
+                    }
+                    .accessibilityIdentifier("backup.export")
+                } header: {
+                    Text("Sicherung")
+                } footer: {
+                    Text("Erstellt eine Kalenderdatei mit allen Terminen, die sich in jede Kalender-App importieren lässt. Als Rückfallebene, falls mit iCloud etwas schiefgeht.")
+                }
+
+                Section {
+                    Button(role: .destructive) {
+                        confirmRemoveHousehold = true
+                    } label: {
+                        HStack {
+                            Label(isOwner ? "Haushalt löschen" : "Haushalt verlassen", systemImage: "trash")
+                            if isRemoving { Spacer(); ProgressView() }
+                        }
+                    }
+                    .disabled(isRemoving || (isOwner && !canManage))
+                    .accessibilityIdentifier("household.remove")
+                } footer: {
+                    Text(isOwner
+                         ? "Löscht den Haushalt mit allen Terminen und Mitgliedern in iCloud, auch für alle Eingeladenen. Das lässt sich nicht rückgängig machen. Vorher am besten exportieren."
+                         : "Entfernt den Familienkalender von diesem Gerät. Die anderen behalten ihn und können Sie neu einladen.")
+                }
+            }
+            .confirmationDialog(isOwner ? "Haushalt endgültig löschen?" : "Haushalt verlassen?",
+                                isPresented: $confirmRemoveHousehold, titleVisibility: .visible) {
+                Button(isOwner ? "Endgültig löschen" : "Verlassen", role: .destructive) {
+                    Task { await removeHousehold() }
+                }
+                .accessibilityIdentifier("household.remove.confirm")
+            } message: {
+                Text(isOwner
+                     ? "Alle Termine, Mitglieder und Einstellungen werden für die ganze Familie gelöscht."
+                     : "Die Termine verschwinden von diesem Gerät.")
+            }
+            .sheet(item: $exportFile) { file in
+                ActivityView(items: [file.url])
             }
             .navigationTitle("Familie")
             .navigationBarTitleDisplayMode(.inline)
@@ -183,6 +231,26 @@ struct MembersScreen: View {
             reloadShare()
         } catch {
             errorMessage = "Bitte prüfen Sie, ob Sie in iCloud angemeldet sind und eine Internetverbindung besteht.\n\n\(error.localizedDescription)"
+        }
+    }
+
+    private func exportCalendar() {
+        let events = (try? context.fetch(ICSExporter.allEventsRequest())) ?? []
+        let me = CurrentMember.resolve(in: context, household: household)
+        do {
+            exportFile = ExportFile(url: try ICSExporter.writeFile(events: events, viewer: me, household: household))
+        } catch {
+            errorMessage = "Export fehlgeschlagen: \(error.localizedDescription)"
+        }
+    }
+
+    private func removeHousehold() async {
+        isRemoving = true
+        defer { isRemoving = false }
+        do {
+            try await HouseholdRemoval.remove(household)
+        } catch {
+            errorMessage = "Das hat nicht geklappt. Bitte prüfen Sie Internet und iCloud-Anmeldung.\n\n\(error.localizedDescription)"
         }
     }
 
@@ -407,4 +475,20 @@ struct IdentityPickerScreen: View {
             .navigationTitle("Wer sind Sie?")
         }
     }
+}
+
+// MARK: - Export
+
+struct ExportFile: Identifiable {
+    let url: URL
+    var id: URL { url }
+}
+
+/// Teilen-Blatt von iOS (Sichern in Dateien, AirDrop, Mail …).
+struct ActivityView: UIViewControllerRepresentable {
+    let items: [Any]
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }

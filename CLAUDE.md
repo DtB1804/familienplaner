@@ -189,6 +189,19 @@ im Eingang der App Group ab (`SharedInbox`); die App holt sie beim Öffnen ab un
 Vorschläge zur Bestätigung (Regel 4). Die Zifferblatt-Elemente der Watch (`WatchWidgets/`) arbeiten genauso: Die Watch-App
 schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 
+## 20. Betrieb: Abgleich sichtbar, Haushalt entfernbar, Sicherung
+
+- **iCloud-Status** (`SyncStatus`): Konto, Netz und Abgleich-Ereignisse von
+  `NSPersistentCloudKitContainer`. Gestörter Abgleich erscheint als Hinweis oben in der
+  Tagesansicht. Niemand soll unbemerkt mit veralteten Terminen planen.
+- **Haushalt löschen/verlassen** (`HouseholdRemoval`): `purgeObjectsAndRecordsInZone` für die
+  Zone des Haushalts (Owner: private Datenbank, für alle; Eingeladene: geteilte Datenbank,
+  nur für sie), danach gerätelokale Daten. Erst die Oberfläche umstellen, dann löschen.
+  Das Verhalten beim Verlassen ist erst mit dem Zwei-Geräte-Test belegt.
+- **Sicherung** (`ICSExporter`): alle Termine als .ics (RFC 5545), Titel wie für "ich" sichtbar.
+- **Barrierefreiheit:** Schriften über Textstile (Dynamic Type), Termine mit Vorlesetext und
+  VoiceOver-Aktionen zum Verschieben; automatische Prüfung im nächtlichen Test.
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).

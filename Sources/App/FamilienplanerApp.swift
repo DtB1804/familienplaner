@@ -15,6 +15,7 @@ struct FamilienplanerApp: App {
         BackgroundSync.shared.start()
         WatchSyncService.shared.start()
         CalendarExportService.shared.start()
+        SyncStatus.shared.start()
     }
 
     /// Links aus Widgets (familyplanner://day?t=…) und aus dem Kalender "Family Planner"
@@ -61,6 +62,7 @@ struct RootView: View {
     @State private var household: CDHousehold?
     @State private var didCheck = false
     @State private var awaitingSharedHousehold = false
+    @State private var showOnboarding = false
     @AppStorage(CurrentMember.storageKey) private var currentMemberID: String?
 
     var body: some View {
@@ -69,6 +71,12 @@ struct RootView: View {
                 if hasIdentity(in: household) {
                     TodayScreen()
                         .environment(\.household, household)
+                        .sheet(isPresented: $showOnboarding) {
+                            if let me = CurrentMember.resolve(in: context, household: household) {
+                                OnboardingScreen(household: household, me: me) { showOnboarding = false }
+                            }
+                        }
+                        .onAppear { showOnboarding = OnboardingScreen.shouldShow }
                 } else {
                     IdentityPickerScreen(household: household) { member in
                         currentMemberID = member.id?.uuidString
@@ -92,6 +100,11 @@ struct RootView: View {
             } else {
                 ProgressView().task { load() }
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .householdRemoved)) { _ in
+            household = nil
+            awaitingSharedHousehold = false
+            didCheck = true
         }
         .onReceive(NotificationCenter.default.publisher(for: .householdShareAccepted)) { _ in
             awaitingSharedHousehold = true

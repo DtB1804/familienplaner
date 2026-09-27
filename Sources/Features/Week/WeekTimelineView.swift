@@ -175,7 +175,9 @@ struct WeekTimelineView: View {
             .contentShape(Rectangle())
             .onTapGesture { onSelect(event) }
             .accessibilityElement(children: .combine)
+            .accessibilityLabel(weekSpokenLabel(event))
             .accessibilityAddTraits(.isButton)
+            .accessibilityAction { onSelect(event) }
             .accessibilityIdentifier("week.event.\(EventPresentation.title(of: event, for: viewer, in: household))")
             .gesture(moveGesture(for: event, columnWidth: columnWidth),
                      including: canMove(event) ? .all : .subviews)
@@ -185,6 +187,19 @@ struct WeekTimelineView: View {
             .zIndex(isDragging ? 10 : 0)
             .offset(x: 1 + slotWidth * CGFloat(item.lane) + (isDragging ? dragOffset.width : 0),
                     y: max(top, 0) + (isDragging ? dragOffset.height : 0))
+    }
+
+    /// Vorlesetext: Titel, Wochentag, Uhrzeit, offene Zuständigkeiten.
+    private func weekSpokenLabel(_ event: CDEvent) -> String {
+        let de = Locale(identifier: "de_DE")
+        var parts = [EventPresentation.title(of: event, for: viewer, in: household)]
+        if let start = event.startAt, let end = event.endAt {
+            parts.append("\(start.formatted(.dateTime.weekday(.wide).locale(de))), "
+                         + "\(start.formatted(.dateTime.hour().minute().locale(de))) bis \(end.formatted(.dateTime.hour().minute().locale(de)))")
+        }
+        let open = RequiredRoles.decode(event.requiredRolesRaw).filter { !EventService.coveredRoles(of: event).contains($0) }
+        if !open.isEmpty { parts.append(open.map { "\($0.label) offen" }.joined(separator: ", ")) }
+        return parts.joined(separator: ", ")
     }
 
     // MARK: - Verschieben über Tage

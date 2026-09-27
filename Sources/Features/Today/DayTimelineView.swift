@@ -170,6 +170,7 @@ public struct DayTimelineView: View {
             }
         }
         .frame(width: gutterWidth, height: height, alignment: .top)
+        .accessibilityHidden(true)   // Uhrzeiten stehen im Vorlesetext jedes Termins
     }
 
     private func hourLines(height: CGFloat, width: CGFloat) -> some View {
@@ -287,7 +288,7 @@ public struct DayTimelineView: View {
             // Offene Zuständigkeit auch bei kurzen Terminen sichtbar, z. B. "Holt ?".
             if openCount > 0 {
                 Text(openLabel(for: event))
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.caption2.weight(.bold))
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)
                     .background(Palette.color("person5"), in: Capsule())
@@ -304,12 +305,38 @@ public struct DayTimelineView: View {
         .shadow(color: .black.opacity(isDragging ? 0.25 : 0), radius: 6, y: 2)
         .scaleEffect(isDragging ? 1.03 : 1)
         .zIndex(isDragging ? 1 : 0)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(spokenLabel(event, title: title))
+        .accessibilityHint(movable ? "Doppeltippen zum Bearbeiten. Weitere Aktionen zum Verschieben." : "Doppeltippen für Details.")
         .accessibilityAddTraits(.isButton)
+        .accessibilityAction { onSelect?(event) }
+        .accessibilityActions {
+            if movable {
+                Button("15 Minuten später") { onMove?(event, 15 * 60) }
+                Button("15 Minuten früher") { onMove?(event, -15 * 60) }
+                Button("1 Stunde später") { onMove?(event, 3600) }
+                Button("1 Stunde früher") { onMove?(event, -3600) }
+            }
+        }
         .accessibilityIdentifier("event.\(baseTitle)")
         .accessibilityValue((event.startAt ?? day).formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)))
         .offset(x: Spacing.xs + (isDragging && canReassign(event, from: member) ? dragDX : 0),
                 y: max(top, 0) + (isDragging ? dragDY : 0))
+    }
+
+    /// Vorlesetext für VoiceOver, z. B. "Holt · Schwimmen, 17:00 bis 18:00, Mia, Bringt offen".
+    private func spokenLabel(_ event: CDEvent, title: String) -> String {
+        let style = Date.FormatStyle.dateTime.hour().minute().locale(Locale(identifier: "de_DE"))
+        var parts = [title]
+        if let start = event.startAt, let end = event.endAt {
+            parts.append("\(start.formatted(style)) bis \(end.formatted(style))")
+        }
+        let names = EventService.subjects(of: event).compactMap(\.displayName)
+        if !names.isEmpty { parts.append(names.joined(separator: ", ")) }
+        let open = openRoles(for: event)
+        if !open.isEmpty { parts.append(open.map { "\($0.label) offen" }.joined(separator: ", ")) }
+        if SeriesService.isSeries(event) { parts.append("wiederholt sich") }
+        return parts.joined(separator: ", ")
     }
 
     // MARK: - Verschieben

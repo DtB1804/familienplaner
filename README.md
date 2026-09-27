@@ -97,6 +97,11 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Widgets | da (Build 25) | „Nächste Termine“ (klein/mittel/groß, Sperrbildschirm) und „Offene Zuständigkeiten“; Zifferblatt-Elemente der Watch ab Build 26 (nach Aufgabe 21) |
 | Apple-Watch-App | Grundfunktion da (Build 19) | Heute/Morgen/Übermorgen, offene Zuständigkeiten, „Übernehme ich“; Zifferblatt-Elemente ab Build 26 (nach Aufgabe 21) |
 | Termin in andere Personenspalte ziehen | da (Build 27) | halten und seitlich ziehen; Zuständigkeiten bleiben |
+| iCloud-Status sichtbar | da (Build 28) | Hinweis bei offline, abgemeldet, Speicher voll, Abgleich gestört |
+| Haushalt löschen / verlassen | da (Build 28) | Familie → ganz unten |
+| Sicherung (.ics) | da (Build 28) | Familie → Sicherung |
+| Erste Schritte | da (Build 28) | einmal je Gerät: wer bin ich, Kalender, Erinnerungen |
+| Barrierefreiheit | Build 28 | große Schrift, VoiceOver-Texte und -Aktionen; Prüfung nachts |
 | Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
 | Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
 

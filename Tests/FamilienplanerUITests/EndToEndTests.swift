@@ -262,4 +262,20 @@ final class EndToEndTests: XCTestCase {
         XCTAssertGreaterThan(block.frame.midX - before, laneWidth / 2, "Termin nicht in Mias Spalte")
         XCTAssertEqual(block.value as? String, "10:00", "Uhrzeit darf sich beim seitlichen Ziehen nicht ändern")
     }
+
+    /// Haushalt löschen führt zurück zur Einrichtung; danach lässt sich neu anlegen.
+    @MainActor
+    func testDeleteHouseholdReturnsToSetup() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("toolbar.family", in: app)
+        var swipes = 0
+        while !app.buttons["household.remove"].exists && swipes < 8 { app.swipeUp(); swipes += 1 }
+        tap("household.remove", in: app)
+        let confirm = app.buttons["Endgültig löschen"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Bestätigung fehlt")
+        confirm.tap()
+        XCTAssertTrue(app.navigationBars["Einrichten"].waitForExistence(timeout: 10), "Nicht zurück bei Einrichten")
+        completeSetup(in: app)
+    }
 }

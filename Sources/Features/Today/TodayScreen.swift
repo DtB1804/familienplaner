@@ -41,6 +41,7 @@ public struct TodayScreen: View {
     @State private var showFreeTime = false
     @State private var showCamera = false
     @State private var cameraData: Data?
+    @ObservedObject private var syncStatus = SyncStatus.shared
 
     @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
     private var pendingSuggestions: FetchedResults<CDSuggestionDraft>
@@ -50,6 +51,9 @@ public struct TodayScreen: View {
     public var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                if let problem = syncStatus.problem {
+                    SyncBanner(problem: problem, lastSuccess: syncStatus.lastSuccess)
+                }
                 if let preview = previewMember {
                     HStack {
                         Label("Vorschau: So sieht \(preview.displayName ?? "das Kind") die App",
@@ -450,7 +454,7 @@ struct OpenResponsibilityBanner: View {
                 .foregroundStyle(Palette.color("person5"))
             VStack(alignment: .leading, spacing: 1) {
                 Text("\(items.count) offene \(items.count == 1 ? "Zuständigkeit" : "Zuständigkeiten")")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(.subheadline.weight(.semibold))
                 Text(items.prefix(2).map { "\($0.role.label): \($0.eventTitle)" }.joined(separator: " · "))
                     .font(TypeScale.eventMeta)
                     .foregroundStyle(.secondary)

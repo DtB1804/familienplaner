@@ -22,7 +22,7 @@ public struct MemberFilterBar: View {
                 }
                 if !selection.isEmpty {
                     Button("Alle") { withAnimation(.snappy(duration: 0.18)) { selection.removeAll() } }
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.footnote.weight(.medium))
                         .padding(.horizontal, Spacing.m)
                         .padding(.vertical, Spacing.s)
                 }
@@ -46,7 +46,7 @@ public struct MemberFilterBar: View {
             HStack(spacing: Spacing.xs) {
                 Circle().fill(tint).frame(width: 7, height: 7)
                 Text(member.displayName ?? "?")
-                    .font(.system(size: 13, weight: isOn ? .semibold : .regular))
+                    .font(.footnote.weight(isOn ? .semibold : .regular))
             }
             .padding(.horizontal, Spacing.m)
             .padding(.vertical, Spacing.s)
@@ -58,6 +58,8 @@ public struct MemberFilterBar: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(member.displayName ?? ""))
+        .accessibilityAddTraits(isOn ? .isSelected : [])
+        .accessibilityHint("Filtert den Kalender auf diese Person")
         .accessibilityAddTraits(isOn ? [.isSelected] : [])
     }
 

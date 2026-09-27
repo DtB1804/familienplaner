@@ -18,4 +18,31 @@ final class SmokeTests: XCTestCase {
         XCTAssertFalse(element("banner.open", in: app).exists, "Ohne Termine keine offenen Zuständigkeiten")
         XCTAssertEqual(app.state, .runningForeground)
     }
+
+    /// Barrierefreiheit: automatische Prüfung von Apple (Kontrast, Beschriftungen,
+    /// Trefferflächen, abgeschnittener Text, große Schrift) auf Hauptbildschirm und Familie.
+    @MainActor
+    func testAccessibilityAudit() throws {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+        createEvent("Schwimmen", roles: ["driveFrom"], in: app)
+        try app.performAccessibilityAudit()
+        tap("toolbar.family", in: app)
+        try app.performAccessibilityAudit()
+    }
+
+    /// Erste Schritte nach dem Einrichten (im Test nur mit -showOnboarding sichtbar).
+    @MainActor
+    func testOnboardingAppearsOnceAndCanBeClosed() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-uiTesting", "-showOnboarding", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        completeSetup(in: app)
+        XCTAssertTrue(app.navigationBars["Erste Schritte"].waitForExistence(timeout: 5), "Erste Schritte fehlen")
+        XCTAssertTrue(element("onboarding.calendars", in: app).exists)
+        XCTAssertTrue(app.switches["onboarding.remindEvents"].exists)
+        tap("onboarding.done", in: app)
+        XCTAssertTrue(app.navigationBars["Erste Schritte"].waitForNonExistence(timeout: 5))
+    }
 }

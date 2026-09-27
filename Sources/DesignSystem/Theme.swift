@@ -77,12 +77,14 @@ public enum Spacing {
 
 // MARK: - Typografie
 
+/// Textstile statt fester Punktgrößen: wachsen mit der Einstellung "Größerer Text"
+/// (Dynamic Type, Barrierefreiheit). Grundgrößen entsprechen dem bisherigen Entwurf.
 public enum TypeScale {
-    public static let laneHeader = Font.system(size: 13, weight: .semibold, design: .rounded)
-    public static let eventTitle = Font.system(size: 13, weight: .medium)
-    public static let eventMeta  = Font.system(size: 11, weight: .regular)
-    public static let hourLabel  = Font.system(size: 11, weight: .regular, design: .rounded)
-    public static let sectionTitle = Font.system(size: 17, weight: .semibold)
+    public static let laneHeader = Font.system(.footnote, design: .rounded).weight(.semibold)
+    public static let eventTitle = Font.footnote.weight(.medium)
+    public static let eventMeta  = Font.caption2
+    public static let hourLabel  = Font.system(.caption2, design: .rounded)
+    public static let sectionTitle = Font.headline
 }
 
 // MARK: - Zoomstufen der Tagesansicht
