@@ -345,7 +345,7 @@ schon, sie wird nur zwei weiteren App-IDs zugeordnet:
 **Zuliefern:** „Watch-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
 **Aufwand:** etwa 5 Minuten.
 
-### Aufgabe 22: App Group für den Teilen-Knopf (neu, 27.09.2026)
+### Aufgabe 22: App Group für den Teilen-Knopf ✅ erledigt (27.09.2026)
 **Warum:** „Family Planner“ im Teilen-Menü (Mail, WhatsApp, Fotos) ist eine eigene
 Erweiterung. Sie legt Fotos im gemeinsamen Ordner ab, die App holt sie dort ab.
 
