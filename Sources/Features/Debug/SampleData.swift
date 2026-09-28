@@ -1,7 +1,9 @@
 import CoreData
 import Foundation
 
-/// Nur für Xcode-Previews und den Simulator. Wird nie in einen Cloud-Store geschrieben.
+/// Nur für Xcode-Previews, den Simulator und die App-Store-Bildschirmfotos (`-sampleData`
+/// im Testmodus, Speicher nur im Arbeitsspeicher). Wird nie in einen Cloud-Store geschrieben.
+/// Frei erfundene Namen, keine echten Familiendaten.
 enum SampleData {
 
     static func populate(in context: NSManagedObjectContext) {
@@ -14,8 +16,8 @@ enum SampleData {
         guard let household = try? HouseholdService.bootstrapIfNeeded(
             in: context,
             householdName: "Familie Muster",
-            ownerDisplayName: "David",
-            ownerShortName: "Da") else { return }
+            ownerDisplayName: "Tom",
+            ownerShortName: "To") else { return }
 
         let owner = (household.members as? Set<CDMember>)?.first
         let partner = HouseholdService.makeMember(in: context, household: household,
@@ -62,6 +64,37 @@ enum SampleData {
                                createdBy: owner, subjects: [partner],
                                kind: .statusBlock, tag: tag("Arbeit"))
 
+        // Weitere Tage für Woche und Monat
+        func day(_ offset: Int, _ hour: Int, _ minute: Int = 0) -> Date {
+            let d = calendar.date(byAdding: .day, value: offset, to: today) ?? today
+            return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: d) ?? d
+        }
+        EventService.makeEvent(in: context, household: household,
+                               title: "Fußball", startAt: day(1, 16), endAt: day(1, 17, 30),
+                               createdBy: owner, subjects: [kid1],
+                               requiredRoles: [.driveFrom], tag: tag("Sport"))
+        EventService.makeEvent(in: context, household: household,
+                               title: "Elternabend", startAt: day(2, 19), endAt: day(2, 20, 30),
+                               createdBy: owner, subjects: [owner, partner], locationName: "Grundschule")
+        EventService.makeEvent(in: context, household: household,
+                               title: "Klavier", startAt: day(3, 15), endAt: day(3, 16),
+                               createdBy: owner, subjects: [kid2], requiredRoles: [.driveTo])
+        EventService.makeEvent(in: context, household: household,
+                               title: "Oma besuchen", startAt: day(5, 14), endAt: day(5, 18),
+                               createdBy: owner, subjects: [owner, partner, kid1, kid2])
+        EventService.makeEvent(in: context, household: household,
+                               title: "Klassenfahrt", startAt: day(8, 0), endAt: day(11, 0),
+                               createdBy: owner, subjects: [kid1], isAllDay: true)
+
         try? context.save()
+    }
+
+    /// Bildschirmfotos: Beispielhaushalt anlegen und dieses Gerät als ersten Erwachsenen setzen.
+    static func populateForScreenshots(in context: NSManagedObjectContext) {
+        populate(in: context)
+        if let household = try? HouseholdService.fetchHousehold(in: context),
+           let owner = household.ownerMemberID {
+            UserDefaults.standard.set(owner.uuidString, forKey: CurrentMember.storageKey)
+        }
     }
 }

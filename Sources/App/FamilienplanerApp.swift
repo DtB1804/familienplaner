@@ -12,6 +12,10 @@ struct FamilienplanerApp: App {
 
     init() {
         TestMode.resetLocalState()
+        // App-Store-Bildschirmfotos: Beispieldaten nur im Testmodus (Arbeitsspeicher, kein iCloud).
+        if TestMode.isActive, ProcessInfo.processInfo.arguments.contains("-sampleData") {
+            SampleData.populateForScreenshots(in: PersistenceController.shared.viewContext)
+        }
         BackgroundSync.shared.start()
         WatchSyncService.shared.start()
         CalendarExportService.shared.start()

@@ -1,0 +1,102 @@
+# App-Store-Bildschirmfotos mit erfundenen Beispieldaten (Test ScreenshotTests, -sampleData).
+# Start: Push auf den Branch "screenshots" oder von Hand (Run workflow).
+# Ergebnis: JPEGs 1284 x 2778 (6,5"-Größe laut App Store Connect) im Branch ci-screenshots
+# und als Artefakt. Kein Einfluss auf Tests oder TestFlight.
+name: Screenshots
+
+on:
+  push:
+    branches: [screenshots]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  screenshots:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: XcodeGen installieren
+        run: brew install xcodegen
+
+      - name: Projekt erzeugen
+        run: xcodegen generate
+
+      - name: Großes iPhone wählen und starten
+        id: sim
+        run: |
+          xcrun simctl list devices available
+          UDID=$(xcrun simctl list devices available | grep -E "^\s+iPhone [0-9]+ Pro Max" | tail -1 | grep -oE "[0-9A-F-]{36}")
+          if [ -z "$UDID" ]; then UDID=$(xcrun simctl list devices available | grep -E "^\s+iPhone .*(Plus|Max)" | tail -1 | grep -oE "[0-9A-F-]{36}"); fi
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices available | grep "$UDID" | tee simulator.txt
+          xcrun simctl boot "$UDID" || true
+          xcrun simctl bootstatus "$UDID" -b
+          # Aufgeräumte Statusleiste
+          xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 || true
+
+      - name: Bildschirmfotos aufnehmen
+        env:
+          TEST_RUNNER_FP_SCREENSHOTS: "1"
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Familienplaner.xcodeproj \
+            -scheme Familienplaner \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -only-testing:FamilienplanerUITests/ScreenshotTests \
+            -resultBundlePath Shots.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee shots.log
+
+      - name: Exportieren und auf App-Store-Größe bringen
+        if: always()
+        run: |
+          mkdir -p raw out
+          xcrun xcresulttool export attachments --path Shots.xcresult --output-path raw || true
+          python3 - <<'PY'
+          import json, os, shutil
+          try:
+              manifest = json.load(open("raw/manifest.json"))
+          except Exception as e:
+              print("kein Manifest:", e); manifest = []
+          for test in manifest:
+              for a in test.get("attachments", []):
+                  name = a.get("suggestedHumanReadableName", "")
+                  src = os.path.join("raw", a.get("exportedFileName", ""))
+                  if name[:2].isdigit() and os.path.exists(src):
+                      base = name.split("_")[0].rsplit(".", 1)[0]
+                      shutil.copy(src, os.path.join("out", base + ".png"))
+                      print("gefunden:", base)
+          PY
+          for f in out/*.png; do
+            [ -e "$f" ] || continue
+            sips --resampleWidth 1284 "$f" >/dev/null
+            sips --cropToHeightWidth 2778 1284 "$f" >/dev/null
+            sips -s format jpeg -s formatOptions 92 "$f" --out "${f%.png}.jpg" >/dev/null
+            rm "$f"
+          done
+          sips -g pixelWidth -g pixelHeight out/*.jpg || true
+          cp shots.log simulator.txt out/ 2>/dev/null || true
+
+      - name: Artefakt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-store-screenshots
+          path: out
+
+      - name: In Branch ci-screenshots ablegen
+        if: always()
+        run: |
+          mkdir -p /tmp/shots && cp -R out/. /tmp/shots/ 2>/dev/null || true
+          echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID}" > /tmp/shots/STATUS
+          cd /tmp/shots
+          git init -q -b ci-screenshots
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "Screenshots ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-screenshots

@@ -385,6 +385,10 @@ Fragebogen (gemeinsam mit Claude), Bildschirmfotos, Build auswählen, Prüfhinwe
 einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
 **Zuliefern:** Fragen aus den Fragebögen, bei denen du unsicher bist.
 
+**Bildschirmfotos:** erzeugt der Workflow „Screenshots“ (Push auf Branch `screenshots`)
+mit erfundenen Beispieldaten in 1284 × 2778 (6,5"). Ergebnis im Branch `ci-screenshots`
+und im Projekt unter `Familienplaner/screenshots/`.
+
 ### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen
 Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
 Antrag: https://developer.apple.com/contact/request/unlisted-app/ (Textvorschlag in
