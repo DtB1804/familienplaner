@@ -31,6 +31,20 @@ public struct MemberFilterBar: View {
             .padding(.horizontal, Spacing.l)
             .padding(.vertical, Spacing.m)
         }
+        // Rechts weich ausblenden: zeigt, dass weitere Personen folgen, statt hart abzuschneiden.
+        .mask(
+            HStack(spacing: 0) {
+                Rectangle()
+                LinearGradient(colors: [.black, .clear], startPoint: .leading, endPoint: .trailing)
+                    .frame(width: Spacing.l)
+            }
+        )
+    }
+
+    /// Vorname reicht im Chip; der volle Name steht im Vorlesetext.
+    private func chipName(_ member: CDMember) -> String {
+        let name = member.displayName ?? "?"
+        return name.split(separator: " ").first.map(String.init) ?? name
     }
 
     private func chip(for member: CDMember) -> some View {
@@ -42,7 +56,8 @@ public struct MemberFilterBar: View {
         } label: {
             HStack(spacing: Spacing.xs) {
                 Circle().fill(tint).frame(width: 7, height: 7)
-                Text(member.displayName ?? "?")
+                Text(chipName(member))
+                    .lineLimit(1)
                     .font(.footnote.weight(isOn ? .semibold : .regular))
             }
             .padding(.horizontal, Spacing.m)
