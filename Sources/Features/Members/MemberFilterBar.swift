@@ -2,8 +2,9 @@ import SwiftUI
 import CoreData
 
 /// Personen-Chips als primäre Filterachse.
-/// Leere Auswahl bedeutet "alle anzeigen" – nicht "nichts anzeigen".
-/// Das ist der Zustand, in dem die App die meiste Zeit steht.
+/// Leere Auswahl bedeutet "alle anzeigen"; dann erscheinen alle Chips als eingeschaltet.
+/// Antippen blendet eine Person aus bzw. wieder ein (UX-Prüfung B6). Die letzte sichtbare
+/// Person lässt sich nicht ausblenden.
 public struct MemberFilterBar: View {
 
     let members: [CDMember]
@@ -30,15 +31,11 @@ public struct MemberFilterBar: View {
             .padding(.horizontal, Spacing.l)
             .padding(.vertical, Spacing.m)
         }
-        .background(Palette.surface)
-        .overlay(alignment: .bottom) {
-            Rectangle().fill(Palette.hairline).frame(height: 0.5)
-        }
     }
 
     private func chip(for member: CDMember) -> some View {
         let tint = Palette.color(member.colorToken ?? "person1")
-        let isOn = selection.contains(member.objectID)
+        let isOn = selection.isEmpty || selection.contains(member.objectID)
 
         return Button {
             withAnimation(.snappy(duration: 0.18)) { toggle(member) }
@@ -59,15 +56,18 @@ public struct MemberFilterBar: View {
         .buttonStyle(.plain)
         .accessibilityLabel(Text(member.displayName ?? ""))
         .accessibilityAddTraits(isOn ? .isSelected : [])
-        .accessibilityHint("Filtert den Kalender auf diese Person")
-        .accessibilityAddTraits(isOn ? [.isSelected] : [])
+        .accessibilityHint(isOn ? "Blendet diese Person aus" : "Blendet diese Person ein")
     }
 
     private func toggle(_ member: CDMember) {
-        if selection.contains(member.objectID) {
-            selection.remove(member.objectID)
+        let all = Set(members.map(\.objectID))
+        var visible = selection.isEmpty ? all : selection
+        if visible.contains(member.objectID) {
+            guard visible.count > 1 else { return }   // mindestens eine Person bleibt sichtbar
+            visible.remove(member.objectID)
         } else {
-            selection.insert(member.objectID)
+            visible.insert(member.objectID)
         }
+        selection = visible == all ? [] : visible
     }
 }

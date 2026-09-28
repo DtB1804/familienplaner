@@ -22,7 +22,7 @@ struct SetupScreen: View {
                         .accessibilityIdentifier("setup.household")
                         .textInputAutocapitalization(.words)
                 }
-                Section("Sie selbst") {
+                Section("Du") {
                     TextField("Vorname", text: $ownerName)
                         .accessibilityIdentifier("setup.name")
                         .textInputAutocapitalization(.words)
@@ -35,12 +35,12 @@ struct SetupScreen: View {
                         }
                 }
                 Section {
-                    Text("Weitere Familienmitglieder legen Sie danach an. Erst dann wird der Haushalt geteilt.")
+                    Text("Weitere Familienmitglieder legst du danach an. Erst dann wird der Haushalt geteilt.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
                 Section("Eingeladen?") {
-                    Text("Wenn Sie eine Einladung zu einem bestehenden Familienkalender bekommen haben, legen Sie hier nichts an. Tippen Sie stattdessen auf den Link in der Einladung.")
+                    Text("Hast du eine Einladung zu einem bestehenden Familienkalender bekommen? Dann lege hier nichts an, sondern tippe auf den Link in der Einladung.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }

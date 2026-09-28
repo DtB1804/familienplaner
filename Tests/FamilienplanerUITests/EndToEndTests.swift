@@ -45,8 +45,10 @@ final class EndToEndTests: XCTestCase {
         app.buttons["Tag"].tap()
 
         // Löschen (weich) über den Editor
+        // Antippen zeigt zuerst die Details, "Bearbeiten" öffnet den Editor.
         tap("event.Schwimmen", in: app)
-        XCTAssertTrue(app.navigationBars["Termin"].waitForExistence(timeout: 5), "Editor öffnet nicht")
+        tap("detail.edit", in: app)
+        XCTAssertTrue(element("editor.title", in: app).waitForExistence(timeout: 5), "Editor öffnet nicht")
         var swipes = 0
         while !app.buttons["editor.delete"].exists && swipes < 6 { app.swipeUp(); swipes += 1 }
         tap("editor.delete", in: app)
@@ -104,7 +106,7 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Datum wählen"].waitForNonExistence(timeout: 5), "Auswahl schließt nicht")
     }
 
-    /// Übernehmen direkt im Termin, nicht nur über das Banner.
+    /// Übernehmen direkt im Termin (Detailansicht), nicht nur über das Banner.
     @MainActor
     func testClaimInsideEditor() {
         let app = launchFreshApp()
@@ -114,9 +116,9 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(element("banner.open", in: app).waitForExistence(timeout: 5))
 
         tap("event.Turnen", in: app)
-        tap("editor.claim.driveFrom", in: app)
-        XCTAssertTrue(element("editor.claim.driveFrom", in: app).waitForNonExistence(timeout: 5), "Übernehmen wirkt nicht")
-        app.buttons["Abbrechen"].firstMatch.tap()
+        tap("detail.claim.driveFrom", in: app)
+        XCTAssertTrue(element("detail.claim.driveFrom", in: app).waitForNonExistence(timeout: 5), "Übernehmen wirkt nicht")
+        tap("detail.done", in: app)
         XCTAssertTrue(element("banner.open", in: app).waitForNonExistence(timeout: 5), "Banner muss verschwinden")
     }
 
@@ -196,7 +198,8 @@ final class EndToEndTests: XCTestCase {
 
         // Ab der Folgewoche löschen
         nextWeek.tap()
-        XCTAssertTrue(app.navigationBars["Termin"].waitForExistence(timeout: 5), "Editor öffnet nicht")
+        tap("detail.edit", in: app)
+        XCTAssertTrue(element("editor.title", in: app).waitForExistence(timeout: 5), "Editor öffnet nicht")
         var swipes = 0
         while !app.buttons["editor.delete"].exists && swipes < 8 { app.swipeUp(); swipes += 1 }
         tap("editor.delete", in: app)

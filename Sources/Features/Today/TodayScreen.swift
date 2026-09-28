@@ -42,6 +42,8 @@ public struct TodayScreen: View {
     @State private var showCamera = false
     @State private var cameraData: Data?
     @State private var showDatePicker = false
+    /// "Bearbeiten" in der Detailansicht: nach dem Schließen den Editor öffnen.
+    @State private var pendingEdit: CDEvent?
     /// Letzte Verschiebung per Ziehen, einige Sekunden lang rückgängig zu machen.
     @State private var undo: UndoAction?
     @ObservedObject private var syncStatus = SyncStatus.shared
@@ -71,51 +73,8 @@ public struct TodayScreen: View {
                     .padding(.vertical, Spacing.s)
                     .background(Palette.color("person5").opacity(0.25))
                 }
-                MemberFilterBar(members: Array(members), selection: $selectedMemberIDs)
-                if !openResponsibilities.isEmpty {
-                    Button { showResponsibilities = true } label: {
-                        OpenResponsibilityBanner(items: openResponsibilities)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("banner.open")
-                }
-                if canEdit && !pendingSuggestions.isEmpty {
-                    Button { showSuggestions = true } label: {
-                        HintBanner(symbol: "doc.text.viewfinder",
-                                   title: pendingSuggestions.count == 1
-                                       ? "1 Foto wartet auf Prüfung"
-                                       : "\(pendingSuggestions.count) Fotos warten auf Prüfung",
-                                   detail: "Erkannte Termine ansehen und eintragen")
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("banner.suggestions")
-                }
-                HStack(spacing: Spacing.m) {
-                    Picker("Ansicht", selection: $mode) {
-                        Text("Tag").tag(CalendarMode.day)
-                        Text("Woche").tag(CalendarMode.week)
-                    }
-                    .pickerStyle(.segmented)
-                    .accessibilityIdentifier("mode")
-                    // Zoom auch ohne Zwei-Finger-Geste erreichbar.
-                    Button {
-                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
-                    } label: {
-                        Image(systemName: "minus.magnifyingglass")
-                    }
-                    .disabled(!zoom.canZoomOut)
-                    .accessibilityLabel("Verkleinern")
-                    Button {
-                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedIn() }
-                    } label: {
-                        Image(systemName: "plus.magnifyingglass")
-                    }
-                    .disabled(!zoom.canZoomIn)
-                    .accessibilityLabel("Vergrößern")
-                }
-                .padding(.horizontal, Spacing.l)
-                .padding(.vertical, Spacing.s)
-                .background(Palette.surface)
+                headerBar
+                banners
                 let allDay = (mode == .day ? Array(dayEvents) : Array(weekEvents))
                     .filter { $0.isAllDay && isVisibleInFilter($0) }
                 if !allDay.isEmpty {
@@ -149,92 +108,7 @@ public struct TodayScreen: View {
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
-                        .accessibilityLabel("Zurück")
-                        .accessibilityIdentifier("nav.previous")
-                }
-                ToolbarItem(placement: .principal) {
-                    Button { showDatePicker = true } label: {
-                        HStack(spacing: 4) {
-                            Text(title).font(.headline).lineLimit(1)
-                            Image(systemName: "chevron.down")
-                                .font(.caption2.weight(.semibold))
-                                .foregroundStyle(.secondary)
-                        }
-                        .foregroundStyle(.primary)
-                    }
-                    .accessibilityLabel(title)
-                    .accessibilityHint("Datum wählen")
-                    .accessibilityIdentifier("nav.title")
-                }
-                if !isShowingToday {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Heute") { withAnimation(.snappy(duration: 0.2)) { day = Date() } }
-                            .accessibilityIdentifier("nav.today")
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
-                        .accessibilityLabel("Weiter")
-                        .accessibilityIdentifier("nav.next")
-                }
-                ToolbarItem(placement: .bottomBar) {
-                    Button { showMembers = true } label: {
-                        Label("Familie", systemImage: "person.2")
-                    }
-                    .accessibilityIdentifier("toolbar.family")
-                }
-                ToolbarSpacer(.flexible, placement: .bottomBar)
-                ToolbarItem(placement: .bottomBar) {
-                    Button { showSearch = true } label: {
-                        Label("Suche", systemImage: "magnifyingglass")
-                    }
-                    .accessibilityIdentifier("toolbar.search")
-                }
-                if canEdit {
-                    ToolbarSpacer(.flexible, placement: .bottomBar)
-                    ToolbarItem(placement: .bottomBar) {
-                        Button { showFreeTime = true } label: {
-                            Label("Frei", systemImage: "calendar.badge.clock")
-                        }
-                        .accessibilityIdentifier("toolbar.free")
-                    }
-                }
-                if canEdit {
-                    ToolbarSpacer(.flexible, placement: .bottomBar)
-                    ToolbarItem(placement: .bottomBar) {
-                        // Eigener Knopf statt verstecktem Menü hinter "+" (UX-Prüfung A3).
-                        Menu {
-                            if CameraPicker.isAvailable {
-                                Button { showCamera = true } label: {
-                                    Label("Termine fotografieren", systemImage: "camera")
-                                }
-                            }
-                            Button { showPhotoPicker = true } label: {
-                                Label("Foto oder Bildschirmfoto auswählen", systemImage: "photo.on.rectangle")
-                            }
-                            if !pendingSuggestions.isEmpty {
-                                Button { showSuggestions = true } label: {
-                                    Label("Offene Vorschläge (\(pendingSuggestions.count))", systemImage: "tray")
-                                }
-                            }
-                        } label: {
-                            Label("Foto", systemImage: "camera")
-                        }
-                        .accessibilityHint("Termine aus einem Elternbrief oder Aushang erkennen")
-                        .accessibilityIdentifier("toolbar.photo")
-                    }
-                    ToolbarSpacer(.flexible, placement: .bottomBar)
-                    ToolbarItem(placement: .bottomBar) {
-                        Button { editorTarget = .new } label: {
-                            Label("Neu", systemImage: "plus")
-                        }
-                        .accessibilityIdentifier("toolbar.new")
-                    }
-                }
-            }
+            .toolbar { toolbarContent }
             .sheet(item: $editorTarget) { target in
                 if let household, let me {
                     EventEditorSheet(household: household,
@@ -300,8 +174,17 @@ public struct TodayScreen: View {
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
             }
-            .sheet(item: $detailEvent) { event in
-                EventDetailSheet(event: event, viewer: viewer, household: household)
+            .sheet(item: $detailEvent, onDismiss: {
+                if let event = pendingEdit {
+                    pendingEdit = nil
+                    editorTarget = .existing(event)
+                }
+            }) { event in
+                EventDetailSheet(event: event, viewer: viewer, household: household,
+                                 onEdit: isEditable(event) ? {
+                                     pendingEdit = event
+                                     detailEvent = nil
+                                 } : nil)
             }
             .task(id: day) { await reloadResponsibilities() }
             .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)) { _ in
@@ -336,6 +219,159 @@ public struct TodayScreen: View {
                                                             object: context)) { _ in
                 Task { await reloadResponsibilities() }
             }
+        }
+    }
+
+
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
+                .accessibilityLabel("Zurück")
+                .accessibilityIdentifier("nav.previous")
+        }
+        ToolbarItem(placement: .principal) {
+            Button { showDatePicker = true } label: {
+                HStack(spacing: 4) {
+                    Text(title).font(.headline).lineLimit(1)
+                    Image(systemName: "chevron.down")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .foregroundStyle(.primary)
+            }
+            .accessibilityLabel(title)
+            .accessibilityHint("Datum wählen")
+            .accessibilityIdentifier("nav.title")
+        }
+        if !isShowingToday {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Heute") { withAnimation(.snappy(duration: 0.2)) { day = Date() } }
+                    .accessibilityIdentifier("nav.today")
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
+                .accessibilityLabel("Weiter")
+                .accessibilityIdentifier("nav.next")
+        }
+        ToolbarItem(placement: .bottomBar) {
+            Button { showMembers = true } label: {
+                Label("Familie", systemImage: "person.2")
+            }
+            .accessibilityIdentifier("toolbar.family")
+        }
+        ToolbarSpacer(.flexible, placement: .bottomBar)
+        ToolbarItem(placement: .bottomBar) {
+            Button { showSearch = true } label: {
+                Label("Suche", systemImage: "magnifyingglass")
+            }
+            .accessibilityIdentifier("toolbar.search")
+        }
+        if canEdit {
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .bottomBar) {
+                Button { showFreeTime = true } label: {
+                    Label("Frei", systemImage: "calendar.badge.clock")
+                }
+                .accessibilityIdentifier("toolbar.free")
+            }
+        }
+        if canEdit {
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .bottomBar) {
+                // Eigener Knopf statt verstecktem Menü hinter "+" (UX-Prüfung A3).
+                Menu {
+                    if CameraPicker.isAvailable {
+                        Button { showCamera = true } label: {
+                            Label("Termine fotografieren", systemImage: "camera")
+                        }
+                    }
+                    Button { showPhotoPicker = true } label: {
+                        Label("Foto oder Bildschirmfoto auswählen", systemImage: "photo.on.rectangle")
+                    }
+                    if !pendingSuggestions.isEmpty {
+                        Button { showSuggestions = true } label: {
+                            Label("Offene Vorschläge (\(pendingSuggestions.count))", systemImage: "tray")
+                        }
+                    }
+                } label: {
+                    Label("Foto", systemImage: "camera")
+                }
+                .accessibilityHint("Termine aus einem Elternbrief oder Aushang erkennen")
+                .accessibilityIdentifier("toolbar.photo")
+            }
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .bottomBar) {
+                Button { editorTarget = .new } label: {
+                    Label("Neu", systemImage: "plus")
+                }
+                .accessibilityIdentifier("toolbar.new")
+            }
+        }
+    }
+
+    // MARK: - Kopfbereich (ausgelagert, damit die Typprüfung schnell bleibt)
+
+    private var headerBar: some View {
+        // Eine Leiste für Personen, Tag/Woche und Zoom (UX-Prüfung B5).
+        HStack(spacing: Spacing.s) {
+            MemberFilterBar(members: Array(members), selection: $selectedMemberIDs)
+            Picker("Ansicht", selection: $mode) {
+                Text("Tag").tag(CalendarMode.day)
+                Text("Woche").tag(CalendarMode.week)
+            }
+            .pickerStyle(.segmented)
+            .fixedSize()
+            .accessibilityIdentifier("mode")
+            // Zoom auch ohne Zwei-Finger-Geste erreichbar.
+            Menu {
+                Button {
+                    withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedIn() }
+                } label: {
+                    Label("Vergrößern", systemImage: "plus.magnifyingglass")
+                }
+                .disabled(!zoom.canZoomIn)
+                Button {
+                    withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
+                } label: {
+                    Label("Verkleinern", systemImage: "minus.magnifyingglass")
+                }
+                .disabled(!zoom.canZoomOut)
+            } label: {
+                Image(systemName: "plus.magnifyingglass")
+                    .frame(minWidth: 44, minHeight: 44)
+            }
+            .accessibilityLabel("Zoom")
+            .accessibilityIdentifier("zoom")
+            .padding(.trailing, Spacing.s)
+        }
+        .background(Palette.surface)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Palette.hairline).frame(height: 0.5)
+        }
+    }
+
+    @ViewBuilder
+    private var banners: some View {
+        if canEdit && !openResponsibilities.isEmpty {
+            Button { showResponsibilities = true } label: {
+                OpenResponsibilityBanner(items: openResponsibilities)
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("banner.open")
+        }
+        if canEdit && !pendingSuggestions.isEmpty {
+            Button { showSuggestions = true } label: {
+                HintBanner(symbol: "doc.text.viewfinder",
+                           title: pendingSuggestions.count == 1
+                               ? "1 Foto wartet auf Prüfung"
+                               : "\(pendingSuggestions.count) Fotos warten auf Prüfung",
+                           detail: "Erkannte Termine ansehen und eintragen")
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("banner.suggestions")
         }
     }
 
@@ -459,12 +495,14 @@ public struct TodayScreen: View {
         if let data = SharedInbox.takeNext() { photoImport = PhotoImport(data: data) }
     }
 
+    /// Antippen zeigt immer zuerst die Details (wie in der Kalender-App); bearbeitet wird
+    /// über "Bearbeiten" oben rechts (UX-Prüfung B4).
     private func open(_ event: CDEvent) {
-        if canEdit, EventOrigin(rawValue: event.originRaw ?? "") != .imported {
-            editorTarget = .existing(event)
-        } else {
-            detailEvent = event
-        }
+        detailEvent = event
+    }
+
+    private func isEditable(_ event: CDEvent) -> Bool {
+        canEdit && EventOrigin(rawValue: event.originRaw ?? "") != .imported
     }
 
     /// Verschieben um ganze Tage (kalendarisch, sommerzeitsicher) und Minuten.

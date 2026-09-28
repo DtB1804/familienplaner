@@ -140,7 +140,7 @@ struct ResponsibilitiesSheet: View {
                 eveningQuestion = true
                 NotificationCenter.default.post(name: .remindersNeedReschedule, object: nil)
             } else {
-                message = "Mitteilungen sind für Family Planner ausgeschaltet. Sie lassen sich in den iPhone-Einstellungen erlauben."
+                message = "Mitteilungen sind für Family Planner ausgeschaltet. Du kannst sie in den iPhone-Einstellungen erlauben."
             }
         }
     }

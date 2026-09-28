@@ -26,8 +26,8 @@ struct WeekTimelineView: View {
     private let snapMinutes = 15
 
     private let gutterWidth: CGFloat = 36
-    private let startHour = 6
-    private let endHour = 23
+    private var startHour: Int { TimelineHours.range(for: events).lowerBound }
+    private var endHour: Int { TimelineHours.range(for: events).upperBound }
 
     private var days: [Date] {
         (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: weekStart) }
@@ -181,8 +181,6 @@ struct WeekTimelineView: View {
             .accessibilityIdentifier("week.event.\(EventPresentation.title(of: event, for: viewer, in: household))")
             .gesture(moveGesture(for: event, columnWidth: columnWidth),
                      including: canMove(event) ? .all : .subviews)
-            .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails(event) },
-                     including: canMove(event) ? .subviews : .all)
             .shadow(color: .black.opacity(isDragging ? 0.3 : 0), radius: 4, y: 2)
             .zIndex(isDragging ? 10 : 0)
             .offset(x: 1 + slotWidth * CGFloat(item.lane) + (isDragging ? dragOffset.width : 0),

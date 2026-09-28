@@ -120,7 +120,7 @@ struct MembersScreen: View {
                     inviteSection
                 } else if !isOwner {
                     Section {
-                        Text("Dieser Haushalt wurde mit Ihnen geteilt. Einladungen verschickt der Haushalt-Owner.")
+                        Text("Dieser Familienkalender wurde mit dir geteilt. Einladungen verschickt, wer ihn angelegt hat.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
@@ -153,7 +153,7 @@ struct MembersScreen: View {
                 } footer: {
                     Text(isOwner
                          ? "Löscht den Haushalt mit allen Terminen und Mitgliedern in iCloud, auch für alle Eingeladenen. Das lässt sich nicht rückgängig machen. Vorher am besten exportieren."
-                         : "Entfernt den Familienkalender von diesem Gerät. Die anderen behalten ihn und können Sie neu einladen.")
+                         : "Entfernt den Familienkalender von diesem Gerät. Die anderen behalten ihn und können dich neu einladen.")
                 }
             }
             .confirmationDialog(isOwner ? "Haushalt endgültig löschen?" : "Haushalt verlassen?",
@@ -189,7 +189,7 @@ struct MembersScreen: View {
                 }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
-                Text("Bitte „\(household.name ?? "")“ eintippen. Danach ist der Familienkalender für alle gelöscht.")
+                Text("Tippe „\(household.name ?? "")“ ein. Danach ist der Familienkalender für alle gelöscht.")
             }
             .sheet(item: $exportFile) { file in
                 ActivityView(items: [file.url])
@@ -248,7 +248,7 @@ struct MembersScreen: View {
         } header: {
             Text("Geteilt mit")
         } footer: {
-            Text("Einladen müssen Sie nur Personen mit eigenem iPhone. Wer kein eigenes iPhone hat, wird von den Erwachsenen mitgepflegt.")
+            Text("Einladen musst du nur Personen mit eigenem iPhone. Wer kein eigenes iPhone hat, wird von den Erwachsenen mitgepflegt.")
         }
     }
 
@@ -259,7 +259,7 @@ struct MembersScreen: View {
             try await SharingService.presentInvitation(for: household)
             reloadShare()
         } catch {
-            errorMessage = "Bitte prüfen Sie, ob Sie in iCloud angemeldet sind und eine Internetverbindung besteht.\n\n\(error.localizedDescription)"
+            errorMessage = "Bitte prüfe, ob du in iCloud angemeldet bist und Internet hast.\n\n\(error.localizedDescription)"
         }
     }
 
@@ -285,7 +285,7 @@ struct MembersScreen: View {
         do {
             try await HouseholdRemoval.remove(household)
         } catch {
-            errorMessage = "Das hat nicht geklappt. Bitte prüfen Sie Internet und iCloud-Anmeldung.\n\n\(error.localizedDescription)"
+            errorMessage = "Das hat nicht geklappt. Bitte prüfe Internet und iCloud-Anmeldung.\n\n\(error.localizedDescription)"
         }
     }
 
@@ -506,7 +506,7 @@ struct IdentityPickerScreen: View {
                         .foregroundStyle(.primary)
                     }
                 } footer: {
-                    Text("Fehlt Ihr Name, bitten Sie den Haushalt-Owner, Sie als Mitglied mit eigenem iPhone anzulegen.")
+                    Text("Fehlt dein Name? Bitte die Person, die den Familienkalender angelegt hat, dich als Mitglied mit eigenem iPhone einzutragen.")
                 }
             }
             .overlay {
@@ -516,13 +516,13 @@ struct IdentityPickerScreen: View {
                                            description: Text("Die Daten kommen gerade aus iCloud. Das kann beim ersten Mal etwas dauern."))
                 } else if candidates.isEmpty {
                     // Geladen, aber niemand ist als "eigenes iPhone" eingetragen (UX-Prüfung A5).
-                    ContentUnavailableView("Ihr Name fehlt noch",
+                    ContentUnavailableView("Dein Name fehlt noch",
                                            systemImage: "person.crop.circle.badge.questionmark",
-                                           description: Text("Bitten Sie die Person, die den Familienkalender angelegt hat: Familie → Ihren Namen antippen (oder „Mitglied hinzufügen“) → „Eigenes iPhone mit eigener Apple-ID“ einschalten. Danach erscheinen Sie hier von selbst."))
+                                           description: Text("Bitte die Person, die den Familienkalender angelegt hat: Familie → deinen Namen antippen (oder „Mitglied hinzufügen“) → „Eigenes iPhone mit eigener Apple-ID“ einschalten. Danach erscheinst du hier von selbst."))
                         .accessibilityIdentifier("identity.missing")
                 }
             }
-            .navigationTitle("Wer sind Sie?")
+            .navigationTitle("Wer bist du?")
         }
     }
 }

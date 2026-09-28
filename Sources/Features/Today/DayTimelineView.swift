@@ -39,8 +39,9 @@ public struct DayTimelineView: View {
     private let snapMinutes = 15
     private let laneMinWidth: CGFloat = 64
     private let gutterWidth: CGFloat = 44
-    private let startHour = 6
-    private let endHour = 23
+    /// Normal 6–23 Uhr; frühere oder spätere Termine erweitern den Bereich (UX-Prüfung B8).
+    private var startHour: Int { TimelineHours.range(for: events).lowerBound }
+    private var endHour: Int { TimelineHours.range(for: events).upperBound }
 
     public init(day: Date, members: [CDMember], events: [CDEvent], zoom: Binding<DayZoom>,
                 viewer: CDMember? = nil, household: CDHousehold? = nil,
@@ -278,7 +279,7 @@ public struct DayTimelineView: View {
         .padding(.horizontal, Spacing.xs)
         .padding(.vertical, Spacing.hair)
         .frame(width: width - Spacing.xs * 2,
-               height: max(bottom - top, 12),
+               height: max(bottom - top, 22),
                alignment: .topLeading)
         .background(tint.opacity(0.16), in: RoundedRectangle(cornerRadius: 6))
         .overlay(alignment: .leading) {
@@ -302,15 +303,13 @@ public struct DayTimelineView: View {
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
         .gesture(moveGesture(for: event, member: member, laneWidth: width), including: movable ? .all : .subviews)
-        // Nicht verschiebbare Termine (z. B. aus dem Kalender): Halten zeigt die Details.
-        .gesture(LongPressGesture(minimumDuration: 0.35).onEnded { _ in onShowDetails?(event) },
-                 including: movable ? .subviews : .all)
+        // Halten bedeutet immer Ziehen; Details gibt es per Tippen (UX-Prüfung B9).
         .shadow(color: .black.opacity(isDragging ? 0.25 : 0), radius: 6, y: 2)
         .scaleEffect(isDragging ? 1.03 : 1)
         .zIndex(isDragging ? 1 : 0)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(spokenLabel(event, title: title))
-        .accessibilityHint(movable ? "Doppeltippen zum Bearbeiten. Weitere Aktionen zum Verschieben." : "Doppeltippen für Details.")
+        .accessibilityHint(movable ? "Doppeltippen für Details. Weitere Aktionen zum Verschieben." : "Doppeltippen für Details.")
         .accessibilityAddTraits(.isButton)
         .accessibilityAction { onSelect?(event) }
         .accessibilityActions {
@@ -469,5 +468,30 @@ public struct DayTimelineView: View {
                     zoom = value.magnification > 1 ? zoom.zoomedIn() : zoom.zoomedOut()
                 }
             }
+    }
+}
+
+/// Sichtbarer Stundenbereich des Zeitstrahls: mindestens 6–23 Uhr, erweitert um Termine
+/// davor oder danach. Termine über Mitternacht reichen bis 24 Uhr.
+enum TimelineHours {
+    static let defaultStart = 6
+    static let defaultEnd = 23
+
+    static func range(for events: [CDEvent]) -> ClosedRange<Int> {
+        let calendar = Calendar.current
+        var start = defaultStart
+        var end = defaultEnd
+        for event in events where !event.isAllDay {
+            guard let begin = event.startAt, let finish = event.endAt else { continue }
+            start = min(start, calendar.component(.hour, from: begin))
+            if !calendar.isDate(finish, inSameDayAs: begin) {
+                end = 24
+            } else {
+                let hour = calendar.component(.hour, from: finish)
+                let minute = calendar.component(.minute, from: finish)
+                end = max(end, hour + (minute > 0 ? 1 : 0))
+            }
+        }
+        return max(0, start)...min(24, max(end, start + 1))
     }
 }

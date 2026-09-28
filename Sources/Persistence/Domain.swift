@@ -57,6 +57,16 @@ public enum ParticipationRole: String, CaseIterable, Codable, Identifiable {
         }
     }
 
+    /// Frage im Editor, z. B. "Wer holt?" (statt "Holt nötig").
+    public var question: String {
+        switch self {
+        case .driveTo: return "Wer bringt?"
+        case .driveFrom: return "Wer holt?"
+        case .accompany: return "Wer begleitet?"
+        case .subject, .informed: return label
+        }
+    }
+
     /// Rollen, die eine Zuständigkeit bedeuten und offen bleiben können.
     public static var responsibilityRoles: [ParticipationRole] { [.driveTo, .driveFrom, .accompany] }
 
@@ -91,8 +101,8 @@ public enum CalendarVisibility: String, CaseIterable, Codable {
 
     public var label: String {
         switch self {
-        case .hidden: return "Nicht übernehmen"
-        case .busyOnly: return "Nur als Belegtzeit"
+        case .hidden: return "Nicht zeigen"
+        case .busyOnly: return "Nur als „Belegt“"
         case .full: return "Mit Titel und Details"
         }
     }

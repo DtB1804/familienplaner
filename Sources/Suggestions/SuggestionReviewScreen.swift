@@ -144,7 +144,7 @@ struct SuggestionReviewList: View {
                     }
                     .buttonStyle(.plain)
                 } footer: {
-                    Text("Vorschläge prüfen: Datum, Uhrzeit und Personen können falsch erkannt sein. Nichts wird ohne Ihre Bestätigung eingetragen.")
+                    Text("Vorschläge prüfen: Datum, Uhrzeit und Personen können falsch erkannt sein. Nichts wird ohne deine Bestätigung eingetragen.")
                 }
             }
 
@@ -170,7 +170,7 @@ struct SuggestionReviewList: View {
     private func suggestionCard(_ item: Binding<SuggestedEvent>) -> some View {
         let decided = item.wrappedValue.decision
         if let decided {
-            Label(decided == .accepted ? "Übernommen: \(item.wrappedValue.title)"
+            Label(decided == .accepted ? "Eingetragen: \(item.wrappedValue.title)"
                                        : "Verworfen: \(item.wrappedValue.title)",
                   systemImage: decided == .accepted ? "checkmark.circle.fill" : "xmark.circle")
                 .foregroundStyle(.secondary)
@@ -216,7 +216,7 @@ struct SuggestionReviewList: View {
                     Button("Verwerfen", role: .destructive) { reject(item.wrappedValue) }
                         .buttonStyle(.bordered)
                     Spacer()
-                    Button("Übernehmen") { accept(item.wrappedValue) }
+                    Button("Eintragen") { accept(item.wrappedValue) }
                         .buttonStyle(.borderedProminent)
                         .disabled(subjects[item.wrappedValue.id, default: []].isEmpty
                                   || item.wrappedValue.title.trimmed.isEmpty)

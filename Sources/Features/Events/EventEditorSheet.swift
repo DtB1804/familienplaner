@@ -85,105 +85,13 @@ struct EventEditorSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    Picker("Art", selection: $kind) {
-                        ForEach(EventKind.allCases, id: \.self) { Text($0.label).tag($0) }
-                    }
-                    .pickerStyle(.segmented)
-                    .onChange(of: kind) { _, new in
-                        // Dienste sind standardmäßig nur als "Belegt" sichtbar (Aufgabe 8).
-                        if isNew { busyOnly = (new == .statusBlock) }
-                    }
-
-                    if !busyOnly {
-                        // Mit Beschriftung, damit das Feld auch ausgefüllt erkennbar bleibt.
-                        LabeledContent(kind == .statusBlock ? "Bezeichnung" : "Titel") {
-                            TextField(kind == .statusBlock ? "z. B. Frühdienst" : "z. B. Schwimmen",
-                                      text: $title)
-                                .accessibilityIdentifier("editor.title")
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
-                }
-
+                titleSection
                 if let event, !openRoles(of: event).isEmpty {
                     openRolesSection(event)
                 }
 
-                Section("Zeit") {
-                    Toggle("Ganztägig", isOn: $isAllDay)
-                        .accessibilityIdentifier("editor.allDay")
-                    if isAllDay {
-                        DatePicker("Von", selection: $startAt, displayedComponents: .date)
-                            .onChange(of: startAt) { _, new in
-                                if lastDay < new { lastDay = new }
-                            }
-                        DatePicker("Bis", selection: $lastDay, in: startAt..., displayedComponents: .date)
-                    } else {
-                        DatePicker("Beginn", selection: $startAt)
-                            .onChange(of: startAt) { _, new in
-                                // Dauer beibehalten, mindestens aber 30 Minuten vorschlagen.
-                                endAt = new.addingTimeInterval(max(duration, EventService.defaultDuration))
-                            }
-                        DatePicker("Ende", selection: $endAt, in: startAt...)
-                            .onChange(of: endAt) { _, new in
-                                duration = max(new.timeIntervalSince(startAt), 5 * 60)
-                            }
-                    }
-                }
-
-                Section {
-                    Picker("Wiederholen", selection: $repeatChoice) {
-                        ForEach(RepeatChoice.allCases) { Text($0.label).tag($0) }
-                    }
-                    .accessibilityIdentifier("editor.repeat")
-                    if repeatChoice != .none {
-                        Toggle("Endet", isOn: $hasEnd)
-                            .accessibilityIdentifier("editor.repeatEnds")
-                        if hasEnd {
-                            DatePicker("Letzter Termin am", selection: $untilDate, in: startAt..., displayedComponents: .date)
-                        }
-                    }
-                } footer: {
-                    if isSeries && ruleChanged {
-                        Text("Die geänderte Wiederholung gilt ab diesem Termin. Spätere Termine der bisherigen Serie werden ersetzt, übernommene Zuständigkeiten dort entfallen.")
-                    } else if repeatChoice != .none && !hasEnd {
-                        Text("Termine werden für die nächsten \(SeriesService.horizonWeeks) Wochen angelegt und laufend ergänzt.")
-                    }
-                }
-
-                Section("Für wen") {
-                    ForEach(members, id: \.objectID) { member in
-                        Button {
-                            toggleSubject(member)
-                        } label: {
-                            HStack {
-                                Circle()
-                                    .fill(Palette.color(member.colorToken ?? "person1"))
-                                    .frame(width: 10, height: 10)
-                                Text(member.displayName ?? "")
-                                    .foregroundStyle(.primary)
-                                Spacer()
-                                if subjectIDs.contains(member.objectID) {
-                                    Image(systemName: "checkmark")
-                                        .foregroundStyle(.blue)
-                                }
-                            }
-                            .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("editor.subject.\(member.displayName ?? "")")
-                    }
-                }
-
-                Section {
-                    Toggle("Für die Familie nur als „Belegt“ zeigen", isOn: $busyOnly)
-                } footer: {
-                    Text(busyOnly
-                         ? "Titel, Ort und Notizen werden nicht gespeichert und verlassen dieses iPhone nicht. Alle sehen nur, dass die Zeit belegt ist."
-                         : "Alle im Haushalt sehen Titel, Ort und Notizen.")
-                }
-
+                timeSection
+                subjectsSection
                 if kind == .appointment && !isAllDay {
                     rolesSection
                 }
@@ -215,6 +123,8 @@ struct EventEditorSheet: View {
                     }
                 }
 
+                repeatSection
+                visibilitySection
                 if !busyOnly {
                     Section("Details") {
                         Picker("Kategorie", selection: $tagID) {
@@ -284,6 +194,119 @@ struct EventEditorSheet: View {
         }
     }
 
+
+    // MARK: - Weitere Abschnitte (Reihenfolge: Wichtiges oben, UX-Prüfung B3)
+
+    @ViewBuilder
+    private var titleSection: some View {
+        Section {
+            Picker("Art", selection: $kind) {
+                ForEach(EventKind.allCases, id: \.self) { Text($0.label).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: kind) { _, new in
+                // Dienste sind standardmäßig nur als "Belegt" sichtbar (Aufgabe 8).
+                if isNew { busyOnly = (new == .statusBlock) }
+            }
+
+            if !busyOnly {
+                // Mit Beschriftung, damit das Feld auch ausgefüllt erkennbar bleibt.
+                LabeledContent(kind == .statusBlock ? "Bezeichnung" : "Titel") {
+                    TextField(kind == .statusBlock ? "z. B. Frühdienst" : "z. B. Schwimmen",
+                              text: $title)
+                        .accessibilityIdentifier("editor.title")
+                        .multilineTextAlignment(.trailing)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var timeSection: some View {
+        Section("Zeit") {
+            Toggle("Ganztägig", isOn: $isAllDay)
+                .accessibilityIdentifier("editor.allDay")
+            if isAllDay {
+                DatePicker("Von", selection: $startAt, displayedComponents: .date)
+                    .onChange(of: startAt) { _, new in
+                        if lastDay < new { lastDay = new }
+                    }
+                DatePicker("Bis", selection: $lastDay, in: startAt..., displayedComponents: .date)
+            } else {
+                DatePicker("Beginn", selection: $startAt)
+                    .onChange(of: startAt) { _, new in
+                        // Dauer beibehalten, mindestens aber 30 Minuten vorschlagen.
+                        endAt = new.addingTimeInterval(max(duration, EventService.defaultDuration))
+                    }
+                DatePicker("Ende", selection: $endAt, in: startAt...)
+                    .onChange(of: endAt) { _, new in
+                        duration = max(new.timeIntervalSince(startAt), 5 * 60)
+                    }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var repeatSection: some View {
+        Section {
+            Picker("Wiederholen", selection: $repeatChoice) {
+                ForEach(RepeatChoice.allCases) { Text($0.label).tag($0) }
+            }
+            .accessibilityIdentifier("editor.repeat")
+            if repeatChoice != .none {
+                Toggle("Endet", isOn: $hasEnd)
+                    .accessibilityIdentifier("editor.repeatEnds")
+                if hasEnd {
+                    DatePicker("Letzter Termin am", selection: $untilDate, in: startAt..., displayedComponents: .date)
+                }
+            }
+        } footer: {
+            if isSeries && ruleChanged {
+                Text("Die geänderte Wiederholung gilt ab diesem Termin. Spätere Termine der bisherigen Serie werden ersetzt, übernommene Zuständigkeiten dort entfallen.")
+            } else if repeatChoice != .none && !hasEnd {
+                Text("Termine werden für die nächsten \(SeriesService.horizonWeeks) Wochen angelegt und laufend ergänzt.")
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var subjectsSection: some View {
+        Section("Für wen") {
+            ForEach(members, id: \.objectID) { member in
+                Button {
+                    toggleSubject(member)
+                } label: {
+                    HStack {
+                        Circle()
+                            .fill(Palette.color(member.colorToken ?? "person1"))
+                            .frame(width: 10, height: 10)
+                        Text(member.displayName ?? "")
+                            .foregroundStyle(.primary)
+                        Spacer()
+                        if subjectIDs.contains(member.objectID) {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("editor.subject.\(member.displayName ?? "")")
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var visibilitySection: some View {
+        Section {
+            Toggle("Für die Familie nur als „Belegt“ zeigen", isOn: $busyOnly)
+        } footer: {
+            Text(busyOnly
+                 ? "Titel, Ort und Notizen werden nicht gespeichert und verlassen dieses iPhone nicht. Alle sehen nur, dass die Zeit belegt ist."
+                 : "Alle im Haushalt sehen Titel, Ort und Notizen.")
+        }
+    }
+
     // MARK: - Abschnitte (ausgelagert, sonst scheitert die Typprüfung am großen Formular)
 
     /// Übernehmen direkt am Termin, nicht nur über das Banner (UX-Prüfung A2).
@@ -307,13 +330,13 @@ struct EventEditorSheet: View {
     private var rolesSection: some View {
         Section {
             ForEach(ParticipationRole.responsibilityRoles) { role in
-                Toggle(role.label + " nötig", isOn: roleBinding(role))
+                Toggle(role.question, isOn: roleBinding(role))
                     .accessibilityIdentifier("editor.role.\(role.rawValue)")
             }
         } header: {
-            Text("Zuständigkeiten")
+            Text("Bringen und Holen")
         } footer: {
-            Text("Offene Zuständigkeiten erscheinen oben in der Tagesansicht, bis jemand sie übernimmt.")
+            Text("Einschalten, wenn jemand gebraucht wird. Das erscheint oben in der Tagesansicht, bis es jemand übernimmt.")
         }
     }
 

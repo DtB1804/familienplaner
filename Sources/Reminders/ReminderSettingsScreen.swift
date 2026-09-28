@@ -18,7 +18,7 @@ struct ReminderSettingsScreen: View {
         Form {
             if denied {
                 Section {
-                    Text("Mitteilungen sind für Family Planner ausgeschaltet. Sie lassen sich in den iPhone-Einstellungen unter Mitteilungen → Family Planner erlauben.")
+                    Text("Mitteilungen sind für Family Planner ausgeschaltet. Du kannst sie in den iPhone-Einstellungen unter Mitteilungen → Family Planner erlauben.")
                         .font(.footnote)
                 }
             }
@@ -33,7 +33,7 @@ struct ReminderSettingsScreen: View {
                     }
                 }
             } footer: {
-                Text("Gilt für Termine, die Sie betreffen, und für Zuständigkeiten, die Sie übernommen haben, z. B. „Holt Mia – Schwimmen um 15:00“.")
+                Text("Gilt für Termine, die dich betreffen, und für Aufgaben, die du übernommen hast, z. B. „Holt Mia – Schwimmen um 15:00“.")
             }
 
             if isAdult {

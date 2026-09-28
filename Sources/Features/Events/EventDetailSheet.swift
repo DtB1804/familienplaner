@@ -9,6 +9,8 @@ struct EventDetailSheet: View {
     @ObservedObject var event: CDEvent
     let viewer: CDMember?
     let household: CDHousehold?
+    /// Gesetzt, wenn der Termin bearbeitet werden darf: zeigt "Bearbeiten".
+    var onEdit: (() -> Void)? = nil
 
     @Environment(\.dismiss) private var dismiss
 
@@ -81,8 +83,15 @@ struct EventDetailSheet: View {
             .navigationTitle(isImported ? "Aus Kalender" : "Termin")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                if let onEdit {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Bearbeiten", action: onEdit)
+                            .accessibilityIdentifier("detail.edit")
+                    }
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Fertig") { dismiss() }
+                        .accessibilityIdentifier("detail.done")
                 }
             }
         }

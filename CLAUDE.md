@@ -207,5 +207,7 @@ schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).
   Während einer solchen Schleife kann Claude nicht antworten. Nach einem Push kurz
   melden, das Ergebnis später mit einem einzelnen `git fetch` des Log-Branches abholen.
+  Log-Branches werden bei jedem Lauf überschrieben: immer mit Plus-Refspec holen
+  (`git fetch <repo> +refs/heads/ci-log:refs/remotes/o/ci-log`), sonst bleibt der alte Stand stehen.
 - Der Workflow `Tests` läuft nur nachts zwischen 2 und 3 Uhr und nur bei neuem Stand
   auf `main`. Kein Push auf einen Branch, der Tests auslöst.

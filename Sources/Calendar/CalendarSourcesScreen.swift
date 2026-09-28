@@ -24,11 +24,11 @@ struct CalendarSourcesScreen: View {
         List {
             if !hasAccess {
                 Section {
-                    Text("Wählen Sie danach für jeden Kalender, ob die Familie Termine mit Titel, nur als „Belegt“ oder gar nicht sieht. Neue Kalender stehen immer auf „Nicht übernehmen“.")
+                    Text("Danach wählst du für jeden Kalender, ob die Familie Termine mit Titel, nur als „Belegt“ oder gar nicht sieht. Neue Kalender stehen immer auf „Nicht zeigen“.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     if denied {
-                        Text("Der Zugriff wurde abgelehnt. Sie können ihn in den iPhone-Einstellungen unter Apps → Family Planner → Kalender erlauben.")
+                        Text("Der Zugriff wurde abgelehnt. Du kannst ihn in den iPhone-Einstellungen unter Apps → Family Planner → Kalender erlauben.")
                             .font(.footnote)
                     } else {
                         Button("Zugriff auf Kalender erlauben") {
@@ -47,7 +47,7 @@ struct CalendarSourcesScreen: View {
                 } footer: {
                     Text(exportScope == .off
                          ? "Family Planner kann die Familientermine in einen eigenen Kalender „Family Planner“ der Kalender-App eintragen und aktuell halten."
-                         : "Kalender „Family Planner“ in der Kalender-App: \(exportScope == .mine ? "Termine, die Sie betreffen oder die Sie übernommen haben" : "alle Termine der Familie"), eine Woche zurück bis sechs Monate voraus. Änderungen, auch an einzelnen Terminen einer Serie, erscheinen dort automatisch. Bearbeiten Sie Termine in Family Planner, im Kalender werden Änderungen überschrieben.")
+                         : "Kalender „Family Planner“ in der Kalender-App: \(exportScope == .mine ? "Termine, die dich betreffen oder die du übernommen hast" : "alle Termine der Familie"), eine Woche zurück bis sechs Monate voraus. Änderungen, auch an einzelnen Terminen einer Serie, erscheinen dort automatisch. Bearbeite Termine in Family Planner, im Kalender werden Änderungen überschrieben.")
                 }
                 ForEach(groupedSources, id: \.0) { sourceTitle, items in
                     Section(sourceTitle) {
@@ -59,7 +59,7 @@ struct CalendarSourcesScreen: View {
                 Section {
                     EmptyView()
                 } footer: {
-                    Text("Übernehmen aus Ihren Kalendern: „Nur als Belegtzeit“: Titel, Ort und Notizen bleiben auf diesem iPhone. Übernommen wird eine Woche zurück bis drei Monate voraus.")
+                    Text("Aus deinen Kalendern: Bei „Nur als „Belegt““ bleiben Titel, Ort und Notizen auf diesem iPhone. Gezeigt wird eine Woche zurück bis drei Monate voraus.")
                 }
             }
         }
