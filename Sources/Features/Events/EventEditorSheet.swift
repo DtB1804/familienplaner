@@ -461,7 +461,7 @@ struct EventEditorSheet: View {
     /// Übernommene Zuständigkeiten (ohne "Betrifft", ohne abgegebene).
     private func assignments(of event: CDEvent) -> [CDEventParticipation] {
         _ = claimTick
-        ((event.participations as? Set<CDEventParticipation>) ?? [])
+        return ((event.participations as? Set<CDEventParticipation>) ?? [])
             .filter { $0.roleRaw != ParticipationRole.subject.rawValue
                       && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined }
             .sorted { ($0.roleRaw ?? "", $0.claimedAt ?? .distantPast) < ($1.roleRaw ?? "", $1.claimedAt ?? .distantPast) }
