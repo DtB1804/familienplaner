@@ -245,14 +245,16 @@ public struct TodayScreen: View {
         ToolbarItem(placement: .principal) {
             Button { showDatePicker = true } label: {
                 HStack(spacing: 4) {
-                    Text(title).font(.headline).lineLimit(1)
+                    Text(title).font(.headline).lineLimit(1).minimumScaleFactor(0.75)
                     Image(systemName: "chevron.down")
                         .font(.caption2.weight(.semibold))
                         .foregroundStyle(.secondary)
                 }
                 .foregroundStyle(.primary)
             }
-            .accessibilityLabel(title)
+            .accessibilityLabel(mode == .day
+                ? day.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Locale(identifier: "de_DE")))
+                : title)
             .accessibilityHint("Datum wählen")
             .accessibilityIdentifier("nav.title")
         }
@@ -510,9 +512,20 @@ public struct TodayScreen: View {
             let d2 = cal.component(.day, from: end), m2 = cal.component(.month, from: end)
             return m1 == m2 ? "KW \(week) · \(d1).–\(d2).\(m2)." : "KW \(week) · \(d1).\(m1).–\(d2).\(m2)."
         }
+        // Ist nicht heute gewählt, steht rechts zusätzlich "Heute": dann kurze Form,
+        // sonst wird der Titel abgeschnitten ("…nstag, 29. September").
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "de_DE")
-        formatter.dateFormat = Calendar.current.isDateInToday(day) ? "'Heute', d. MMMM" : "EEEE, d. MMMM"
+        let cal = Calendar.current
+        if cal.isDateInToday(day) {
+            formatter.dateFormat = "'Heute', d. MMMM"
+        } else if cal.isDateInTomorrow(day) {
+            formatter.dateFormat = "'Morgen', d. MMM"
+        } else if cal.isDateInYesterday(day) {
+            formatter.dateFormat = "'Gestern', d. MMM"
+        } else {
+            formatter.dateFormat = "EEE, d. MMM"
+        }
         return formatter.string(from: day)
     }
 
