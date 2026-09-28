@@ -239,12 +239,12 @@ Build darf sie benutzen.
 
 ### Aufgabe 16: Tester eintragen (erst wenn der erste Build in TestFlight liegt)
 - David: automatisch als Account Holder.
-- Jana: in App Store Connect unter "Benutzer und Zugriff" als Benutzer einladen
+- Partnerin: in App Store Connect unter "Benutzer und Zugriff" als Benutzer einladen
   (Rolle z. B. "Developer" oder "Marketing"), danach als interne Testerin eintragen.
   Interne Tests brauchen keine Beta-Prüfung durch Apple.
-- Josh: **als interner Tester nicht möglich** (25.09.2026: App Store Connect verlangt
-  Mindestalter 13, in der EU 16). Wege: (a) iPad mit iCloud = Josh, App Store/Medien &
-  Käufe = David (nicht verifiziert), (b) externe Testgruppe per Einladung an Joshs
+- Kind: **als interner Tester nicht möglich** (25.09.2026: App Store Connect verlangt
+  Mindestalter 13, in der EU 16). Wege: (a) iPad mit iCloud = Kind, App Store/Medien &
+  Käufe = David (nicht verifiziert), (b) externe Testgruppe per Einladung an des Kindes
   Apple-ID, braucht einmalig TestFlight App Review.
 - Auf jedem iPhone die App "TestFlight" aus dem App Store installieren.
 
@@ -254,7 +254,7 @@ App über TestFlight installiert, Haushalt angelegt, zweiten Erwachsenen angeleg
 ### Aufgabe 16b: Funktionstest Build 7 ✅ erfolgreich (24.09.2026)
 Termine/Dienste anlegen und bearbeiten, Kalenderübernahme (nur Belegt), Zuständigkeit
 übernehmen/abgeben inkl. Anzeige, Verschieben per Ziehen, Tage wischen: alles i. O.
-Offen: Einladungstest mit Jana (Aufgabe 16), Kinderansicht mit Josh.
+Offen: Einladungstest mit der Partnerin (Aufgabe 16), Kinderansicht auf dem Kindergerät.
 
 ### Aufgabe 17: CloudKit-Management-Token (ersetzt Aufgabe 10) ✅ erledigt (23.09.2026)
 **Ergebnis:** Schema per `cktool` geprüft ("Schema is valid") und in Development

@@ -31,6 +31,9 @@ public struct DayTimelineView: View {
     @State private var draggingMemberID: NSManagedObjectID?
     @State private var dragDY: CGFloat = 0
     @State private var dragDX: CGFloat = 0
+    /// Richtung eines Ziehvorgangs, festgelegt nach den ersten Punkten: entweder Uhrzeit
+    /// (senkrecht) oder Person (seitlich), nie beides zugleich.
+    @State private var dragAxis: Axis?
 
     /// Raster beim Verschieben.
     private let snapMinutes = 15
@@ -348,21 +351,33 @@ public struct DayTimelineView: View {
                 if case .second(true, let drag) = value {
                     draggingID = event.objectID
                     draggingMemberID = member.objectID
-                    dragDY = drag?.translation.height ?? 0
-                    dragDX = drag?.translation.width ?? 0
+                    let translation = drag?.translation ?? .zero
+                    if dragAxis == nil, translation.width * translation.width + translation.height * translation.height > 144 {
+                        dragAxis = abs(translation.width) > abs(translation.height) && canReassign(event, from: member)
+                            ? .horizontal : .vertical
+                    }
+                    dragDY = dragAxis == .vertical ? translation.height : 0
+                    dragDX = dragAxis == .horizontal ? translation.width : 0
                 }
             }
             .onEnded { value in
                 if case .second(true, let drag?) = value {
-                    let minutes = snappedMinutes(for: drag.translation.height)
-                    if minutes != 0 { onMove?(event, TimeInterval(minutes * 60)) }
-                    if let target = reassignTarget(from: member, laneWidth: laneWidth, dx: drag.translation.width),
-                       canReassign(event, from: member) {
-                        onReassign?(event, member, target)
+                    switch dragAxis {
+                    case .vertical:
+                        let minutes = snappedMinutes(for: drag.translation.height)
+                        if minutes != 0 { onMove?(event, TimeInterval(minutes * 60)) }
+                    case .horizontal:
+                        if let target = reassignTarget(from: member, laneWidth: laneWidth, dx: drag.translation.width),
+                           canReassign(event, from: member) {
+                            onReassign?(event, member, target)
+                        }
+                    case nil:
+                        break
                     }
                 }
                 draggingID = nil
                 draggingMemberID = nil
+                dragAxis = nil
                 dragDY = 0
                 dragDX = 0
                 lastDragEnd = Date()

@@ -79,6 +79,45 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue((11...12).contains(hour), "Erwartet etwa 12:00, ist \(value)")
         XCTAssertTrue(value.hasSuffix(":00") || value.hasSuffix(":15") || value.hasSuffix(":30") || value.hasSuffix(":45"),
                       "Nicht auf 15 Minuten gerastet: \(value)")
+
+        // Rückgängig stellt die alte Uhrzeit wieder her.
+        tap("undo.button", in: app)
+        let restored = NSPredicate(format: "value == '10:00'")
+        expectation(for: restored, evaluatedWith: block)
+        waitForExpectations(timeout: 5)
+    }
+
+    /// Datum wählen und zurück zu heute.
+    @MainActor
+    func testJumpToDateAndBackToToday() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        XCTAssertFalse(element("nav.today", in: app).exists)
+        tap("nav.next", in: app)
+        tap("nav.next", in: app)
+        tap("nav.today", in: app)
+        XCTAssertTrue(element("nav.today", in: app).waitForNonExistence(timeout: 5), "Nicht zurück bei heute")
+
+        tap("nav.title", in: app)
+        XCTAssertTrue(app.navigationBars["Datum wählen"].waitForExistence(timeout: 5), "Datumsauswahl fehlt")
+        tap("datepicker.today", in: app)
+        XCTAssertTrue(app.navigationBars["Datum wählen"].waitForNonExistence(timeout: 5), "Auswahl schließt nicht")
+    }
+
+    /// Übernehmen direkt im Termin, nicht nur über das Banner.
+    @MainActor
+    func testClaimInsideEditor() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("nav.next", in: app)
+        createEvent("Turnen", roles: ["driveFrom"], in: app)
+        XCTAssertTrue(element("banner.open", in: app).waitForExistence(timeout: 5))
+
+        tap("event.Turnen", in: app)
+        tap("editor.claim.driveFrom", in: app)
+        XCTAssertTrue(element("editor.claim.driveFrom", in: app).waitForNonExistence(timeout: 5), "Übernehmen wirkt nicht")
+        app.buttons["Abbrechen"].firstMatch.tap()
+        XCTAssertTrue(element("banner.open", in: app).waitForNonExistence(timeout: 5), "Banner muss verschwinden")
     }
 
     /// Wischen blättert die Tage, der Titel der Navigationsleiste wechselt.
@@ -278,9 +317,16 @@ final class EndToEndTests: XCTestCase {
         var swipes = 0
         while !app.buttons["household.remove"].exists && swipes < 8 { app.swipeUp(); swipes += 1 }
         tap("household.remove", in: app)
-        let confirm = app.buttons["Endgültig löschen"].firstMatch
-        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "Bestätigung fehlt")
-        confirm.tap()
+        // Stufe 1: Dialog mit Sichern-Angebot, Stufe 2: Haushaltsnamen eintippen.
+        XCTAssertTrue(app.buttons["Vorher alle Termine sichern (.ics)"].waitForExistence(timeout: 5), "Sichern-Angebot fehlt")
+        tap("household.remove.confirm", in: app)
+        let alert = app.alerts.firstMatch
+        XCTAssertTrue(alert.waitForExistence(timeout: 5), "Namensabfrage fehlt")
+        let nameField = alert.textFields.firstMatch
+        XCTAssertTrue(nameField.waitForExistence(timeout: 5))
+        nameField.tap()
+        nameField.typeText("Testfamilie")
+        alert.buttons["Endgültig löschen"].tap()
         XCTAssertTrue(app.navigationBars["Einrichten"].waitForExistence(timeout: 10), "Nicht zurück bei Einrichten")
         completeSetup(in: app)
     }

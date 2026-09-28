@@ -41,6 +41,9 @@ public struct TodayScreen: View {
     @State private var showFreeTime = false
     @State private var showCamera = false
     @State private var cameraData: Data?
+    @State private var showDatePicker = false
+    /// Letzte Verschiebung per Ziehen, einige Sekunden lang rückgängig zu machen.
+    @State private var undo: UndoAction?
     @ObservedObject private var syncStatus = SyncStatus.shared
 
     @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
@@ -75,6 +78,17 @@ public struct TodayScreen: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("banner.open")
+                }
+                if canEdit && !pendingSuggestions.isEmpty {
+                    Button { showSuggestions = true } label: {
+                        HintBanner(symbol: "doc.text.viewfinder",
+                                   title: pendingSuggestions.count == 1
+                                       ? "1 Foto wartet auf Prüfung"
+                                       : "\(pendingSuggestions.count) Fotos warten auf Prüfung",
+                                   detail: "Erkannte Termine ansehen und eintragen")
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("banner.suggestions")
                 }
                 HStack(spacing: Spacing.m) {
                     Picker("Ansicht", selection: $mode) {
@@ -116,6 +130,23 @@ public struct TodayScreen: View {
                 }
             }
             .background(Palette.surfaceSunken)
+            .overlay(alignment: .bottom) {
+                if let undo {
+                    UndoToast(text: undo.text) {
+                        undo.revert()
+                        self.undo = nil
+                    }
+                    .padding(.horizontal, Spacing.l)
+                    .padding(.bottom, 72)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            .animation(.snappy(duration: 0.2), value: undo?.id)
+            .task(id: undo?.id) {
+                guard undo != nil else { return }
+                try? await Task.sleep(for: .seconds(6))
+                if !Task.isCancelled { undo = nil }
+            }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -123,6 +154,26 @@ public struct TodayScreen: View {
                     Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
                         .accessibilityLabel("Zurück")
                         .accessibilityIdentifier("nav.previous")
+                }
+                ToolbarItem(placement: .principal) {
+                    Button { showDatePicker = true } label: {
+                        HStack(spacing: 4) {
+                            Text(title).font(.headline).lineLimit(1)
+                            Image(systemName: "chevron.down")
+                                .font(.caption2.weight(.semibold))
+                                .foregroundStyle(.secondary)
+                        }
+                        .foregroundStyle(.primary)
+                    }
+                    .accessibilityLabel(title)
+                    .accessibilityHint("Datum wählen")
+                    .accessibilityIdentifier("nav.title")
+                }
+                if !isShowingToday {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Heute") { withAnimation(.snappy(duration: 0.2)) { day = Date() } }
+                            .accessibilityIdentifier("nav.today")
+                    }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
@@ -154,17 +205,15 @@ public struct TodayScreen: View {
                 if canEdit {
                     ToolbarSpacer(.flexible, placement: .bottomBar)
                     ToolbarItem(placement: .bottomBar) {
+                        // Eigener Knopf statt verstecktem Menü hinter "+" (UX-Prüfung A3).
                         Menu {
-                            Button { editorTarget = .new } label: {
-                                Label("Neuer Termin", systemImage: "calendar.badge.plus")
-                            }
                             if CameraPicker.isAvailable {
                                 Button { showCamera = true } label: {
                                     Label("Termine fotografieren", systemImage: "camera")
                                 }
                             }
                             Button { showPhotoPicker = true } label: {
-                                Label("Termine aus Foto", systemImage: "doc.text.viewfinder")
+                                Label("Foto oder Bildschirmfoto auswählen", systemImage: "photo.on.rectangle")
                             }
                             if !pendingSuggestions.isEmpty {
                                 Button { showSuggestions = true } label: {
@@ -172,9 +221,15 @@ public struct TodayScreen: View {
                                 }
                             }
                         } label: {
+                            Label("Foto", systemImage: "camera")
+                        }
+                        .accessibilityHint("Termine aus einem Elternbrief oder Aushang erkennen")
+                        .accessibilityIdentifier("toolbar.photo")
+                    }
+                    ToolbarSpacer(.flexible, placement: .bottomBar)
+                    ToolbarItem(placement: .bottomBar) {
+                        Button { editorTarget = .new } label: {
                             Label("Neu", systemImage: "plus")
-                        } primaryAction: {
-                            editorTarget = .new
                         }
                         .accessibilityIdentifier("toolbar.new")
                     }
@@ -193,6 +248,12 @@ public struct TodayScreen: View {
                 let start = Self.weekStart(of: new)
                 let end = Calendar.current.date(byAdding: .day, value: 7, to: start) ?? start
                 weekEvents.nsPredicate = EventService.eventsRequest(from: start, to: end).predicate
+            }
+            .sheet(isPresented: $showDatePicker) {
+                DayPickerSheet(day: Binding(get: { day }, set: { new in
+                    withAnimation(.snappy(duration: 0.2)) { day = new }
+                    showDatePicker = false
+                }))
             }
             .sheet(isPresented: $showSearch) {
                 SearchScreen(viewer: viewer, household: household) { target in
@@ -294,9 +355,7 @@ public struct TodayScreen: View {
                         onSwipeDay: { offset in shiftDay(offset) },
                         onReassign: canEdit ? { event, from, to in
                             guard EventOrigin(rawValue: event.originRaw ?? "") != .imported else { return }
-                            if EventService.reassignSubject(event, from: from, to: to, in: context) {
-                                PersistenceController.shared.save(context)
-                            }
+                            reassign(event, from: from, to: to)
                         } : nil)
     }
 
@@ -409,6 +468,7 @@ public struct TodayScreen: View {
     }
 
     /// Verschieben um ganze Tage (kalendarisch, sommerzeitsicher) und Minuten.
+    /// Bei Serien betrifft das nur diesen Termin; der Hinweis sagt das und bietet Rückgängig.
     private func move(_ event: CDEvent, days: Int, minutes: Int) {
         guard let start = event.startAt, let end = event.endAt else { return }
         let calendar = Calendar.current
@@ -419,6 +479,46 @@ public struct TodayScreen: View {
         event.endAt = newStart.addingTimeInterval(duration)
         event.updatedAt = Date()
         PersistenceController.shared.save(context)
+
+        let style: Date.FormatStyle = days == 0
+            ? .dateTime.hour().minute().locale(Locale(identifier: "de_DE"))
+            : .dateTime.weekday(.abbreviated).hour().minute().locale(Locale(identifier: "de_DE"))
+        var text = "\(shortTitle(event)) → \(newStart.formatted(style))"
+        if SeriesService.isSeries(event) { text += " · nur dieser Termin" }
+        undo = UndoAction(text: text) {
+            event.startAt = start
+            event.endAt = end
+            event.updatedAt = Date()
+            PersistenceController.shared.save(context)
+        }
+    }
+
+    /// Seitlich in eine andere Spalte gezogen: Termin betrifft jetzt die andere Person.
+    private func reassign(_ event: CDEvent, from: CDMember, to: CDMember) {
+        let targetWasSubject = EventService.subjects(of: event).contains { $0.objectID == to.objectID }
+        guard EventService.reassignSubject(event, from: from, to: to, in: context) else { return }
+        PersistenceController.shared.save(context)
+        undo = UndoAction(text: "\(shortTitle(event)) → \(to.displayName ?? "")") {
+            if targetWasSubject {
+                EventService.addParticipation(in: context, event: event, member: from, role: .subject)
+                event.updatedAt = Date()
+            } else {
+                _ = EventService.reassignSubject(event, from: to, to: from, in: context)
+            }
+            PersistenceController.shared.save(context)
+        }
+    }
+
+    private func shortTitle(_ event: CDEvent) -> String {
+        let title = EventPresentation.title(of: event, for: viewer, in: household)
+        return title.count > 22 ? String(title.prefix(21)) + "…" : title
+    }
+
+    /// Zeigt die Ansicht heute (Tag) bzw. die laufende Woche?
+    private var isShowingToday: Bool {
+        mode == .day
+            ? Calendar.current.isDateInToday(day)
+            : Self.weekStart(of: day) == Self.weekStart(of: Date())
     }
 
     /// Erinnerungen neu planen, gebündelt: mehrere Speichervorgänge kurz hintereinander
@@ -501,4 +601,99 @@ struct PhotoImport: Identifiable {
 
 enum CalendarMode: Hashable {
     case day, week
+}
+
+// MARK: - Rückgängig nach dem Ziehen
+
+struct UndoAction: Identifiable {
+    let id = UUID()
+    let text: String
+    let revert: () -> Void
+}
+
+struct UndoToast: View {
+    let text: String
+    let onUndo: () -> Void
+
+    var body: some View {
+        HStack(spacing: Spacing.m) {
+            Text(text)
+                .font(.subheadline)
+                .lineLimit(2)
+            Spacer(minLength: Spacing.s)
+            Button("Rückgängig", action: onUndo)
+                .font(.subheadline.weight(.semibold))
+                .accessibilityIdentifier("undo.button")
+        }
+        .padding(.horizontal, Spacing.l)
+        .padding(.vertical, Spacing.m)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+        .shadow(color: .black.opacity(0.15), radius: 8, y: 2)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("undo.toast")
+    }
+}
+
+// MARK: - Hinweisleiste (z. B. Foto-Vorschläge)
+
+struct HintBanner: View {
+    let symbol: String
+    let title: String
+    let detail: String
+
+    var body: some View {
+        HStack(spacing: Spacing.s) {
+            Image(systemName: symbol)
+                .foregroundStyle(Color.accentColor)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title).font(.subheadline.weight(.semibold))
+                Text(detail).font(TypeScale.eventMeta).foregroundStyle(.secondary).lineLimit(1)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.tertiary)
+                .accessibilityHidden(true)
+        }
+        .padding(.horizontal, Spacing.l)
+        .padding(.vertical, Spacing.m)
+        .background(Palette.surface)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Palette.hairline).frame(height: 0.5)
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Datum wählen
+
+struct DayPickerSheet: View {
+    @Binding var day: Date
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            VStack {
+                DatePicker("Datum", selection: $day, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+                    .environment(\.locale, Locale(identifier: "de_DE"))
+                    .padding(.horizontal)
+                    .accessibilityIdentifier("datepicker")
+                Spacer(minLength: 0)
+            }
+            .navigationTitle("Datum wählen")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Heute") { day = Date() }
+                        .accessibilityIdentifier("datepicker.today")
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Fertig") { dismiss() }
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+    }
 }

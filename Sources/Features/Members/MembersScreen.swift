@@ -23,6 +23,11 @@ struct MembersScreen: View {
     @State private var exportFile: ExportFile?
     @State private var confirmRemoveHousehold = false
     @State private var isRemoving = false
+    /// Zweite Stufe beim Löschen: Haushaltsnamen eintippen.
+    @State private var askHouseholdName = false
+    @State private var typedHouseholdName = ""
+    /// Nach dem Anlegen einer Person mit eigenem iPhone gleich einladen.
+    @State private var inviteAfterSheet = false
 
     private var isOwner: Bool { HouseholdService.isOwner(of: household) }
 
@@ -153,14 +158,38 @@ struct MembersScreen: View {
             }
             .confirmationDialog(isOwner ? "Haushalt endgültig löschen?" : "Haushalt verlassen?",
                                 isPresented: $confirmRemoveHousehold, titleVisibility: .visible) {
-                Button(isOwner ? "Endgültig löschen" : "Verlassen", role: .destructive) {
-                    Task { await removeHousehold() }
+                if isOwner {
+                    Button("Vorher alle Termine sichern (.ics)") { exportCalendar() }
+                        .accessibilityIdentifier("household.remove.backup")
+                    Button("Weiter zum Löschen", role: .destructive) {
+                        typedHouseholdName = ""
+                        askHouseholdName = true
+                    }
+                    .accessibilityIdentifier("household.remove.confirm")
+                } else {
+                    Button("Verlassen", role: .destructive) {
+                        Task { await removeHousehold() }
+                    }
+                    .accessibilityIdentifier("household.remove.confirm")
                 }
-                .accessibilityIdentifier("household.remove.confirm")
             } message: {
                 Text(isOwner
-                     ? "Alle Termine, Mitglieder und Einstellungen werden für die ganze Familie gelöscht."
+                     ? "Alle Termine, Mitglieder und Einstellungen werden für die ganze Familie gelöscht. Das lässt sich nicht rückgängig machen."
                      : "Die Termine verschwinden von diesem Gerät.")
+            }
+            .alert("Zum Bestätigen den Namen eingeben", isPresented: $askHouseholdName) {
+                TextField(household.name ?? "", text: $typedHouseholdName)
+                    .accessibilityIdentifier("household.remove.name")
+                Button("Endgültig löschen", role: .destructive) {
+                    if typedHouseholdName.trimmed.caseInsensitiveCompare((household.name ?? "").trimmed) == .orderedSame {
+                        Task { await removeHousehold() }
+                    } else {
+                        errorMessage = "Der Name stimmt nicht. Es wurde nichts gelöscht."
+                    }
+                }
+                Button("Abbrechen", role: .cancel) {}
+            } message: {
+                Text("Bitte „\(household.name ?? "")“ eintippen. Danach ist der Familienkalender für alle gelöscht.")
             }
             .sheet(item: $exportFile) { file in
                 ActivityView(items: [file.url])
@@ -173,13 +202,13 @@ struct MembersScreen: View {
                         .accessibilityIdentifier("members.done")
                 }
             }
-            .sheet(isPresented: $showAddMember) {
-                AddMemberSheet(household: household)
+            .sheet(isPresented: $showAddMember, onDismiss: inviteIfRequested) {
+                AddMemberSheet(household: household, canInvite: isOwner) { inviteAfterSheet = true }
             }
-            .sheet(item: $editedMember) { member in
-                AddMemberSheet(household: household, member: member)
+            .sheet(item: $editedMember, onDismiss: inviteIfRequested) { member in
+                AddMemberSheet(household: household, member: member, canInvite: isOwner) { inviteAfterSheet = true }
             }
-            .alert("Einladung nicht möglich",
+            .alert("Das hat nicht geklappt",
                    isPresented: Binding(get: { errorMessage != nil },
                                         set: { if !$0 { errorMessage = nil } })) {
                 Button("OK", role: .cancel) {}
@@ -232,6 +261,12 @@ struct MembersScreen: View {
         } catch {
             errorMessage = "Bitte prüfen Sie, ob Sie in iCloud angemeldet sind und eine Internetverbindung besteht.\n\n\(error.localizedDescription)"
         }
+    }
+
+    private func inviteIfRequested() {
+        guard inviteAfterSheet else { return }
+        inviteAfterSheet = false
+        Task { await invite() }
     }
 
     private func exportCalendar() {
@@ -326,6 +361,10 @@ struct AddMemberSheet: View {
     let household: CDHousehold
     /// nil = neues Mitglied, sonst Bearbeiten
     var member: CDMember? = nil
+    /// Nur wer den Haushalt angelegt hat, kann einladen.
+    var canInvite: Bool = false
+    /// Nach dem Sichern einer Person mit eigenem iPhone: Einladung öffnen.
+    var onInvite: (() -> Void)? = nil
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -362,7 +401,9 @@ struct AddMemberSheet: View {
                     Toggle("Eigenes iPhone mit eigener Apple-ID", isOn: $hasOwnPhone)
                 } footer: {
                     Text(hasOwnPhone
-                         ? "Diese Person bekommt anschließend eine Einladung und sieht den Familienkalender auf ihrem iPhone."
+                         ? (canInvite
+                            ? "Nach dem Sichern öffnet sich die Einladung, z. B. per Nachricht. Wer sie annimmt, sieht den Familienkalender auf dem eigenen iPhone."
+                            : "Die Einladung verschickt, wer den Haushalt angelegt hat: Familie → Familie einladen.")
                          : "Diese Person erscheint im Kalender, ihre Termine tragen die Erwachsenen ein.")
                 }
                 if let member, member.id != CurrentMember.id {
@@ -410,6 +451,9 @@ struct AddMemberSheet: View {
     }
 
     private func save() {
+        // Einladen, wenn die Person ein eigenes iPhone hat und noch keins eingetragen war.
+        let wasParticipant = member?.accountKind == .participant
+        if hasOwnPhone && !wasParticipant && canInvite { onInvite?() }
         if let member {
             member.displayName = name.trimmed
             member.shortName = String(shortName.trimmed.prefix(3))
@@ -466,10 +510,16 @@ struct IdentityPickerScreen: View {
                 }
             }
             .overlay {
-                if candidates.isEmpty {
+                if members.isEmpty {
                     ContentUnavailableView("Familie wird geladen",
                                            systemImage: "icloud.and.arrow.down",
                                            description: Text("Die Daten kommen gerade aus iCloud. Das kann beim ersten Mal etwas dauern."))
+                } else if candidates.isEmpty {
+                    // Geladen, aber niemand ist als "eigenes iPhone" eingetragen (UX-Prüfung A5).
+                    ContentUnavailableView("Ihr Name fehlt noch",
+                                           systemImage: "person.crop.circle.badge.questionmark",
+                                           description: Text("Bitten Sie die Person, die den Familienkalender angelegt hat: Familie → Ihren Namen antippen (oder „Mitglied hinzufügen“) → „Eigenes iPhone mit eigener Apple-ID“ einschalten. Danach erscheinen Sie hier von selbst."))
+                        .accessibilityIdentifier("identity.missing")
                 }
             }
             .navigationTitle("Wer sind Sie?")

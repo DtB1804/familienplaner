@@ -33,7 +33,7 @@ struct ReminderSettingsScreen: View {
                     }
                 }
             } footer: {
-                Text("Gilt für Termine, die Sie betreffen, und für Zuständigkeiten, die Sie übernommen haben, z. B. „Holt Josh – Schwimmen um 15:00“.")
+                Text("Gilt für Termine, die Sie betreffen, und für Zuständigkeiten, die Sie übernommen haben, z. B. „Holt Mia – Schwimmen um 15:00“.")
             }
 
             if isAdult {

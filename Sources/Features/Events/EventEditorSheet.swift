@@ -43,6 +43,10 @@ struct EventEditorSheet: View {
     @State private var isAllDay = false
     /// Letzter Tag eines ganztägigen Termins (einschließlich).
     @State private var lastDay = Date()
+    /// Zählt Übernahmen hoch, damit die Abschnitte "Noch offen" und "Übernommen" neu lesen.
+    @State private var claimTick = 0
+    @State private var pendingClaimRole: ParticipationRole?
+    @State private var claimMessage: String?
 
     private var isNew: Bool { event == nil }
 
@@ -99,6 +103,26 @@ struct EventEditorSheet: View {
                                 .accessibilityIdentifier("editor.title")
                                 .multilineTextAlignment(.trailing)
                         }
+                    }
+                }
+
+                if let event, !openRoles(of: event).isEmpty {
+                    // Übernehmen direkt am Termin, nicht nur über das Banner (UX-Prüfung A2).
+                    Section {
+                        ForEach(openRoles(of: event)) { role in
+                            HStack {
+                                Text("\(role.label): noch offen")
+                                Spacer()
+                                Button("Übernehme ich") {
+                                    if isSeries { pendingClaimRole = role } else { claim(role, scope: .single) }
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .controlSize(.small)
+                                .accessibilityIdentifier("editor.claim.\(role.rawValue)")
+                            }
+                        }
+                    } header: {
+                        Text("Noch offen")
                     }
                 }
 
@@ -277,6 +301,25 @@ struct EventEditorSheet: View {
                     Button("Diesen und alle folgenden abgeben", role: .destructive) { giveBackFollowing(participation) }
                 }
             }
+            .confirmationDialog(pendingClaimRole.map { "\($0.label) übernehmen" } ?? "",
+                                isPresented: Binding(get: { pendingClaimRole != nil },
+                                                     set: { if !$0 { pendingClaimRole = nil } }),
+                                titleVisibility: .visible) {
+                if let role = pendingClaimRole {
+                    Button("Für die ganze Serie") { claim(role, scope: .series) }
+                        .accessibilityIdentifier("editor.claimScope.series")
+                    Button("Nur diesen Termin") { claim(role, scope: .single) }
+                        .accessibilityIdentifier("editor.claimScope.single")
+                }
+            } message: {
+                Text("Bei „ganze Serie“ gilt die Übernahme auch für später ergänzte Termine.")
+            }
+            .alert("Nicht übernommen",
+                   isPresented: Binding(get: { claimMessage != nil }, set: { if !$0 { claimMessage = nil } })) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(claimMessage ?? "")
+            }
             .confirmationDialog("Termin einer Serie ändern", isPresented: $askSaveScope, titleVisibility: .visible) {
                 Button("Nur diesen Termin") { save(following: false) }
                     .accessibilityIdentifier("scope.save.one")
@@ -395,8 +438,30 @@ struct EventEditorSheet: View {
         dismiss()
     }
 
+    /// Gespeicherte, noch von niemandem übernommene Zuständigkeiten.
+    private func openRoles(of event: CDEvent) -> [ParticipationRole] {
+        _ = claimTick
+        let covered = EventService.coveredRoles(of: event)
+        return RequiredRoles.decode(event.requiredRolesRaw).filter { !covered.contains($0) }
+    }
+
+    private func claim(_ role: ParticipationRole, scope: ClaimActions.Scope) {
+        pendingClaimRole = nil
+        guard let id = event?.id else { return }
+        switch ClaimActions.claim(eventID: id, role: role, scope: scope) {
+        case .claimed:
+            break
+        case .alreadyTaken(let name):
+            claimMessage = "\(role.label) übernimmt bereits \(name)."
+        case .notPossible(let reason):
+            claimMessage = reason
+        }
+        claimTick += 1
+    }
+
     /// Übernommene Zuständigkeiten (ohne "Betrifft", ohne abgegebene).
     private func assignments(of event: CDEvent) -> [CDEventParticipation] {
+        _ = claimTick
         ((event.participations as? Set<CDEventParticipation>) ?? [])
             .filter { $0.roleRaw != ParticipationRole.subject.rawValue
                       && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined }
@@ -409,6 +474,7 @@ struct EventEditorSheet: View {
         participation.statusRaw = ParticipationStatus.declined.rawValue
         participation.updatedAt = Date()
         PersistenceController.shared.save(context)
+        claimTick += 1
     }
 
     private func giveBackFollowing(_ participation: CDEventParticipation) {
@@ -416,6 +482,7 @@ struct EventEditorSheet: View {
               let role = ParticipationRole(rawValue: participation.roleRaw ?? "") else { return }
         SeriesService.giveBackFollowing(role: role, from: event, by: member, in: context)
         PersistenceController.shared.save(context)
+        claimTick += 1
     }
 
     private func toggleSubject(_ member: CDMember) {

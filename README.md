@@ -102,8 +102,9 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Sicherung (.ics) | da (Build 28) | Familie → Sicherung |
 | Erste Schritte | da (Build 28) | einmal je Gerät: wer bin ich, Kalender, Erinnerungen |
 | Barrierefreiheit | Build 28 | große Schrift, VoiceOver-Texte und -Aktionen; Prüfung nachts |
-| Einladungstest mit Jana | wartet auf Jana | Aufgabe 16 |
-| Kinderansicht mit Josh testen | wartet auf Josh-Gerät | |
+| UX-Korrekturen | Build 29 | Rückgängig nach Ziehen, Ziehen nur senkrecht oder seitlich, „Übernehme ich“ im Termin, Foto-Knopf, Datum wählen und „Heute“, Einladung direkt nach dem Anlegen, Löschen mit Namenseingabe |
+| Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
+| Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
 
 ## Bekannte offene Punkte
 

@@ -12,7 +12,18 @@ struct EventDetailSheet: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    @State private var pendingClaimRole: ParticipationRole?
+    @State private var claimMessage: String?
+
     private let de = Locale(identifier: "de_DE")
+
+    /// Übernehmen dürfen Erwachsene; in der Kindervorschau ist `viewer` das Kind.
+    private var canClaim: Bool { viewer?.role == .adult }
+
+    private struct Assignment {
+        let role: ParticipationRole
+        let who: String?
+    }
 
     var body: some View {
         NavigationStack {
@@ -40,7 +51,21 @@ struct EventDetailSheet: View {
 
                 if !assignments.isEmpty {
                     Section("Zuständigkeiten") {
-                        ForEach(assignments, id: \.self) { Text($0) }
+                        ForEach(assignments, id: \.role) { item in
+                            HStack {
+                                Text("\(item.role.label): \(item.who ?? "noch offen")")
+                                Spacer()
+                                if item.who == nil && canClaim {
+                                    Button("Übernehme ich") {
+                                        if SeriesService.isSeries(event) { pendingClaimRole = item.role }
+                                        else { claim(item.role, scope: .single) }
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.small)
+                                    .accessibilityIdentifier("detail.claim.\(item.role.rawValue)")
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -65,6 +90,31 @@ struct EventDetailSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
+        .confirmationDialog(pendingClaimRole.map { "\($0.label) übernehmen" } ?? "",
+                            isPresented: Binding(get: { pendingClaimRole != nil },
+                                                 set: { if !$0 { pendingClaimRole = nil } }),
+                            titleVisibility: .visible) {
+            if let role = pendingClaimRole {
+                Button("Für die ganze Serie") { claim(role, scope: .series) }
+                Button("Nur diesen Termin") { claim(role, scope: .single) }
+            }
+        }
+        .alert("Nicht übernommen",
+               isPresented: Binding(get: { claimMessage != nil }, set: { if !$0 { claimMessage = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(claimMessage ?? "")
+        }
+    }
+
+    private func claim(_ role: ParticipationRole, scope: ClaimActions.Scope) {
+        pendingClaimRole = nil
+        guard let id = event.id else { return }
+        switch ClaimActions.claim(eventID: id, role: role, scope: scope) {
+        case .claimed: break
+        case .alreadyTaken(let name): claimMessage = "\(role.label) übernimmt bereits \(name)."
+        case .notPossible(let reason): claimMessage = reason
+        }
     }
 
     // MARK: - Texte
@@ -109,7 +159,7 @@ struct EventDetailSheet: View {
         }
     }
 
-    private var assignments: [String] {
+    private var assignments: [Assignment] {
         let required = RequiredRoles.decode(event.requiredRolesRaw)
         guard !required.isEmpty else { return [] }
         let participations = (event.participations as? Set<CDEventParticipation>) ?? []
@@ -117,8 +167,7 @@ struct EventDetailSheet: View {
             let candidates = participations.filter {
                 $0.roleRaw == role.rawValue && ParticipationStatus(rawValue: $0.statusRaw ?? "") != .declined
             }
-            let who = EventService.earliest(of: candidates)?.member?.displayName ?? "noch offen"
-            return "\(role.label): \(who)"
+            return Assignment(role: role, who: EventService.earliest(of: candidates)?.member?.displayName)
         }
     }
 
