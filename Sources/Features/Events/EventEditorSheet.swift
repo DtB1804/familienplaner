@@ -330,7 +330,7 @@ struct EventEditorSheet: View {
     private var rolesSection: some View {
         Section {
             ForEach(ParticipationRole.responsibilityRoles) { role in
-                Toggle(role.question, isOn: roleBinding(role))
+                Toggle(role.editorQuestion, isOn: roleBinding(role))
                     .accessibilityIdentifier("editor.role.\(role.rawValue)")
             }
         } header: {

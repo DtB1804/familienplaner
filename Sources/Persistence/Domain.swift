@@ -57,8 +57,8 @@ public enum ParticipationRole: String, CaseIterable, Codable, Identifiable {
         }
     }
 
-    /// Frage im Editor, z. B. "Wer holt?" (statt "Holt nötig").
-    public var question: String {
+    /// Schalter im Editor, z. B. "Wer holt?" (statt "Holt nötig").
+    public var editorQuestion: String {
         switch self {
         case .driveTo: return "Wer bringt?"
         case .driveFrom: return "Wer holt?"
