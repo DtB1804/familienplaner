@@ -288,10 +288,11 @@ public struct DayTimelineView: View {
                 .frame(width: 3)
                 .padding(.vertical, 1)
         }
-        .overlay(alignment: .topTrailing) {
+        .overlay(alignment: .bottomTrailing) {
             // Offene Zuständigkeit auch bei kurzen Terminen sichtbar, z. B. "Holt ?".
+            // Unten rechts und in schmalen Spalten kurz ("2 ?"), damit der Titel lesbar bleibt.
             if openCount > 0 {
-                Text(openLabel(for: event))
+                Text(width < 140 ? "\(openCount) ?" : openLabel(for: event))
                     .font(.caption2.weight(.bold))
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)

@@ -26,10 +26,12 @@ public struct TodayScreen: View {
     @State private var showSearch = false
     @State private var reminderTask: Task<Void, Never>?
 
-    @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
+    /// Startwert gleich die richtige Woche: Ein nachträglich gesetztes `nsPredicate`
+    /// greift beim ersten Anzeigen nicht zuverlässig (Woche und Monat blieben leer).
+    @FetchRequest(fetchRequest: TodayScreen.weekRequest(for: Date()))
     private var weekEvents: FetchedResults<CDEvent>
     /// Sechs Wochen der Monatsübersicht.
-    @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
+    @FetchRequest(fetchRequest: TodayScreen.monthRequest(for: Date()))
     private var monthEvents: FetchedResults<CDEvent>
     @State private var zoom: DayZoom = .normal
     @State private var selectedMemberIDs: Set<NSManagedObjectID> = []
@@ -124,11 +126,8 @@ public struct TodayScreen: View {
             }
             .onChange(of: day, initial: true) { _, new in
                 dayEvents.nsPredicate = EventService.eventsRequest(on: new).predicate
-                let start = Self.weekStart(of: new)
-                let end = Calendar.current.date(byAdding: .day, value: 7, to: start) ?? start
-                weekEvents.nsPredicate = EventService.eventsRequest(from: start, to: end).predicate
-                let grid = Self.monthGridRange(of: new)
-                monthEvents.nsPredicate = EventService.eventsRequest(from: grid.start, to: grid.end).predicate
+                weekEvents.nsPredicate = Self.weekRequest(for: new).predicate
+                monthEvents.nsPredicate = Self.monthRequest(for: new).predicate
             }
             .alert("Nichts kopiert", isPresented: $pasteEmpty) {
                 Button("OK", role: .cancel) {}
@@ -533,6 +532,17 @@ public struct TodayScreen: View {
     }
 
     /// Die 42 Tage der Monatsübersicht (Montag vor dem Monatsersten, sechs Wochen).
+    static func weekRequest(for date: Date) -> NSFetchRequest<CDEvent> {
+        let start = weekStart(of: date)
+        let end = Calendar.current.date(byAdding: .day, value: 7, to: start) ?? start
+        return EventService.eventsRequest(from: start, to: end)
+    }
+
+    static func monthRequest(for date: Date) -> NSFetchRequest<CDEvent> {
+        let grid = monthGridRange(of: date)
+        return EventService.eventsRequest(from: grid.start, to: grid.end)
+    }
+
     static func monthGridRange(of date: Date) -> (start: Date, end: Date) {
         var calendar = Calendar(identifier: .gregorian)
         calendar.firstWeekday = 2
