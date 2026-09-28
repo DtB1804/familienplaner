@@ -259,6 +259,12 @@ final class EndToEndTests: XCTestCase {
         while block.frame.midX - before < laneWidth / 2 && Date() < deadline {
             RunLoop.current.run(until: Date().addingTimeInterval(0.25))
         }
+        if block.frame.midX - before < laneWidth / 2 {
+            let hierarchy = XCTAttachment(string: app.debugDescription)
+            hierarchy.name = "Hierarchie nach seitlichem Ziehen"
+            hierarchy.lifetime = .keepAlways
+            add(hierarchy)
+        }
         XCTAssertGreaterThan(block.frame.midX - before, laneWidth / 2, "Termin nicht in Mias Spalte")
         XCTAssertEqual(block.value as? String, "10:00", "Uhrzeit darf sich beim seitlichen Ziehen nicht ändern")
     }

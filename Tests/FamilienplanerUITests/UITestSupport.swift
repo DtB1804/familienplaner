@@ -37,7 +37,10 @@ extension XCTestCase {
     @MainActor
     func setSwitch(_ id: String, on: Bool, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
         let toggle = app.switches[id].firstMatch
-        XCTAssertTrue(toggle.waitForExistence(timeout: 5), "\(id) fehlt", file: file, line: line)
+        // Formulare laden Zeilen erst beim Scrollen: so lange wischen, bis der Schalter da ist.
+        var scrolls = 0
+        while !toggle.waitForExistence(timeout: 1) && scrolls < 8 { app.swipeUp(velocity: .slow); scrolls += 1 }
+        XCTAssertTrue(toggle.exists, "\(id) fehlt", file: file, line: line)
         var tries = 0
         while !toggle.isHittable && tries < 6 { app.swipeUp(velocity: .slow); tries += 1 }
         if (toggle.value as? String == "1") != on {

@@ -211,7 +211,12 @@ public enum EventService {
         if !subjects(of: event).contains(where: { $0.objectID == to.objectID }) {
             addParticipation(in: context, event: event, member: to, role: .subject)
         }
-        fromSubject.forEach(context.delete)
+        for participation in fromSubject {
+            // Sofort aus der Beziehung lösen, nicht erst beim Speichern: Ansichten lesen
+            // `participations` direkt danach wieder aus.
+            participation.event = nil
+            context.delete(participation)
+        }
         event.updatedAt = Date()
         return true
     }
