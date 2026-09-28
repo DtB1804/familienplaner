@@ -106,6 +106,23 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Datum wählen"].waitForNonExistence(timeout: 5), "Auswahl schließt nicht")
     }
 
+    /// Monatsübersicht: Termin erscheint als Punkt am Tag, Tippen öffnet den Tag.
+    @MainActor
+    func testMonthOverviewOpensDay() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        createEvent("Zahnarzt", in: app)
+        showMode("Monat", in: app)
+        XCTAssertTrue(element("month.grid", in: app).waitForExistence(timeout: 5), "Monatsübersicht fehlt")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let today = element("month.day.\(formatter.string(from: Date()))", in: app)
+        XCTAssertTrue(today.waitForExistence(timeout: 5), "Heutiger Tag fehlt")
+        XCTAssertTrue(today.label.contains("1 Termin"), today.label)
+        today.tap()
+        XCTAssertTrue(element("event.Zahnarzt", in: app).waitForExistence(timeout: 5), "Tag öffnet nicht")
+    }
+
     /// Der Editor sagt, was zum Sichern fehlt, und der Hinweis verschwindet, sobald es passt.
     @MainActor
     func testEditorExplainsWhatIsMissing() {

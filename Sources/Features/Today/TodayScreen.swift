@@ -27,6 +27,9 @@ public struct TodayScreen: View {
 
     @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
     private var weekEvents: FetchedResults<CDEvent>
+    /// Sechs Wochen der Monatsübersicht.
+    @FetchRequest(fetchRequest: EventService.eventsRequest(from: Date(), to: Date()))
+    private var monthEvents: FetchedResults<CDEvent>
     @State private var zoom: DayZoom = .normal
     @State private var selectedMemberIDs: Set<NSManagedObjectID> = []
     @State private var openResponsibilities: [OpenResponsibility] = []
@@ -77,15 +80,15 @@ public struct TodayScreen: View {
                 banners
                 let allDay = (mode == .day ? Array(dayEvents) : Array(weekEvents))
                     .filter { $0.isAllDay && isVisibleInFilter($0) }
-                if !allDay.isEmpty {
+                if mode != .month && !allDay.isEmpty {
                     AllDayStrip(events: allDay, showsDates: mode == .week,
                                 viewer: viewer, household: household,
                                 onSelect: { event in open(event) })
                 }
-                if mode == .day {
-                    dayTimeline
-                } else {
-                    weekTimeline
+                switch mode {
+                case .day: dayTimeline
+                case .week: weekTimeline
+                case .month: monthGrid
                 }
             }
             .background(Palette.surfaceSunken)
@@ -122,6 +125,8 @@ public struct TodayScreen: View {
                 let start = Self.weekStart(of: new)
                 let end = Calendar.current.date(byAdding: .day, value: 7, to: start) ?? start
                 weekEvents.nsPredicate = EventService.eventsRequest(from: start, to: end).predicate
+                let grid = Self.monthGridRange(of: new)
+                monthEvents.nsPredicate = EventService.eventsRequest(from: grid.start, to: grid.end).predicate
             }
             .sheet(isPresented: $showDatePicker) {
                 DayPickerSheet(day: Binding(get: { day }, set: { new in
@@ -227,7 +232,7 @@ public struct TodayScreen: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Button { shiftDay(mode == .day ? -1 : -7) } label: { Image(systemName: "chevron.left") }
+            Button { step(-1) } label: { Image(systemName: "chevron.left") }
                 .accessibilityLabel("Zurück")
                 .accessibilityIdentifier("nav.previous")
         }
@@ -252,7 +257,7 @@ public struct TodayScreen: View {
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            Button { shiftDay(mode == .day ? 1 : 7) } label: { Image(systemName: "chevron.right") }
+            Button { step(1) } label: { Image(systemName: "chevron.right") }
                 .accessibilityLabel("Weiter")
                 .accessibilityIdentifier("nav.next")
         }
@@ -323,7 +328,8 @@ public struct TodayScreen: View {
             Menu {
                 Picker("Ansicht", selection: $mode) {
                     Label("Tag", systemImage: "calendar.day.timeline.left").tag(CalendarMode.day)
-                    Label("Woche", systemImage: "calendar").tag(CalendarMode.week)
+                    Label("Woche", systemImage: "rectangle.split.3x1").tag(CalendarMode.week)
+                    Label("Monat", systemImage: "calendar").tag(CalendarMode.month)
                 }
                 Section {
                     Button {
@@ -341,15 +347,15 @@ public struct TodayScreen: View {
                 }
             } label: {
                 VStack(spacing: 1) {
-                    Image(systemName: mode == .day ? "calendar.day.timeline.left" : "calendar")
+                    Image(systemName: mode.symbol)
                         .font(.body.weight(.semibold))
-                    Text(mode == .day ? "Tag" : "Woche")
+                    Text(mode.label)
                         .font(.caption2.weight(.medium))
                 }
                 .frame(minWidth: 44, minHeight: 44)
             }
-            .accessibilityLabel("Ansicht: \(mode == .day ? "Tag" : "Woche")")
-            .accessibilityHint("Tag oder Woche wählen, vergrößern oder verkleinern")
+            .accessibilityLabel("Ansicht: \(mode.label)")
+            .accessibilityHint("Tag, Woche oder Monat wählen, vergrößern oder verkleinern")
             .accessibilityIdentifier("view.menu")
             .padding(.trailing, Spacing.s)
         }
@@ -399,6 +405,19 @@ public struct TodayScreen: View {
                             guard EventOrigin(rawValue: event.originRaw ?? "") != .imported else { return }
                             reassign(event, from: from, to: to)
                         } : nil)
+    }
+
+    private var monthGrid: some View {
+        MonthGridView(month: day,
+                      events: monthEvents.filter { isVisibleInFilter($0) },
+                      members: visibleMembers,
+                      viewer: viewer,
+                      household: household,
+                      onOpenDay: { target in
+                          day = target
+                          mode = .day
+                      },
+                      onSwipeMonth: { offset in shiftMonth(offset) })
     }
 
     private var weekTimeline: some View {
@@ -464,6 +483,12 @@ public struct TodayScreen: View {
     private var viewer: CDMember? { previewMember ?? me }
 
     private var title: String {
+        if mode == .month {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "de_DE")
+            formatter.dateFormat = "LLLL yyyy"
+            return formatter.string(from: day)
+        }
         if mode == .week {
             let start = Self.weekStart(of: day)
             let end = Calendar.current.date(byAdding: .day, value: 6, to: start) ?? start
@@ -480,6 +505,32 @@ public struct TodayScreen: View {
         formatter.locale = Locale(identifier: "de_DE")
         formatter.dateFormat = Calendar.current.isDateInToday(day) ? "'Heute', d. MMMM" : "EEEE, d. MMMM"
         return formatter.string(from: day)
+    }
+
+    /// Pfeile: je nach Ansicht einen Tag, eine Woche oder einen Monat weiter.
+    private func step(_ direction: Int) {
+        switch mode {
+        case .day: shiftDay(direction)
+        case .week: shiftDay(direction * 7)
+        case .month: shiftMonth(direction)
+        }
+    }
+
+    private func shiftMonth(_ offset: Int) {
+        withAnimation(.snappy(duration: 0.2)) {
+            day = Calendar.current.date(byAdding: .month, value: offset, to: day) ?? day
+        }
+    }
+
+    /// Die 42 Tage der Monatsübersicht (Montag vor dem Monatsersten, sechs Wochen).
+    static func monthGridRange(of date: Date) -> (start: Date, end: Date) {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 2
+        calendar.timeZone = .current
+        let first = calendar.dateInterval(of: .month, for: date)?.start ?? calendar.startOfDay(for: date)
+        let start = calendar.dateInterval(of: .weekOfYear, for: first)?.start ?? first
+        let end = calendar.date(byAdding: .day, value: 42, to: start) ?? start
+        return (start, end)
     }
 
     private func shiftDay(_ offset: Int) {
@@ -560,9 +611,11 @@ public struct TodayScreen: View {
 
     /// Zeigt die Ansicht heute (Tag) bzw. die laufende Woche?
     private var isShowingToday: Bool {
-        mode == .day
-            ? Calendar.current.isDateInToday(day)
-            : Self.weekStart(of: day) == Self.weekStart(of: Date())
+        switch mode {
+        case .day: return Calendar.current.isDateInToday(day)
+        case .week: return Self.weekStart(of: day) == Self.weekStart(of: Date())
+        case .month: return Calendar.current.isDate(day, equalTo: Date(), toGranularity: .month)
+        }
     }
 
     /// Erinnerungen neu planen, gebündelt: mehrere Speichervorgänge kurz hintereinander
@@ -644,7 +697,23 @@ struct PhotoImport: Identifiable {
 }
 
 enum CalendarMode: Hashable {
-    case day, week
+    case day, week, month
+
+    var label: String {
+        switch self {
+        case .day: return "Tag"
+        case .week: return "Woche"
+        case .month: return "Monat"
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .day: return "calendar.day.timeline.left"
+        case .week: return "rectangle.split.3x1"
+        case .month: return "calendar"
+        }
+    }
 }
 
 // MARK: - Rückgängig nach dem Ziehen
