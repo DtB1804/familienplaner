@@ -58,17 +58,13 @@
 		</dict>
 	</array>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Der Familienplaner liest Ihre Kalender, um Termine in der gemeinsamen Übersicht anzuzeigen, und schreibt Familientermine zurück, wenn Sie das für einen Kalender erlauben.</string>
+	<string>Family Planner liest die Kalender, die du auswählst, und zeigt deren Termine der Familie – mit Titel oder nur als „Belegt“. Auf Wunsch trägt die App Familientermine in einen eigenen Kalender „Family Planner“ ein.</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
-	<string>Der Familienplaner legt Familientermine in Ihrem Kalender an. Bestehende Termine werden dabei nicht gelesen.</string>
-	<key>NSRemindersFullAccessUsageDescription</key>
-	<string>Der Familienplaner kann Aufgaben zu Terminen mit Ihren Erinnerungen abgleichen.</string>
+	<string>Family Planner trägt Familientermine in einen eigenen Kalender „Family Planner“ ein. Bestehende Termine werden dabei nicht gelesen.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Der Familienplaner liest ausgewählte Screenshots und Fotos, um daraus Terminvorschläge zu erzeugen. Die Auswertung geschieht auf dem Gerät.</string>
+	<string>Family Planner liest nur das Foto oder den Screenshot, den du auswählst, und erkennt darin Termine. Die Auswertung geschieht auf dem Gerät.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Der Familienplaner fotografiert Aushänge und Elternbriefe, um daraus Terminvorschläge zu erzeugen.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Der Familienplaner berechnet Fahrzeiten zwischen Terminen, damit Wegzeiten realistisch eingeplant werden.</string>
+	<string>Family Planner fotografiert Aushänge und Elternbriefe, um darin Termine zu erkennen. Die Auswertung geschieht auf dem Gerät.</string>
 
 	<!-- Ohne diesen Schlüssel öffnet iOS Einladungslinks nicht in der App. -->
 	<key>CKSharingSupported</key>

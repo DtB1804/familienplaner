@@ -359,6 +359,37 @@ Erweiterung. Sie legt Fotos im gemeinsamen Ordner ab, die App holt sie dort ab.
 **Zuliefern:** „Teilen-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
 **Aufwand:** etwa 3 Minuten.
 
+### Aufgabe 23: Einladung an die Partnerin annehmen (Schleife beim Link)
+Stand 28.09.2026: Der Einladungslink aus App Store Connect öffnet sich immer wieder neu.
+Umgehungen (im Apple-Entwicklerforum berichtet, nicht offiziell bestätigt): Link am
+**Computer im privaten Browserfenster** öffnen und mit der Apple-ID anmelden; sonst
+Einladung erneut senden bzw. Benutzer löschen und neu einladen, nur den neuesten Link
+nutzen. Bleibt es dabei: Apple Developer Support. Ausweg: externe Gruppe mit öffentlichem
+Link (braucht einmal Apples Beta-Prüfung).
+**Zuliefern:** „Einladung angenommen“ oder die Meldung, die erscheint.
+
+### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite)
+**Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
+Branch `main`, Ordner `/docs` → Save. Nach wenigen Minuten erreichbar unter
+https://dtb1804.github.io/familienplaner/ (Adresse zeigt GitHub dort an).
+**Vorher:** in `docs/datenschutz.md` und `docs/index.md` die Platzhalter [NAME],
+[ANSCHRIFT], [E-MAIL-ADRESSE], [DATUM] ausfüllen (oder mir die Angaben nennen). Achtung:
+Das Repository ist öffentlich, die Angaben stehen dann im Netz – so wie es eine
+Datenschutzerklärung ohnehin verlangt.
+**Zuliefern:** „Pages an“.
+
+### Aufgabe 25: App in App Store Connect vorbereiten
+Texte und Ablauf stehen in `APP-STORE.md`. Schritte: App-Informationen (Name, Kategorie,
+Datenschutz-URL), Preis „kostenlos“, Altersfreigabe-Fragebogen, App-Datenschutz-
+Fragebogen (gemeinsam mit Claude), Bildschirmfotos, Build auswählen, Prüfhinweise
+einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
+**Zuliefern:** Fragen aus den Fragebögen, bei denen du unsicher bist.
+
+### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen
+Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
+Antrag: https://developer.apple.com/contact/request/unlisted-app/ (Textvorschlag in
+`APP-STORE.md`).
+
 ## Was ich in der Zwischenzeit weiterbaue
 
 Ohne auf eine dieser Aufgaben zu warten:
