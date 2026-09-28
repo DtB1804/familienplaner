@@ -1,7 +1,7 @@
 import Foundation
 
-/// Eingang für Fotos, die über den Teilen-Knopf (Mail, WhatsApp, Fotos) an Family Planner
-/// geschickt werden. Die Teilen-Erweiterung legt die Bilder in der App Group ab, die App
+/// Eingang für Fotos und Texte, die über den Teilen-Knopf (Mail, WhatsApp, Fotos) an
+/// Family Planner geschickt werden. Die Teilen-Erweiterung legt die Bilder in der App Group ab, die App
 /// nimmt sie beim nächsten Öffnen und zeigt die erkannten Terminvorschläge (Regel 4:
 /// übernommen wird nur nach Bestätigung).
 enum SharedInbox {
@@ -20,6 +20,24 @@ enum SharedInbox {
         guard let folder else { return false }
         let name = "\(Int(Date().timeIntervalSince1970 * 1000))-\(UUID().uuidString.prefix(8)).\(fileExtension)"
         return (try? data.write(to: folder.appendingPathComponent(name), options: .atomic)) != nil
+    }
+
+    /// Geteilter Text (z. B. WhatsApp-Nachricht) als .txt-Datei.
+    @discardableResult
+    static func saveText(_ text: String) -> Bool {
+        save(Data(text.utf8), fileExtension: "txt")
+    }
+
+    enum Item: Equatable {
+        case image(Data)
+        case text(String)
+    }
+
+    /// Ältesten Eintrag herausnehmen, Bild oder Text (Datei wird dabei gelöscht).
+    static func takeNextItem() -> Item? {
+        guard let next = files().first, let data = try? Data(contentsOf: next) else { return nil }
+        try? FileManager.default.removeItem(at: next)
+        return next.pathExtension == "txt" ? .text(String(decoding: data, as: UTF8.self)) : .image(data)
     }
 
     static var pendingCount: Int { files().count }

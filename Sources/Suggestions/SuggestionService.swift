@@ -40,6 +40,32 @@ enum SuggestionService {
         return draft
     }
 
+    /// Vorschläge aus geteiltem oder eingefügtem Text. Der Text selbst bleibt am Vorschlag
+    /// (`sourceTextExcerpt`), damit die Bestätigung nachprüfbar ist (Regel 4).
+    @discardableResult
+    static func saveDraft(text: String,
+                          result: SuggestionExtractor.Result,
+                          household: CDHousehold,
+                          author: CDMember,
+                          in context: NSManagedObjectContext) -> CDSuggestionDraft {
+        let now = Date()
+        let draft = CDSuggestionDraft(context: context)
+        PersistenceController.assign(draft, toStoreOf: household)
+        draft.id = UUID()
+        draft.household = household
+        draft.sourceKindRaw = SuggestionSourceKind.sharedText.rawValue
+        draft.sourceTextExcerpt = String(text.prefix(2000))
+        draft.extractedPayload = try? JSONEncoder().encode(result.suggestions)
+        draft.statusRaw = result.suggestions.isEmpty
+            ? SuggestionStatus.rejected.rawValue
+            : SuggestionStatus.pending.rawValue
+        draft.createdByMemberID = author.id
+        draft.createdAt = now
+        draft.updatedAt = now
+        PersistenceController.shared.save(context)
+        return draft
+    }
+
     static func suggestions(of draft: CDSuggestionDraft) -> [SuggestedEvent] {
         guard let data = draft.extractedPayload else { return [] }
         return (try? JSONDecoder().decode([SuggestedEvent].self, from: data)) ?? []
@@ -57,7 +83,8 @@ enum SuggestionService {
                                            title: suggestion.title,
                                            startAt: suggestion.start, endAt: suggestion.end,
                                            createdBy: adult, subjects: subjects,
-                                           locationName: suggestion.location)
+                                           locationName: suggestion.location,
+                                           isAllDay: suggestion.isAllDay ?? false)
         event.originRaw = EventOrigin.fromSuggestion.rawValue
         var updated = suggestion
         updated.decision = .accepted

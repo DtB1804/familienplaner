@@ -2,6 +2,7 @@ import SwiftUI
 import CoreData
 import EventKit
 import PhotosUI
+import UIKit
 
 public struct TodayScreen: View {
 
@@ -45,6 +46,7 @@ public struct TodayScreen: View {
     @State private var showCamera = false
     @State private var cameraData: Data?
     @State private var showDatePicker = false
+    @State private var pasteEmpty = false
     /// "Bearbeiten" in der Detailansicht: nach dem Schließen den Editor öffnen.
     @State private var pendingEdit: CDEvent?
     /// Letzte Verschiebung per Ziehen, einige Sekunden lang rückgängig zu machen.
@@ -128,6 +130,11 @@ public struct TodayScreen: View {
                 let grid = Self.monthGridRange(of: new)
                 monthEvents.nsPredicate = EventService.eventsRequest(from: grid.start, to: grid.end).predicate
             }
+            .alert("Nichts kopiert", isPresented: $pasteEmpty) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Kopiere zuerst den Text mit dem Termin, z. B. eine WhatsApp-Nachricht: lange drücken → Kopieren.")
+            }
             .sheet(isPresented: $showDatePicker) {
                 DayPickerSheet(day: Binding(get: { day }, set: { new in
                     withAnimation(.snappy(duration: 0.2)) { day = new }
@@ -150,14 +157,14 @@ public struct TodayScreen: View {
                 guard let item else { return }
                 Task {
                     if let data = try? await item.loadTransferable(type: Data.self) {
-                        photoImport = PhotoImport(data: data)
+                        photoImport = PhotoImport(source: .image(data))
                     }
                     photoItem = nil
                 }
             }
             .fullScreenCover(isPresented: $showCamera, onDismiss: {
                 // Erst nach dem Schließen der Kamera das Prüfblatt zeigen.
-                if let data = cameraData { photoImport = PhotoImport(data: data) }
+                if let data = cameraData { photoImport = PhotoImport(source: .image(data)) }
                 cameraData = nil
             }) {
                 CameraPicker { data in cameraData = data }
@@ -165,7 +172,7 @@ public struct TodayScreen: View {
             }
             .sheet(item: $photoImport, onDismiss: takeSharedPhoto) { photo in
                 if let household, let me {
-                    PhotoImportSheet(imageData: photo.data, household: household, me: me)
+                    PhotoImportSheet(source: photo.source, household: household, me: me)
                 }
             }
             .sheet(isPresented: $showSuggestions) {
@@ -296,15 +303,18 @@ public struct TodayScreen: View {
                     Button { showPhotoPicker = true } label: {
                         Label("Foto oder Bildschirmfoto auswählen", systemImage: "photo.on.rectangle")
                     }
+                    Button { pasteText() } label: {
+                        Label("Kopierten Text einfügen", systemImage: "doc.on.clipboard")
+                    }
                     if !pendingSuggestions.isEmpty {
                         Button { showSuggestions = true } label: {
                             Label("Offene Vorschläge (\(pendingSuggestions.count))", systemImage: "tray")
                         }
                     }
                 } label: {
-                    Label("Foto", systemImage: "camera")
+                    Label("Foto oder Text", systemImage: "camera")
                 }
-                .accessibilityHint("Termine aus einem Elternbrief oder Aushang erkennen")
+                .accessibilityHint("Termine aus einem Elternbrief, Aushang oder kopierten Text erkennen")
                 .accessibilityIdentifier("toolbar.photo")
             }
             ToolbarSpacer(.flexible, placement: .bottomBar)
@@ -549,11 +559,25 @@ public struct TodayScreen: View {
     /// Über den Teilen-Knopf (Mail, WhatsApp, Fotos) geschickte Bilder nacheinander prüfen.
     private func takeSharedPhoto() {
         guard canEdit, photoImport == nil, !showCamera else { return }
-        if let data = SharedInbox.takeNext() { photoImport = PhotoImport(data: data) }
+        switch SharedInbox.takeNextItem() {
+        case .image(let data): photoImport = PhotoImport(source: .image(data))
+        case .text(let text): photoImport = PhotoImport(source: .text(text))
+        case nil: break
+        }
     }
 
     /// Antippen zeigt immer zuerst die Details (wie in der Kalender-App); bearbeitet wird
     /// über "Bearbeiten" oben rechts (UX-Prüfung B4).
+    /// Kopierten Text (z. B. aus WhatsApp) auswerten. iOS fragt beim ersten Mal nach.
+    private func pasteText() {
+        if let text = UIPasteboard.general.string,
+           !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            photoImport = PhotoImport(source: .text(String(text.prefix(5000))))
+        } else {
+            pasteEmpty = true
+        }
+    }
+
     private func open(_ event: CDEvent) {
         detailEvent = event
     }
@@ -693,7 +717,7 @@ enum EditorTarget: Identifiable {
 /// Ein ausgewähltes Foto, das eingelesen werden soll.
 struct PhotoImport: Identifiable {
     let id = UUID()
-    let data: Data
+    let source: ImportSource
 }
 
 enum CalendarMode: Hashable {

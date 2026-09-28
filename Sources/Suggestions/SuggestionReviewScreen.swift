@@ -2,10 +2,16 @@ import SwiftUI
 import CoreData
 import UIKit
 
-/// Liest ein Foto ein und zeigt danach die Vorschläge zur Prüfung.
+/// Was ausgewertet werden soll: ein Foto oder ein Text (geteilt oder eingefügt).
+enum ImportSource {
+    case image(Data)
+    case text(String)
+}
+
+/// Liest ein Foto oder einen Text ein und zeigt danach die Vorschläge zur Prüfung.
 struct PhotoImportSheet: View {
 
-    let imageData: Data
+    let source: ImportSource
     let household: CDHousehold
     let me: CDMember
 
@@ -24,9 +30,11 @@ struct PhotoImportSheet: View {
                 } else if foundNothing {
                     ContentUnavailableView("Keine Termine erkannt",
                                            systemImage: "doc.text.magnifyingglass",
-                                           description: Text("Auf dem Foto wurde kein Datum gefunden. Tipp: Den Text möglichst gerade und formatfüllend fotografieren."))
+                                           description: Text(isText
+                                                ? "Im Text wurde kein Datum gefunden. Erkannt werden z. B. „14.10.“, „14. Oktober“ oder „Dienstag 19 Uhr“."
+                                                : "Auf dem Foto wurde kein Datum gefunden. Tipp: Den Text möglichst gerade und formatfüllend fotografieren."))
                 } else if let failure {
-                    ContentUnavailableView("Foto konnte nicht gelesen werden",
+                    ContentUnavailableView(isText ? "Text konnte nicht gelesen werden" : "Foto konnte nicht gelesen werden",
                                            systemImage: "exclamationmark.triangle",
                                            description: Text(failure))
                 } else {
@@ -42,7 +50,7 @@ struct PhotoImportSheet: View {
                     .padding()
                 }
             }
-            .navigationTitle("Termine aus Foto")
+            .navigationTitle(isText ? "Termine aus Text" : "Termine aus Foto")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -53,20 +61,30 @@ struct PhotoImportSheet: View {
         }
     }
 
+    private var isText: Bool {
+        if case .text = source { return true }
+        return false
+    }
+
     private func run() async {
         guard draft == nil, failure == nil, !foundNothing else { return }
-        guard let image = UIImage(data: imageData), let cgImage = image.cgImage else {
-            failure = "Das Bildformat wird nicht unterstützt."
-            return
-        }
         do {
-            let result = try await SuggestionExtractor.extract(from: cgImage)
-            if result.suggestions.isEmpty {
-                foundNothing = true
-                return
+            switch source {
+            case .image(let data):
+                guard let image = UIImage(data: data), let cgImage = image.cgImage else {
+                    failure = "Das Bildformat wird nicht unterstützt."
+                    return
+                }
+                let result = try await SuggestionExtractor.extract(from: cgImage)
+                if result.suggestions.isEmpty { foundNothing = true; return }
+                draft = SuggestionService.saveDraft(image: image, result: result,
+                                                    household: household, author: me, in: context)
+            case .text(let text):
+                let result = try await SuggestionExtractor.extract(text: text)
+                if result.suggestions.isEmpty { foundNothing = true; return }
+                draft = SuggestionService.saveDraft(text: text, result: result,
+                                                    household: household, author: me, in: context)
             }
-            draft = SuggestionService.saveDraft(image: image, result: result,
-                                                household: household, author: me, in: context)
         } catch {
             failure = error.localizedDescription
         }
@@ -148,6 +166,20 @@ struct SuggestionReviewList: View {
                 }
             }
 
+            if draft.sourceAsset == nil, let text = draft.sourceTextExcerpt, !text.isEmpty {
+                Section {
+                    Text(text)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(12)
+                        .textSelection(.enabled)
+                } header: {
+                    Text("Geteilter Text")
+                } footer: {
+                    Text("Vorschläge prüfen: Datum, Uhrzeit und Personen können falsch erkannt sein. Nichts wird ohne deine Bestätigung eingetragen.")
+                }
+            }
+
             ForEach($items) { $item in
                 Section {
                     suggestionCard($item)
@@ -178,14 +210,18 @@ struct SuggestionReviewList: View {
             LabeledContent("Titel") {
                 TextField("Titel", text: item.title).multilineTextAlignment(.trailing)
             }
-            DatePicker("Beginn", selection: item.start)
-                .onChange(of: item.wrappedValue.start) { old, new in
-                    // Dauer beibehalten, mindestens 30 Minuten.
-                    let length = max(item.wrappedValue.end.timeIntervalSince(old), EventService.defaultDuration)
-                    item.wrappedValue.end = new.addingTimeInterval(length)
-                    item.wrappedValue.timeIsGuessed = false
-                }
-            DatePicker("Ende", selection: item.end, in: item.wrappedValue.start...)
+            if item.wrappedValue.isAllDay == true {
+                allDayPickers(item)
+            } else {
+                DatePicker("Beginn", selection: item.start)
+                    .onChange(of: item.wrappedValue.start) { old, new in
+                        // Dauer beibehalten, mindestens 30 Minuten.
+                        let length = max(item.wrappedValue.end.timeIntervalSince(old), EventService.defaultDuration)
+                        item.wrappedValue.end = new.addingTimeInterval(length)
+                        item.wrappedValue.timeIsGuessed = false
+                    }
+                DatePicker("Ende", selection: item.end, in: item.wrappedValue.start...)
+            }
             if item.wrappedValue.timeIsGuessed {
                 Label("Keine Uhrzeit erkannt – bitte prüfen", systemImage: "clock.badge.questionmark")
                     .font(.footnote)
@@ -223,6 +259,27 @@ struct SuggestionReviewList: View {
                 }
             }
         }
+    }
+
+    /// Ganztägig (z. B. Klassenfahrt): nur Tage, Ende einschließlich angezeigt.
+    @ViewBuilder
+    private func allDayPickers(_ item: Binding<SuggestedEvent>) -> some View {
+        let calendar = Calendar.current
+        LabeledContent("Ganztägig", value: "ja")
+        DatePicker("Von", selection: Binding(
+            get: { item.wrappedValue.start },
+            set: { new in
+                let days = calendar.dateComponents([.day], from: item.wrappedValue.start, to: item.wrappedValue.end).day ?? 1
+                let start = calendar.startOfDay(for: new)
+                item.wrappedValue.start = start
+                item.wrappedValue.end = calendar.date(byAdding: .day, value: max(days, 1), to: start) ?? start
+            }), displayedComponents: .date)
+        DatePicker("Bis", selection: Binding(
+            get: { calendar.date(byAdding: .day, value: -1, to: item.wrappedValue.end) ?? item.wrappedValue.end },
+            set: { new in
+                item.wrappedValue.end = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: new))
+                    ?? item.wrappedValue.end
+            }), in: item.wrappedValue.start..., displayedComponents: .date)
     }
 
     private func load() {

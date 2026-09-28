@@ -17,6 +17,9 @@ struct SuggestedEvent: Codable, Hashable, Identifiable {
     /// Entscheidung eines Erwachsenen: nil = offen, sonst accepted/rejected.
     var decision: SuggestionStatus? = nil
     var resultingEventID: UUID? = nil
+    /// Mehrtägig ohne Uhrzeit (z. B. Klassenfahrt 12.–14.10.): Beginn 0 Uhr, Ende 0 Uhr
+    /// nach dem letzten Tag. Optional, damit ältere gespeicherte Vorschläge lesbar bleiben.
+    var isAllDay: Bool? = nil
 }
 
 
@@ -47,7 +50,12 @@ enum SuggestionExtractor {
     }
 
     static func extract(from image: CGImage, now: Date = Date()) async throws -> Result {
-        let text = try await recognizeText(in: image)
+        try await extract(text: try await recognizeText(in: image), now: now)
+    }
+
+    /// Geteilter oder eingefügter Text (z. B. WhatsApp-Nachricht): gleiche Auswertung wie
+    /// beim Foto, nur ohne Texterkennung.
+    static func extract(text: String, now: Date = Date()) async throws -> Result {
         guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Result(recognizedText: "", suggestions: [], method: .dateDetector)
         }
@@ -99,6 +107,8 @@ enum SuggestionExtractor {
         var endTime: String
         @Guide(description: "Ort, leer wenn nicht genannt")
         var location: String
+        @Guide(description: "Letzter Tag im Format JJJJ-MM-TT, nur bei mehrtägigen Terminen wie Klassenfahrt oder Ferien, sonst leer")
+        var endDate: String
     }
 
     private static func extractWithModel(text: String, now: Date) async throws -> [SuggestedEvent] {
@@ -131,6 +141,10 @@ enum SuggestionExtractor {
             }
             let title = item.title.trimmingCharacters(in: .whitespacesAndNewlines)
             let location = item.location.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let last = dayFormatter.date(from: item.endDate.trimmingCharacters(in: .whitespaces)), last > day {
+                return makeAllDaySuggestion(title: title, firstDay: day, lastDay: last,
+                                            location: location.isEmpty ? nil : location)
+            }
             return makeSuggestion(title: title, day: day, start: start, end: end,
                                   location: location.isEmpty ? nil : location)
         }
@@ -155,6 +169,17 @@ enum SuggestionExtractor {
                               location: location, timeIsGuessed: start == nil)
     }
 
+    /// Mehrtägig, ganztägig: 0 Uhr des ersten Tages bis 0 Uhr nach dem letzten.
+    static func makeAllDaySuggestion(title: String, firstDay: Date, lastDay: Date,
+                                     location: String?) -> SuggestedEvent {
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: firstDay)
+        let end = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: lastDay)) ?? lastDay
+        return SuggestedEvent(title: title.isEmpty ? "Termin" : String(title.prefix(60)),
+                              start: start, end: end, location: location,
+                              timeIsGuessed: false, isAllDay: true)
+    }
+
     private static func deduplicated(_ items: [SuggestedEvent]) -> [SuggestedEvent] {
         var seen = Set<String>()
         return items.filter { item in
@@ -175,32 +200,66 @@ enum SuggestionExtractor {
 
     // MARK: - Weg 2: ohne KI
 
+    /// Zeile für Zeile: zuerst deutsche Schreibweisen (`GermanDateParser`), sonst
+    /// `NSDataDetector`. Steht in einer Zeile nur Datum und Uhrzeit, wird die Zeile
+    /// davor zum Titel ("Elternabend" / "Di, 14.10., 19:30 Uhr").
     static func extractWithDetector(text: String, now: Date) -> [SuggestedEvent] {
-        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.date.rawValue) else {
-            return []
-        }
         let calendar = Calendar.current
+        let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.date.rawValue)
         var result: [SuggestedEvent] = []
-        for line in text.components(separatedBy: .newlines) {
-            let range = NSRange(line.startIndex..., in: line)
-            for match in detector.matches(in: line, options: [], range: range) {
-                guard let date = match.date,
-                      date > calendar.date(byAdding: .day, value: -1, to: now) ?? now else { continue }
-                var title = line
-                if let r = Range(match.range, in: line) { title.removeSubrange(r) }
-                title = title.trimmingCharacters(in: CharacterSet(charactersIn: " :-–,.;").union(.whitespaces))
-                // NSDataDetector setzt bei reinen Datumsangaben 12:00 bzw. 0:00.
-                let hour = calendar.component(.hour, from: date)
-                let minute = calendar.component(.minute, from: date)
-                let hasTime = !((hour == 12 || hour == 0) && minute == 0)
-                let end = match.duration > 0 ? date.addingTimeInterval(match.duration) : nil
-                result.append(makeSuggestion(title: title, day: date,
-                                             start: hasTime ? date : nil,
-                                             end: hasTime ? end : nil,
-                                             location: nil))
+        var previousLine = ""
+        for rawLine in text.components(separatedBy: .newlines) {
+            let line = rawLine.trimmingCharacters(in: .whitespaces)
+            guard !line.isEmpty else { continue }
+
+            let german = GermanDateParser.parse(line: line, now: now, calendar: calendar)
+            if !german.found.isEmpty {
+                let title = german.rest.isEmpty ? previousLine : german.rest
+                for item in german.found {
+                    result.append(suggestion(from: item, title: title, calendar: calendar))
+                }
+                continue
             }
+
+            var matched = false
+            if let detector {
+                let range = NSRange(line.startIndex..., in: line)
+                for match in detector.matches(in: line, options: [], range: range) {
+                    guard let date = match.date,
+                          date > calendar.date(byAdding: .day, value: -1, to: now) ?? now else { continue }
+                    matched = true
+                    var title = line
+                    if let r = Range(match.range, in: line) { title.removeSubrange(r) }
+                    title = title.trimmingCharacters(in: CharacterSet(charactersIn: " :-–,.;").union(.whitespaces))
+                    if title.isEmpty { title = previousLine }
+                    // NSDataDetector setzt bei reinen Datumsangaben 12:00 bzw. 0:00.
+                    let hour = calendar.component(.hour, from: date)
+                    let minute = calendar.component(.minute, from: date)
+                    let hasTime = !((hour == 12 || hour == 0) && minute == 0)
+                    let end = match.duration > 0 ? date.addingTimeInterval(match.duration) : nil
+                    result.append(makeSuggestion(title: title, day: date,
+                                                 start: hasTime ? date : nil,
+                                                 end: hasTime ? end : nil,
+                                                 location: nil))
+                }
+            }
+            if !matched { previousLine = String(line.prefix(60)) }
         }
         return deduplicated(result)
+    }
+
+    private static func suggestion(from item: GermanDateParser.Found, title: String,
+                                   calendar: Calendar) -> SuggestedEvent {
+        if let last = item.lastDay {
+            return makeAllDaySuggestion(title: title, firstDay: item.day, lastDay: last, location: nil)
+        }
+        let start = item.start.flatMap {
+            calendar.date(bySettingHour: $0.hour, minute: $0.minute, second: 0, of: item.day)
+        }
+        let end = item.end.flatMap {
+            calendar.date(bySettingHour: $0.hour, minute: $0.minute, second: 0, of: item.day)
+        }
+        return makeSuggestion(title: title, day: item.day, start: start, end: end, location: nil)
     }
 
     // MARK: - Hilfen

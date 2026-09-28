@@ -105,6 +105,8 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | UX-Korrekturen | Build 29 | Rückgängig nach Ziehen, Ziehen nur senkrecht oder seitlich, „Übernehme ich“ im Termin, Foto-Knopf, Datum wählen und „Heute“, Einladung direkt nach dem Anlegen, Löschen mit Namenseingabe |
 | UX-Feinschliff | Build 30 | durchgehend „Du“, „Wer bringt?/Wer holt?“, Editor mit Wichtigem oben, Antippen zeigt Details, eine Leiste für Personen/Tag-Woche/Zoom, Personenfilter blendet aus, Zeitstrahl passt sich an frühe/späte Termine an |
 | Monatsübersicht | Build 33 | Ansicht-Menü → Monat: Punkte je Person, ganztägige Termine als Balken, Tippen öffnet den Tag |
+| Text teilen / einfügen | Build 34 | Teilen-Knopf nimmt Text an (z. B. WhatsApp); „Foto oder Text“ → „Kopierten Text einfügen“ |
+| Bessere Erkennung ohne KI | Build 34 | deutsche Schreibweisen: 14.10., 14. Oktober, 12.–14.10. (ganztägig), 19.30 Uhr, 15–16:30 Uhr, „Dienstag 19 Uhr“; Titel aus der Zeile davor |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
 

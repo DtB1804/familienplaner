@@ -5,7 +5,7 @@ import UniformTypeIdentifiers
 import UserNotifications
 
 /// Teilen-Erweiterung: "Family Planner" im Teilen-Menü von Mail, WhatsApp, Fotos, Dateien.
-/// Nimmt Bilder und PDFs (erste drei Seiten) an, legt sie im gemeinsamen Eingang ab und
+/// Nimmt Bilder, PDFs (erste drei Seiten) und Text (z. B. WhatsApp-Nachrichten) an, legt sie im gemeinsamen Eingang ab und
 /// meldet per Mitteilung, dass die Termine in der App geprüft werden können.
 /// Kein Core Data, keine Terminanlage hier (Regel 4 und 15).
 final class ShareViewController: UIViewController {
@@ -48,6 +48,11 @@ final class ShareModel: ObservableObject {
                         saved += 1
                     }
                 }
+            } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier),
+                      let text = await loadText(provider),
+                      !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                      SharedInbox.saveText(String(text.prefix(5000))) {
+                saved += 1
             } else if provider.hasItemConformingToTypeIdentifier(UTType.image.identifier),
                       let data = await load(provider, type: .image),
                       let image = UIImage(data: data),
@@ -60,7 +65,15 @@ final class ShareModel: ObservableObject {
             state = .saved(saved)
             await notify(count: saved)
         } else {
-            state = .failed("Kein Bild und kein PDF gefunden. Family Planner erkennt Termine aus Fotos, Screenshots und PDFs.")
+            state = .failed("Nichts Passendes gefunden. Family Planner erkennt Termine aus Fotos, Screenshots, PDFs und Text.")
+        }
+    }
+
+    private func loadText(_ provider: NSItemProvider) async -> String? {
+        await withCheckedContinuation { continuation in
+            _ = provider.loadObject(ofClass: NSString.self) { object, _ in
+                continuation.resume(returning: (object as? NSString).map { $0 as String })
+            }
         }
     }
 
@@ -98,8 +111,8 @@ final class ShareModel: ObservableObject {
         let content = UNMutableNotificationContent()
         content.title = "Family Planner"
         content.body = count == 1
-            ? "Foto erhalten. Antippen, um die erkannten Termine zu prüfen."
-            : "\(count) Bilder erhalten. Antippen, um die erkannten Termine zu prüfen."
+            ? "Erhalten. Antippen, um die erkannten Termine zu prüfen."
+            : "\(count) Einträge erhalten. Antippen, um die erkannten Termine zu prüfen."
         content.userInfo = ["fp.inbox": true]
         try? await UNUserNotificationCenter.current().add(
             UNNotificationRequest(identifier: "fp.inbox.\(UUID().uuidString)", content: content, trigger: nil))
@@ -118,7 +131,7 @@ struct ShareView: View {
                     ProgressView("Wird übernommen …")
                 case .saved(let count):
                     Image(systemName: "checkmark.circle.fill").font(.system(size: 48)).foregroundStyle(.green)
-                    Text(count == 1 ? "Foto übernommen" : "\(count) Bilder übernommen").font(.headline)
+                    Text(count == 1 ? "Erhalten" : "\(count) Einträge erhalten").font(.headline)
                     Text("Öffne Family Planner, um die erkannten Termine zu prüfen und zu übernehmen.")
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
