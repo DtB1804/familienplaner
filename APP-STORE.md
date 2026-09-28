@@ -83,3 +83,9 @@ Angabe in App Store Connect nötig. Als „Händler“ zeigt Apple Anschrift, Te
 öffentlich. Als „Nicht-Händler“ erhalten EU-Nutzer den Hinweis, dass Verbraucherrechte
 nicht gelten. Entscheidung David (rechtliche Frage, ggf. prüfen lassen).
 Quelle: https://developer.apple.com/help/app-store-connect/manage-compliance-information/manage-european-union-digital-services-act-trader-requirements/
+
+## Screenshots
+
+Erzeugt der Workflow `Screenshots` (Push auf Branch `screenshots` oder manuell):
+6 Bilder 1284 × 2778 (6,5-Zoll-Format) im Branch `ci-screenshots`, nur Beispieldaten.
+Stand 28.09.2026: Lauf für d3f0d7a geprüft, Woche und Monat zeigen Termine.
