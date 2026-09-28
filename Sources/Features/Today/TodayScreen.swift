@@ -318,33 +318,39 @@ public struct TodayScreen: View {
         // Eine Leiste für Personen, Tag/Woche und Zoom (UX-Prüfung B5).
         HStack(spacing: Spacing.s) {
             MemberFilterBar(members: Array(members), selection: $selectedMemberIDs)
-            Picker("Ansicht", selection: $mode) {
-                Text("Tag").tag(CalendarMode.day)
-                Text("Woche").tag(CalendarMode.week)
-            }
-            .pickerStyle(.segmented)
-            .fixedSize()
-            .accessibilityIdentifier("mode")
-            // Zoom auch ohne Zwei-Finger-Geste erreichbar.
+            // Tag/Woche und Zoom in einem Menü, damit die Namen die Zeile nutzen können
+            // (vier Personen sollen nebeneinander passen).
             Menu {
-                Button {
-                    withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedIn() }
-                } label: {
-                    Label("Vergrößern", systemImage: "plus.magnifyingglass")
+                Picker("Ansicht", selection: $mode) {
+                    Label("Tag", systemImage: "calendar.day.timeline.left").tag(CalendarMode.day)
+                    Label("Woche", systemImage: "calendar").tag(CalendarMode.week)
                 }
-                .disabled(!zoom.canZoomIn)
-                Button {
-                    withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
-                } label: {
-                    Label("Verkleinern", systemImage: "minus.magnifyingglass")
+                Section {
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedIn() }
+                    } label: {
+                        Label("Vergrößern", systemImage: "plus.magnifyingglass")
+                    }
+                    .disabled(!zoom.canZoomIn)
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { zoom = zoom.zoomedOut() }
+                    } label: {
+                        Label("Verkleinern", systemImage: "minus.magnifyingglass")
+                    }
+                    .disabled(!zoom.canZoomOut)
                 }
-                .disabled(!zoom.canZoomOut)
             } label: {
-                Image(systemName: "plus.magnifyingglass")
-                    .frame(minWidth: 44, minHeight: 44)
+                VStack(spacing: 1) {
+                    Image(systemName: mode == .day ? "calendar.day.timeline.left" : "calendar")
+                        .font(.body.weight(.semibold))
+                    Text(mode == .day ? "Tag" : "Woche")
+                        .font(.caption2.weight(.medium))
+                }
+                .frame(minWidth: 44, minHeight: 44)
             }
-            .accessibilityLabel("Zoom")
-            .accessibilityIdentifier("zoom")
+            .accessibilityLabel("Ansicht: \(mode == .day ? "Tag" : "Woche")")
+            .accessibilityHint("Tag oder Woche wählen, vergrößern oder verkleinern")
+            .accessibilityIdentifier("view.menu")
             .padding(.trailing, Spacing.s)
         }
         .background(Palette.surface)

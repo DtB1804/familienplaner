@@ -40,9 +40,9 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(element("event.Schwimmen", in: app).waitForExistence(timeout: 5), "Suche öffnet den Tag nicht")
 
         // Wochenansicht
-        app.buttons["Woche"].tap()
+        showMode("Woche", in: app)
         XCTAssertTrue(element("week.event.Schwimmen", in: app).waitForExistence(timeout: 5))
-        app.buttons["Tag"].tap()
+        showMode("Tag", in: app)
 
         // Löschen (weich) über den Editor
         // Antippen zeigt zuerst die Details, "Bearbeiten" öffnet den Editor.
@@ -204,7 +204,7 @@ final class EndToEndTests: XCTestCase {
         tap("editor.save", in: app)
         XCTAssertTrue(element("event.Chor", in: app).waitForExistence(timeout: 5))
 
-        app.buttons["Woche"].tap()
+        showMode("Woche", in: app)
         tap("nav.next", in: app)
         let nextWeek = element("week.event.Chor", in: app)
         XCTAssertTrue(nextWeek.waitForExistence(timeout: 5), "Serie fehlt in der Folgewoche")
@@ -269,7 +269,7 @@ final class EndToEndTests: XCTestCase {
 
         XCTAssertTrue(element("allday.Urlaub", in: app).waitForExistence(timeout: 5), "Leiste fehlt")
         XCTAssertFalse(element("event.Urlaub", in: app).exists, "Ganztägig darf kein Block im Zeitstrahl sein")
-        app.buttons["Woche"].tap()
+        showMode("Woche", in: app)
         XCTAssertTrue(element("allday.Urlaub", in: app).waitForExistence(timeout: 5), "Leiste fehlt in der Woche")
     }
 

@@ -49,6 +49,15 @@ extension XCTestCase {
         XCTAssertEqual(toggle.value as? String, on ? "1" : "0", "\(id) nicht umgeschaltet", file: file, line: line)
     }
 
+    /// Tag oder Woche über das Ansicht-Menü neben den Personen wählen.
+    @MainActor
+    func showMode(_ label: String, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
+        tap("view.menu", in: app, file: file, line: line)
+        let item = app.buttons[label].firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 5), "Menüpunkt \(label) fehlt", file: file, line: line)
+        item.tap()
+    }
+
     /// Einrichten: Haushalt mit Anna als erster Erwachsener.
     @MainActor
     func completeSetup(in app: XCUIApplication) {

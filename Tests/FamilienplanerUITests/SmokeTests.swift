@@ -12,7 +12,7 @@ final class SmokeTests: XCTestCase {
         XCTAssertFalse(app.buttons["setup.create"].isEnabled, "Anlegen ohne Eingaben muss gesperrt sein")
 
         completeSetup(in: app)
-        for id in ["toolbar.family", "toolbar.search", "toolbar.photo", "toolbar.new", "mode", "nav.previous", "nav.next", "nav.title"] {
+        for id in ["toolbar.family", "toolbar.search", "toolbar.photo", "toolbar.new", "view.menu", "nav.previous", "nav.next", "nav.title"] {
             XCTAssertTrue(element(id, in: app).exists, "\(id) fehlt auf dem Hauptbildschirm")
         }
         XCTAssertFalse(element("banner.open", in: app).exists, "Ohne Termine keine offenen Zuständigkeiten")
