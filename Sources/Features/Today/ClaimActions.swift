@@ -1,5 +1,6 @@
 import CoreData
 import Foundation
+import SwiftUI
 
 /// "Übernehme ich" von außerhalb der Oberfläche: aus einer Mitteilung (Vorabend-Abfrage)
 /// oder von der Apple Watch. Gespeichert wird immer über die Service-Funktionen (Regel 5).
@@ -54,5 +55,46 @@ enum ClaimActions {
         persistence.save(context)
         NotificationCenter.default.post(name: .remindersNeedReschedule, object: nil)
         return outcome
+    }
+}
+
+/// Rückfrage "ganze Serie oder nur dieser Termin?" und Hinweis, wenn schon vergeben.
+/// Gemeinsam für Editor und Detailansicht; als eigener Modifier, damit die großen
+/// Ansichten für den Compiler überschaubar bleiben.
+struct ClaimDialogs: ViewModifier {
+    @Binding var pendingRole: ParticipationRole?
+    @Binding var message: String?
+    let identifierPrefix: String
+    let onClaim: (ParticipationRole, ClaimActions.Scope) -> Void
+
+    private var title: String {
+        pendingRole.map { "\($0.label) übernehmen" } ?? ""
+    }
+
+    private var showsDialog: Binding<Bool> {
+        Binding(get: { pendingRole != nil }, set: { if !$0 { pendingRole = nil } })
+    }
+
+    private var showsMessage: Binding<Bool> {
+        Binding(get: { message != nil }, set: { if !$0 { message = nil } })
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .confirmationDialog(title, isPresented: showsDialog, titleVisibility: .visible) {
+                if let role = pendingRole {
+                    Button("Für die ganze Serie") { onClaim(role, .series) }
+                        .accessibilityIdentifier("\(identifierPrefix).claimScope.series")
+                    Button("Nur diesen Termin") { onClaim(role, .single) }
+                        .accessibilityIdentifier("\(identifierPrefix).claimScope.single")
+                }
+            } message: {
+                Text("Bei „ganze Serie“ gilt die Übernahme auch für später ergänzte Termine.")
+            }
+            .alert("Nicht übernommen", isPresented: showsMessage) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(message ?? "")
+            }
     }
 }

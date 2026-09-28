@@ -56,10 +56,7 @@ struct EventDetailSheet: View {
                                 Text("\(item.role.label): \(item.who ?? "noch offen")")
                                 Spacer()
                                 if item.who == nil && canClaim {
-                                    Button("Übernehme ich") {
-                                        if SeriesService.isSeries(event) { pendingClaimRole = item.role }
-                                        else { claim(item.role, scope: .single) }
-                                    }
+                                    Button("Übernehme ich") { requestClaim(item.role) }
                                     .buttonStyle(.borderedProminent)
                                     .controlSize(.small)
                                     .accessibilityIdentifier("detail.claim.\(item.role.rawValue)")
@@ -90,21 +87,12 @@ struct EventDetailSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
-        .confirmationDialog(pendingClaimRole.map { "\($0.label) übernehmen" } ?? "",
-                            isPresented: Binding(get: { pendingClaimRole != nil },
-                                                 set: { if !$0 { pendingClaimRole = nil } }),
-                            titleVisibility: .visible) {
-            if let role = pendingClaimRole {
-                Button("Für die ganze Serie") { claim(role, scope: .series) }
-                Button("Nur diesen Termin") { claim(role, scope: .single) }
-            }
-        }
-        .alert("Nicht übernommen",
-               isPresented: Binding(get: { claimMessage != nil }, set: { if !$0 { claimMessage = nil } })) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(claimMessage ?? "")
-        }
+        .modifier(ClaimDialogs(pendingRole: $pendingClaimRole, message: $claimMessage,
+                               identifierPrefix: "detail", onClaim: claim))
+    }
+
+    private func requestClaim(_ role: ParticipationRole) {
+        if SeriesService.isSeries(event) { pendingClaimRole = role } else { claim(role, scope: .single) }
     }
 
     private func claim(_ role: ParticipationRole, scope: ClaimActions.Scope) {

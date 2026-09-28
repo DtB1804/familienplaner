@@ -107,23 +107,7 @@ struct EventEditorSheet: View {
                 }
 
                 if let event, !openRoles(of: event).isEmpty {
-                    // Übernehmen direkt am Termin, nicht nur über das Banner (UX-Prüfung A2).
-                    Section {
-                        ForEach(openRoles(of: event)) { role in
-                            HStack {
-                                Text("\(role.label): noch offen")
-                                Spacer()
-                                Button("Übernehme ich") {
-                                    if isSeries { pendingClaimRole = role } else { claim(role, scope: .single) }
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .controlSize(.small)
-                                .accessibilityIdentifier("editor.claim.\(role.rawValue)")
-                            }
-                        }
-                    } header: {
-                        Text("Noch offen")
-                    }
+                    openRolesSection(event)
                 }
 
                 Section("Zeit") {
@@ -201,20 +185,7 @@ struct EventEditorSheet: View {
                 }
 
                 if kind == .appointment && !isAllDay {
-                    Section {
-                        ForEach(ParticipationRole.responsibilityRoles) { role in
-                            Toggle(role.label + " nötig", isOn: Binding(
-                                get: { requiredRoles.contains(role) },
-                                set: { on in
-                                    if on { requiredRoles.insert(role) } else { requiredRoles.remove(role) }
-                                }))
-                            .accessibilityIdentifier("editor.role.\(role.rawValue)")
-                        }
-                    } header: {
-                        Text("Zuständigkeiten")
-                    } footer: {
-                        Text("Offene Zuständigkeiten erscheinen oben in der Tagesansicht, bis jemand sie übernimmt.")
-                    }
+                    rolesSection
                 }
 
                 if let event, !assignments(of: event).isEmpty {
@@ -301,25 +272,8 @@ struct EventEditorSheet: View {
                     Button("Diesen und alle folgenden abgeben", role: .destructive) { giveBackFollowing(participation) }
                 }
             }
-            .confirmationDialog(pendingClaimRole.map { "\($0.label) übernehmen" } ?? "",
-                                isPresented: Binding(get: { pendingClaimRole != nil },
-                                                     set: { if !$0 { pendingClaimRole = nil } }),
-                                titleVisibility: .visible) {
-                if let role = pendingClaimRole {
-                    Button("Für die ganze Serie") { claim(role, scope: .series) }
-                        .accessibilityIdentifier("editor.claimScope.series")
-                    Button("Nur diesen Termin") { claim(role, scope: .single) }
-                        .accessibilityIdentifier("editor.claimScope.single")
-                }
-            } message: {
-                Text("Bei „ganze Serie“ gilt die Übernahme auch für später ergänzte Termine.")
-            }
-            .alert("Nicht übernommen",
-                   isPresented: Binding(get: { claimMessage != nil }, set: { if !$0 { claimMessage = nil } })) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text(claimMessage ?? "")
-            }
+            .modifier(ClaimDialogs(pendingRole: $pendingClaimRole, message: $claimMessage,
+                                   identifierPrefix: "editor", onClaim: claim))
             .confirmationDialog("Termin einer Serie ändern", isPresented: $askSaveScope, titleVisibility: .visible) {
                 Button("Nur diesen Termin") { save(following: false) }
                     .accessibilityIdentifier("scope.save.one")
@@ -328,6 +282,51 @@ struct EventEditorSheet: View {
             }
             .onAppear(perform: load)
         }
+    }
+
+    // MARK: - Abschnitte (ausgelagert, sonst scheitert die Typprüfung am großen Formular)
+
+    /// Übernehmen direkt am Termin, nicht nur über das Banner (UX-Prüfung A2).
+    private func openRolesSection(_ event: CDEvent) -> some View {
+        Section {
+            ForEach(openRoles(of: event)) { role in
+                HStack {
+                    Text("\(role.label): noch offen")
+                    Spacer()
+                    Button("Übernehme ich") { requestClaim(role) }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.small)
+                        .accessibilityIdentifier("editor.claim.\(role.rawValue)")
+                }
+            }
+        } header: {
+            Text("Noch offen")
+        }
+    }
+
+    private var rolesSection: some View {
+        Section {
+            ForEach(ParticipationRole.responsibilityRoles) { role in
+                Toggle(role.label + " nötig", isOn: roleBinding(role))
+                    .accessibilityIdentifier("editor.role.\(role.rawValue)")
+            }
+        } header: {
+            Text("Zuständigkeiten")
+        } footer: {
+            Text("Offene Zuständigkeiten erscheinen oben in der Tagesansicht, bis jemand sie übernimmt.")
+        }
+    }
+
+    private func roleBinding(_ role: ParticipationRole) -> Binding<Bool> {
+        Binding(
+            get: { requiredRoles.contains(role) },
+            set: { on in
+                if on { requiredRoles.insert(role) } else { requiredRoles.remove(role) }
+            })
+    }
+
+    private func requestClaim(_ role: ParticipationRole) {
+        if isSeries { pendingClaimRole = role } else { claim(role, scope: .single) }
     }
 
     // MARK: - Laden und Speichern
