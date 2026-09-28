@@ -273,7 +273,7 @@ public struct TodayScreen: View {
             ToolbarSpacer(.flexible, placement: .bottomBar)
             ToolbarItem(placement: .bottomBar) {
                 Button { showFreeTime = true } label: {
-                    Label("Frei", systemImage: "calendar.badge.clock")
+                    Label("Freie Zeit", systemImage: "calendar.badge.clock")
                 }
                 .accessibilityIdentifier("toolbar.free")
             }

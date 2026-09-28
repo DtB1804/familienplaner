@@ -76,6 +76,15 @@ struct EventEditorSheet: View {
         return EventService.allDaySpan(from: startAt, to: after)
     }
 
+    /// Warum "Sichern" gesperrt ist, in Worten (UX-Prüfung C).
+    private var missingForSave: String? {
+        var missing: [String] = []
+        if !busyOnly && title.trimmed.isEmpty { missing.append(kind == .statusBlock ? "Bezeichnung" : "Titel") }
+        if subjectIDs.isEmpty { missing.append("mindestens eine Person bei „Für wen“") }
+        if !isAllDay && endAt <= startAt { missing.append("ein Ende nach dem Beginn") }
+        return missing.isEmpty ? nil : "Zum Sichern fehlt: " + missing.joined(separator: ", ") + "."
+    }
+
     private var canSave: Bool {
         (isAllDay || endAt > startAt)
             && !subjectIDs.isEmpty
@@ -217,6 +226,11 @@ struct EventEditorSheet: View {
                         .accessibilityIdentifier("editor.title")
                         .multilineTextAlignment(.trailing)
                 }
+            }
+        } footer: {
+            if let missingForSave {
+                Text(missingForSave)
+                    .accessibilityIdentifier("editor.missing")
             }
         }
     }

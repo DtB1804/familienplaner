@@ -52,7 +52,7 @@ struct ReminderSettingsScreen: View {
             Section {
                 EmptyView()
             } footer: {
-                Text("Die Erinnerungen werden auf diesem Gerät geplant. Änderungen anderer Familienmitglieder werden berücksichtigt, sobald Family Planner das nächste Mal geöffnet wird.")
+                Text("Die Erinnerungen werden auf diesem Gerät geplant. Änderungen anderer Familienmitglieder übernimmt Family Planner im Hintergrund; wann das passiert, entscheidet iOS. Spätestens beim nächsten Öffnen ist alles aktuell.")
             }
         }
         .navigationTitle("Erinnerungen")

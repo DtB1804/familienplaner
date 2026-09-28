@@ -106,6 +106,19 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Datum wählen"].waitForNonExistence(timeout: 5), "Auswahl schließt nicht")
     }
 
+    /// Der Editor sagt, was zum Sichern fehlt, und der Hinweis verschwindet, sobald es passt.
+    @MainActor
+    func testEditorExplainsWhatIsMissing() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        tap("toolbar.new", in: app)
+        let hint = element("editor.missing", in: app)
+        XCTAssertTrue(hint.waitForExistence(timeout: 5), "Hinweis fehlt")
+        XCTAssertTrue(hint.label.contains("Titel"), hint.label)
+        type("Chor", into: "editor.title", in: app)
+        XCTAssertTrue(hint.waitForNonExistence(timeout: 5), "Hinweis bleibt trotz Titel")
+    }
+
     /// Übernehmen direkt im Termin (Detailansicht), nicht nur über das Banner.
     @MainActor
     func testClaimInsideEditor() {

@@ -410,7 +410,7 @@ struct AddMemberSheet: View {
                     Section {
                         Button("Aus dem Haushalt entfernen", role: .destructive) { confirmRemove = true }
                     } footer: {
-                        Text("Die Person verschwindet aus Kalender und Auswahl. Vergangene Termine bleiben erhalten.")
+                        Text("Die Person verschwindet aus der Auswahl und ihre Spalte aus der Tagesansicht. Ihre Termine werden nicht gelöscht; die anderen Familienmitglieder sehen sie weiter.")
                     }
                 }
             }

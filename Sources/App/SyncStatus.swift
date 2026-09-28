@@ -165,6 +165,7 @@ struct SyncBanner: View {
         .accessibilityHint("Zeigt Erklärung und Abhilfe")
         .accessibilityIdentifier("sync.banner")
         .alert(problem.title, isPresented: $showDetails) {
+            Button("Erneut prüfen") { Task { await SyncStatus.shared.refreshAccount() } }
             Button("OK", role: .cancel) {}
         } message: {
             Text(problem.explanation)
