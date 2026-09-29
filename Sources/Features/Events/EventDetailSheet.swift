@@ -33,6 +33,26 @@ struct EventDetailSheet: View {
                 Section {
                     Text(EventPresentation.title(of: event, for: viewer, in: household))
                         .font(.title3.weight(.semibold))
+                }
+
+                // Offenes steht oben: Die Ansicht öffnet halbhoch, "Übernehme ich" muss
+                // ohne Scrollen sichtbar sein (nächtlicher Test 29.09.2026).
+                if canClaim && !openRoles.isEmpty {
+                    Section("Noch offen") {
+                        ForEach(openRoles, id: \.self) { role in
+                            HStack {
+                                Text(role.label)
+                                Spacer()
+                                Button("Übernehme ich") { requestClaim(role) }
+                                    .buttonStyle(.borderedProminent)
+                                    .controlSize(.small)
+                                    .accessibilityIdentifier("detail.claim.\(role.rawValue)")
+                            }
+                        }
+                    }
+                }
+
+                Section {
                     LabeledContent("Datum", value: dateText)
                     LabeledContent("Zeit", value: timeText)
                     LabeledContent("Dauer", value: durationText)
@@ -51,19 +71,11 @@ struct EventDetailSheet: View {
                     Text(names.isEmpty ? "–" : names.joined(separator: ", "))
                 }
 
-                if !assignments.isEmpty {
+                let listed = canClaim ? assignments.filter { $0.who != nil } : assignments
+                if !listed.isEmpty {
                     Section("Zuständigkeiten") {
-                        ForEach(assignments, id: \.role) { item in
-                            HStack {
-                                Text("\(item.role.label): \(item.who ?? "noch offen")")
-                                Spacer()
-                                if item.who == nil && canClaim {
-                                    Button("Übernehme ich") { requestClaim(item.role) }
-                                    .buttonStyle(.borderedProminent)
-                                    .controlSize(.small)
-                                    .accessibilityIdentifier("detail.claim.\(item.role.rawValue)")
-                                }
-                            }
+                        ForEach(listed, id: \.role) { item in
+                            Text("\(item.role.label): \(item.who ?? "noch offen")")
                         }
                     }
                 }
@@ -117,6 +129,10 @@ struct EventDetailSheet: View {
     // MARK: - Texte
 
     private var isImported: Bool { EventOrigin(rawValue: event.originRaw ?? "") == .imported }
+
+    private var openRoles: [ParticipationRole] {
+        assignments.filter { $0.who == nil }.map(\.role)
+    }
 
     private var hidesDetails: Bool {
         EventPresentation.isBusyOnly(event, for: viewer, in: household)

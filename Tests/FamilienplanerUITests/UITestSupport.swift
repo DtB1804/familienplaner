@@ -33,6 +33,15 @@ extension XCTestCase {
         field.typeText(text)
     }
 
+    /// Formulare laden Zeilen erst beim Scrollen: wischen, bis das Element da und antippbar ist.
+    @MainActor
+    func reveal(_ id: String, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
+        let target = element(id, in: app)
+        var swipes = 0
+        while !(target.exists && target.isHittable) && swipes < 8 { app.swipeUp(velocity: .slow); swipes += 1 }
+        XCTAssertTrue(target.exists, "\(id) fehlt", file: file, line: line)
+    }
+
     /// Schalter in Formularen: Tippen auf den rechten Rand trifft den Switch sicher.
     @MainActor
     func setSwitch(_ id: String, on: Bool, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {

@@ -214,6 +214,7 @@ final class EndToEndTests: XCTestCase {
 
         tap("toolbar.new", in: app)
         type("Chor", into: "editor.title", in: app)
+        reveal("editor.repeat", in: app)
         tap("editor.repeat", in: app)
         let weekly = app.buttons["Wöchentlich"].firstMatch
         XCTAssertTrue(weekly.waitForExistence(timeout: 5), "Auswahl Wöchentlich fehlt")
@@ -253,9 +254,11 @@ final class EndToEndTests: XCTestCase {
 
         tap("toolbar.new", in: app)
         type("Tanzen", into: "editor.title", in: app)
+        // Erst "Holt" (weiter oben im Formular), dann nach unten zu "Wiederholen".
+        setSwitch("editor.role.driveFrom", on: true, in: app)
+        reveal("editor.repeat", in: app)
         tap("editor.repeat", in: app)
         app.buttons["Wöchentlich"].firstMatch.tap()
-        setSwitch("editor.role.driveFrom", on: true, in: app)
         tap("editor.save", in: app)
 
         let banner = element("banner.open", in: app)

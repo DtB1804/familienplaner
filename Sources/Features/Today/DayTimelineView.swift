@@ -79,7 +79,10 @@ public struct DayTimelineView: View {
                 ScrollView(needsHorizontal ? [.vertical, .horizontal] : .vertical, showsIndicators: false) {
                     timelineBody(laneWidth: laneWidth)
                 }
-                .simultaneousGesture(daySwipe)
+                // Während ein Termin gezogen wird, ruht das Wischen für den Tageswechsel.
+                // Sonst erkennt es das seitliche Ziehen (ab 40 pt) mit, und das Ziehen
+                // in eine andere Spalte kommt nie an (nächtlicher Test 29.09.2026).
+                .simultaneousGesture(daySwipe, including: draggingID == nil ? .all : .subviews)
                 .safeAreaInset(edge: .top, spacing: 0) {
                     VStack(spacing: 0) {
                         laneHeaders(laneWidth: laneWidth)

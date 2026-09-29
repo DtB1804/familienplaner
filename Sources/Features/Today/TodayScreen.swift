@@ -251,6 +251,8 @@ public struct TodayScreen: View {
                         .foregroundStyle(.secondary)
                 }
                 .foregroundStyle(.primary)
+                .frame(minHeight: 44)          // Trefferfläche (Barrierefreiheitsprüfung)
+                .contentShape(Rectangle())
             }
             .accessibilityLabel(mode == .day
                 ? day.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Locale(identifier: "de_DE")))
