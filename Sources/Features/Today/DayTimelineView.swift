@@ -35,7 +35,7 @@ public struct DayTimelineView: View {
     /// (senkrecht) oder Person (seitlich), nie beides zugleich.
     @State private var dragAxis: Axis?
     /// Nur mit `-gestureDebug` (Oberflächentest): letzter Gestenverlauf.
-    @State private var gestureLog = 
+    @State private var gestureLog = ""
 
     /// Raster beim Verschieben.
     private let snapMinutes = 15
