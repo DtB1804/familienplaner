@@ -10,6 +10,9 @@ enum TestMode {
     /// Die App läuft als Gastgeber der Unit-Tests (FamilienplanerTests). Auch dann kein iCloud.
     static let isUnitTestHost = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 
+    /// Nur für den Test "seitlich ziehen": Gestenverlauf als unsichtbarer Text zum Auslesen.
+    static let gestureDebug = isActive && ProcessInfo.processInfo.arguments.contains("-gestureDebug")
+
     static func resetLocalState() {
         guard isActive else { return }
         let defaults = UserDefaults.standard

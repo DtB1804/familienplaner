@@ -317,7 +317,9 @@ final class EndToEndTests: XCTestCase {
     /// Seitlich ziehen: Termin wandert in die Spalte einer anderen Person.
     @MainActor
     func testDragToOtherPersonColumn() {
-        let app = launchFreshApp()
+        let app = XCUIApplication()
+        app.launchArguments += ["-uiTesting", "-gestureDebug", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
         completeSetup(in: app)
         addChild("Mia", in: app)
         tap("members.done", in: app)
@@ -328,7 +330,9 @@ final class EndToEndTests: XCTestCase {
         let before = block.frame.midX
         let laneWidth = (app.windows.firstMatch.frame.width - 44) / 2
         let start = block.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3))
-        start.press(forDuration: 0.8, thenDragTo: start.withOffset(CGVector(dx: laneWidth, dy: 0)))
+        // Wie ein Mensch: halten, langsam ziehen, kurz am Ziel verweilen.
+        start.press(forDuration: 0.8, thenDragTo: start.withOffset(CGVector(dx: laneWidth, dy: 0)),
+                    withVelocity: .slow, thenHoldForDuration: 0.3)
 
         let deadline = Date().addingTimeInterval(5)
         while block.frame.midX - before < laneWidth / 2 && Date() < deadline {
@@ -340,7 +344,8 @@ final class EndToEndTests: XCTestCase {
             hierarchy.lifetime = .keepAlways
             add(hierarchy)
         }
-        XCTAssertGreaterThan(block.frame.midX - before, laneWidth / 2, "Termin nicht in Mias Spalte")
+        let log = element("debug.gesture", in: app).label
+        XCTAssertGreaterThan(block.frame.midX - before, laneWidth / 2, "Termin nicht in Mias Spalte. Gesten: \(log)")
         XCTAssertEqual(block.value as? String, "10:00", "Uhrzeit darf sich beim seitlichen Ziehen nicht ändern")
     }
 

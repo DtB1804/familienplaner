@@ -28,9 +28,19 @@ final class SmokeTests: XCTestCase {
         completeSetup(in: app)
         tap("nav.next", in: app)
         createEvent("Schwimmen", roles: ["driveFrom"], in: app)
-        try app.performAccessibilityAudit()
+        try app.performAccessibilityAudit(for: .all, auditIssueHandler)
         tap("toolbar.family", in: app)
-        try app.performAccessibilityAudit()
+        try app.performAccessibilityAudit(for: .all, auditIssueHandler)
+    }
+
+    /// Knöpfe in der Navigationsleiste (z. B. "Heute") skaliert iOS selbst nur begrenzt;
+    /// das meldet die Prüfung als "Dynamic Type teilweise nicht unterstützt". Nur diese
+    /// Meldung für Elemente in der Navigationsleiste wird hingenommen, alles andere zählt.
+    @MainActor
+    private func auditIssueHandler(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
+        guard issue.auditType == .dynamicType, let element = issue.element else { return false }
+        return ["nav.today", "nav.previous", "nav.next", "nav.title"].contains(element.identifier)
+            || element.label == "Heute"
     }
 
     /// Erste Schritte nach dem Einrichten (im Test nur mit -showOnboarding sichtbar).

@@ -34,6 +34,8 @@ public struct DayTimelineView: View {
     /// Richtung eines Ziehvorgangs, festgelegt nach den ersten Punkten: entweder Uhrzeit
     /// (senkrecht) oder Person (seitlich), nie beides zugleich.
     @State private var dragAxis: Axis?
+    /// Nur mit `-gestureDebug` (Oberflächentest): letzter Gestenverlauf.
+    @State private var gestureLog = 
 
     /// Raster beim Verschieben.
     private let snapMinutes = 15
@@ -79,10 +81,7 @@ public struct DayTimelineView: View {
                 ScrollView(needsHorizontal ? [.vertical, .horizontal] : .vertical, showsIndicators: false) {
                     timelineBody(laneWidth: laneWidth)
                 }
-                // Während ein Termin gezogen wird, ruht das Wischen für den Tageswechsel.
-                // Sonst erkennt es das seitliche Ziehen (ab 40 pt) mit, und das Ziehen
-                // in eine andere Spalte kommt nie an (nächtlicher Test 29.09.2026).
-                .simultaneousGesture(daySwipe, including: draggingID == nil ? .all : .subviews)
+                .simultaneousGesture(daySwipe)
                 .safeAreaInset(edge: .top, spacing: 0) {
                     VStack(spacing: 0) {
                         laneHeaders(laneWidth: laneWidth)
@@ -95,6 +94,14 @@ public struct DayTimelineView: View {
             }
         }
         .background(Palette.surfaceSunken)
+        .overlay(alignment: .bottomLeading) {
+            if TestMode.gestureDebug {
+                Text(gestureLog)
+                    .font(.caption2)
+                    .accessibilityIdentifier("debug.gesture")
+                    .accessibilityLabel(gestureLog.isEmpty ? "leer" : gestureLog)
+            }
+        }
         .gesture(magnification)
         .sensoryFeedback(.selection, trigger: draggingID)
     }
@@ -102,6 +109,7 @@ public struct DayTimelineView: View {
     private var daySwipe: some Gesture {
         DragGesture(minimumDistance: 40)
             .onEnded { value in
+                if TestMode.gestureDebug { gestureLog += " | daySwipe dx=\(Int(value.translation.width))" }
                 guard draggingID == nil, Date().timeIntervalSince(lastDragEnd) > 0.6 else { return }
                 let dx = value.translation.width, dy = value.translation.height
                 guard abs(dx) > 80, abs(dx) > abs(dy) * 2 else { return }
@@ -361,9 +369,19 @@ public struct DayTimelineView: View {
                     }
                     dragDY = dragAxis == .vertical ? translation.height : 0
                     dragDX = dragAxis == .horizontal ? translation.width : 0
+                    if TestMode.gestureDebug {
+                        gestureLog = "changed axis=\(dragAxis.map { "\($0)" } ?? "nil") dx=\(Int(translation.width)) dy=\(Int(translation.height)) canReassign=\(canReassign(event, from: member))"
+                    }
                 }
             }
             .onEnded { value in
+                if TestMode.gestureDebug {
+                    var phase = "other"
+                    if case .second(let pressed, let drag) = value {
+                        phase = "second pressed=\(pressed) drag=\(drag.map { "dx=\(Int($0.translation.width))" } ?? "nil")"
+                    }
+                    gestureLog += " | ended \(phase) axis=\(dragAxis.map { "\($0)" } ?? "nil") lane=\(Int(laneWidth))"
+                }
                 if case .second(true, let drag?) = value {
                     switch dragAxis {
                     case .vertical:
