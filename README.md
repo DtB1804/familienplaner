@@ -109,6 +109,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Bessere Erkennung ohne KI | Build 34 | deutsche Schreibweisen: 14.10., 14. Oktober, 12.–14.10. (ganztägig), 19.30 Uhr, 15–16:30 Uhr, „Dienstag 19 Uhr“; Titel aus der Zeile davor |
 | Woche/Monat sofort gefüllt, kurzer Tagestitel | Build 35 | Woche und Monat zeigen Termine schon beim ersten Öffnen; „Di., 29. Sept.“ statt abgeschnittenem Wochentag; offene Zuständigkeit in schmalen Spalten als „2 ?“ unten rechts |
 | Übernehmen oben in der Termin-Ansicht | Build 36 | „Noch offen“ mit „Übernehme ich“ direkt unter dem Titel; seitliches Ziehen ohne Tageswechsel-Wischen; Titel-Trefferfläche 44 pt |
+| Ziehen nach unten wieder korrekt | Build 37 | Rücknahme aus Build 36 (Termin landete zu früh); Diagnose für seitliches Ziehen im Test |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
