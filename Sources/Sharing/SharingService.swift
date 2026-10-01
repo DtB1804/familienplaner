@@ -62,7 +62,7 @@ public enum SharingService {
 
     /// Fehlertext mit CloudKit-Fehlercode, damit ein Screenshot die Ursache zeigt
     /// (Test 01.10.2026: "Einladung konnte nicht erstellt werden" ohne Details).
-    public static func describe(_ error: Error) -> String {
+    nonisolated public static func describe(_ error: Error) -> String {
         var lines = [error.localizedDescription]
         if let ck = error as? CKError {
             lines.append("CloudKit-Code \(ck.code.rawValue) (\(String(describing: ck.code)))")
@@ -111,8 +111,13 @@ private final class SharingControllerDelegate: NSObject, UICloudSharingControlle
 
     func cloudSharingController(_ csc: UICloudSharingController, failedToSaveShareWithError error: Error) {
         logger.error("Freigabe konnte nicht gespeichert werden: \(error.localizedDescription, privacy: .public)")
-        let text = MainActor.assumeIsolated { SharingService.describe(error) }
-        NotificationCenter.default.post(name: .householdShareFailed, object: text)
+        // Kann außerhalb des Hauptthreads kommen. MainActor.assumeIsolated hat dann die
+        // App beendet (Absturz beim Einladen, Build 39). Deshalb Text sofort bilden und
+        // die Meldung auf dem Hauptthread verschicken.
+        let text = SharingService.describe(error)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .householdShareFailed, object: text)
+        }
     }
 
     func cloudSharingControllerDidSaveShare(_ csc: UICloudSharingController) {
