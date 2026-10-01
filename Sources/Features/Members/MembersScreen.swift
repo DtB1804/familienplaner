@@ -379,12 +379,32 @@ struct AddMemberSheet: View {
     @State private var didLoad = false
     @State private var confirmRemove = false
 
-    private var canSave: Bool { !name.trimmed.isEmpty && !shortName.trimmed.isEmpty }
+    private var canSave: Bool {
+        !name.trimmed.isEmpty && !shortName.trimmed.isEmpty && duplicateHint == nil
+    }
+
+    /// Jede Person nur einmal im Haushalt (Familientest 01.10.2026: „Jana“ doppelt angelegt).
+    /// Vergleich ohne Groß-/Kleinschreibung und Akzente, nur aktive Mitglieder.
+    private var duplicateHint: String? {
+        let others = ((household.members as? Set<CDMember>) ?? [])
+            .filter { $0.isActive && $0.objectID != member?.objectID }
+        func same(_ a: String?, _ b: String) -> Bool {
+            guard let a, !b.isEmpty else { return false }
+            return a.trimmed.compare(b, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
+        }
+        if let twin = others.first(where: { same($0.displayName, name.trimmed) }) {
+            return "„\(twin.displayName ?? "")“ gibt es schon. Zum Einladen den vorhandenen Eintrag öffnen und „Eigenes iPhone“ einschalten."
+        }
+        if others.contains(where: { same($0.shortName, shortName.trimmed) }) {
+            return "Das Kürzel „\(shortName.trimmed)“ ist schon vergeben."
+        }
+        return nil
+    }
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("Person") {
+                Section {
                     TextField("Vorname", text: $name)
                         .accessibilityIdentifier("member.name")
                         .textInputAutocapitalization(.words)
@@ -398,6 +418,14 @@ struct AddMemberSheet: View {
                     Picker("Rolle", selection: $role) {
                         Text(MemberRole.adult.label).tag(MemberRole.adult)
                         Text(MemberRole.child.label).tag(MemberRole.child)
+                    }
+                } header: {
+                    Text("Person")
+                } footer: {
+                    if let duplicateHint {
+                        Text(duplicateHint)
+                            .foregroundStyle(.red)
+                            .accessibilityIdentifier("member.duplicate")
                     }
                 }
                 Section {

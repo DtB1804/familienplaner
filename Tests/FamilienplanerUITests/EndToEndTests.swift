@@ -314,6 +314,18 @@ final class EndToEndTests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Neu"].waitForExistence(timeout: 5), "Editor öffnet nicht")
     }
 
+    /// Jede Person nur einmal: gleicher Name lässt sich nicht sichern.
+    @MainActor
+    func testDuplicateMemberNameIsRejected() {
+        let app = launchFreshApp()
+        completeSetup(in: app)
+        addChild("Mia", in: app)
+        tap("members.add", in: app)
+        type("mia", into: "member.name", in: app)
+        XCTAssertTrue(element("member.duplicate", in: app).waitForExistence(timeout: 5), "Hinweis auf doppelten Namen fehlt")
+        XCTAssertFalse(app.buttons["member.save"].isEnabled, "Doppelter Name darf nicht gesichert werden")
+    }
+
     /// Seitlich ziehen: Termin wandert in die Spalte einer anderen Person.
     @MainActor
     func testDragToOtherPersonColumn() {
