@@ -368,6 +368,13 @@ nutzen. Bleibt es dabei: Apple Developer Support. Ausweg: externe Gruppe mit öf
 Link (braucht einmal Apples Beta-Prüfung).
 **Zuliefern:** „Einladung angenommen“ oder die Meldung, die erscheint.
 
+### Aufgabe 23a: Familientest 01.10.2026 (Build 38, Partnerin als externe Testerin)
+Installation über TestFlight (externe Gruppe) ✅. Einladung in den Haushalt: „Einladung konnte
+nicht erstellt werden“, Test lief deshalb mit zwei getrennten Haushalten. Wünsche: Bringt/Holt
+bei Kalender-Terminen, sofortige Meldung neuer offener Aufgaben – beides ab dem nächsten Build.
+**Zuliefern:** Screenshot der Fehlermeldung beim Einladen mit dem nächsten Build (zeigt dann
+den CloudKit-Code).
+
 ### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite)
 **Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
 Branch `main`, Ordner `/docs` → Save. Nach wenigen Minuten erreichbar unter
