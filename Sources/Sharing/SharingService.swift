@@ -37,7 +37,11 @@ public enum SharingService {
         share[CKShare.SystemFieldKey.title] = (household.name ?? "Familie") as CKRecordValue
         // Nur ausdrücklich eingeladene Personen, kein Zugriff per weitergeleitetem Link.
         share.publicPermission = .none
-        return share
+        // Geänderte Freigabe selbst speichern, bevor Apples Dialog sie bekommt. Scheitert das,
+        // zeigt die App den CloudKit-Fehler an. Apples Dialog meldete nur "Es konnte kein Link
+        // zum Teilen erstellt werden" (Familientest 01.10.2026).
+        guard let store = persistence.privateStore else { return share }
+        return try await persistence.container.persistUpdatedShare(share, in: store)
     }
 
     /// Öffnet Apples Einladungsdialog (Nachrichten, Mail, Link kopieren).
@@ -110,6 +114,8 @@ private final class SharingControllerDelegate: NSObject, UICloudSharingControlle
     func itemTitle(for csc: UICloudSharingController) -> String? { title }
 
     func cloudSharingController(_ csc: UICloudSharingController, failedToSaveShareWithError error: Error) {
+        // Apples Dialog schließen, sonst kann die App ihre Meldung nicht darüber zeigen.
+        DispatchQueue.main.async { csc.presentingViewController?.dismiss(animated: true) }
         logger.error("Freigabe konnte nicht gespeichert werden: \(error.localizedDescription, privacy: .public)")
         // Kann außerhalb des Hauptthreads kommen. MainActor.assumeIsolated hat dann die
         // App beendet (Absturz beim Einladen, Build 39). Deshalb Text sofort bilden und
