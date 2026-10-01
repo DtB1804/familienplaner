@@ -375,6 +375,18 @@ bei Kalender-Terminen, sofortige Meldung neuer offener Aufgaben – beides ab de
 **Zuliefern:** Screenshot der Fehlermeldung beim Einladen mit dem nächsten Build (zeigt dann
 den CloudKit-Code).
 
+### Aufgabe 23b: Ursache Einladung gefunden (02.10.2026, Build 41)
+Fehlermeldung der App: CKError 12/2006 „Cannot create or modify field 'CD_moveReceipt' in
+record 'CD_CDTag' in production schema“. Beim Teilen legt Core Data zusätzliche Felder
+(`CD_moveReceipt`) und den Typ `cloudkit.share` an. Das geht nur in der CloudKit-Umgebung
+Development; Production nimmt keine neuen Felder an. TestFlight nutzt immer Production.
+**Lösung:** einmal mit einem Build teilen, der Development nutzt (Ad-hoc-Build, kein
+TestFlight), danach im CloudKit-Dashboard „Deploy Schema Changes“ (wie Aufgabe 18/19).
+Vorlage für den Ablauf: https://github.com/ktgywmzgj4-alt/FutariKakeibo/pull/30
+**Schritte David:** (1) UDID des iPhones ermitteln (z. B. Windows-App „Apple-Geräte“),
+(2) developer.apple.com → Devices → iPhone registrieren, (3) Ad-hoc-Build installieren,
+Einladung einmal anlegen, (4) Schema nach Production übernehmen.
+
 ### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite)
 **Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
 Branch `main`, Ordner `/docs` → Save. Nach wenigen Minuten erreichbar unter
