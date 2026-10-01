@@ -1,0 +1,134 @@
+# Einmaliger Sonder-Build: Ad hoc signiert und mit der CloudKit-Umgebung **Development**.
+# Zweck: Beim ersten Teilen legt Core Data Felder (CD_moveReceipt) und den Typ cloudkit.share
+# an. Das geht nur in Development; Production nimmt keine neuen Felder an (Fehler 12/2006,
+# Familientest 02.10.2026). Danach im CloudKit-Dashboard "Deploy Schema Changes".
+# Installation: über GitHub Pages (Branch "pages"), Link auf adhoc/index.html.
+# Voraussetzung: Das iPhone ist unter developer.apple.com → Devices registriert.
+# Auslöser: Push auf den Branch "adhoc" oder manuell.
+name: AdHoc-Development
+
+on:
+  push:
+    branches: [adhoc]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  adhoc:
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      PAGES_URL: https://dtb1804.github.io/familienplaner
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Werkzeuge
+        run: brew install xcodegen
+
+      - name: Projekt erzeugen
+        run: xcodegen generate
+
+      - name: API-Schlüssel ablegen
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+
+      - name: Archivieren
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project Familienplaner.xcodeproj \
+            -scheme Familienplaner \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Familienplaner.xcarchive" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY=- \
+            PROVISIONING_PROFILE_SPECIFIER= \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
+            CURRENT_PROJECT_VERSION=9${{ github.run_number }} \
+            2>&1 | tee archive.log
+
+      - name: Exportieren (ad hoc, CloudKit Development)
+        run: |
+          set -o pipefail
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>release-testing</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>KF96Z9PD9Q</string>
+            <key>iCloudContainerEnvironment</key><string>Development</string>
+            <key>manifest</key>
+            <dict>
+              <key>appURL</key><string>${PAGES_URL}/adhoc/Familienplaner.ipa</string>
+              <key>displayImageURL</key><string>${PAGES_URL}/adhoc/icon57.png</string>
+              <key>fullSizeImageURL</key><string>${PAGES_URL}/adhoc/icon512.png</string>
+            </dict>
+          </dict>
+          </plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Familienplaner.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            2>&1 | tee export.log
+          ls -la "$RUNNER_TEMP/export" | tee -a export.log
+          # Prüfen, dass wirklich Development eingetragen ist.
+          cd "$RUNNER_TEMP" && rm -rf chk && mkdir chk && cd chk && unzip -q ../export/*.ipa
+          codesign -d --entitlements - Payload/*.app 2>&1 | grep -A1 -i "icloud-container-environment" | tee -a "$GITHUB_WORKSPACE/export.log"
+
+      - name: Schlüssel entfernen
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
+
+      - name: Installationsseite auf Branch pages
+        run: |
+          set -e
+          site=/tmp/site && rm -rf $site && mkdir -p $site/adhoc
+          cp -R docs/. $site/
+          cp "$RUNNER_TEMP"/export/*.ipa $site/adhoc/Familienplaner.ipa
+          cp "$RUNNER_TEMP"/export/manifest.plist $site/adhoc/manifest.plist
+          icon=$(find "$RUNNER_TEMP/Familienplaner.xcarchive/Products/Applications/Familienplaner.app" -name "AppIcon60x60@3x.png" | head -1)
+          if [ -n "$icon" ]; then sips -z 57 57 "$icon" --out $site/adhoc/icon57.png >/dev/null; sips -z 512 512 "$icon" --out $site/adhoc/icon512.png >/dev/null; fi
+          cat > $site/adhoc/index.html <<HTML
+          <!doctype html><html lang="de"><head><meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <title>Family Planner – Sonder-Build</title></head>
+          <body style="font-family:-apple-system,sans-serif;padding:24px;max-width:560px">
+          <h1>Family Planner – Sonder-Build (Development)</h1>
+          <p>Nur für registrierte iPhones. Einmalig zum Anlegen einer Einladung, danach wieder löschen und die App aus TestFlight installieren.</p>
+          <p><a style="font-size:20px" href="itms-services://?action=download-manifest&amp;url=${PAGES_URL}/adhoc/manifest.plist">Installieren</a></p>
+          <p>Build ${GITHUB_RUN_NUMBER} · ${GITHUB_SHA}</p>
+          </body></html>
+          HTML
+          cd $site
+          git init -q -b pages
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "Pages mit Sonder-Build ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" pages
+
+      - name: Log in Branch ci-log-adhoc
+        if: always()
+        run: |
+          mkdir -p /tmp/cilog
+          cp archive.log export.log /tmp/cilog/ 2>/dev/null || true
+          cat archive.log export.log 2>/dev/null | grep -E "error|EXPORT|ARCHIVE|icloud-container-environment|Development|device|profile" | sort -u > /tmp/cilog/errors.txt || true
+          echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID}" > /tmp/cilog/STATUS
+          cd /tmp/cilog
+          git init -q -b ci-log-adhoc
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -q -m "AdHoc-Log ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-log-adhoc
