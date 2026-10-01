@@ -37,4 +37,4 @@ Familie → Sicherung → „Alle Termine exportieren (.ics)“.
 
 ## Kontakt
 
-[E-MAIL-ADRESSE]
+d.barg.hh@gmail.com

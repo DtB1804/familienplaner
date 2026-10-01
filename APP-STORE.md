@@ -19,7 +19,7 @@ angenommen wird, ist offen. Fallback bei Ablehnung: TestFlight weiter nutzen.
 App Store Connect beim Anlegen.)
 **Untertitel (max. 30 Zeichen):** Wer bringt, wer holt, wann
 **Kategorie:** Lifestyle (primär), Produktivität (sekundär)
-**Copyright:** 2026 [VORNAME NACHNAME]
+**Copyright:** 2026 David Barg
 **Support-URL:** https://dtb1804.github.io/familienplaner/  (nach Aktivierung von GitHub Pages)
 **Datenschutz-URL:** https://dtb1804.github.io/familienplaner/datenschutz.html
 **Preis:** kostenlos

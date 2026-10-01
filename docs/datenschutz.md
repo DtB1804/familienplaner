@@ -4,13 +4,13 @@ title: Datenschutzerklärung – Family Planner
 
 # Datenschutzerklärung Family Planner
 
-Stand: [DATUM EINSETZEN]
+Stand: 1. Oktober 2026
 
 ## Verantwortlich
 
-[VORNAME NACHNAME]
-[ANSCHRIFT]
-E-Mail: [E-MAIL-ADRESSE]
+David Barg  
+Wiesenweg 42, 22393 Hamburg  
+E-Mail: d.barg.hh@gmail.com
 
 ## Kurz gesagt
 
@@ -63,7 +63,7 @@ Du hast nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung, Einschr�
 Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht auf Beschwerde bei einer
 Datenschutz-Aufsichtsbehörde. Da der Entwickler keinen Zugriff auf deine Daten hat, übst
 du die meisten Rechte direkt in der App aus (bearbeiten, exportieren als .ics, löschen).
-Für Fragen: [E-MAIL-ADRESSE]
+Für Fragen: d.barg.hh@gmail.com
 
 ## Kinder
 

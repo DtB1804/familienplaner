@@ -372,10 +372,10 @@ Link (braucht einmal Apples Beta-Prüfung).
 **Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
 Branch `main`, Ordner `/docs` → Save. Nach wenigen Minuten erreichbar unter
 https://dtb1804.github.io/familienplaner/ (Adresse zeigt GitHub dort an).
-**Vorher:** in `docs/datenschutz.md` und `docs/index.md` die Platzhalter [NAME],
+**Erledigt 01.10.2026:** Angaben eingetragen. (Früher: in `docs/datenschutz.md` und `docs/index.md` die Platzhalter [NAME],
 [ANSCHRIFT], [E-MAIL-ADRESSE], [DATUM] ausfüllen (oder mir die Angaben nennen). Achtung:
 Das Repository ist öffentlich, die Angaben stehen dann im Netz – so wie es eine
-Datenschutzerklärung ohnehin verlangt.
+Datenschutzerklärung ohnehin verlangt.)
 **Zuliefern:** „Pages an“.
 
 ### Aufgabe 25: App in App Store Connect vorbereiten
@@ -387,7 +387,7 @@ einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
 
 **Bildschirmfotos:** erzeugt der Workflow „Screenshots“ (Push auf Branch `screenshots`)
 mit erfundenen Beispieldaten in 1284 × 2778 (6,5"). Ergebnis im Branch `ci-screenshots`
-und im Projekt unter `Familienplaner/screenshots/`.
+(Bilddateien lassen sich nicht ins Projekt spiegeln).
 
 ### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen
 Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
