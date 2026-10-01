@@ -112,6 +112,8 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Ziehen nach unten wieder korrekt | Build 37 | Rücknahme aus Build 36 (Termin landete zu früh); Diagnose für seitliches Ziehen im Test |
 | Ziehen folgt dem Finger | Build 38 | Bewegung in globalen Koordinaten (vorher halbe Strecke); seitlich in die Spalte einer anderen Person ziehen |
 | Familientest-Wünsche | Build 39 | Bringt/Holt bei Terminen aus dem iPhone-Kalender; neue offene Aufgaben anderer werden gemeldet; Einladungsfehler mit CloudKit-Code |
+| Absturz beim Einladen behoben | Build 40 | Fehler aus Apples Einladungsdialog wird angezeigt statt die App zu beenden |
+| Keine doppelten Mitglieder | offen (nächster Build) | gleicher Name oder gleiches Kürzel wird beim Anlegen abgewiesen |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
