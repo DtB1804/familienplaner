@@ -209,5 +209,7 @@ schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
   melden, das Ergebnis später mit einem einzelnen `git fetch` des Log-Branches abholen.
   Log-Branches werden bei jedem Lauf überschrieben: immer mit Plus-Refspec holen
   (`git fetch <repo> +refs/heads/ci-log:refs/remotes/o/ci-log`), sonst bleibt der alte Stand stehen.
+- GitHub Pages kommt aus dem Branch `pages` (Inhalt von `docs/`, dazu `adhoc/` vom
+  Workflow `AdHoc-Development`). Nach Änderungen an `docs/` den Branch `pages` neu schreiben.
 - Der Workflow `Tests` läuft nur nachts zwischen 2 und 3 Uhr und nur bei neuem Stand
   auf `main`. Kein Push auf einen Branch, der Tests auslöst.

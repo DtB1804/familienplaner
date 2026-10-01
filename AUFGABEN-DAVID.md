@@ -383,13 +383,14 @@ Development; Production nimmt keine neuen Felder an. TestFlight nutzt immer Prod
 **Lösung:** einmal mit einem Build teilen, der Development nutzt (Ad-hoc-Build, kein
 TestFlight), danach im CloudKit-Dashboard „Deploy Schema Changes“ (wie Aufgabe 18/19).
 Vorlage für den Ablauf: https://github.com/ktgywmzgj4-alt/FutariKakeibo/pull/30
-**Schritte David:** (1) UDID des iPhones ermitteln (z. B. Windows-App „Apple-Geräte“),
+**Schritte David:** (0) GitHub Pages einschalten (Aufgabe 24, Branch `pages`), (1) UDID des iPhones ermitteln (Windows-App „Apple-Geräte“),
 (2) developer.apple.com → Devices → iPhone registrieren, (3) Ad-hoc-Build installieren,
 Einladung einmal anlegen, (4) Schema nach Production übernehmen.
 
 ### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite)
 **Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
-Branch `main`, Ordner `/docs` → Save. Nach wenigen Minuten erreichbar unter
+Branch **`pages`**, Ordner **`/ (root)`** → Save. (Geändert 02.10.2026: Der Branch `pages`
+enthält die Seiten aus `docs/` und später die Installationsseite für den Sonder-Build.) Nach wenigen Minuten erreichbar unter
 https://dtb1804.github.io/familienplaner/ (Adresse zeigt GitHub dort an).
 **Erledigt 01.10.2026:** Angaben eingetragen. (Früher: in `docs/datenschutz.md` und `docs/index.md` die Platzhalter [NAME],
 [ANSCHRIFT], [E-MAIL-ADRESSE], [DATUM] ausfüllen (oder mir die Angaben nennen). Achtung:
