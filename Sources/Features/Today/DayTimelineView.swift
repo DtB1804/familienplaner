@@ -357,7 +357,10 @@ public struct DayTimelineView: View {
 
     private func moveGesture(for event: CDEvent, member: CDMember, laneWidth: CGFloat) -> some Gesture {
         LongPressGesture(minimumDuration: 0.35)
-            .sequenced(before: DragGesture(minimumDistance: 0))
+            // Globale Koordinaten: Der Block wandert beim Ziehen mit (offset). In lokalen
+            // Koordinaten zählte deshalb nur die halbe Fingerbewegung (Nachttest 01.10.2026:
+            // Finger 178 pt, Geste 88 pt), und das Ziel war nie die Nachbarspalte.
+            .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .global))
             .onChanged { value in
                 if case .second(true, let drag) = value {
                     draggingID = event.objectID

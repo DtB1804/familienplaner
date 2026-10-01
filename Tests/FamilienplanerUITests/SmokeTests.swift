@@ -28,19 +28,19 @@ final class SmokeTests: XCTestCase {
         completeSetup(in: app)
         tap("nav.next", in: app)
         createEvent("Schwimmen", roles: ["driveFrom"], in: app)
-        try app.performAccessibilityAudit(for: .all, auditIssueHandler)
+        try app.performAccessibilityAudit(for: .all) { issue in self.isNavigationBarTypeIssue(issue, in: app) }
         tap("toolbar.family", in: app)
-        try app.performAccessibilityAudit(for: .all, auditIssueHandler)
+        try app.performAccessibilityAudit(for: .all) { issue in self.isNavigationBarTypeIssue(issue, in: app) }
     }
 
-    /// Knöpfe in der Navigationsleiste (z. B. "Heute") skaliert iOS selbst nur begrenzt;
-    /// das meldet die Prüfung als "Dynamic Type teilweise nicht unterstützt". Nur diese
-    /// Meldung für Elemente in der Navigationsleiste wird hingenommen, alles andere zählt.
+    /// Texte und Knöpfe in der Navigationsleiste (Titel, "Heute") begrenzt iOS selbst in der
+    /// Größe; die Prüfung meldet das als "Dynamic Type teilweise nicht unterstützt". Nur diese
+    /// Meldung für Elemente innerhalb der Navigationsleiste wird hingenommen, alles andere zählt.
     @MainActor
-    private func auditIssueHandler(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
+    private func isNavigationBarTypeIssue(_ issue: XCUIAccessibilityAuditIssue, in app: XCUIApplication) -> Bool {
         guard issue.auditType == .dynamicType, let element = issue.element else { return false }
-        return ["nav.today", "nav.previous", "nav.next", "nav.title"].contains(element.identifier)
-            || element.label == "Heute"
+        let bar = app.navigationBars.firstMatch
+        return bar.exists && bar.frame.contains(CGPoint(x: element.frame.midX, y: element.frame.midY))
     }
 
     /// Erste Schritte nach dem Einrichten (im Test nur mit -showOnboarding sichtbar).
