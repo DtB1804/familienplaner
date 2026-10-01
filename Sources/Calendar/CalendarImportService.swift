@@ -155,7 +155,9 @@ final class CalendarImportService {
                         EventService.update(event, in: context,
                                             title: title, startAt: start, endAt: end,
                                             subjects: Array(Set(EventService.subjects(of: event)).union([member])),
-                                            requiredRoles: [],
+                                            // In der App ergänzte Zuständigkeiten (Bringt/Holt) behalten;
+                                            // ganztägige Termine haben keine (CLAUDE.md Regel 18).
+                                            requiredRoles: ekEvent.isAllDay ? [] : RequiredRoles.decode(event.requiredRolesRaw),
                                             kind: .appointment, visibility: eventVisibility,
                                             tag: event.tag, locationName: ekEvent.location, notes: nil,
                                             isAllDay: ekEvent.isAllDay)

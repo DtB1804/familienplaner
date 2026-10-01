@@ -83,6 +83,7 @@ final class BackgroundSync {
             guard let household = try? HouseholdService.fetchHousehold(in: context) else { return }
             let me = CurrentMember.resolve(in: context, household: household)
             await ReminderService.reschedule(me: me, household: household, in: context)
+            await ReminderService.announceNewOpenResponsibilities(me: me, in: context)
         }
     }
 }

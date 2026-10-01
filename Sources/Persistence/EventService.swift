@@ -122,6 +122,14 @@ public enum EventService {
         return event
     }
 
+    /// Nur die nötigen Zuständigkeiten ändern (z. B. bei Terminen aus dem iPhone-Kalender,
+    /// deren Titel und Zeit der Kalender vorgibt). Übernahmen bleiben unberührt (Regel 5).
+    public static func setRequiredRoles(_ roles: [ParticipationRole], of event: CDEvent) {
+        guard !event.isAllDay else { return }
+        event.requiredRolesRaw = RequiredRoles.encode(roles)
+        event.updatedAt = Date()
+    }
+
     /// Ändert einen vorhandenen Termin. Betroffene Personen werden abgeglichen:
     /// neue bekommen eine Beteiligung, entfernte verlieren sie. Zuständigkeiten
     /// (Bringen, Holen, Begleiten) bleiben unberührt, siehe CLAUDE.md Regel 5.

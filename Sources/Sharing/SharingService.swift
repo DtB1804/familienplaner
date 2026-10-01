@@ -60,6 +60,26 @@ public enum SharingService {
         presenter.present(controller, animated: true)
     }
 
+    /// Fehlertext mit CloudKit-Fehlercode, damit ein Screenshot die Ursache zeigt
+    /// (Test 01.10.2026: "Einladung konnte nicht erstellt werden" ohne Details).
+    public static func describe(_ error: Error) -> String {
+        var lines = [error.localizedDescription]
+        if let ck = error as? CKError {
+            lines.append("CloudKit-Code \(ck.code.rawValue) (\(String(describing: ck.code)))")
+            if let partial = ck.partialErrorsByItemID {
+                for (item, sub) in partial.prefix(3) {
+                    let code = (sub as? CKError).map { "\($0.code.rawValue)" } ?? "?"
+                    lines.append("• \(item): Code \(code) – \(sub.localizedDescription)")
+                }
+            }
+            if let reason = ck.userInfo[NSLocalizedFailureReasonErrorKey] as? String { lines.append(reason) }
+        } else {
+            let ns = error as NSError
+            lines.append("\(ns.domain) \(ns.code)")
+        }
+        return lines.joined(separator: "\n")
+    }
+
     /// Teilnehmer der Freigabe ohne den Owner, für die Anzeige in der Mitgliederliste.
     public static func participants(of share: CKShare) -> [CKShare.Participant] {
         share.participants.filter { $0.role != .owner }
@@ -91,6 +111,8 @@ private final class SharingControllerDelegate: NSObject, UICloudSharingControlle
 
     func cloudSharingController(_ csc: UICloudSharingController, failedToSaveShareWithError error: Error) {
         logger.error("Freigabe konnte nicht gespeichert werden: \(error.localizedDescription, privacy: .public)")
+        let text = MainActor.assumeIsolated { SharingService.describe(error) }
+        NotificationCenter.default.post(name: .householdShareFailed, object: text)
     }
 
     func cloudSharingControllerDidSaveShare(_ csc: UICloudSharingController) {
@@ -109,4 +131,6 @@ public extension Notification.Name {
     static let householdShareAccepted = Notification.Name("householdShareAccepted")
     /// Teilnehmer hinzugefügt, entfernt oder Freigabe beendet.
     static let householdShareChanged = Notification.Name("householdShareChanged")
+    /// Apples Einladungsdialog konnte die Freigabe nicht speichern; `object` ist der Fehlertext.
+    static let householdShareFailed = Notification.Name("householdShareFailed")
 }

@@ -208,6 +208,9 @@ struct MembersScreen: View {
             .sheet(item: $editedMember, onDismiss: inviteIfRequested) { member in
                 AddMemberSheet(household: household, member: member, canInvite: isOwner) { inviteAfterSheet = true }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .householdShareFailed)) { note in
+                errorMessage = "Apples Einladungsdialog meldet einen Fehler. Schick einen Screenshot dieser Meldung an Claude.\n\n\(note.object as? String ?? "")"
+            }
             .alert("Das hat nicht geklappt",
                    isPresented: Binding(get: { errorMessage != nil },
                                         set: { if !$0 { errorMessage = nil } })) {
@@ -259,7 +262,7 @@ struct MembersScreen: View {
             try await SharingService.presentInvitation(for: household)
             reloadShare()
         } catch {
-            errorMessage = "Bitte prüfe, ob du in iCloud angemeldet bist und Internet hast.\n\n\(error.localizedDescription)"
+            errorMessage = "Die Einladung konnte nicht vorbereitet werden. Bitte prüfe, ob du in iCloud angemeldet bist und Internet hast. Schick einen Screenshot dieser Meldung an Claude.\n\n\(SharingService.describe(error))"
         }
     }
 

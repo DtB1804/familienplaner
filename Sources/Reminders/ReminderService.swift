@@ -9,6 +9,9 @@ enum ReminderSettings {
     static let leadMinutesKey = "reminders.events.leadMinutes"
     static let openEnabledKey = "reminders.open.enabled"
     static let openHourKey = "reminders.open.hour"
+    static let newOpenEnabledKey = "reminders.newOpen.enabled"
+    /// Bereits gemeldete offene Zuständigkeiten ("<Termin-UUID>.<Rolle>"), damit jede nur einmal kommt.
+    static let announcedKey = "reminders.newOpen.announced"
 
     static var eventsEnabled: Bool { UserDefaults.standard.bool(forKey: eventsEnabledKey) }
     static var leadMinutes: Int {
@@ -16,6 +19,8 @@ enum ReminderSettings {
         return value > 0 ? value : 15
     }
     static var openEnabled: Bool { UserDefaults.standard.bool(forKey: openEnabledKey) }
+    /// Standard: an (Wunsch aus dem Familientest). Wirkt nur, wenn Mitteilungen erlaubt sind.
+    static var newOpenEnabled: Bool { UserDefaults.standard.object(forKey: newOpenEnabledKey) as? Bool ?? true }
     static var openHour: Int {
         let value = UserDefaults.standard.integer(forKey: openHourKey)
         return (1...23).contains(value) ? value : 19
@@ -152,6 +157,54 @@ enum ReminderService {
                 trigger: trigger(at: fire))))
         }
         return result
+    }
+
+    // MARK: - Neue offene Zuständigkeiten sofort melden
+
+    /// Legt ein anderes Familienmitglied einen Termin mit "Wer bringt/holt/begleitet?" an,
+    /// meldet dieses Gerät das sofort, sobald die Änderung aus iCloud ankommt (Wunsch aus
+    /// dem Familientest 01.10.2026). Kein eigener Server: CloudKit weckt die App mit einer
+    /// stillen Mitteilung, wann iOS das zulässt, entscheidet das System. Spätestens beim
+    /// nächsten Öffnen kommt die Meldung. Jede offene Zuständigkeit wird nur einmal gemeldet.
+    static func announceNewOpenResponsibilities(me: CDMember?, in context: NSManagedObjectContext) async {
+        guard let me, me.role == .adult, let myID = me.id else { return }
+        let defaults = UserDefaults.standard
+        let open = ((try? EventService.openResponsibilities(within: 14, in: context)) ?? [])
+            .filter { $0.startAt > Date() }
+        let keys = open.map { "\($0.eventID.uuidString).\($0.role.rawValue)" }
+        // Erster Lauf: nur merken, nicht alles Bestehende auf einmal melden.
+        guard let known = defaults.stringArray(forKey: ReminderSettings.announcedKey) else {
+            defaults.set(keys, forKey: ReminderSettings.announcedKey)
+            return
+        }
+        // Nur noch offene merken, damit die Liste nicht wächst.
+        defaults.set(Array(Set(keys)), forKey: ReminderSettings.announcedKey)
+        guard ReminderSettings.newOpenEnabled else { return }
+        let center = UNUserNotificationCenter.current()
+        let status = await center.notificationSettings().authorizationStatus
+        guard status == .authorized || status == .provisional else { return }
+
+        let knownSet = Set(known)
+        var sent = 0
+        for (item, key) in zip(open, keys) where !knownSet.contains(key) && sent < 5 {
+            guard let event = fetchEvent(item.eventID, in: context),
+                  event.createdByMemberID != myID else { continue }
+            let kids = EventService.subjects(of: event).compactMap(\.displayName).joined(separator: ", ")
+            let day = item.startAt.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated)
+                .locale(Locale(identifier: "de_DE")))
+            let content = UNMutableNotificationContent()
+            content.title = "Neu: Wer \(item.role.question)\(kids.isEmpty ? "" : " " + kids)?"
+            content.body = "\(item.eventTitle), \(day) um \(item.startAt.formatted(date: .omitted, time: .shortened))"
+            content.sound = .default
+            content.categoryIdentifier = SeriesService.isSeries(event) ? openSeriesCategory : openCategory
+            content.userInfo = [dayKey: Calendar.current.startOfDay(for: item.startAt).timeIntervalSince1970,
+                                eventIDKey: item.eventID.uuidString,
+                                roleKey: item.role.rawValue]
+            let request = UNNotificationRequest(identifier: "fpnew.\(key)", content: content, trigger: nil)
+            do { try await center.add(request); sent += 1 } catch {
+                logger.error("Neue Zuständigkeit nicht gemeldet: \(error.localizedDescription, privacy: .public)")
+            }
+        }
     }
 
     // MARK: - Aktionen in Mitteilungen

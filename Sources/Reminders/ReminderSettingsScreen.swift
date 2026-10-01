@@ -10,6 +10,7 @@ struct ReminderSettingsScreen: View {
     @AppStorage(ReminderSettings.eventsEnabledKey) private var eventsEnabled = false
     @AppStorage(ReminderSettings.leadMinutesKey) private var leadMinutes = 15
     @AppStorage(ReminderSettings.openEnabledKey) private var openEnabled = false
+    @AppStorage(ReminderSettings.newOpenEnabledKey) private var newOpenEnabled = true
     @AppStorage(ReminderSettings.openHourKey) private var openHour = 19
 
     @State private var denied = false
@@ -49,6 +50,15 @@ struct ReminderSettingsScreen: View {
                 }
             }
 
+            if isAdult {
+                Section {
+                    Toggle("Neue offene Aufgaben sofort melden", isOn: $newOpenEnabled)
+                        .accessibilityIdentifier("reminders.newOpen")
+                } footer: {
+                    Text("Legt jemand aus der Familie einen Termin an, bei dem noch jemand bringen, holen oder begleiten muss, meldet sich Family Planner, sobald der Termin auf diesem iPhone ankommt. Übernehmen geht direkt aus der Mitteilung.")
+                }
+            }
+
             Section {
                 EmptyView()
             } footer: {
@@ -59,6 +69,7 @@ struct ReminderSettingsScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: eventsEnabled) { _, on in if on { Task { await ensurePermission() } }; onChange() }
         .onChange(of: openEnabled) { _, on in if on { Task { await ensurePermission() } }; onChange() }
+        .onChange(of: newOpenEnabled) { _, on in if on { Task { await ensurePermission() } } }
         .onChange(of: leadMinutes) { _, _ in onChange() }
         .onChange(of: openHour) { _, _ in onChange() }
         .task { await refreshDenied() }
@@ -69,6 +80,7 @@ struct ReminderSettingsScreen: View {
         if !granted {
             eventsEnabled = false
             openEnabled = false
+            newOpenEnabled = false
         }
         await refreshDenied()
         onChange()

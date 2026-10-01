@@ -38,6 +38,18 @@ final class EventServiceTests: XCTestCase {
 
     // MARK: Ändern
 
+    /// Termine aus dem iPhone-Kalender: Bringen/Holen lässt sich in der App ergänzen.
+    func testSetRequiredRolesOnTimedEventOnly() throws {
+        let fx = try Fixture()
+        let event = fx.event("Geburtstag Martin")
+        EventService.setRequiredRoles([.driveTo, .driveFrom], of: event)
+        XCTAssertEqual(Set(RequiredRoles.decode(event.requiredRolesRaw)), [.driveTo, .driveFrom])
+        event.isAllDay = true
+        EventService.setRequiredRoles([.accompany], of: event)
+        XCTAssertEqual(Set(RequiredRoles.decode(event.requiredRolesRaw)), [.driveTo, .driveFrom],
+                       "Ganztägige Termine haben keine Zuständigkeiten (Regel 18)")
+    }
+
     func testUpdateSyncsSubjectsButKeepsResponsibilities() throws {
         let fx = try Fixture()
         let mia = fx.member("Mia", role: .child)

@@ -13,6 +13,7 @@ struct EventDetailSheet: View {
     var onEdit: (() -> Void)? = nil
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var context
 
     @State private var pendingClaimRole: ParticipationRole?
     @State private var claimMessage: String?
@@ -80,6 +81,21 @@ struct EventDetailSheet: View {
                     }
                 }
 
+                // Termine aus dem iPhone-Kalender: Titel und Zeit kommen aus dem Kalender,
+                // ob jemand bringt oder holt, wird hier ergänzt (Test 01.10.2026).
+                if isImported && canClaim && !event.isAllDay {
+                    Section {
+                        ForEach(ParticipationRole.responsibilityRoles) { role in
+                            Toggle(role.editorQuestion, isOn: requiredRoleBinding(role))
+                                .accessibilityIdentifier("detail.role.\(role.rawValue)")
+                        }
+                    } header: {
+                        Text("Bringen und Holen")
+                    } footer: {
+                        Text("Titel und Zeit änderst du in der Kalender-App. Bringen und Holen gilt nur in Family Planner.")
+                    }
+                }
+
                 if !hidesDetails, let notes = event.notes, !notes.isEmpty {
                     Section("Notizen") { Text(notes) }
                 }
@@ -110,6 +126,17 @@ struct EventDetailSheet: View {
         .presentationDetents([.medium, .large])
         .modifier(ClaimDialogs(pendingRole: $pendingClaimRole, message: $claimMessage,
                                identifierPrefix: "detail", onClaim: claim))
+    }
+
+    private func requiredRoleBinding(_ role: ParticipationRole) -> Binding<Bool> {
+        Binding(
+            get: { RequiredRoles.decode(event.requiredRolesRaw).contains(role) },
+            set: { on in
+                var roles = RequiredRoles.decode(event.requiredRolesRaw).filter { $0 != role }
+                if on { roles.append(role) }
+                EventService.setRequiredRoles(roles, of: event)
+                PersistenceController.shared.save(context)
+            })
     }
 
     private func requestClaim(_ role: ParticipationRole) {
