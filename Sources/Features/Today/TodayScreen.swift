@@ -704,7 +704,9 @@ struct OpenResponsibilityBanner: View {
                 Text(items.prefix(2).map { "\($0.role.label): \($0.eventTitle)" }.joined(separator: " · "))
                     .font(TypeScale.eventMeta)
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
+                    // Bei großer Schrift umbrechen statt abschneiden (Barrierefreiheitsprüfung 02.10.).
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
             Image(systemName: "chevron.right")
