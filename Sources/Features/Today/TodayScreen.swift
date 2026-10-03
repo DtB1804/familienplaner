@@ -703,7 +703,8 @@ struct OpenResponsibilityBanner: View {
                     .font(.subheadline.weight(.semibold))
                 Text(items.prefix(2).map { "\($0.role.label): \($0.eventTitle)" }.joined(separator: " · "))
                     .font(TypeScale.eventMeta)
-                    .foregroundStyle(.secondary)
+                    // Volle Textfarbe: Grau auf Weiß war der Prüfung zu kontrastarm (03.10.).
+                    .foregroundStyle(.primary)
                     // Bei großer Schrift umbrechen statt abschneiden (Barrierefreiheitsprüfung 02.10.).
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
