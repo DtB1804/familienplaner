@@ -1,0 +1,465 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "EC010953-1496-4DFD-A676-BEE18BC9E5B3.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "98A6B7FA-51E4-4DA0-8D1F-DC017843FE10.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testAllDayEventShowsInStrip()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testAllDayEventShowsInStrip"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "FC11F6E3-9A15-4FF4-8138-4B0923540297.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "5E070CB9-0E6E-4A41-BE3A-B6163940ED6A.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testAppointmentLifecycleWithResponsibility()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testAppointmentLifecycleWithResponsibility"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "7198F6ED-DAB0-44FF-BEF2-EBECC7D4CF14.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testChildPreviewHidesAdultTitles()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testChildPreviewHidesAdultTitles"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "91E29F9A-7BA6-4BAE-B266-5CB9746206C2.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testClaimForWholeSeries()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testClaimForWholeSeries"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "985F3B74-16D1-474B-9B6C-A75D5A9930A9.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testClaimInsideEditor()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testClaimInsideEditor"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "463881D5-41C1-420E-BAC0-D5DDC5263D3E.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testDeleteHouseholdReturnsToSetup()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDeleteHouseholdReturnsToSetup"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "615B1EDE-AE98-48E7-B466-EA63AA21044C.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testDragMovesAppointmentLater()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDragMovesAppointmentLater"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "C1225D37-687B-447A-B17B-AEB58B2F0B64.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testDragToOtherPersonColumn()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDragToOtherPersonColumn"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "67B7AEBF-7CF6-4C47-9A76-854036F1CCC7.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testDuplicateMemberNameIsRejected()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDuplicateMemberNameIsRejected"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "912DAC40-DF68-4FD6-8D0A-2C5EE5BA6088.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testEditorExplainsWhatIsMissing()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testEditorExplainsWhatIsMissing"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "FF7854C5-282B-421B-BDFC-D969D90298F9.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testFreeTimeFinder()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testFreeTimeFinder"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "37A7F804-9B10-4087-BFA6-B03742797310.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testJumpToDateAndBackToToday()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testJumpToDateAndBackToToday"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "D7F0ED5E-CFB8-4561-B981-C421AE1CC2A9.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "EE3885AA-9ADD-45BA-8684-F469A74DB911.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testMonthOverviewOpensDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testMonthOverviewOpensDay"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "334BEF80-9DBA-4062-884C-FA305CB14B91.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testSwipeChangesDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testSwipeChangesDay"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "37AC0AE7-199D-4807-8AC4-22B8FBADB0AA.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "1E86C519-B2A7-498A-A095-4B919159ED45.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "EndToEndTests/testWeeklySeries()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testWeeklySeries"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "1558EAA7-1790-4B9A-9F34-FF02CEEA4853",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-03 at 01.02.15 AM",
+        "timestamp" : 1790989335.306
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "579A6F89-8774-4B9A-B6E6-1942586E070D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.02.15 AM",
+        "timestamp" : 1790989335.7
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "26B00B7F-D139-4D90-A9F5-1DE8C5840AB3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-03 at 01.02.09 AM",
+        "timestamp" : 1790989329.602
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "4D61BFCC-F3F5-4393-BE07-998D9C40C1E4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.02.11 AM",
+        "timestamp" : 1790989331.429
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "1DC01BDF-A6A7-417B-819D-1C4B9273434F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-03 at 01.02.01 AM",
+        "timestamp" : 1790989321.79
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "C5C8E9D0-3EFD-4A4C-ACDA-01A927BF9791",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.02.02 AM",
+        "timestamp" : 1790989322.314
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "4A78D6F3-2F77-4E7C-B9C3-DD6CB68A7A6C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"editor.role.driveFrom\" Switch`_0_21C7CA0C-D958-4A65-8124-22D79085225E.txt",
+        "timestamp" : 1790989312.829
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "14F0EFD4-F092-4410-8D5D-97C871A72C18",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.51 AM",
+        "timestamp" : 1790989311.37
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "86BA07D0-FCE0-4C8D-8F2E-392F8E69C92E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.48 AM",
+        "timestamp" : 1790989308.166
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "20200A12-6B94-4197-8B79-6DDB73B3108E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.43 AM",
+        "timestamp" : 1790989303.205
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "4EAAC0DC-2689-4DFD-9615-7F81864A2E0F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.39 AM",
+        "timestamp" : 1790989299.829
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "DCC1EDA3-A3E7-4A57-9A20-84F7D0C6242B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.34 AM",
+        "timestamp" : 1790989294.894
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "BAC9FC1D-1CE7-4093-9A78-0E8FF71E7528",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.31 AM",
+        "timestamp" : 1790989291.961
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "FEB1556F-F3D7-4665-9DC8-CE2C3C9CF0C1",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.29 AM",
+        "timestamp" : 1790989289.704
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "5F474FEE-0099-4A7D-A0E9-F054D7120119",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.25 AM",
+        "timestamp" : 1790989285.168
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "2C938F66-C28C-49C4-86A0-FEFB1F7D8781",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-03 at 01.01.21 AM",
+        "timestamp" : 1790989281.911
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "D3F69A4B-6B28-4514-8043-79AAF8AA63A7.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-10-03 at 01.01.07 AM.mp4",
+        "timestamp" : 1790989267.288
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "3FE99A24-E43D-4CA0-9260-841916D0D2A3.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "16525BD0-D5BB-4D7D-92C6-B4A25A200BE7.png",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "App Screenshot_0_B3FE8B42-B7D6-4A31-9C61-9E5C8C3597D6.png",
+        "timestamp" : 1790989344.596
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "5D0BEE5C-E601-46B0-8252-21F4679BC17F.png",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Element Screenshot_1_24AA4A4E-16B9-49CE-B2C2-1262BC5B632D.png",
+        "timestamp" : 1790989344.596
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "18D067CA-46E7-4A8D-9C1F-5061E85C4C31.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "SmokeTests/testAccessibilityAudit()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testAccessibilityAudit"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "E463B565-2A19-4502-A258-ADCCD115339C.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "SmokeTests/testLaunchSetupAndMainScreen()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testLaunchSetupAndMainScreen"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "78E9393D-2C5B-44AE-92B3-B1B7CA4AB251.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "SmokeTests/testOnboardingAppearsOnceAndCanBeClosed()",
+    "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testOnboardingAppearsOnceAndCanBeClosed"
+  }
+]

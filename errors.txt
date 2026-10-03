@@ -1,0 +1,2 @@
+<unknown>:0: error: -[FamilienplanerUITests.SmokeTests testAccessibilityAudit] : Contrast nearly passed
+2026-10-03 00:38:17.112 appintentsmetadataprocessor[5915:20932] warning: Metadata extraction skipped. No AppIntents.framework dependency found.

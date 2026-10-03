@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'de.barg.familienplaner'
+  ↪︎Find: Descendants matching type Switch
+    ↪︎Find: Elements matching predicate '"editor.role.driveFrom" IN identifiers'
+      ↪︎Find: First Match
