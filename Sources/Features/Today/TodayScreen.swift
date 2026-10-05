@@ -363,7 +363,9 @@ public struct TodayScreen: View {
                     Image(systemName: mode.symbol)
                         .font(.body.weight(.semibold))
                     Text(mode.label)
-                        .font(.caption2.weight(.medium))
+                        .font(.caption2.weight(.semibold))
+                        // Kleine blaue Schrift auf Weiß war der Prüfung zu kontrastarm (05.10.).
+                        .foregroundStyle(.primary)
                 }
                 .frame(minWidth: 44, minHeight: 44)
             }
