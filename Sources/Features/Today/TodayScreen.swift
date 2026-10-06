@@ -359,15 +359,12 @@ public struct TodayScreen: View {
                     .disabled(!zoom.canZoomOut)
                 }
             } label: {
-                VStack(spacing: 1) {
-                    Image(systemName: mode.symbol)
-                        .font(.body.weight(.semibold))
-                    Text(mode.label)
-                        .font(.caption2.weight(.semibold))
-                        // Kleine blaue Schrift auf Weiß war der Prüfung zu kontrastarm (05.10.).
-                        .foregroundStyle(.primary)
-                }
-                .frame(minWidth: 44, minHeight: 44)
+                // Nur das Symbol: Die kleine Beschriftung darunter färbt iOS im Menü-Knopf blau
+                // und skaliert sie nicht mit (Barrierefreiheitsprüfung 03.–06.10.). Welche Ansicht
+                // aktiv ist, zeigen Symbol und Titel; VoiceOver liest "Ansicht: Tag".
+                Image(systemName: mode.symbol)
+                    .font(.title3.weight(.semibold))
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .accessibilityLabel("Ansicht: \(mode.label)")
             .accessibilityHint("Tag, Woche oder Monat wählen, vergrößern oder verkleinern")
