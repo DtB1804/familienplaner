@@ -29,8 +29,13 @@ jobs:
       - name: Werkzeuge
         run: brew install xcodegen
 
-      - name: Projekt erzeugen
-        run: xcodegen generate
+      - name: Projekt erzeugen (ohne Watch-App)
+        # Für den einmaligen Sonder-Build reicht die iPhone-App. Ad-hoc-Profile für die Watch
+        # bräuchten eine registrierte Apple Watch; der erste Versuch scheiterte beim Export.
+        run: |
+          sed -i '' '/- target: FamilienplanerWatch   #/d' project.yml
+          grep -n "target: FamilienplanerWatch" project.yml || echo "Watch-Abhängigkeit entfernt"
+          xcodegen generate
 
       - name: API-Schlüssel ablegen
         env:
