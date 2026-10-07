@@ -124,6 +124,10 @@ jobs:
         run: |
           mkdir -p /tmp/cilog
           cp archive.log export.log /tmp/cilog/ 2>/dev/null || true
+          # Ausführliche Export-Protokolle von Xcode (Grund für "Communication with Apple failed").
+          for d in $(find /var/folders "$TMPDIR" -maxdepth 4 -name "*.xcdistributionlogs" 2>/dev/null); do
+            mkdir -p /tmp/cilog/distlogs && cp -R "$d" /tmp/cilog/distlogs/ 2>/dev/null || true
+          done
           cat archive.log export.log 2>/dev/null | grep -E "error|EXPORT|ARCHIVE|icloud-container-environment|Development|device|profile" | sort -u > /tmp/cilog/errors.txt || true
           echo "commit=${GITHUB_SHA} status=${{ job.status }} run=${GITHUB_RUN_ID}" > /tmp/cilog/STATUS
           cd /tmp/cilog
