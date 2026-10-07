@@ -812,7 +812,8 @@ struct HintBanner: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 1) {
                 Text(title).font(.subheadline.weight(.semibold))
-                Text(detail).font(TypeScale.eventMeta).foregroundStyle(.secondary).lineLimit(1)
+                Text(detail).font(TypeScale.eventMeta).foregroundStyle(.primary)
+                    .lineLimit(3).fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
             Image(systemName: "chevron.right")

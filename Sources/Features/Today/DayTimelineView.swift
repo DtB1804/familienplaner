@@ -185,7 +185,10 @@ public struct DayTimelineView: View {
             }
         }
         .frame(width: gutterWidth, height: height, alignment: .top)
-        .accessibilityHidden(true)   // Uhrzeiten stehen im Vorlesetext jedes Termins
+        // Sichtbarer Text darf nicht unsichtbar für VoiceOver sein (Prüfung 07.10.:
+        // "Potentially inaccessible text"). Ein Element statt 17 einzelner Zahlen.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Uhrzeiten von \(startHour) bis \(endHour) Uhr")
     }
 
     private func hourLines(height: CGFloat, width: CGFloat) -> some View {
