@@ -1,0 +1,9 @@
+                    container.purgeObjectsAndRecordsInZone(with: zoneID, in: store) { _, error in
+** ARCHIVE SUCCEEDED **
+** EXPORT SUCCEEDED **
+2026-10-08 21:12:02.800 xcodebuild[4641:17088] Progress 0%: Uploading to App Store Connect…
+2026-10-08 21:12:02.828 xcodebuild[4641:17088] Progress 100%: Uploading to App Store Connect…
+2026-10-08 21:12:02.829 xcodebuild[4641:17088] Progress 100%: Uploading to App Store Connect…
+2026-10-08 21:12:04.305 xcodebuild[4641:17088] Progress 100%: Uploaded package is processing.
+2026-10-08 21:12:04.309 xcodebuild[4641:17088] Progress 100%: Upload succeeded.
+Uploaded Familienplaner
