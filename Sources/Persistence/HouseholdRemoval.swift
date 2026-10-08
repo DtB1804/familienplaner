@@ -39,9 +39,13 @@ enum HouseholdRemoval {
 
         if usesCloudKit {
             guard let zoneID = persistence.container.recordID(for: household.objectID)?.zoneID else { throw Failure.noZone }
+            let container = persistence.container
+            // Außerhalb des Hauptthreads, sonst kann die App festhängen (siehe SharingService.offMain).
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-                persistence.container.purgeObjectsAndRecordsInZone(with: zoneID, in: store) { _, error in
-                    if let error { continuation.resume(throwing: error) } else { continuation.resume() }
+                DispatchQueue.global(qos: .userInitiated).async {
+                    container.purgeObjectsAndRecordsInZone(with: zoneID, in: store) { _, error in
+                        if let error { continuation.resume(throwing: error) } else { continuation.resume() }
+                    }
                 }
             }
         }

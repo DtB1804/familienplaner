@@ -23,7 +23,11 @@ enum ShareAcceptance {
             return
         }
         do {
-            _ = try await persistence.container.acceptShareInvitations(from: [metadata], into: sharedStore)
+            // Außerhalb des Hauptthreads, sonst kann die App festhängen (siehe SharingService.offMain).
+            let container = persistence.container
+            _ = try await SharingService.offMain {
+                try await container.acceptShareInvitations(from: [metadata], into: sharedStore)
+            }
             NotificationCenter.default.post(name: .householdShareAccepted, object: nil)
         } catch {
             logger.error("Einladung konnte nicht angenommen werden: \(error.localizedDescription, privacy: .public)")

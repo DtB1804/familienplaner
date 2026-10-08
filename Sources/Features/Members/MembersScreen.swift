@@ -260,7 +260,7 @@ struct MembersScreen: View {
         defer { isPreparingInvite = false }
         do {
             try await SharingService.presentInvitation(for: household)
-            reloadShare()
+            await loadShare()
         } catch {
             errorMessage = "Die Einladung konnte nicht vorbereitet werden. Bitte prüfe, ob du in iCloud angemeldet bist und Internet hast. Schick einen Screenshot dieser Meldung an Claude.\n\n\(SharingService.describe(error))"
         }
@@ -293,7 +293,11 @@ struct MembersScreen: View {
     }
 
     private func reloadShare() {
-        share = SharingService.existingShare(for: household)
+        Task { await loadShare() }
+    }
+
+    private func loadShare() async {
+        share = await SharingService.existingShare(for: household)
     }
 }
 

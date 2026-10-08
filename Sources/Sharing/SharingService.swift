@@ -16,11 +16,20 @@ public enum SharingService {
                                        category: "Sharing")
 
     /// Vorhandene Freigabe des Haushalts, falls schon einmal eingeladen wurde.
+    ///
+    /// Alle Freigabe-Aufrufe von `NSPersistentCloudKitContainer` laufen außerhalb des
+    /// Hauptthreads (`offMain`). Sie warten intern auf den CloudKit-Abgleich, und der wartet
+    /// seinerseits auf Beobachter, die auf dem Hauptthread laufen (`queue: .main`). Auf dem
+    /// Hauptthread aufgerufen hängt die App fest, bis iOS sie beendet. Belegt durch den
+    /// Absturzbericht vom 01.10.2026 (Build 39, 0x8BADF00D): Hauptthread in
+    /// `shareManagedObjects:toShare:completion:` → `_PFRequestExecutor wait`, CloudKit-Queue in
+    /// `eventUpdated:` → `NSOperation waitUntilFinished`.
     public static func existingShare(for household: CDHousehold,
-                                     persistence: PersistenceController = .shared) -> CKShare? {
+                                     persistence: PersistenceController = .shared) async -> CKShare? {
+        let id = household.objectID
+        let container = persistence.container
         do {
-            let shares = try persistence.container.fetchShares(matching: [household.objectID])
-            return shares[household.objectID]
+            return try await offMain { try container.fetchShares(matching: [id])[id] }
         } catch {
             logger.error("Freigabe konnte nicht gelesen werden: \(error.localizedDescription, privacy: .public)")
             return nil
@@ -30,18 +39,37 @@ public enum SharingService {
     /// Liefert die vorhandene Freigabe oder legt eine neue an.
     public static func shareForHousehold(_ household: CDHousehold,
                                          persistence: PersistenceController = .shared) async throws -> CKShare {
-        if let share = existingShare(for: household, persistence: persistence) {
+        if let share = await existingShare(for: household, persistence: persistence) {
             return share
         }
-        let (_, share, _) = try await persistence.container.share([household], to: nil)
-        share[CKShare.SystemFieldKey.title] = (household.name ?? "Familie") as CKRecordValue
-        // Nur ausdrücklich eingeladene Personen, kein Zugriff per weitergeleitetem Link.
-        share.publicPermission = .none
-        // Geänderte Freigabe selbst speichern, bevor Apples Dialog sie bekommt. Scheitert das,
-        // zeigt die App den CloudKit-Fehler an. Apples Dialog meldete nur "Es konnte kein Link
-        // zum Teilen erstellt werden" (Familientest 01.10.2026).
-        guard let store = persistence.privateStore else { return share }
-        return try await persistence.container.persistUpdatedShare(share, in: store)
+        let id = household.objectID
+        let title = household.name ?? "Familie"
+        let container = persistence.container
+        let store = persistence.privateStore
+        return try await offMain {
+            let context = container.newBackgroundContext()
+            let object = try context.performAndWait { try context.existingObject(with: id) }
+            let (_, share, _) = try await container.share([object], to: nil)
+            share[CKShare.SystemFieldKey.title] = title as CKRecordValue
+            // Nur ausdrücklich eingeladene Personen, kein Zugriff per weitergeleitetem Link.
+            share.publicPermission = .none
+            // Geänderte Freigabe selbst speichern, bevor Apples Dialog sie bekommt. Scheitert das,
+            // zeigt die App den CloudKit-Fehler an. Apples Dialog meldete nur "Es konnte kein Link
+            // zum Teilen erstellt werden" (Familientest 01.10.2026).
+            guard let store else { return share }
+            return try await container.persistUpdatedShare(share, in: store)
+        }
+    }
+
+    /// Führt einen Aufruf von `NSPersistentCloudKitContainer` außerhalb des Hauptthreads aus.
+    /// `@Sendable`, damit der Block nicht den MainActor der Aufrufstelle erbt.
+    nonisolated static func offMain<T>(_ work: @escaping @Sendable () async throws -> T) async throws -> T {
+        try await withCheckedThrowingContinuation { continuation in
+            Task.detached(priority: .userInitiated) {
+                do { continuation.resume(returning: try await work()) }
+                catch { continuation.resume(throwing: error) }
+            }
+        }
     }
 
     /// Öffnet Apples Einladungsdialog (Nachrichten, Mail, Link kopieren).
