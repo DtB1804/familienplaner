@@ -189,6 +189,10 @@ public struct DayTimelineView: View {
         // "Potentially inaccessible text"). Ein Element statt 17 einzelner Zahlen.
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Uhrzeiten von \(startHour) bis \(endHour) Uhr")
+        // Reiner Text, nicht antippbar: sonst wertet die Prüfung die schmale Spalte als
+        // zu kleine Trefferfläche (Nachttest 08.10.).
+        .accessibilityAddTraits(.isStaticText)
+        .accessibilityRespondsToUserInteraction(false)
     }
 
     private func hourLines(height: CGFloat, width: CGFloat) -> some View {
