@@ -115,6 +115,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Absturz beim Einladen behoben | Build 40 | Fehler aus Apples Einladungsdialog wird angezeigt statt die App zu beenden |
 | Keine doppelten Mitglieder, Einladungsfehler sichtbar | Build 41 | gleicher Name oder gleiches Kürzel wird beim Anlegen abgewiesen |
 | Barrierefreiheit | Build 42 | Hinweis offene Zuständigkeiten bricht um und hat vollen Kontrast; Ansicht-Knopf nur mit Symbol |
+| Einladen hängt nicht mehr | Build 43 | Teilen, Freigabe lesen, Einladung annehmen und Haushalt löschen laufen außerhalb des Hauptthreads (Absturzberichte 01.10. und 08.10., 0x8BADF00D); Uhrzeitspalte als Text |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
