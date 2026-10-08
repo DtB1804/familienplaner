@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 import CoreData
 import EventKit
 import PhotosUI
@@ -198,10 +199,14 @@ public struct TodayScreen: View {
                                  } : nil)
             }
             .task(id: day) { await reloadResponsibilities() }
-            .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)) { _ in
+            .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextDidSave)
+                .receive(on: DispatchQueue.main)) { _ in
+                // Kommt auch von den Hintergrund-Kontexten des CloudKit-Abgleichs, also
+                // außerhalb des Hauptthreads. Deshalb erst auf den Hauptthread wechseln.
                 scheduleReminders()
             }
-            .onReceive(NotificationCenter.default.publisher(for: .remindersNeedReschedule)) { _ in
+            .onReceive(NotificationCenter.default.publisher(for: .remindersNeedReschedule)
+                .receive(on: DispatchQueue.main)) { _ in
                 scheduleReminders()
             }
             .onReceive(NotificationCenter.default.publisher(for: .openDayFromReminder)) { note in
@@ -223,7 +228,8 @@ public struct TodayScreen: View {
                     takeSharedPhoto()
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in
+            .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)
+                .receive(on: DispatchQueue.main)) { _ in
                 syncCalendars()
             }
             .onReceive(NotificationCenter.default.publisher(for: .NSManagedObjectContextObjectsDidChange,

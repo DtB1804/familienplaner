@@ -126,14 +126,21 @@ private final class SharingControllerDelegate: NSObject, UICloudSharingControlle
         }
     }
 
+    // Beide Rückrufe können außerhalb des Hauptthreads kommen. Die Meldung löst in
+    // MembersScreen eine Änderung der Oberfläche aus, deshalb immer auf dem Hauptthread
+    // (Absturz beim Einladen, Familientest 08.10.2026).
     func cloudSharingControllerDidSaveShare(_ csc: UICloudSharingController) {
-        NotificationCenter.default.post(name: .householdShareChanged, object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .householdShareChanged, object: nil)
+        }
     }
 
     func cloudSharingControllerDidStopSharing(_ csc: UICloudSharingController) {
         // Der Owner behält seine Daten im privaten Store. Die anderen Geräte
         // verlieren den Zugriff; ihre Kopie räumt CloudKit beim nächsten Sync ab.
-        NotificationCenter.default.post(name: .householdShareChanged, object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .householdShareChanged, object: nil)
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 import CoreData
 
 @main
@@ -114,7 +115,8 @@ struct RootView: View {
             awaitingSharedHousehold = true
             load()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)
+                    .receive(on: DispatchQueue.main)) { _ in
             // Daten eines geteilten Haushalts kommen asynchron. Neu laden, solange
             // noch kein Haushalt da ist oder gerade eine Einladung angenommen wurde.
             if household == nil || awaitingSharedHousehold { load() }
