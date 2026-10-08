@@ -1,0 +1,113 @@
+2026-10-08 20:16:20 +0000 [MT] Starting export with options: {"manifest":{"appURL":"https:\/\/dtb1804.github.io\/familienplaner\/adhoc\/Familienplaner.ipa","displayImageURL":"https:\/\/dtb1804.github.io\/familienplaner\/adhoc\/icon57.png","fullSizeImageURL":"https:\/\/dtb1804.github.io\/familienplaner\/adhoc\/icon512.png"},"stripSwiftSymbols":true,"raiseProfileSupportOptionalToRequired":false,"method":"release-testing","manageAppVersionAndBuildNumber":true,"uploadSymbols":true,"testFlightInternalTestingOnly":false,"thinning":"<none>","teamID":"KF96Z9PD9Q","iCloudContainerEnvironment":"Development","destination":"export","embedOnDemandResourcesAssetPacksInBundle":true,"generateAppStoreInformation":false,"signingStyle":"automatic"}
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionReformatterSelectionStep with <IDEDistributionContext: 0x949df0280; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="(null)">
+	Chain (3, self inclusive):
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0280>
+2026-10-08 20:16:20 +0000 [MT] Skipping reformatter selection. Selection is not required. There was no failure determining reformatter requirements.
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionReformatArchiveStep with <IDEDistributionContext: 0x949df0500; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="(null)">
+	Chain (4, self inclusive):
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0500>
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionAnalyzeArchiveStep with <IDEDistributionContext: 0x949df0780; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="(null)">
+	Chain (5, self inclusive):
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0780>
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find embedded provisioning profile for <DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>: Error Domain=NSCocoaErrorDomain Code=4 "No file at <DVTFilePath:0x948066e60:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/embedded.mobileprovision'>" UserInfo={NSLocalizedDescription=No file at <DVTFilePath:0x948066e60:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/embedded.mobileprovision'>}
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find embedded provisioning profile for <DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>: Error Domain=NSCocoaErrorDomain Code=4 "No file at <DVTFilePath:0x948066f40:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/embedded.mobileprovision'>" UserInfo={NSLocalizedDescription=No file at <DVTFilePath:0x948066f40:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/embedded.mobileprovision'>}
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find embedded provisioning profile for <DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>: Error Domain=NSCocoaErrorDomain Code=4 "No file at <DVTFilePath:0x948066fb0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/embedded.mobileprovision'>" UserInfo={NSLocalizedDescription=No file at <DVTFilePath:0x948066fb0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/embedded.mobileprovision'>}
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find platform <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>> or cert (null) for <DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>: (null)
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find platform <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>> or cert (null) for <DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>: (null)
+2026-10-08 20:16:20 +0000 [MT] [OPTIONAL] Didn't find platform <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>> or cert (null) for <DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>: (null)
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionTeamStep with <IDEDistributionContext: 0x949df0a00; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (6, self inclusive):
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0a00>
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionOptionsStep with <IDEDistributionContext: 0x949df0c80; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (7, self inclusive):
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0c80>
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionManifestStep with <IDEDistributionContext: 0x949df0f00; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (8, self inclusive):
+	<IDEDistributionContext: 0x949df0f00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df0f00>
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionSigningMethodStep with <IDEDistributionContext: 0x949df1180; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (9, self inclusive):
+	<IDEDistributionContext: 0x949df1180; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0f00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df1180>
+2026-10-08 20:16:20 +0000 [MT] Running step: IDEDistributionSigningAssetsStep with <IDEDistributionContext: 0x949df1400; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (10, self inclusive):
+	<IDEDistributionContext: 0x949df1400; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1180; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0f00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df1400>
+2026-10-08 20:16:35 +0000 [MT] Running step: IDEDistributionPackagingStep with <IDEDistributionContext: 0x949df1680; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (11, self inclusive):
+	<IDEDistributionContext: 0x949df1680; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1400; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1180; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0f00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df1680>
+2026-10-08 20:16:38 +0000 [MT] Running step: IDEDistributionSummaryStep with <IDEDistributionContext: 0x949df2300; archive(resolved)="<IDEArchive: 0x948064150>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team(resolved)="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	Chain (12, self inclusive):
+	<IDEDistributionContext: 0x949df2300; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1680; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1400; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df1180; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0f00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0c80; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0a00; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>">
+	<IDEDistributionContext: 0x949df0780; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0500; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0280; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x949df0000; archive = "<IDEArchive: 0x948064150>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x948737420>", team="(null)">
+	<IDEDistributionContext: 0x1035dbd00; archive = "<IDEArchive: 0x948064150>", distributionMethod="(null)", team="(null)">
+</IDEDistributionContext: 0x949df2300>

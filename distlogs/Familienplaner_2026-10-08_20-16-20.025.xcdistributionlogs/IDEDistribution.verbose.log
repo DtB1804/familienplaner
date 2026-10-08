@@ -1,0 +1,401 @@
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x948737440> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x948737510> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x948737560> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x948737410> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAdHoc: 0x948737420>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x948737460> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x948737550> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x9487375b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x948737490> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x9487374f0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x948737500> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSEnterprise: 0x948737590>
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodDevelopmentSigned: 0x948737450>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x9487374a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x948737520> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x948737580> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x948737480> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x9487375a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x948737530> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x9487375d0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x9487375e0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x948737400> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x948737430> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x9487374b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x9487375c0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x948737540> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x948737440> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x948737510> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x948737560> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x948737410> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAdHoc: 0x948737420> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x948737460> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x948737550> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x9487375b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x948737490> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x9487374f0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x948737500> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSEnterprise: 0x948737590> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSigned: 0x948737450> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x9487374a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x948737520> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x948737580> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x948737480> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x9487375a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x948737530> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x9487375d0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x9487375e0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x948737400> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x948737430>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x9487374b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x9487375c0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x948737540> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Available distribution methods: {(
+    <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470>,
+    <IDEDistributionMethodiOSAdHoc: 0x948737420>,
+    <IDEDistributionMethodiOSEnterprise: 0x948737590>,
+    <IDEDistributionMethodDevelopmentSigned: 0x948737450>,
+    <IDEDistributionMethodiOSAppStoreValidation: 0x948737430>
+)}
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x948737440> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x948737510> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x948737560> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x948737410> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAdHoc: 0x948737420>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x948737460> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x948737550> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x9487375b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x948737490> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x9487374f0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x948737500> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSEnterprise: 0x948737590>
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodDevelopmentSigned: 0x948737450>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x9487374a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x948737520> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x948737580> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x948737480> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x9487375a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x948737530> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x9487375d0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x9487375e0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x948737400> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x948737430> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x9487374b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x9487375c0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x948737540> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x948737440> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x948737510> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x948737560> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x948737410> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAdHoc: 0x948737420> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x948737460> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x948737550> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x9487375b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x948737490> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x9487374f0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x948737500> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSEnterprise: 0x948737590> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSigned: 0x948737450> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x9487374a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x948737520> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x948737580> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x948737480> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x9487375a0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x948737530> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x9487375d0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x9487375e0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x948737400> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x948737430>
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x9487374b0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x9487375c0> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x948737540> because it doesn't support distributing archive
+2026-10-08 20:16:20 +0000 [MT] Available distribution methods: {(
+    <IDEDistributionMethodiOSAppStoreDistribution: 0x948737470>,
+    <IDEDistributionMethodiOSAdHoc: 0x948737420>,
+    <IDEDistributionMethodiOSEnterprise: 0x948737590>,
+    <IDEDistributionMethodDevelopmentSigned: 0x948737450>,
+    <IDEDistributionMethodiOSAppStoreValidation: 0x948737430>
+)}
+2026-10-08 20:16:20 +0000 [MT] Skipping reformat archive step. No reformatter selected for archive <DVTFilePath:0x9480640e0:'/Users/runner/work/_temp/Familienplaner.xcarchive'>
+2026-10-08 20:16:20 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>
+2026-10-08 20:16:20 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>
+2026-10-08 20:16:20 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>
+2026-10-08 20:16:20 +0000 [MT] Set distributionItems on context: (
+    "<IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{\n    \"aps-environment\" = development;\n    \"com.apple.developer.icloud-container-identifiers\" =     (\n        \"iCloud.de.barg.familienplaner\"\n    );\n    \"com.apple.developer.icloud-services\" =     (\n        CloudKit\n    );\n    \"com.apple.developer.ubiquity-kvstore-identifier\" = \"KF96Z9PD9Q.de.barg.familienplaner\";\n    \"com.apple.security.application-groups\" =     (\n        \"group.de.barg.familienplaner\"\n    );\n}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'>"
+)
+2026-10-08 20:16:20 +0000 [MT] Archs to thin for item /Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app are []
+2026-10-08 20:16:20 +0000 [MT] Archs to thin for item /Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex are []
+2026-10-08 20:16:20 +0000 [MT] Archs to thin for item /Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex are []
+2026-10-08 20:16:20 +0000 [MT] Distributable's provisioning style is Automatic
+2026-10-08 20:16:22 +0000 [MT] Starting evaluation for distribution items:
+(
+    "<IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{\n    \"aps-environment\" = development;\n    \"com.apple.developer.icloud-container-identifiers\" =     (\n        \"iCloud.de.barg.familienplaner\"\n    );\n    \"com.apple.developer.icloud-services\" =     (\n        CloudKit\n    );\n    \"com.apple.developer.ubiquity-kvstore-identifier\" = \"KF96Z9PD9Q.de.barg.familienplaner\";\n    \"com.apple.security.application-groups\" =     (\n        \"group.de.barg.familienplaner\"\n    );\n}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'>"
+)
+2026-10-08 20:16:22 +0000 [MT] Evaluating <IDEDistributionItemProvisionable: 0x9481cf200; distributionItem='<IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'>', team='<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>', method='<IDEDistributionMethodiOSAdHoc: 0x948737420>', provisioningStyle='0', entitlementsProcessors='(
+    "<IDEiCloudEntitlementsProcessor: 0x949e8a880>",
+    "<IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbe40>",
+    "<IDEClassKitEntitlementsProcessor: 0x949edbf60>",
+    "<IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f10510>"
+)'> with overrides <IDEProvisionableOverrides 0x949d68900: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818cb00>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'> from <IDEiCloudEntitlementsProcessor: 0x949e8a880>: {
+    "com.apple.developer.icloud-container-environment" = Development;
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'> from <IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbe40>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'> from <IDEClassKitEntitlementsProcessor: 0x949edbf60>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x9490547e0; bundleID='de.barg.familienplaner', path='<DVTFilePath:0x9480641c0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53f60; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner', executablePath='<DVTFilePath:0x949d53960:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/Familienplaner'>', hardenedRuntime='0'>'> from <IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f10510>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Evaluating <IDEDistributionItemProvisionable: 0x9481cf180; distributionItem='<IDEDistributionItem: 0x949d53e40; bundleID='de.barg.familienplaner.share', path='<DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53de0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.share', executablePath='<DVTFilePath:0x948065dc0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/FamilienplanerShare'>', hardenedRuntime='0'>'>', team='<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>', method='<IDEDistributionMethodiOSAdHoc: 0x948737420>', provisioningStyle='0', entitlementsProcessors='(
+    "<IDEiCloudEntitlementsProcessor: 0x949e8a8b0>",
+    "<IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbea0>",
+    "<IDEClassKitEntitlementsProcessor: 0x949edbf90>",
+    "<IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f10690>"
+)'> with overrides <IDEProvisionableOverrides 0x94a144d80: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818e280>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53e40; bundleID='de.barg.familienplaner.share', path='<DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53de0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.share', executablePath='<DVTFilePath:0x948065dc0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/FamilienplanerShare'>', hardenedRuntime='0'>'> from <IDEiCloudEntitlementsProcessor: 0x949e8a8b0>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53e40; bundleID='de.barg.familienplaner.share', path='<DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53de0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.share', executablePath='<DVTFilePath:0x948065dc0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/FamilienplanerShare'>', hardenedRuntime='0'>'> from <IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbea0>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53e40; bundleID='de.barg.familienplaner.share', path='<DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53de0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.share', executablePath='<DVTFilePath:0x948065dc0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/FamilienplanerShare'>', hardenedRuntime='0'>'> from <IDEClassKitEntitlementsProcessor: 0x949edbf90>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53e40; bundleID='de.barg.familienplaner.share', path='<DVTFilePath:0x948065ce0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53de0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.share', executablePath='<DVTFilePath:0x948065dc0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerShare.appex/FamilienplanerShare'>', hardenedRuntime='0'>'> from <IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f10690>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Evaluating <IDEDistributionItemProvisionable: 0x9481cf100; distributionItem='<IDEDistributionItem: 0x949d53f00; bundleID='de.barg.familienplaner.widgets', path='<DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53ea0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.widgets', executablePath='<DVTFilePath:0x948065ea0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/FamilienplanerWidgets'>', hardenedRuntime='0'>'>', team='<IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>', method='<IDEDistributionMethodiOSAdHoc: 0x948737420>', provisioningStyle='0', entitlementsProcessors='(
+    "<IDEiCloudEntitlementsProcessor: 0x949e8a910>",
+    "<IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbed0>",
+    "<IDEClassKitEntitlementsProcessor: 0x949edbfc0>",
+    "<IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f106f0>"
+)'> with overrides <IDEProvisionableOverrides 0x949d6adc0: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818df00>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53f00; bundleID='de.barg.familienplaner.widgets', path='<DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53ea0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.widgets', executablePath='<DVTFilePath:0x948065ea0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/FamilienplanerWidgets'>', hardenedRuntime='0'>'> from <IDEiCloudEntitlementsProcessor: 0x949e8a910>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53f00; bundleID='de.barg.familienplaner.widgets', path='<DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53ea0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.widgets', executablePath='<DVTFilePath:0x948065ea0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/FamilienplanerWidgets'>', hardenedRuntime='0'>'> from <IDEAppAttestEnvironmentEntitlementsProcessor: 0x949edbed0>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53f00; bundleID='de.barg.familienplaner.widgets', path='<DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53ea0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.widgets', executablePath='<DVTFilePath:0x948065ea0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/FamilienplanerWidgets'>', hardenedRuntime='0'>'> from <IDEClassKitEntitlementsProcessor: 0x949edbfc0>: {
+}
+2026-10-08 20:16:22 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x949d53f00; bundleID='de.barg.familienplaner.widgets', path='<DVTFilePath:0x948065e30:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x949d53ea0; isSigned='1', isAdHocSigned='1', signingCertificate='(null)', entitlements='{
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+}', teamID='(null)', identifier='de.barg.familienplaner.widgets', executablePath='<DVTFilePath:0x948065ea0:'/Users/runner/work/_temp/Familienplaner.xcarchive/Products/Applications/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex/FamilienplanerWidgets'>', hardenedRuntime='0'>'> from <IDEAppIdentifierPrefixedEntitlementsProcessor: 0x949f106f0>: {
+}
+2026-10-08 20:16:32 +0000 [MT] Evaluation for Familienplaner.app is <IDEProvisionableStatusEvaluation 0x948363c60: inputs: <IDEProvisionableStatusEvalutorInputs 0x94a2251d0: provisionableSnapshot: <IDEProvisionableSnapshot 0x949f5e9d0: name: Familienplaner.app, configurations: {
+    Default = "<_IDEProvisionableConfigurationSnapshot 0x948cc2620: name: Default, provisioningStyle: 0, certificateSigningStyle: 2, team: <IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>, profileSupport: <IDEProvisioningProfileSupport: 0x94818ded0>, platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), bundleIdentifier: de.barg.familienplaner, profileSpecifier: (null), certificateIdentifier: iPhone Distribution, entitlementsFilePath: (null), baseEntitlements: <IDEProvisionableEntitlements: 0x949e92500; signedEntitlements='{\n    \"aps-environment\" = development;\n    \"com.apple.developer.icloud-container-environment\" = Development;\n    \"com.apple.developer.icloud-container-identifiers\" =     (\n        \"iCloud.de.barg.familienplaner\"\n    );\n    \"com.apple.developer.icloud-services\" =     (\n        CloudKit\n    );\n    \"com.apple.developer.ubiquity-kvstore-identifier\" = \"KF96Z9PD9Q.de.barg.familienplaner\";\n    \"com.apple.security.application-groups\" =     (\n        \"group.de.barg.familienplaner\"\n    );\n}', simulatedEntitlements='(null)'>, entitlementsExpansion: <IDEDistributionProvisioningEntitlementsExpansion: 0x94818caf0>, entitlementsDestination: 1, allowSigningWithoutTeamSelection: 0, signingRequiresTeam: 0, appIDFeatures: <DVTPortalAppIDFeatures 0x94a19c3e0: Features: {\n    \"<DVTPortalProfileFeature: 0x94810eae0; id='APP_GROUPS', userDescription='App Groups', platforms='.watchos, .appletvos, .xros, .macosx, .iphoneos'>\" = 1;\n    \"<DVTPortalProfileFeature: 0x94810ec30; id='PUSH_NOTIFICATIONS', userDescription='Push Notifications', platforms='.iphoneos, .macosx, .appletvos, .xros, .watchos'>\" = 1;\n    \"<DVTPortalProfileFeature: 0x94810eca0; id='ICLOUD', userDescription='iCloud', platforms='.appletvos, .iphoneos, .watchos, .xros, .macosx'>\" = 1;\n}, Containers: {\n    \"Xcode.Portal.Container.Type.AppGroup\" = \"{(\\n    \\\"group.de.barg.familienplaner\\\"\\n)}\";\n    \"Xcode.Portal.Container.Type.CloudKit\" = \"{(\\n    \\\"iCloud.de.barg.familienplaner\\\"\\n)}\";\n}>, provisioningPurpose: ad-hoc, supportsIOSMac: 0, areFeaturesUpToDate: 0>";
+}, overrides: <IDEProvisionableOverrides 0x949d68900: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818cb00>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>>>, configuration: Default, codesignParameterSnapshot: <IDECodesignParameterSnapshot: 0x949f4b360>:
+Profile:  <DVTEmbeddedProvisioningProfile 0x949d6bf00: name: iOS Team Ad Hoc Provisioning Profile: de.barg.familienplaner, UUID: 68b7946f-3592-40a0-af8e-43c1ae647d40, teamName: David Barg, teamIdentifierPrefixes: (
+    KF96Z9PD9Q
+), entitlements: {
+    "application-identifier" = "KF96Z9PD9Q.de.barg.familienplaner";
+    "aps-environment" = production;
+    "com.apple.developer.icloud-container-development-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-container-environment" =     (
+        Production,
+        Development
+    );
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.icloud-services" = "*";
+    "com.apple.developer.team-identifier" = KF96Z9PD9Q;
+    "com.apple.developer.ubiquity-container-identifiers" =     (
+        "iCloud.de.barg.familienplaner"
+    );
+    "com.apple.developer.ubiquity-kvstore-identifier" = "KF96Z9PD9Q.*";
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+    "get-task-allow" = 0;
+    "keychain-access-groups" =     (
+        "KF96Z9PD9Q.*",
+        "com.apple.token"
+    );
+}, appIdentifierName: Familenplaner, applicationIdentifierPrefixes: (
+    KF96Z9PD9Q
+), dateCreated: 2026-10-08 20:16:32 +0000, dateExpired: 2027-09-22 22:06:37 +0000, certificateKinds: {(
+    "1.2.840.113635.100.6.1.4",
+    "1.2.840.113635.100.6.1.7"
+)}, certificateSHA1Hashes: {(
+    935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+)}, supportedUDIDs: {(
+    "00008140-000c1d283a68801c"
+)}, isUniversal: 0, isXcodeManaged: 1, platforms: {(
+    <DVTPlatform:0x948cd2a00:'com.apple.platform.xros':<DVTFilePath:0x949055bc0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/XROS.platform'>>,
+    <DVTPlatform:0x948cd2980:'com.apple.platform.watchos':<DVTFilePath:0x948cbc930:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchOS.platform'>>,
+    <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>
+)}, filePath: <DVTFilePath:0x948cc3840:'/Users/runner/Library/Developer/Xcode/UserData/Provisioning Profiles/68b7946f-3592-40a0-af8e-43c1ae647d40.mobileprovision'>>
+Identity: 935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+Certificate <DVTSigningCertificate: 0x949d6a040; name='Apple Distribution: David Barg (KF96Z9PD9Q)', hash='935C848EA9DB023C06AB296DCB9BFAF4BB2787A1', serialNumber='2AAA67DDBB334E85EE222D89A5922B78', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-09-22 22:06:38 +0000''>>, errors: (null)>
+2026-10-08 20:16:33 +0000 [MT] Evaluation for FamilienplanerWidgets.appex is <IDEProvisionableStatusEvaluation 0x9483611f0: inputs: <IDEProvisionableStatusEvalutorInputs 0x94a225ef0: provisionableSnapshot: <IDEProvisionableSnapshot 0x949f5e8e0: name: FamilienplanerWidgets.appex, configurations: {
+    Default = "<_IDEProvisionableConfigurationSnapshot 0x948ccb7a0: name: Default, provisioningStyle: 0, certificateSigningStyle: 2, team: <IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>, profileSupport: <IDEProvisioningProfileSupport: 0x94818f590>, platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), bundleIdentifier: de.barg.familienplaner.widgets, profileSpecifier: (null), certificateIdentifier: iPhone Distribution, entitlementsFilePath: (null), baseEntitlements: <IDEProvisionableEntitlements: 0x94a1ec6c0; signedEntitlements='{\n    \"com.apple.security.application-groups\" =     (\n        \"group.de.barg.familienplaner\"\n    );\n}', simulatedEntitlements='(null)'>, entitlementsExpansion: <IDEDistributionProvisioningEntitlementsExpansion: 0x94818f790>, entitlementsDestination: 1, allowSigningWithoutTeamSelection: 0, signingRequiresTeam: 0, appIDFeatures: <DVTPortalAppIDFeatures 0x94a249100: Features: {\n    \"<DVTPortalProfileFeature: 0x94826a300; id='APP_GROUPS', userDescription='App Groups', platforms='.macosx, .watchos, .appletvos, .iphoneos, .xros'>\" = 1;\n}, Containers: {\n    \"Xcode.Portal.Container.Type.AppGroup\" = \"{(\\n    \\\"group.de.barg.familienplaner\\\"\\n)}\";\n}>, provisioningPurpose: ad-hoc, supportsIOSMac: 0, areFeaturesUpToDate: 0>";
+}, overrides: <IDEProvisionableOverrides 0x949d6adc0: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818df00>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>>>, configuration: Default, codesignParameterSnapshot: <IDECodesignParameterSnapshot: 0x949f10660>:
+Profile:  <DVTEmbeddedProvisioningProfile 0x949d6a100: name: iOS Team Ad Hoc Provisioning Profile: de.barg.familienplaner.widgets, UUID: a3bb8f76-5227-4e1c-8c8e-34664c68a85e, teamName: David Barg, teamIdentifierPrefixes: (
+    KF96Z9PD9Q
+), entitlements: {
+    "application-identifier" = "KF96Z9PD9Q.de.barg.familienplaner.widgets";
+    "com.apple.developer.team-identifier" = KF96Z9PD9Q;
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+    "get-task-allow" = 0;
+    "keychain-access-groups" =     (
+        "KF96Z9PD9Q.*",
+        "com.apple.token"
+    );
+}, appIdentifierName: Family Planner Widget, applicationIdentifierPrefixes: (
+    KF96Z9PD9Q
+), dateCreated: 2026-10-08 20:16:33 +0000, dateExpired: 2027-09-22 22:06:37 +0000, certificateKinds: {(
+    "1.2.840.113635.100.6.1.4",
+    "1.2.840.113635.100.6.1.7"
+)}, certificateSHA1Hashes: {(
+    935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+)}, supportedUDIDs: {(
+    "00008140-000c1d283a68801c"
+)}, isUniversal: 0, isXcodeManaged: 1, platforms: {(
+    <DVTPlatform:0x948cd2a00:'com.apple.platform.xros':<DVTFilePath:0x949055bc0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/XROS.platform'>>,
+    <DVTPlatform:0x948cd2980:'com.apple.platform.watchos':<DVTFilePath:0x948cbc930:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchOS.platform'>>,
+    <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>
+)}, filePath: <DVTFilePath:0x948cc0be0:'/Users/runner/Library/Developer/Xcode/UserData/Provisioning Profiles/a3bb8f76-5227-4e1c-8c8e-34664c68a85e.mobileprovision'>>
+Identity: 935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+Certificate <DVTSigningCertificate: 0x949d6ac40; name='Apple Distribution: David Barg (KF96Z9PD9Q)', hash='935C848EA9DB023C06AB296DCB9BFAF4BB2787A1', serialNumber='2AAA67DDBB334E85EE222D89A5922B78', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-09-22 22:06:38 +0000''>>, errors: (null)>
+2026-10-08 20:16:35 +0000 [MT] Evaluation for FamilienplanerShare.appex is <IDEProvisionableStatusEvaluation 0x948363cd0: inputs: <IDEProvisionableStatusEvalutorInputs 0x94a224f50: provisionableSnapshot: <IDEProvisionableSnapshot 0x949f5e970: name: FamilienplanerShare.appex, configurations: {
+    Default = "<_IDEProvisionableConfigurationSnapshot 0x948cc8fa0: name: Default, provisioningStyle: 0, certificateSigningStyle: 2, team: <IDEProvisioningBasicTeam: 0x949d8eec0; teamID='KF96Z9PD9Q', teamName='(null)'>, profileSupport: <IDEProvisioningProfileSupport: 0x94818ec00>, platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), bundleIdentifier: de.barg.familienplaner.share, profileSpecifier: (null), certificateIdentifier: iPhone Distribution, entitlementsFilePath: (null), baseEntitlements: <IDEProvisionableEntitlements: 0x94a19c140; signedEntitlements='{\n    \"com.apple.security.application-groups\" =     (\n        \"group.de.barg.familienplaner\"\n    );\n}', simulatedEntitlements='(null)'>, entitlementsExpansion: <IDEDistributionProvisioningEntitlementsExpansion: 0x94818eb80>, entitlementsDestination: 1, allowSigningWithoutTeamSelection: 0, signingRequiresTeam: 0, appIDFeatures: <DVTPortalAppIDFeatures 0x94a1ec880: Features: {\n    \"<DVTPortalProfileFeature: 0x948269f80; id='APP_GROUPS', userDescription='App Groups', platforms='.macosx, .appletvos, .iphoneos, .watchos, .xros'>\" = 1;\n}, Containers: {\n    \"Xcode.Portal.Container.Type.AppGroup\" = \"{(\\n    \\\"group.de.barg.familienplaner\\\"\\n)}\";\n}>, provisioningPurpose: ad-hoc, supportsIOSMac: 0, areFeaturesUpToDate: 0>";
+}, overrides: <IDEProvisionableOverrides 0x94a144d80: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x94818e280>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: ad-hoc, team: (null), platform: <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>>>, configuration: Default, codesignParameterSnapshot: <IDECodesignParameterSnapshot: 0x949d89d10>:
+Profile:  <DVTEmbeddedProvisioningProfile 0x949d6b3c0: name: iOS Team Ad Hoc Provisioning Profile: de.barg.familienplaner.share, UUID: 74534803-b7d4-4348-93f3-463b4d4de56e, teamName: David Barg, teamIdentifierPrefixes: (
+    KF96Z9PD9Q
+), entitlements: {
+    "application-identifier" = "KF96Z9PD9Q.de.barg.familienplaner.share";
+    "com.apple.developer.team-identifier" = KF96Z9PD9Q;
+    "com.apple.security.application-groups" =     (
+        "group.de.barg.familienplaner"
+    );
+    "get-task-allow" = 0;
+    "keychain-access-groups" =     (
+        "KF96Z9PD9Q.*",
+        "com.apple.token"
+    );
+}, appIdentifierName: Family Planner teilen, applicationIdentifierPrefixes: (
+    KF96Z9PD9Q
+), dateCreated: 2026-10-08 20:16:35 +0000, dateExpired: 2027-09-22 22:06:37 +0000, certificateKinds: {(
+    "1.2.840.113635.100.6.1.4",
+    "1.2.840.113635.100.6.1.7"
+)}, certificateSHA1Hashes: {(
+    935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+)}, supportedUDIDs: {(
+    "00008140-000c1d283a68801c"
+)}, isUniversal: 0, isXcodeManaged: 1, platforms: {(
+    <DVTPlatform:0x948cd2a00:'com.apple.platform.xros':<DVTFilePath:0x949055bc0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/XROS.platform'>>,
+    <DVTPlatform:0x948cd2980:'com.apple.platform.watchos':<DVTFilePath:0x948cbc930:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchOS.platform'>>,
+    <DVTPlatform:0x948cd2900:'com.apple.platform.iphoneos':<DVTFilePath:0x948cbc850:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>
+)}, filePath: <DVTFilePath:0x948cc3f20:'/Users/runner/Library/Developer/Xcode/UserData/Provisioning Profiles/74534803-b7d4-4348-93f3-463b4d4de56e.mobileprovision'>>
+Identity: 935C848EA9DB023C06AB296DCB9BFAF4BB2787A1
+Certificate <DVTSigningCertificate: 0x949d6a1c0; name='Apple Distribution: David Barg (KF96Z9PD9Q)', hash='935C848EA9DB023C06AB296DCB9BFAF4BB2787A1', serialNumber='2AAA67DDBB334E85EE222D89A5922B78', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-09-22 22:06:38 +0000''>>, errors: (null)>

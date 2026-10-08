@@ -1,0 +1,14 @@
+2026-10-08 20:16:20.027 xcodebuild[6189:22306] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path "/var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/T/Familienplaner_2026-10-08_20-16-20.025.xcdistributionlogs".
+Exported Familienplaner to: /Users/runner/work/_temp/export
+** EXPORT SUCCEEDED **
+
+total 2880
+drwxr-xr-x   7 runner  staff      224 Oct  8 20:16 .
+drwxr-xr-x  13 runner  staff      416 Oct  8 20:16 ..
+-rw-r--r--   1 runner  staff     5034 Oct  8 20:16 DistributionSummary.plist
+-rw-r--r--   1 runner  staff      908 Oct  8 20:16 ExportOptions.plist
+-rw-r--r--   1 runner  staff  1330302 Oct  8 20:16 Familienplaner.ipa
+-rw-r--r--   1 runner  staff     1211 Oct  8 20:16 manifest.plist
+-rw-r--r--   1 runner  staff   126529 Oct  8 20:16 Packaging.log
+	[Key] com.apple.developer.icloud-container-environment
+	[Value]
