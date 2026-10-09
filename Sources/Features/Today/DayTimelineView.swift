@@ -178,7 +178,8 @@ public struct DayTimelineView: View {
                 Text(String(format: "%02d", hour))
                     .id(hour)
                     .font(TypeScale.hourLabel)
-                    .foregroundStyle(.tertiary)
+                    // Voller Kontrast: .tertiary fiel in der Prüfung durch (Nachttest 09.10.).
+                    .foregroundStyle(.primary)
                     .frame(height: zoom.pointsPerHour, alignment: .top)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing, Spacing.s)

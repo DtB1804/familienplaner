@@ -96,13 +96,19 @@ struct WeekTimelineView: View {
                     Text(String(format: "%02d", hour))
                         .id(hour)
                         .font(TypeScale.hourLabel)
-                        .foregroundStyle(.tertiary)
+                        // Voller Kontrast wie in der Tagesansicht (Nachttest 09.10.).
+                        .foregroundStyle(.primary)
                         .frame(height: zoom.pointsPerHour, alignment: .top)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.trailing, Spacing.xs)
                 }
             }
             .frame(width: gutterWidth, height: height, alignment: .top)
+            // Wie in der Tagesansicht: ein Textelement statt einzelner Zahlen.
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Uhrzeiten von \(startHour) bis \(endHour) Uhr")
+            .accessibilityAddTraits(.isStaticText)
+            .accessibilityRespondsToUserInteraction(false)
 
             ForEach(days, id: \.self) { day in
                 dayColumn(day, width: columnWidth, height: height)
