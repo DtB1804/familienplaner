@@ -1,0 +1,5 @@
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:2:1: warning: add '@preconcurrency' to suppress 'Sendable'-related warnings from module 'CoreData'
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:46:78: warning: capture of 'store' with non-Sendable type 'NSPersistentStore' in a '@Sendable' closure
+<unknown>:0: error: -[FamilienplanerUITests.EndToEndTests testAllDayEventShowsInStrip] : Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextField, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster'
+<unknown>:0: error: -[FamilienplanerUITests.SmokeTests testAccessibilityAudit] : Contrast failed
+2026-10-10 00:44:25.887 appintentsmetadataprocessor[3922:14885] warning: Metadata extraction skipped. No AppIntents.framework dependency found.

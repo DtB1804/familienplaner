@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'de.barg.familienplaner'
+  ↪︎Find: Descendants matching type Any
+    ↪︎Find: Elements matching predicate '"setup.household" IN identifiers'
+      ↪︎Find: First Match

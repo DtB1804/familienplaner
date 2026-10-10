@@ -1,0 +1,83 @@
+Application, 0x1055a66e0, pid: 6766, label: 'Family Planner' <App element pid: 6766>
+  Window (Main), 0x105556e40, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382121744.3>
+    Other, 0x1070148c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4384398512.4>
+      Other, 0x10703c540, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4384447136.5>
+        Other, 0x10703c940, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382101872.6>
+          Other, 0x107040aa0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382114368.7>
+            Other, 0x107040680, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4385596528.8>
+              NavigationBar, 0x10702a270, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Einrichten' <AX element pid: 6766, elementOrHash.elementID: 4385593360.9>
+                Other, 0x107040260, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen' <AX element pid: 6766, elementOrHash.elementID: 4429990912.12>
+                  Other, 0x1070308d0, {{292.3, 66.0}, {89.7, 36.0}} <AX element pid: 6766, elementOrHash.elementID: 4385641472.16>
+                    Button, 0x1070309f0, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen', Disabled <AX element pid: 6766, elementOrHash.elementID: 4385637712.18>
+                StaticText, 0x107030b10, {{16.0, 119.7}, {160.3, 40.7}}, label: 'Einrichten' <AX element pid: 6766, elementOrHash.elementID: 4382154848.13>
+              Other, 0x107030c30, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4385455104.10>
+                Other, 0x107030d50, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382261632.14>
+                  Other, 0x107030e70, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4385585728.17>
+                    Other, 0x107030f90, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382280928.19>
+                      CollectionView, 0x1070310b0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4413152256.20>
+                        Other, 0x107040ec0, {{-16.0, -1580.0}, {434.0, 1858.0}} <AX element pid: 6766, elementOrHash.elementID: 4382470976.21>
+                        Other, 0x107040fe0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382168704.22>
+                        Other, 0x107041100, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4382128688.23>
+                        Cell, 0x107041220, {{16.0, 168.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4422133248.24>
+                          Other, 0x107041340, {{16.0, 168.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4384546128.37>
+                          Other, 0x107041460, {{16.0, 168.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4384544944.38>
+                            Other, 0x107041580, {{16.0, 168.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4422140928.54>
+                              Other, 0x1070416a0, {{16.0, 168.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4385714624.67>
+                                StaticText, 0x1070417c0, {{16.0, 168.0}, {370.0, 40.3}}, label: 'Haushalt' <AX element pid: 6766, elementOrHash.elementID: 4385743792.75>
+                        Cell, 0x1070418e0, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4430490112.25>
+                          Other, 0x107041a00, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4385694848.39>
+                            Other, 0x107041b20, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4385690000.55>
+                          Other, 0x1055545b0, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4384534800.40>
+                            Other, 0x105567f20, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4430558208.56>
+                              Other, 0x105568040, {{16.0, 208.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4385806048.68>
+                                TextField, 0x105568160, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster' <AX element pid: 6766, elementOrHash.elementID: 4413113344.76>
+                        Other, 0x105568280, {{-16.0, 278.0}, {434.0, 162.0}} <AX element pid: 6766, elementOrHash.elementID: 4382461200.26>
+                        Cell, 0x1055683a0, {{16.0, 278.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4413775360.27>
+                          Other, 0x1055684c0, {{16.0, 278.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4382439824.41>
+                          Other, 0x1055685e0, {{16.0, 278.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4382438896.42>
+                            Other, 0x105568700, {{16.0, 278.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4413346304.57>
+                              Other, 0x107041c40, {{16.0, 278.0}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4385807824.69>
+                                StaticText, 0x107041d60, {{16.0, 278.0}, {370.0, 40.3}}, label: 'Du' <AX element pid: 6766, elementOrHash.elementID: 4385807392.77>
+                        Cell, 0x107041e80, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4413440000.28>
+                          Other, 0x107041fa0, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382314896.43>
+                            Other, 0x1070420c0, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382315392.58>
+                          Other, 0x1070421e0, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382313456.44>
+                            Other, 0x107042300, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4412992512.59>
+                              Other, 0x107042420, {{16.0, 318.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4385808688.70>
+                                TextField, 0x107042540, {{32.0, 333.3}, {338.0, 22.0}}, identifier: 'setup.name', placeholderValue: 'Vorname' <AX element pid: 6766, elementOrHash.elementID: 4413372928.78>
+                        Cell, 0x107042660, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4413660160.29>
+                          Other, 0x107042780, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382359664.45>
+                            Other, 0x1070428a0, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382360160.60>
+                          Other, 0x1070429c0, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4382358736.46>
+                            Other, 0x107042ae0, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4413661696.61>
+                              Other, 0x107042c00, {{16.0, 370.3}, {370.0, 52.0}} <AX element pid: 6766, elementOrHash.elementID: 4385810832.71>
+                                TextField, 0x107042d20, {{32.0, 385.3}, {338.0, 22.0}}, placeholderValue: 'Kürzel für die Tagesansicht' <AX element pid: 6766, elementOrHash.elementID: 4413690880.79>
+                        Other, 0x107042e40, {{32.0, 369.3}, {338.0, 1.0}} <AX element pid: 6766, elementOrHash.elementID: 4382477616.30>
+                        Other, 0x107042f60, {{-16.0, 439.7}, {434.0, 98.7}} <AX element pid: 6766, elementOrHash.elementID: 4382478944.31>
+                        Cell, 0x107043080, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4413651456.32>
+                          Other, 0x1070431a0, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4382355504.47>
+                            Other, 0x1070432c0, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4382356560.62>
+                          Other, 0x105786630, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4382347248.48>
+                            Other, 0x1070433e0, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4413652992.63>
+                              Other, 0x107043500, {{16.0, 457.3}, {370.0, 63.7}} <AX element pid: 6766, elementOrHash.elementID: 4385815152.72>
+                                StaticText, 0x107043620, {{16.0, 457.3}, {370.0, 63.7}}, label: 'Weitere Familienmitglieder legst du danach an. Erst dann wird der Haushalt geteilt.' <AX element pid: 6766, elementOrHash.elementID: 4385814048.80>
+                        Other, 0x107043740, {{-16.0, 538.3}, {434.0, 1890.0}} <AX element pid: 6766, elementOrHash.elementID: 4382480272.33>
+                        Cell, 0x105786990, {{16.0, 538.3}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4413682176.34>
+                          Other, 0x105787780, {{16.0, 538.3}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4382370912.49>
+                          Other, 0x105787410, {{16.0, 538.3}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4382446208.50>
+                            Other, 0x105787080, {{16.0, 538.3}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4413683712.64>
+                              Other, 0x107043860, {{16.0, 538.3}, {370.0, 40.3}} <AX element pid: 6766, elementOrHash.elementID: 4385817632.73>
+                                StaticText, 0x107043980, {{16.0, 538.3}, {370.0, 40.3}}, label: 'Eingeladen?' <AX element pid: 6766, elementOrHash.elementID: 4385817200.81>
+                        Cell, 0x107043aa0, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4430520320.35>
+                          Other, 0x107043bc0, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4385717424.51>
+                            Other, 0x107043ce0, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4385717920.65>
+                          Other, 0x107043e00, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4385716496.52>
+                            Other, 0x107043f20, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4430697984.66>
+                              Other, 0x107044040, {{16.0, 578.7}, {370.0, 81.7}} <AX element pid: 6766, elementOrHash.elementID: 4384648816.74>
+                                StaticText, 0x107044160, {{16.0, 578.7}, {370.0, 81.7}}, label: 'Hast du eine Einladung zu einem bestehenden Familienkalender bekommen? Dann lege hier nichts an, sondern tippe auf den Link in der Einladung.' <AX element pid: 6766, elementOrHash.elementID: 4384150032.82>
+                        Other, 0x107044280, {{369.0, 116.0}, {30.0, 696.0}}, label: 'Vertikaler Rollbalken, 1 Seite', value: 0 % <AX element pid: 6766, elementOrHash.elementID: 4382274704.36>
+                          Other, 0x105786d20, {{396.0, 278.7}, {3.0, 530.3}} <AX element pid: 6766, elementOrHash.elementID: 4382276352.53>
+                        Other, 0x105787ae0, {{369.0, 116.0}, {30.0, 696.0}}, label: 'Vertikaler Rollbalken, 1 Seite', value: 0 % <AX element pid: 6766, elementOrHash.elementID: 4382274704.36>
+                          Other, 0x1070443a0, {{396.0, 278.7}, {3.0, 530.3}} <AX element pid: 6766, elementOrHash.elementID: 4382276352.53>
+              Other, 0x1070444c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4385253728.11>
+                Other, 0x1070445e0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 6766, elementOrHash.elementID: 4384461520.15>

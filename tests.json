@@ -1,0 +1,1367 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+      "deviceName" : "iPhone 17 Pro",
+      "modelName" : "iPhone 17 Pro",
+      "osBuildNumber" : "23C54",
+      "osVersion" : "26.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.036s",
+                  "durationInSeconds" : 0.03584909439086914,
+                  "name" : "testExportMarksAllDay()",
+                  "nodeIdentifier" : "AllDayTests/testExportMarksAllDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testExportMarksAllDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0097s",
+                  "durationInSeconds" : 0.009695053100585938,
+                  "name" : "testMakeEventNormalizesAndIsFoundOnEveryDay()",
+                  "nodeIdentifier" : "AllDayTests/testMakeEventNormalizesAndIsFoundOnEveryDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testMakeEventNormalizesAndIsFoundOnEveryDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0011s",
+                  "durationInSeconds" : 0.0011409521102905273,
+                  "name" : "testSpanCoversWholeDays()",
+                  "nodeIdentifier" : "AllDayTests/testSpanCoversWholeDays()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testSpanCoversWholeDays",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.4334290027618408,
+                  "name" : "testSpanSurvivesDaylightSavingChange()",
+                  "nodeIdentifier" : "AllDayTests/testSpanSurvivesDaylightSavingChange()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testSpanSurvivesDaylightSavingChange",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0041s",
+                  "durationInSeconds" : 0.004095911979675293,
+                  "name" : "testUpdateKeepsOrSwitchesAllDay()",
+                  "nodeIdentifier" : "AllDayTests/testUpdateKeepsOrSwitchesAllDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testUpdateKeepsOrSwitchesAllDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0047s",
+                  "durationInSeconds" : 0.004733085632324219,
+                  "name" : "testYearlyBirthdaySeriesStaysAllDay()",
+                  "nodeIdentifier" : "AllDayTests/testYearlyBirthdaySeriesStaysAllDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests/testYearlyBirthdaySeriesStaysAllDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "AllDayTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/AllDayTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0011650323867797852,
+                  "name" : "testFoldingKeepsMultibyteCharactersIntact()",
+                  "nodeIdentifier" : "BackupAndSyncTests/testFoldingKeepsMultibyteCharactersIntact()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests/testFoldingKeepsMultibyteCharactersIntact",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.007s",
+                  "durationInSeconds" : 0.0069849491119384766,
+                  "name" : "testICSBusyOnlyHidesDetails()",
+                  "nodeIdentifier" : "BackupAndSyncTests/testICSBusyOnlyHidesDetails()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests/testICSBusyOnlyHidesDetails",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0046s",
+                  "durationInSeconds" : 0.004609107971191406,
+                  "name" : "testICSContainsTimedAndAllDayEventsWithEscaping()",
+                  "nodeIdentifier" : "BackupAndSyncTests/testICSContainsTimedAndAllDayEventsWithEscaping()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests/testICSContainsTimedAndAllDayEventsWithEscaping",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.55s",
+                  "durationInSeconds" : 0.5474629402160645,
+                  "name" : "testRemovingHouseholdDeletesAllDataInItsStore()",
+                  "nodeIdentifier" : "BackupAndSyncTests/testRemovingHouseholdDeletesAllDataInItsStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests/testRemovingHouseholdDeletesAllDataInItsStore",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0052s",
+                  "durationInSeconds" : 0.005230069160461426,
+                  "name" : "testSyncProblemPriorities()",
+                  "nodeIdentifier" : "BackupAndSyncTests/testSyncProblemPriorities()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests/testSyncProblemPriorities",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "BackupAndSyncTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/BackupAndSyncTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0041s",
+                  "durationInSeconds" : 0.004138946533203125,
+                  "name" : "testContentRespectsBusyOnlyAndChildView()",
+                  "nodeIdentifier" : "CalendarExportTests/testContentRespectsBusyOnlyAndChildView()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/CalendarExportTests/testContentRespectsBusyOnlyAndChildView",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0035s",
+                  "durationInSeconds" : 0.003545999526977539,
+                  "name" : "testContentShowsPeopleDutiesAndOpenRoles()",
+                  "nodeIdentifier" : "CalendarExportTests/testContentShowsPeopleDutiesAndOpenRoles()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/CalendarExportTests/testContentShowsPeopleDutiesAndOpenRoles",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0031260251998901367,
+                  "name" : "testOwnImportedEventsAreNotExportedAgain()",
+                  "nodeIdentifier" : "CalendarExportTests/testOwnImportedEventsAreNotExportedAgain()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/CalendarExportTests/testOwnImportedEventsAreNotExportedAgain",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0038s",
+                  "durationInSeconds" : 0.0038280487060546875,
+                  "name" : "testScopeDecidesWhichEventsAreExported()",
+                  "nodeIdentifier" : "CalendarExportTests/testScopeDecidesWhichEventsAreExported()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/CalendarExportTests/testScopeDecidesWhichEventsAreExported",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CalendarExportTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/CalendarExportTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.003s",
+                  "durationInSeconds" : 0.002959012985229492,
+                  "name" : "testBusyOnlyNeverStoresTitleLocationOrNotes()",
+                  "nodeIdentifier" : "EventServiceTests/testBusyOnlyNeverStoresTitleLocationOrNotes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testBusyOnlyNeverStoresTitleLocationOrNotes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0031169652938842773,
+                  "name" : "testConcurrentClaimsResolveDeterministically()",
+                  "nodeIdentifier" : "EventServiceTests/testConcurrentClaimsResolveDeterministically()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testConcurrentClaimsResolveDeterministically",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.33s",
+                  "durationInSeconds" : 0.33400607109069824,
+                  "name" : "testDeclinedParticipationReopensRole()",
+                  "nodeIdentifier" : "EventServiceTests/testDeclinedParticipationReopensRole()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testDeclinedParticipationReopensRole",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00077s",
+                  "durationInSeconds" : 0.0007700920104980469,
+                  "name" : "testDefaultDurationIsThirtyMinutes()",
+                  "nodeIdentifier" : "EventServiceTests/testDefaultDurationIsThirtyMinutes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testDefaultDurationIsThirtyMinutes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0027s",
+                  "durationInSeconds" : 0.002684950828552246,
+                  "name" : "testEmptyLocationAndNotesAreStoredAsNil()",
+                  "nodeIdentifier" : "EventServiceTests/testEmptyLocationAndNotesAreStoredAsNil()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testEmptyLocationAndNotesAreStoredAsNil",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.004s",
+                  "durationInSeconds" : 0.004019975662231445,
+                  "name" : "testEventsRequestIncludesOverlapsAndExcludesTouchingEvents()",
+                  "nodeIdentifier" : "EventServiceTests/testEventsRequestIncludesOverlapsAndExcludesTouchingEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testEventsRequestIncludesOverlapsAndExcludesTouchingEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.11s",
+                  "durationInSeconds" : 0.11312103271484375,
+                  "name" : "testOpenResponsibilitiesAreDifferenceOfRequiredAndCovered()",
+                  "nodeIdentifier" : "EventServiceTests/testOpenResponsibilitiesAreDifferenceOfRequiredAndCovered()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testOpenResponsibilitiesAreDifferenceOfRequiredAndCovered",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0030900239944458008,
+                  "name" : "testOpenResponsibilitiesRespectTimeWindow()",
+                  "nodeIdentifier" : "EventServiceTests/testOpenResponsibilitiesRespectTimeWindow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testOpenResponsibilitiesRespectTimeWindow",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0032s",
+                  "durationInSeconds" : 0.0031930208206176758,
+                  "name" : "testReassignSubjectMovesEventToOtherPersonAndKeepsDuties()",
+                  "nodeIdentifier" : "EventServiceTests/testReassignSubjectMovesEventToOtherPersonAndKeepsDuties()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testReassignSubjectMovesEventToOtherPersonAndKeepsDuties",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00059s",
+                  "durationInSeconds" : 0.0005939006805419922,
+                  "name" : "testRequiredRolesRoundTrip()",
+                  "nodeIdentifier" : "EventServiceTests/testRequiredRolesRoundTrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testRequiredRolesRoundTrip",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.081s",
+                  "durationInSeconds" : 0.0807880163192749,
+                  "name" : "testSearchIgnoresCaseAndDiacriticsAndCoversLocationAndNotes()",
+                  "nodeIdentifier" : "EventServiceTests/testSearchIgnoresCaseAndDiacriticsAndCoversLocationAndNotes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testSearchIgnoresCaseAndDiacriticsAndCoversLocationAndNotes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0025s",
+                  "durationInSeconds" : 0.0024890899658203125,
+                  "name" : "testSecondAdultCannotClaimTakenRole()",
+                  "nodeIdentifier" : "EventServiceTests/testSecondAdultCannotClaimTakenRole()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testSecondAdultCannotClaimTakenRole",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0019s",
+                  "durationInSeconds" : 0.0018939971923828125,
+                  "name" : "testSetRequiredRolesOnTimedEventOnly()",
+                  "nodeIdentifier" : "EventServiceTests/testSetRequiredRolesOnTimedEventOnly()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testSetRequiredRolesOnTimedEventOnly",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0037s",
+                  "durationInSeconds" : 0.00374603271484375,
+                  "name" : "testSoftDeleteHidesEverywhereButKeepsRecord()",
+                  "nodeIdentifier" : "EventServiceTests/testSoftDeleteHidesEverywhereButKeepsRecord()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testSoftDeleteHidesEverywhereButKeepsRecord",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0031290054321289062,
+                  "name" : "testUpdateSyncsSubjectsButKeepsResponsibilities()",
+                  "nodeIdentifier" : "EventServiceTests/testUpdateSyncsSubjectsButKeepsResponsibilities()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testUpdateSyncsSubjectsButKeepsResponsibilities",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0023s",
+                  "durationInSeconds" : 0.002291083335876465,
+                  "name" : "testUpdateToBusyOnlyStripsExistingDetails()",
+                  "nodeIdentifier" : "EventServiceTests/testUpdateToBusyOnlyStripsExistingDetails()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests/testUpdateToBusyOnlyStripsExistingDetails",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "EventServiceTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/EventServiceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.003s",
+                  "durationInSeconds" : 0.0029829740524291992,
+                  "name" : "testBusyComesFromSubjectsAndDutiesOfSelectedMembers()",
+                  "nodeIdentifier" : "FreeTimeTests/testBusyComesFromSubjectsAndDutiesOfSelectedMembers()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testBusyComesFromSubjectsAndDutiesOfSelectedMembers",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.081s",
+                  "durationInSeconds" : 0.0807180404663086,
+                  "name" : "testGapsBetweenMergedBusyBlocks()",
+                  "nodeIdentifier" : "FreeTimeTests/testGapsBetweenMergedBusyBlocks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testGapsBetweenMergedBusyBlocks",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00061s",
+                  "durationInSeconds" : 0.0006101131439208984,
+                  "name" : "testMergeJoinsTouchingIntervals()",
+                  "nodeIdentifier" : "FreeTimeTests/testMergeJoinsTouchingIntervals()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testMergeJoinsTouchingIntervals",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00075s",
+                  "durationInSeconds" : 0.0007519721984863281,
+                  "name" : "testMinimumDurationFiltersShortGaps()",
+                  "nodeIdentifier" : "FreeTimeTests/testMinimumDurationFiltersShortGaps()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testMinimumDurationFiltersShortGaps",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00074s",
+                  "durationInSeconds" : 0.0007410049438476562,
+                  "name" : "testStartsNotBeforeNowRoundedToQuarterHour()",
+                  "nodeIdentifier" : "FreeTimeTests/testStartsNotBeforeNowRoundedToQuarterHour()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testStartsNotBeforeNowRoundedToQuarterHour",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0011519193649291992,
+                  "name" : "testWeekendAndWeekdayFilter()",
+                  "nodeIdentifier" : "FreeTimeTests/testWeekendAndWeekdayFilter()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests/testWeekendAndWeekdayFilter",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "FreeTimeTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/FreeTimeTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0059s",
+                  "durationInSeconds" : 0.005939006805419922,
+                  "name" : "testDateRangeIsAllDay()",
+                  "nodeIdentifier" : "GermanDateParserTests/testDateRangeIsAllDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testDateRangeIsAllDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00092s",
+                  "durationInSeconds" : 0.0009219646453857422,
+                  "name" : "testInvalidMonthIsNoDate()",
+                  "nodeIdentifier" : "GermanDateParserTests/testInvalidMonthIsNoDate()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testInvalidMonthIsNoDate",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0008s",
+                  "durationInSeconds" : 0.0008031129837036133,
+                  "name" : "testNamedMonthAndUhrTime()",
+                  "nodeIdentifier" : "GermanDateParserTests/testNamedMonthAndUhrTime()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testNamedMonthAndUhrTime",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.053s",
+                  "durationInSeconds" : 0.05290496349334717,
+                  "name" : "testNumbersWithoutUhrAreNoTime()",
+                  "nodeIdentifier" : "GermanDateParserTests/testNumbersWithoutUhrAreNoTime()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testNumbersWithoutUhrAreNoTime",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00097s",
+                  "durationInSeconds" : 0.00096893310546875,
+                  "name" : "testNumericDateWithTime()",
+                  "nodeIdentifier" : "GermanDateParserTests/testNumericDateWithTime()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testNumericDateWithTime",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0051s",
+                  "durationInSeconds" : 0.005084991455078125,
+                  "name" : "testOldSuggestionsWithoutAllDayStillDecode()",
+                  "nodeIdentifier" : "GermanDateParserTests/testOldSuggestionsWithoutAllDayStillDecode()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testOldSuggestionsWithoutAllDayStillDecode",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00099s",
+                  "durationInSeconds" : 0.000993967056274414,
+                  "name" : "testPastDateWithoutYearMovesToNextYear()",
+                  "nodeIdentifier" : "GermanDateParserTests/testPastDateWithoutYearMovesToNextYear()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testPastDateWithoutYearMovesToNextYear",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.031s",
+                  "durationInSeconds" : 0.031433939933776855,
+                  "name" : "testPreviousLineBecomesTitle()",
+                  "nodeIdentifier" : "GermanDateParserTests/testPreviousLineBecomesTitle()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testPreviousLineBecomesTitle",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0014s",
+                  "durationInSeconds" : 0.0013620853424072266,
+                  "name" : "testRangeBecomesAllDaySuggestion()",
+                  "nodeIdentifier" : "GermanDateParserTests/testRangeBecomesAllDaySuggestion()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testRangeBecomesAllDaySuggestion",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00084s",
+                  "durationInSeconds" : 0.0008400678634643555,
+                  "name" : "testTimeRangeWithDots()",
+                  "nodeIdentifier" : "GermanDateParserTests/testTimeRangeWithDots()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testTimeRangeWithDots",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00069s",
+                  "durationInSeconds" : 0.0006879568099975586,
+                  "name" : "testWeekdayWithoutTimeIsIgnored()",
+                  "nodeIdentifier" : "GermanDateParserTests/testWeekdayWithoutTimeIsIgnored()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testWeekdayWithoutTimeIsIgnored",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00076s",
+                  "durationInSeconds" : 0.0007599592208862305,
+                  "name" : "testWeekdayWithTimeMeansNextOccurrence()",
+                  "nodeIdentifier" : "GermanDateParserTests/testWeekdayWithTimeMeansNextOccurrence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testWeekdayWithTimeMeansNextOccurrence",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0012390613555908203,
+                  "name" : "testWhatsAppMessage()",
+                  "nodeIdentifier" : "GermanDateParserTests/testWhatsAppMessage()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests/testWhatsAppMessage",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "GermanDateParserTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/GermanDateParserTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0019s",
+                  "durationInSeconds" : 0.0018939971923828125,
+                  "name" : "testBootstrapCreatesOwnerAndSystemTags()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testBootstrapCreatesOwnerAndSystemTags()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testBootstrapCreatesOwnerAndSystemTags",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0016s",
+                  "durationInSeconds" : 0.0016170740127563477,
+                  "name" : "testBootstrapIsIdempotent()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testBootstrapIsIdempotent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testBootstrapIsIdempotent",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0023s",
+                  "durationInSeconds" : 0.0022699832916259766,
+                  "name" : "testMemberShortNameIsLimitedToThreeCharacters()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testMemberShortNameIsLimitedToThreeCharacters()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testMemberShortNameIsLimitedToThreeCharacters",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0021s",
+                  "durationInSeconds" : 0.002146005630493164,
+                  "name" : "testNextColorTokenSkipsUsedColors()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testNextColorTokenSkipsUsedColors()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testNextColorTokenSkipsUsedColors",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.002s",
+                  "durationInSeconds" : 0.0020319223403930664,
+                  "name" : "testOwnHouseholdLivesInPrivateStore()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testOwnHouseholdLivesInPrivateStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testOwnHouseholdLivesInPrivateStore",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0023s",
+                  "durationInSeconds" : 0.002315998077392578,
+                  "name" : "testSharedHouseholdIsPreferredAndNewObjectsFollowItsStore()",
+                  "nodeIdentifier" : "HouseholdServiceTests/testSharedHouseholdIsPreferredAndNewObjectsFollowItsStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests/testSharedHouseholdIsPreferredAndNewObjectsFollowItsStore",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HouseholdServiceTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/HouseholdServiceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.51s",
+                  "durationInSeconds" : 0.5110019445419312,
+                  "name" : "testWeekQueryAndOpenResponsibilitiesWithAYearOfEvents()",
+                  "nodeIdentifier" : "PerformanceTests/testWeekQueryAndOpenResponsibilitiesWithAYearOfEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PerformanceTests/testWeekQueryAndOpenResponsibilitiesWithAYearOfEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "PerformanceTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PerformanceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0029s",
+                  "durationInSeconds" : 0.0029230117797851562,
+                  "name" : "testAdultsAlwaysSeeTitlesButBusyOnlyStaysBusy()",
+                  "nodeIdentifier" : "PresentationTests/testAdultsAlwaysSeeTitlesButBusyOnlyStaysBusy()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PresentationTests/testAdultsAlwaysSeeTitlesButBusyOnlyStaysBusy",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0023s",
+                  "durationInSeconds" : 0.0023289918899536133,
+                  "name" : "testChildSeesBusyForAdultEventsWhenSwitchIsOff()",
+                  "nodeIdentifier" : "PresentationTests/testChildSeesBusyForAdultEventsWhenSwitchIsOff()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PresentationTests/testChildSeesBusyForAdultEventsWhenSwitchIsOff",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0083s",
+                  "durationInSeconds" : 0.00828099250793457,
+                  "name" : "testChildSeesTitlesWhenSwitchIsOn()",
+                  "nodeIdentifier" : "PresentationTests/testChildSeesTitlesWhenSwitchIsOn()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PresentationTests/testChildSeesTitlesWhenSwitchIsOn",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0023s",
+                  "durationInSeconds" : 0.0022810697555541992,
+                  "name" : "testEventsConcerningAChildStayReadableForChildren()",
+                  "nodeIdentifier" : "PresentationTests/testEventsConcerningAChildStayReadableForChildren()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PresentationTests/testEventsConcerningAChildStayReadableForChildren",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "PresentationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/PresentationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0067s",
+                  "durationInSeconds" : 0.0066939592361450195,
+                  "name" : "testBusyOnlySeriesStaysProjected()",
+                  "nodeIdentifier" : "SeriesTests/testBusyOnlySeriesStaysProjected()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testBusyOnlySeriesStaysProjected",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.044s",
+                  "durationInSeconds" : 0.04371798038482666,
+                  "name" : "testChangingRuleStartsNewSeriesFromThisOccurrence()",
+                  "nodeIdentifier" : "SeriesTests/testChangingRuleStartsNewSeriesFromThisOccurrence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testChangingRuleStartsNewSeriesFromThisOccurrence",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.01s",
+                  "durationInSeconds" : 0.01037895679473877,
+                  "name" : "testClaimActionsSingleAndSeries()",
+                  "nodeIdentifier" : "SeriesTests/testClaimActionsSingleAndSeries()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testClaimActionsSingleAndSeries",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0045s",
+                  "durationInSeconds" : 0.004479050636291504,
+                  "name" : "testClaimFollowingCoversOnlyOpenOccurrences()",
+                  "nodeIdentifier" : "SeriesTests/testClaimFollowingCoversOnlyOpenOccurrences()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testClaimFollowingCoversOnlyOpenOccurrences",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0067s",
+                  "durationInSeconds" : 0.0066710710525512695,
+                  "name" : "testDuplicatesFromConcurrentExtensionAreMergedWithClaims()",
+                  "nodeIdentifier" : "SeriesTests/testDuplicatesFromConcurrentExtensionAreMergedWithClaims()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testDuplicatesFromConcurrentExtensionAreMergedWithClaims",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0018s",
+                  "durationInSeconds" : 0.0017789602279663086,
+                  "name" : "testEncodingRoundTrip()",
+                  "nodeIdentifier" : "SeriesTests/testEncodingRoundTrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testEncodingRoundTrip",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0053s",
+                  "durationInSeconds" : 0.00531005859375,
+                  "name" : "testEndingSeriesDeletesFollowingAndBlocksExtension()",
+                  "nodeIdentifier" : "SeriesTests/testEndingSeriesDeletesFollowingAndBlocksExtension()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testEndingSeriesDeletesFollowingAndBlocksExtension",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0052s",
+                  "durationInSeconds" : 0.005229949951171875,
+                  "name" : "testExtendingAddsLaterDatesButNeverRecreatesDeletedOnes()",
+                  "nodeIdentifier" : "SeriesTests/testExtendingAddsLaterDatesButNeverRecreatesDeletedOnes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testExtendingAddsLaterDatesButNeverRecreatesDeletedOnes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0053s",
+                  "durationInSeconds" : 0.005323052406311035,
+                  "name" : "testGivingBackFollowingStopsCarrying()",
+                  "nodeIdentifier" : "SeriesTests/testGivingBackFollowingStopsCarrying()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testGivingBackFollowingStopsCarrying",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00059s",
+                  "durationInSeconds" : 0.0005880594253540039,
+                  "name" : "testMonthlyOnThe31stUsesLastDayOfShortMonths()",
+                  "nodeIdentifier" : "SeriesTests/testMonthlyOnThe31stUsesLastDayOfShortMonths()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testMonthlyOnThe31stUsesLastDayOfShortMonths",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0065s",
+                  "durationInSeconds" : 0.006536960601806641,
+                  "name" : "testOnlyTheCreatorExtendsWhileActive()",
+                  "nodeIdentifier" : "SeriesTests/testOnlyTheCreatorExtendsWhileActive()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testOnlyTheCreatorExtendsWhileActive",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00079s",
+                  "durationInSeconds" : 0.0007860660552978516,
+                  "name" : "testRoleQuestionWording()",
+                  "nodeIdentifier" : "SeriesTests/testRoleQuestionWording()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testRoleQuestionWording",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0084s",
+                  "durationInSeconds" : 0.008378028869628906,
+                  "name" : "testSeriesClaimIsMarkedAndCarriedToExtendedOccurrences()",
+                  "nodeIdentifier" : "SeriesTests/testSeriesClaimIsMarkedAndCarriedToExtendedOccurrences()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testSeriesClaimIsMarkedAndCarriedToExtendedOccurrences",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0028s",
+                  "durationInSeconds" : 0.0027800798416137695,
+                  "name" : "testSeriesWithEndStopsAtUntil()",
+                  "nodeIdentifier" : "SeriesTests/testSeriesWithEndStopsAtUntil()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testSeriesWithEndStopsAtUntil",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0043s",
+                  "durationInSeconds" : 0.00432896614074707,
+                  "name" : "testSingleClaimIsNotCarriedButCanBeUpgraded()",
+                  "nodeIdentifier" : "SeriesTests/testSingleClaimIsNotCarriedButCanBeUpgraded()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testSingleClaimIsNotCarriedButCanBeUpgraded",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00068s",
+                  "durationInSeconds" : 0.0006819963455200195,
+                  "name" : "testUntilIsInclusive()",
+                  "nodeIdentifier" : "SeriesTests/testUntilIsInclusive()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testUntilIsInclusive",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0044s",
+                  "durationInSeconds" : 0.004360079765319824,
+                  "name" : "testUpdateFollowingShiftsOnlyLaterOccurrencesAndKeepsClaims()",
+                  "nodeIdentifier" : "SeriesTests/testUpdateFollowingShiftsOnlyLaterOccurrencesAndKeepsClaims()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testUpdateFollowingShiftsOnlyLaterOccurrencesAndKeepsClaims",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00064s",
+                  "durationInSeconds" : 0.0006380081176757812,
+                  "name" : "testWeekdaysSkipWeekend()",
+                  "nodeIdentifier" : "SeriesTests/testWeekdaysSkipWeekend()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testWeekdaysSkipWeekend",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.013s",
+                  "durationInSeconds" : 0.013437032699584961,
+                  "name" : "testWeeklyKeepsWallClockTimeAcrossDaylightSavingChange()",
+                  "nodeIdentifier" : "SeriesTests/testWeeklyKeepsWallClockTimeAcrossDaylightSavingChange()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testWeeklyKeepsWallClockTimeAcrossDaylightSavingChange",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0056s",
+                  "durationInSeconds" : 0.005558013916015625,
+                  "name" : "testWeeklySeriesCopiesContentForTwentySixWeeks()",
+                  "nodeIdentifier" : "SeriesTests/testWeeklySeriesCopiesContentForTwentySixWeeks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testWeeklySeriesCopiesContentForTwentySixWeeks",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00067s",
+                  "durationInSeconds" : 0.0006740093231201172,
+                  "name" : "testYearlyOnLeapDay()",
+                  "nodeIdentifier" : "SeriesTests/testYearlyOnLeapDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests/testYearlyOnLeapDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SeriesTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SeriesTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.29s",
+                  "durationInSeconds" : 0.2924569845199585,
+                  "name" : "testOccurrenceKeyCombinesIdentifierAndOccurrence()",
+                  "nodeIdentifier" : "SmallUnitsTests/testOccurrenceKeyCombinesIdentifierAndOccurrence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testOccurrenceKeyCombinesIdentifierAndOccurrence",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0039s",
+                  "durationInSeconds" : 0.003899097442626953,
+                  "name" : "testReminderSettingsFallBackToSafeDefaults()",
+                  "nodeIdentifier" : "SmallUnitsTests/testReminderSettingsFallBackToSafeDefaults()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testReminderSettingsFallBackToSafeDefaults",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Test skipped - App Group im Simulator ohne Signierung nicht verfügbar",
+                      "nodeType" : "Failure Message"
+                    }
+                  ],
+                  "duration" : "0.66s",
+                  "durationInSeconds" : 0.6600140333175659,
+                  "name" : "testSharedInboxKeepsOrderAndRemovesTakenFiles()",
+                  "nodeIdentifier" : "SmallUnitsTests/testSharedInboxKeepsOrderAndRemovesTakenFiles()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testSharedInboxKeepsOrderAndRemovesTakenFiles",
+                  "nodeType" : "Test Case",
+                  "result" : "Skipped"
+                },
+                {
+                  "duration" : "0.014s",
+                  "durationInSeconds" : 0.013888001441955566,
+                  "name" : "testSnapshotWithTokenStillDecodesOldFormat()",
+                  "nodeIdentifier" : "SmallUnitsTests/testSnapshotWithTokenStillDecodesOldFormat()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testSnapshotWithTokenStillDecodesOldFormat",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.013s",
+                  "durationInSeconds" : 0.01305997371673584,
+                  "name" : "testWatchSnapshotRoundTrip()",
+                  "nodeIdentifier" : "SmallUnitsTests/testWatchSnapshotRoundTrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testWatchSnapshotRoundTrip",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.71s",
+                  "durationInSeconds" : 0.7064880132675171,
+                  "name" : "testWeekStartsOnMonday()",
+                  "nodeIdentifier" : "SmallUnitsTests/testWeekStartsOnMonday()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testWeekStartsOnMonday",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0006s",
+                  "durationInSeconds" : 0.0006020069122314453,
+                  "name" : "testWidgetDayLinkRoundTrip()",
+                  "nodeIdentifier" : "SmallUnitsTests/testWidgetDayLinkRoundTrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testWidgetDayLinkRoundTrip",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00053s",
+                  "durationInSeconds" : 0.0005300045013427734,
+                  "name" : "testZoomLevelsAreOrderedAndBounded()",
+                  "nodeIdentifier" : "SmallUnitsTests/testZoomLevelsAreOrderedAndBounded()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests/testZoomLevelsAreOrderedAndBounded",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SmallUnitsTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SmallUnitsTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.011s",
+                  "durationInSeconds" : 0.011312007904052734,
+                  "name" : "testDateDetectorFindsFutureDateAndIgnoresPast()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testDateDetectorFindsFutureDateAndIgnoresPast()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testDateDetectorFindsFutureDateAndIgnoresPast",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0026s",
+                  "durationInSeconds" : 0.0025719404220581055,
+                  "name" : "testDateDetectorSwallowsDaytimeWords()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testDateDetectorSwallowsDaytimeWords()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testDateDetectorSwallowsDaytimeWords",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00091s",
+                  "durationInSeconds" : 0.000908970832824707,
+                  "name" : "testEndIsAtLeastThirtyMinutesAfterStart()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testEndIsAtLeastThirtyMinutesAfterStart()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testEndIsAtLeastThirtyMinutesAfterStart",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00063s",
+                  "durationInSeconds" : 0.0006279945373535156,
+                  "name" : "testImplausiblyLongEventIsShortened()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testImplausiblyLongEventIsShortened()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testImplausiblyLongEventIsShortened",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.51s",
+                  "durationInSeconds" : 0.5129959583282471,
+                  "name" : "testLanguageDetection()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testLanguageDetection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testLanguageDetection",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00064s",
+                  "durationInSeconds" : 0.0006439685821533203,
+                  "name" : "testMissingTimeDefaultsToEightAndIsMarkedAsGuess()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testMissingTimeDefaultsToEightAndIsMarkedAsGuess()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testMissingTimeDefaultsToEightAndIsMarkedAsGuess",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00051s",
+                  "durationInSeconds" : 0.0005069971084594727,
+                  "name" : "testTitleFallbackAndLimit()",
+                  "nodeIdentifier" : "SuggestionExtractorTests/testTitleFallbackAndLimit()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests/testTitleFallbackAndLimit",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SuggestionExtractorTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/SuggestionExtractorTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.085s",
+                  "durationInSeconds" : 0.08511602878570557,
+                  "name" : "testDefaultRange()",
+                  "nodeIdentifier" : "TimelineHoursTests/testDefaultRange()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/TimelineHoursTests/testDefaultRange",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0019s",
+                  "durationInSeconds" : 0.0019099712371826172,
+                  "name" : "testEarlyAndLateEventsExtendRange()",
+                  "nodeIdentifier" : "TimelineHoursTests/testEarlyAndLateEventsExtendRange()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/TimelineHoursTests/testEarlyAndLateEventsExtendRange",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0017s",
+                  "durationInSeconds" : 0.0017230510711669922,
+                  "name" : "testOvernightEventReachesMidnight()",
+                  "nodeIdentifier" : "TimelineHoursTests/testOvernightEventReachesMidnight()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/TimelineHoursTests/testOvernightEventReachesMidnight",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "TimelineHoursTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests/TimelineHoursTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "FamilienplanerTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextField, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster'\nElement debug description:\nAttributes: TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nElement subtree:\n →TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nPath to element:\n →Application, 0x1070148c0, pid: 6766, label: 'Family Planner'\n  ↳Window (Main), 0x10704c290, {{0.0, 0.0}, {402.0, 874.0}}\n   ↳Other, 0x10704c650, {{0.0, 0.0}, {402.0, 874.0}}\n    ↳Other, 0x10704c770, {{0.0, 0.0}, {402.0, 874.0}}\n     ↳Other, 0x10704c3b0, {{0.0, 0.0}, {402.0, 874.0}}\n      ↳Other, 0x10704c4d0, {{0.0, 0.0}, {402.0, 874.0}}\n       ↳Other, 0x10704c890, {{0.0, 0.0}, {402.0, 874.0}}\n        ↳Other, 0x10704cf50, {{0.0, 0.0}, {402.0, 874.0}}\n         ↳Other, 0x10704d070, {{0.0, 0.0}, {402.0, 874.0}}\n          ↳Other, 0x10704d190, {{0.0, 0.0}, {402.0, 874.0}}\n           ↳Other, 0x10704d2b0, {{0.0, 0.0}, {402.0, 874.0}}\n            ↳CollectionView, 0x10704d3d0, {{0.0, 0.0}, {402.0, 874.0}}\n             ↳Cell, 0x10704df10, {{16.0, 208.3}, {370.0, 52.0}}\n              ↳Other, 0x10704e270, {{16.0, 208.3}, {370.0, 52.0}}\n               ↳Other, 0x10704e390, {{16.0, 208.3}, {370.0, 52.0}}\n                ↳Other, 0x10704e4b0, {{16.0, 208.3}, {370.0, 52.0}}\n                 ↳TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nQuery chain:\n →Find: Target Application 'de.barg.familienplaner'\n  Output: {\n    Application, 0x1070840f0, pid: 6766, label: 'Family Planner'\n  }\n  ↪︎Find: Descendants matching type Any\n    Output: {\n      Window (Main), 0x10576ea30, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10576e360, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105782d70, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10576dcb0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057829f0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105773cb0, {{0.0, 0.0}, {402.0, 874.0}}\n      NavigationBar, 0x105774380, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Einrichten'\n      Other, 0x1057804b0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10575f6e0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057822d0, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen'\n      StaticText, 0x105781f50, {{16.0, 119.7}, {160.3, 40.7}}, label: 'Einrichten'\n      Other, 0x105773930, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10575db20, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105782670, {{292.3, 66.0}, {89.7, 36.0}}\n      Other, 0x105774020, {{0.0, 0.0}, {402.0, 874.0}}\n      Button, 0x105781840, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen', Disabled\n      Other, 0x105775560, {{0.0, 0.0}, {402.0, 874.0}}\n      CollectionView, 0x105773230, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105776720, {{-16.0, -1580.0}, {434.0, 1858.0}}\n      Other, 0x105776a90, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057763a0, {{0.0, 0.0}, {402.0, 874.0}}\n      Cell, 0x105776000, {{16.0, 168.0}, {370.0, 40.3}}\n      Cell, 0x105777f60, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x105777840, {{-16.0, 278.0}, {434.0, 162.0}}\n      Cell, 0x10577a220, {{16.0, 278.0}, {370.0, 40.3}}\n      Cell, 0x105779480, {{16.0, 318.3}, {370.0, 52.0}}\n      Cell, 0x10577cab0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x10577f690, {{32.0, 369.3}, {338.0, 1.0}}\n      Other, 0x105780120, {{-16.0, 439.7}, {434.0, 98.7}}\n      Cell, 0x1057814c0, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770cb0, {{-16.0, 538.3}, {434.0, 1890.0}}\n      Cell, 0x10575cdc0, {{16.0, 538.3}, {370.0, 40.3}}\n      Cell, 0x10575d460, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575ec90, {{369.0, 116.0}, {30.0, 696.0}}, label: 'Vertikaler Rollbalken, 1 Seite', value: 0 %\n      Other, 0x1057758f0, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x105775c70, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x105778db0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x105779b30, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577a910, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577d1b0, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577c720, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577fa20, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577fd90, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105781bc0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105781130, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770250, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575d7d0, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575ca40, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575e5a0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575dea0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x105752290, {{396.0, 278.7}, {3.0, 530.3}}\n      Other, 0x105776e00, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x1057782c0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577a580, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577c3d0, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577d530, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577d8b0, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577ef80, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105780da0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105780a20, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770910, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575c390, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575efe0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575e230, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x105779130, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x1057797d0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577b330, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577afe0, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577e3f0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x10576fec0, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575aba0, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575c6f0, {{16.0, 578.7}, {370.0, 81.7}}\n      StaticText, 0x105777be0, {{16.0, 168.0}, {370.0, 40.3}}, label: 'Haushalt'\n      TextField, 0x105779eb0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n      StaticText, 0x10577ac80, {{16.0, 278.0}, {370.0, 40.3}}, label: 'Du'\n      TextField, 0x10577ce30, {{32.0, 333.3}, {338.0, 22.0}}, identifier: 'setup.name', placeholderValue: 'Vorname', value: Vorname\n      TextField, 0x10577f310, {{32.0, 385.3}, {338.0, 22.0}}, placeholderValue: 'Kürzel für die Tagesansicht', value: Kürzel für die Tag...\n      StaticText, 0x1057705c0, {{16.0, 457.3}, {370.0, 63.7}}, label: 'Weitere Familienmitglieder legst du danach an. Erst dann wird der Haushalt geteilt.'\n      StaticText, 0x10575d110, {{16.0, 538.3}, {370.0, 40.3}}, label: 'Eingeladen?'\n      StaticText, 0x10575e940, {{16.0, 578.7}, {370.0, 81.7}}, label: 'Hast du eine Einladung zu einem bestehenden Familienkalender bekommen? Dann lege hier nichts an, sondern tippe auf den Link in der Einladung.'\n    }\n    ↪︎Find: Elements matching predicate '\"setup.household\" IN identifiers'\n      Output: {\n        TextField, 0x1057650b0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n      }\n      ↪︎Find: First Match\n        Output: {\n          TextField, 0x10559f0d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n        }\n",
+                      "nodeType" : "Failure Message"
+                    }
+                  ],
+                  "duration" : "2m 13s",
+                  "durationInSeconds" : 133.4712859392166,
+                  "name" : "testAllDayEventShowsInStrip()",
+                  "nodeIdentifier" : "EndToEndTests/testAllDayEventShowsInStrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testAllDayEventShowsInStrip",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 36s",
+                  "durationInSeconds" : 156.13350999355316,
+                  "name" : "testAppointmentLifecycleWithResponsibility()",
+                  "nodeIdentifier" : "EndToEndTests/testAppointmentLifecycleWithResponsibility()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testAppointmentLifecycleWithResponsibility",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 53s",
+                  "durationInSeconds" : 113.24211299419403,
+                  "name" : "testChildPreviewHidesAdultTitles()",
+                  "nodeIdentifier" : "EndToEndTests/testChildPreviewHidesAdultTitles()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testChildPreviewHidesAdultTitles",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 23s",
+                  "durationInSeconds" : 83.94553506374359,
+                  "name" : "testClaimForWholeSeries()",
+                  "nodeIdentifier" : "EndToEndTests/testClaimForWholeSeries()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testClaimForWholeSeries",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 2s",
+                  "durationInSeconds" : 62.56531596183777,
+                  "name" : "testClaimInsideEditor()",
+                  "nodeIdentifier" : "EndToEndTests/testClaimInsideEditor()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testClaimInsideEditor",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "50s",
+                  "durationInSeconds" : 50.32804191112518,
+                  "name" : "testDeleteHouseholdReturnsToSetup()",
+                  "nodeIdentifier" : "EndToEndTests/testDeleteHouseholdReturnsToSetup()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDeleteHouseholdReturnsToSetup",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "44s",
+                  "durationInSeconds" : 44.18667495250702,
+                  "name" : "testDragMovesAppointmentLater()",
+                  "nodeIdentifier" : "EndToEndTests/testDragMovesAppointmentLater()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDragMovesAppointmentLater",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "55s",
+                  "durationInSeconds" : 55.27961504459381,
+                  "name" : "testDragToOtherPersonColumn()",
+                  "nodeIdentifier" : "EndToEndTests/testDragToOtherPersonColumn()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDragToOtherPersonColumn",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "46s",
+                  "durationInSeconds" : 46.303630113601685,
+                  "name" : "testDuplicateMemberNameIsRejected()",
+                  "nodeIdentifier" : "EndToEndTests/testDuplicateMemberNameIsRejected()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testDuplicateMemberNameIsRejected",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "27s",
+                  "durationInSeconds" : 27.565979957580566,
+                  "name" : "testEditorExplainsWhatIsMissing()",
+                  "nodeIdentifier" : "EndToEndTests/testEditorExplainsWhatIsMissing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testEditorExplainsWhatIsMissing",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "39s",
+                  "durationInSeconds" : 39.089836955070496,
+                  "name" : "testFreeTimeFinder()",
+                  "nodeIdentifier" : "EndToEndTests/testFreeTimeFinder()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testFreeTimeFinder",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "31s",
+                  "durationInSeconds" : 31.225145936012268,
+                  "name" : "testJumpToDateAndBackToToday()",
+                  "nodeIdentifier" : "EndToEndTests/testJumpToDateAndBackToToday()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testJumpToDateAndBackToToday",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "40s",
+                  "durationInSeconds" : 40.42505395412445,
+                  "name" : "testMonthOverviewOpensDay()",
+                  "nodeIdentifier" : "EndToEndTests/testMonthOverviewOpensDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testMonthOverviewOpensDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "21s",
+                  "durationInSeconds" : 21.822147965431213,
+                  "name" : "testSwipeChangesDay()",
+                  "nodeIdentifier" : "EndToEndTests/testSwipeChangesDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testSwipeChangesDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 20s",
+                  "durationInSeconds" : 80.69436693191528,
+                  "name" : "testWeeklySeries()",
+                  "nodeIdentifier" : "EndToEndTests/testWeeklySeries()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testWeeklySeries",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "EndToEndTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Test skipped - Nur im Screenshot-Workflow",
+                      "nodeType" : "Failure Message"
+                    }
+                  ],
+                  "duration" : "0.13s",
+                  "durationInSeconds" : 0.12561500072479248,
+                  "name" : "testAppStoreScreenshots()",
+                  "nodeIdentifier" : "ScreenshotTests/testAppStoreScreenshots()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/ScreenshotTests/testAppStoreScreenshots",
+                  "nodeType" : "Test Case",
+                  "result" : "Skipped"
+                }
+              ],
+              "name" : "ScreenshotTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/ScreenshotTests",
+              "nodeType" : "Test Suite",
+              "result" : "Skipped"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Contrast failed",
+                      "nodeType" : "Failure Message"
+                    },
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "44s",
+                  "durationInSeconds" : 44.33238196372986,
+                  "name" : "testAccessibilityAudit()",
+                  "nodeIdentifier" : "SmokeTests/testAccessibilityAudit()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testAccessibilityAudit",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "18s",
+                  "durationInSeconds" : 18.937826991081238,
+                  "name" : "testLaunchSetupAndMainScreen()",
+                  "nodeIdentifier" : "SmokeTests/testLaunchSetupAndMainScreen()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testLaunchSetupAndMainScreen",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Adding 'UIKitToolbar' as a subview of UIHostingController.view is not supported and may result in a broken view hierarchy. Add your view above UIHostingController.view in a common superview or insert it into your SwiftUI content in a UIViewRepresentable instead.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "21s",
+                  "durationInSeconds" : 21.25863790512085,
+                  "name" : "testOnboardingAppearsOnceAndCanBeClosed()",
+                  "nodeIdentifier" : "SmokeTests/testOnboardingAppearsOnceAndCanBeClosed()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testOnboardingAppearsOnceAndCanBeClosed",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SmokeTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "FamilienplanerUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "Familienplaner",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

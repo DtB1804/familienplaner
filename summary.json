@@ -1,0 +1,64 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "5FEB61C5-E3F5-471D-AE23-8A07438D5E92",
+        "deviceName" : "iPhone 17 Pro",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23C54",
+        "osVersion" : "26.2",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 115,
+      "skippedTests" : 2,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Familienplaner · Built with macOS 26.6.2",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1791594362.89,
+  "passedTests" : 115,
+  "result" : "Failed",
+  "skippedTests" : 2,
+  "startTime" : 1791592978.066,
+  "statistics" : [
+    {
+      "subtitle" : "1 test run",
+      "title" : "1 test collected performance metrics"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Contrast failed",
+      "targetName" : "FamilienplanerUITests",
+      "testIdentifier" : 117,
+      "testIdentifierString" : "SmokeTests/testAccessibilityAudit()",
+      "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testAccessibilityAudit",
+      "testName" : "testAccessibilityAudit()"
+    },
+    {
+      "failureText" : "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextField, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster'\nElement debug description:\nAttributes: TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nElement subtree:\n →TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nPath to element:\n →Application, 0x1070148c0, pid: 6766, label: 'Family Planner'\n  ↳Window (Main), 0x10704c290, {{0.0, 0.0}, {402.0, 874.0}}\n   ↳Other, 0x10704c650, {{0.0, 0.0}, {402.0, 874.0}}\n    ↳Other, 0x10704c770, {{0.0, 0.0}, {402.0, 874.0}}\n     ↳Other, 0x10704c3b0, {{0.0, 0.0}, {402.0, 874.0}}\n      ↳Other, 0x10704c4d0, {{0.0, 0.0}, {402.0, 874.0}}\n       ↳Other, 0x10704c890, {{0.0, 0.0}, {402.0, 874.0}}\n        ↳Other, 0x10704cf50, {{0.0, 0.0}, {402.0, 874.0}}\n         ↳Other, 0x10704d070, {{0.0, 0.0}, {402.0, 874.0}}\n          ↳Other, 0x10704d190, {{0.0, 0.0}, {402.0, 874.0}}\n           ↳Other, 0x10704d2b0, {{0.0, 0.0}, {402.0, 874.0}}\n            ↳CollectionView, 0x10704d3d0, {{0.0, 0.0}, {402.0, 874.0}}\n             ↳Cell, 0x10704df10, {{16.0, 208.3}, {370.0, 52.0}}\n              ↳Other, 0x10704e270, {{16.0, 208.3}, {370.0, 52.0}}\n               ↳Other, 0x10704e390, {{16.0, 208.3}, {370.0, 52.0}}\n                ↳Other, 0x10704e4b0, {{16.0, 208.3}, {370.0, 52.0}}\n                 ↳TextField, 0x10704e5d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\nQuery chain:\n →Find: Target Application 'de.barg.familienplaner'\n  Output: {\n    Application, 0x1070840f0, pid: 6766, label: 'Family Planner'\n  }\n  ↪︎Find: Descendants matching type Any\n    Output: {\n      Window (Main), 0x10576ea30, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10576e360, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105782d70, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10576dcb0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057829f0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105773cb0, {{0.0, 0.0}, {402.0, 874.0}}\n      NavigationBar, 0x105774380, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Einrichten'\n      Other, 0x1057804b0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10575f6e0, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057822d0, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen'\n      StaticText, 0x105781f50, {{16.0, 119.7}, {160.3, 40.7}}, label: 'Einrichten'\n      Other, 0x105773930, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10575db20, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105782670, {{292.3, 66.0}, {89.7, 36.0}}\n      Other, 0x105774020, {{0.0, 0.0}, {402.0, 874.0}}\n      Button, 0x105781840, {{292.3, 66.0}, {89.7, 36.0}}, identifier: 'setup.create', label: 'Anlegen', Disabled\n      Other, 0x105775560, {{0.0, 0.0}, {402.0, 874.0}}\n      CollectionView, 0x105773230, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x105776720, {{-16.0, -1580.0}, {434.0, 1858.0}}\n      Other, 0x105776a90, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x1057763a0, {{0.0, 0.0}, {402.0, 874.0}}\n      Cell, 0x105776000, {{16.0, 168.0}, {370.0, 40.3}}\n      Cell, 0x105777f60, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x105777840, {{-16.0, 278.0}, {434.0, 162.0}}\n      Cell, 0x10577a220, {{16.0, 278.0}, {370.0, 40.3}}\n      Cell, 0x105779480, {{16.0, 318.3}, {370.0, 52.0}}\n      Cell, 0x10577cab0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x10577f690, {{32.0, 369.3}, {338.0, 1.0}}\n      Other, 0x105780120, {{-16.0, 439.7}, {434.0, 98.7}}\n      Cell, 0x1057814c0, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770cb0, {{-16.0, 538.3}, {434.0, 1890.0}}\n      Cell, 0x10575cdc0, {{16.0, 538.3}, {370.0, 40.3}}\n      Cell, 0x10575d460, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575ec90, {{369.0, 116.0}, {30.0, 696.0}}, label: 'Vertikaler Rollbalken, 1 Seite', value: 0 %\n      Other, 0x1057758f0, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x105775c70, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x105778db0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x105779b30, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577a910, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577d1b0, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577c720, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577fa20, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577fd90, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105781bc0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105781130, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770250, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575d7d0, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575ca40, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575e5a0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575dea0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x105752290, {{396.0, 278.7}, {3.0, 530.3}}\n      Other, 0x105776e00, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x1057782c0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577a580, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577c3d0, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577d530, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577d8b0, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577ef80, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105780da0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x105780a20, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x105770910, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575c390, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575efe0, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x10575e230, {{16.0, 578.7}, {370.0, 81.7}}\n      Other, 0x105779130, {{16.0, 168.0}, {370.0, 40.3}}\n      Other, 0x1057797d0, {{16.0, 208.3}, {370.0, 52.0}}\n      Other, 0x10577b330, {{16.0, 278.0}, {370.0, 40.3}}\n      Other, 0x10577afe0, {{16.0, 318.3}, {370.0, 52.0}}\n      Other, 0x10577e3f0, {{16.0, 370.3}, {370.0, 52.0}}\n      Other, 0x10576fec0, {{16.0, 457.3}, {370.0, 63.7}}\n      Other, 0x10575aba0, {{16.0, 538.3}, {370.0, 40.3}}\n      Other, 0x10575c6f0, {{16.0, 578.7}, {370.0, 81.7}}\n      StaticText, 0x105777be0, {{16.0, 168.0}, {370.0, 40.3}}, label: 'Haushalt'\n      TextField, 0x105779eb0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n      StaticText, 0x10577ac80, {{16.0, 278.0}, {370.0, 40.3}}, label: 'Du'\n      TextField, 0x10577ce30, {{32.0, 333.3}, {338.0, 22.0}}, identifier: 'setup.name', placeholderValue: 'Vorname', value: Vorname\n      TextField, 0x10577f310, {{32.0, 385.3}, {338.0, 22.0}}, placeholderValue: 'Kürzel für die Tagesansicht', value: Kürzel für die Tag...\n      StaticText, 0x1057705c0, {{16.0, 457.3}, {370.0, 63.7}}, label: 'Weitere Familienmitglieder legst du danach an. Erst dann wird der Haushalt geteilt.'\n      StaticText, 0x10575d110, {{16.0, 538.3}, {370.0, 40.3}}, label: 'Eingeladen?'\n      StaticText, 0x10575e940, {{16.0, 578.7}, {370.0, 81.7}}, label: 'Hast du eine Einladung zu einem bestehenden Familienkalender bekommen? Dann lege hier nichts an, sondern tippe auf den Link in der Einladung.'\n    }\n    ↪︎Find: Elements matching predicate '\"setup.household\" IN identifiers'\n      Output: {\n        TextField, 0x1057650b0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n      }\n      ↪︎Find: First Match\n        Output: {\n          TextField, 0x10559f0d0, {{32.0, 223.3}, {338.0, 22.0}}, identifier: 'setup.household', placeholderValue: 'Name, z. B. Familie Muster', value: Name, z. B. Famili...\n        }\n",
+      "targetName" : "FamilienplanerUITests",
+      "testIdentifier" : 101,
+      "testIdentifierString" : "EndToEndTests/testAllDayEventShowsInStrip()",
+      "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/EndToEndTests/testAllDayEventShowsInStrip",
+      "testName" : "testAllDayEventShowsInStrip()"
+    }
+  ],
+  "title" : "Test - Familienplaner",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "48% of duration",
+      "text" : "3 longest test runs with outlier durations exceeding 0.64s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 119
+}
