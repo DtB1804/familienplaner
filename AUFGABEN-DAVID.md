@@ -359,7 +359,7 @@ Erweiterung. Sie legt Fotos im gemeinsamen Ordner ab, die App holt sie dort ab.
 **Zuliefern:** „Teilen-Gruppe angelegt“. Ich starte dann den TestFlight-Build.
 **Aufwand:** etwa 3 Minuten.
 
-### Aufgabe 23: Einladung an die Partnerin annehmen (Schleife beim Link)
+### Aufgabe 23: Einladung an die Partnerin annehmen ✅ erledigt (10.10.2026)
 Stand 28.09.2026: Der Einladungslink aus App Store Connect öffnet sich immer wieder neu.
 Umgehungen (im Apple-Entwicklerforum berichtet, nicht offiziell bestätigt): Link am
 **Computer im privaten Browserfenster** öffnen und mit der Apple-ID anmelden; sonst
@@ -375,7 +375,7 @@ bei Kalender-Terminen, sofortige Meldung neuer offener Aufgaben – beides ab de
 **Zuliefern:** Screenshot der Fehlermeldung beim Einladen mit dem nächsten Build (zeigt dann
 den CloudKit-Code).
 
-### Aufgabe 23b: Ursache Einladung gefunden (02.10.2026, Build 41)
+### Aufgabe 23b: Ursache Einladung gefunden (02.10.2026, Build 41) ✅ behoben (08.–10.10.2026)
 Fehlermeldung der App: CKError 12/2006 „Cannot create or modify field 'CD_moveReceipt' in
 record 'CD_CDTag' in production schema“. Beim Teilen legt Core Data zusätzliche Felder
 (`CD_moveReceipt`) und den Typ `cloudkit.share` an. Das geht nur in der CloudKit-Umgebung
@@ -386,8 +386,12 @@ Vorlage für den Ablauf: https://github.com/ktgywmzgj4-alt/FutariKakeibo/pull/30
 **Schritte David:** (0) GitHub Pages einschalten (Aufgabe 24, Branch `pages`), (1) UDID des iPhones ermitteln (Windows-App „Apple-Geräte“),
 (2) developer.apple.com → Devices → iPhone registrieren, (3) Ad-hoc-Build installieren,
 Einladung einmal anlegen, (4) Schema nach Production übernehmen.
+**Ergebnis:** Schritte 0–4 erledigt 08.10.2026 (Production hat `cloudkit.share`). Hänger beim
+Einladen behoben in Build 43. Familientest 10.10.2026: Einladung angenommen, Termine und
+Übernahmen kommen in beide Richtungen an. Wichtig: Beim Empfänger muss die App vorher über
+TestFlight installiert sein, sonst meldet iOS „cloudkit.zoneshare konnte nicht geöffnet werden“.
 
-### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite)
+### Aufgabe 24: GitHub Pages einschalten (Support- und Datenschutzseite) ✅ erledigt (08.10.2026)
 **Wo:** GitHub → Repository → Settings → Pages → Source „Deploy from a branch“ →
 Branch **`pages`**, Ordner **`/ (root)`** → Save. (Geändert 02.10.2026: Der Branch `pages`
 enthält die Seiten aus `docs/` und später die Installationsseite für den Sonder-Build.) Nach wenigen Minuten erreichbar unter
