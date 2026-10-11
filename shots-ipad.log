@@ -1,0 +1,360 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test -project Familienplaner.xcodeproj -scheme Familienplaner -destination id=A2011F14-88A1-46AA-999A-FD6FEDCD870B "-only-testing:FamilienplanerUITests/ScreenshotTests" -resultBundlePath ShotsPad.xcresult CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/runner/work/familienplaner/familienplaner/ShotsPad.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:A2011F14-88A1-46AA-999A-FD6FEDCD870B, OS:26.5, name:iPad Pro 13-inch (M5) }
+{ platform:iOS Simulator, arch:x86_64, id:A2011F14-88A1-46AA-999A-FD6FEDCD870B, OS:26.5, name:iPad Pro 13-inch (M5) }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (7 targets)
+    Target 'FamilienplanerUITests' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'Familienplaner' in project 'Familienplaner'
+    Target 'FamilienplanerTests' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'Familienplaner' in project 'Familienplaner'
+    Target 'Familienplaner' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'FamilienplanerWatch' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'FamilienplanerWidgets' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'FamilienplanerShare' in project 'Familienplaner'
+    Target 'FamilienplanerShare' in project 'Familienplaner' (no dependencies)
+    Target 'FamilienplanerWidgets' in project 'Familienplaner' (no dependencies)
+    Target 'FamilienplanerWatch' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'FamilienplanerWatchWidgets' in project 'Familienplaner'
+    Target 'FamilienplanerWatchWidgets' in project 'Familienplaner' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/momc --dry-run --action generate --swift-version 5.0 --sdkroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --iphonesimulator-deployment-target 26.0 --module Familienplaner /Users/runner/work/familienplaner/familienplaner/Sources/Persistence/Familienplaner.xcdatamodeld /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/DerivedSources/CoreDataGenerated/Familienplaner
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/familienplaner/familienplaner/Assets/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 542921061e89d1a8d5bee8e6cb113414
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/XCBuildData/542921061e89d1a8d5bee8e6cb113414.xcbuilddata
+ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -o /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache
+
+ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/Info.plist /Users/runner/work/familienplaner/familienplaner/WatchWidgets/Info.plist (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/WatchWidgets/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform watchsimulator -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/Info.plist
+
+CompileAssetCatalogVariant thinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPad17,4-A --filter-for-device-os-version 26.5 --development-region en --target-device watch --minimum-deployment-target 26.0 --platform watchsimulator
+/* com.apple.actool.compilation-results */
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned/Assets.car
+
+
+LinkAssetCatalog /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-linkAssetCatalog --thinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app --plist-output /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Assets.car (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatchWidgets.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist /Users/runner/work/familienplaner/familienplaner/Watch/Info.plist (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/Watch/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PkgInfo -expandbuildsettings -format binary -platform watchsimulator -additionalcontentfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist
+
+CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/FamilienplanerWatch.debug.dylib --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Extensions --platform watchsimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ValidateEmbeddedBinary /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex -info-plist-path /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerWidgets.appex/Info.plist /Users/runner/work/familienplaner/familienplaner/Widgets/Info.plist (in target 'FamilienplanerWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/Widgets/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphonesimulator -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerWidgets.appex/Info.plist
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerShare.appex/Info.plist /Users/runner/work/familienplaner/familienplaner/ShareExtension/Info.plist (in target 'FamilienplanerShare' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/ShareExtension/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphonesimulator -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerShare.appex/Info.plist
+
+CompileAssetCatalogVariant thinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app /Users/runner/work/familienplaner/familienplaner/Assets/Assets.xcassets (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/familienplaner/familienplaner/Assets/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --filter-for-thinning-device-configuration iPad17,4-A --filter-for-device-os-version 26.5 --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 26.0 --platform iphonesimulator
+/* com.apple.actool.compilation-results */
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/thinned/Assets.car
+
+
+LinkAssetCatalog /Users/runner/work/familienplaner/familienplaner/Assets/Assets.xcassets (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-linkAssetCatalog --thinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app --plist-output /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Assets.car (in target 'Familienplaner' from project 'Familienplaner')
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/AppIcon60x60@2x.png (in target 'Familienplaner' from project 'Familienplaner')
+note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/AppIcon76x76@2x~ipad.png (in target 'Familienplaner' from project 'Familienplaner')
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerShare.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerShare.appex (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerShare.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerWidgets.appex (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerWidgets.appex /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Watch/FamilienplanerWatch.app /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-watchsimulator/FamilienplanerWatch.app /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Watch
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Info.plist /Users/runner/work/familienplaner/familienplaner/Resources/Info.plist (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/Resources/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerShare.appex -scanforprivacyfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex -scanforprivacyfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Watch/FamilienplanerWatch.app -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Info.plist
+
+CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Familienplaner.debug.dylib --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/Familienplaner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/Info.plist /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerTests.build/empty-FamilienplanerTests.plist (in target 'FamilienplanerTests' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerTests.build/empty-FamilienplanerTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/Info.plist
+
+ValidateEmbeddedBinary /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Watch/FamilienplanerWatch.app (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Watch/FamilienplanerWatch.app -info-plist-path /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Info.plist
+
+ValidateEmbeddedBinary /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerWidgets.appex -info-plist-path /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Info.plist
+
+ValidateEmbeddedBinary /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerShare.appex (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerShare.appex -info-plist-path /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/Info.plist
+
+CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest (in target 'FamilienplanerTests' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/FamilienplanerTests --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app/PlugIns/FamilienplanerTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+Validate /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app (in target 'Familienplaner' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-validationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/Familienplaner.app -shallow-bundle -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/Info.plist /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerUITests.build/empty-FamilienplanerUITests.plist (in target 'FamilienplanerUITests' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerUITests.build/empty-FamilienplanerUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest (in target 'FamilienplanerUITests' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/FamilienplanerUITests --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Products/Debug-iphonesimulator/FamilienplanerUITests-Runner.app/PlugIns/FamilienplanerUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Familienplaner-dmcrrzfthkjbwogvslwbznxtcpok/Build/Intermediates.noindex/Familienplaner.build/Debug-iphonesimulator/FamilienplanerUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+2026-10-11 13:49:17.562370+0000 FamilienplanerUITests-Runner[39502:114734] [Default] Running tests...
+2026-10-11 13:49:18.755428+0000 FamilienplanerUITests-Runner[39502:114734] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+objc[39502]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10ac30310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109c0c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-11 13:49:34.025.
+Test Suite 'FamilienplanerUITests.xctest' started at 2026-10-11 13:49:34.025.
+Test Suite 'ScreenshotTests' started at 2026-10-11 13:49:34.026.
+Test Case '-[FamilienplanerUITests.ScreenshotTests testAppStoreScreenshots]' started.
+    t =     0.00s Start Test at 2026-10-11 13:49:34.027
+    t =     1.78s Set Up
+    t =     1.80s Open de.barg.familienplaner
+    t =     1.81s     Launch de.barg.familienplaner
+2026-10-11 13:49:39.086 xcodebuild[23675:75747] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-11 13:49:39.087 xcodebuild[23675:75747] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   122.63s         Setting up automation session
+    t =   126.50s         Wait for de.barg.familienplaner to idle
+    t =   133.19s Waiting 15.0s for "toolbar.family" Any to exist
+    t =   134.27s     Checking `Expect predicate `existsNoRetry == 1` for object "toolbar.family" Any`
+    t =   134.28s         Checking existence of `"toolbar.family" Any`
+    t =   148.46s         Capturing element debug description
+    t =   148.46s     Checking existence of `"toolbar.family" Any`
+    t =   156.07s Added attachment named '01-Tag'
+    t =   156.09s Waiting 5.0s for "event.Schwimmkurs" Any to exist
+    t =   157.13s     Checking `Expect predicate `existsNoRetry == 1` for object "event.Schwimmkurs" Any`
+    t =   157.14s         Checking existence of `"event.Schwimmkurs" Any`
+    t =   157.76s Tap "event.Schwimmkurs" Any
+    t =   157.76s     Wait for de.barg.familienplaner to idle
+    t =   157.77s     Find the "event.Schwimmkurs" Any
+    t =   158.88s     Check for interrupting elements affecting "event.Schwimmkurs" Button
+    t =   159.28s         Wait for com.apple.springboard to idle
+    t =   160.33s     Synthesize event
+    t =   160.83s     Wait for de.barg.familienplaner to idle
+    t =   161.74s Waiting 5.0s for "detail.done" Any to exist
+    t =   162.75s     Checking `Expect predicate `existsNoRetry == 1` for object "detail.done" Any`
+    t =   162.75s         Checking existence of `"detail.done" Any`
+    t =   164.41s Added attachment named '02-Termin'
+    t =   164.41s Tap "detail.done" Any
+    t =   164.41s     Wait for de.barg.familienplaner to idle
+    t =   164.42s     Find the "detail.done" Any
+    t =   164.68s     Check for interrupting elements affecting "detail.done" Other
+    t =   165.79s         Wait for com.apple.springboard to idle
+    t =   165.96s     Synthesize event
+    t =   166.62s     Wait for de.barg.familienplaner to idle
+    t =   167.59s Waiting 5.0s for "banner.open" Any to exist
+    t =   168.60s     Checking `Expect predicate `existsNoRetry == 1` for object "banner.open" Any`
+    t =   168.60s         Checking existence of `"banner.open" Any`
+    t =   168.80s Tap "banner.open" Any
+    t =   168.80s     Wait for de.barg.familienplaner to idle
+    t =   168.81s     Find the "banner.open" Any
+    t =   168.95s     Check for interrupting elements affecting "banner.open" Button
+    t =   169.04s         Wait for com.apple.springboard to idle
+    t =   169.14s     Synthesize event
+    t =   169.46s     Wait for de.barg.familienplaner to idle
+    t =   229.92s         App event loop idle notification not received, will attempt to continue.
+    t =   232.47s Waiting 5.0s for "responsibilities.done" Any to exist
+    t =   233.58s     Checking `Expect predicate `existsNoRetry == 1` for object "responsibilities.done" Any`
+    t =   233.63s         Checking existence of `"responsibilities.done" Any`
+    t =   237.80s         Capturing element debug description
+    t =   237.80s     Checking existence of `"responsibilities.done" Any`
+    t =   245.78s Added attachment named '03-Wer-holt'
+    t =   245.78s Tap "responsibilities.done" Any
+    t =   245.78s     Wait for de.barg.familienplaner to idle
+    t =   245.78s     Find the "responsibilities.done" Any
+    t =   246.44s     Check for interrupting elements affecting "responsibilities.done" Other
+    t =   246.90s         Wait for com.apple.springboard to idle
+    t =   247.13s     Synthesize event
+    t =   247.53s     Wait for de.barg.familienplaner to idle
+    t =   248.37s Waiting 5.0s for "view.menu" Any to exist
+    t =   249.43s     Checking `Expect predicate `existsNoRetry == 1` for object "view.menu" Any`
+    t =   249.43s         Checking existence of `"view.menu" Any`
+    t =   249.83s Tap "view.menu" Any
+    t =   249.83s     Wait for de.barg.familienplaner to idle
+    t =   249.84s     Find the "view.menu" Any
+    t =   250.03s     Check for interrupting elements affecting "view.menu" Button
+    t =   250.11s         Wait for com.apple.springboard to idle
+    t =   250.21s     Synthesize event
+    t =   250.55s     Wait for de.barg.familienplaner to idle
+    t =   250.89s Waiting 5.0s for "Woche" Button to exist
+    t =   251.95s     Checking `Expect predicate `existsNoRetry == 1` for object "Woche" Button`
+    t =   251.96s         Checking existence of `"Woche" Button`
+    t =   256.20s         Capturing element debug description
+    t =   256.20s     Checking existence of `"Woche" Button`
+    t =   260.10s Tap "Woche" Button
+    t =   260.10s     Wait for de.barg.familienplaner to idle
+    t =   260.11s     Find the "Woche" Button
+    t =   260.17s     Check for interrupting elements affecting "rectangle.split.3x1" Button
+    t =   260.29s         Wait for com.apple.springboard to idle
+    t =   260.34s     Synthesize event
+    t =   260.66s     Wait for de.barg.familienplaner to idle
+    t =   320.70s         App event loop idle notification not received, will attempt to continue.
+    t =   345.81s Added attachment named '04-Woche'
+    t =   345.89s Waiting 5.0s for "view.menu" Any to exist
+    t =   346.91s     Checking `Expect predicate `existsNoRetry == 1` for object "view.menu" Any`
+    t =   347.09s         Checking existence of `"view.menu" Any`
+    t =   351.22s         Capturing element debug description
+    t =   351.22s     Checking existence of `"view.menu" Any`
+    t =   382.26s     Checking existence of `"view.menu" Any` (retry 1)
+    t =   418.00s     Checking existence of `"view.menu" Any` (retry 2)
+    t =   439.01s Tap "view.menu" Any
+    t =   439.01s     Wait for de.barg.familienplaner to idle
+    t =   439.01s     Find the "view.menu" Any
+    t =   439.86s     Check for interrupting elements affecting "view.menu" Button
+    t =   440.64s         Wait for com.apple.springboard to idle
+    t =   441.31s     Synthesize event
+    t =   443.60s     Wait for de.barg.familienplaner to idle
+    t =   444.53s Waiting 5.0s for "Monat" Button to exist
+    t =   445.59s     Checking `Expect predicate `existsNoRetry == 1` for object "Monat" Button`
+    t =   445.61s         Checking existence of `"Monat" Button`
+    t =   447.77s Tap "Monat" Button
+    t =   447.77s     Wait for de.barg.familienplaner to idle
+    t =   447.78s     Find the "Monat" Button
+    t =   448.58s     Check for interrupting elements affecting "calendar" Button
+    t =   449.22s         Wait for com.apple.springboard to idle
+    t =   449.26s     Synthesize event
+    t =   449.94s     Wait for de.barg.familienplaner to idle
+    t =   453.26s Added attachment named '05-Monat'
+    t =   453.26s Waiting 5.0s for "view.menu" Any to exist
+    t =   454.30s     Checking `Expect predicate `existsNoRetry == 1` for object "view.menu" Any`
+    t =   454.30s         Checking existence of `"view.menu" Any`
+    t =   457.31s Tap "view.menu" Any
+    t =   457.31s     Wait for de.barg.familienplaner to idle
+    t =   457.31s     Find the "view.menu" Any
+    t =   457.44s     Check for interrupting elements affecting "view.menu" Button
+    t =   457.53s         Wait for com.apple.springboard to idle
+    t =   457.60s     Synthesize event
+    t =   457.98s     Wait for de.barg.familienplaner to idle
+    t =   459.10s Waiting 5.0s for "Tag" Button to exist
+    t =   460.17s     Checking `Expect predicate `existsNoRetry == 1` for object "Tag" Button`
+    t =   460.17s         Checking existence of `"Tag" Button`
+    t =   460.24s Tap "Tag" Button
+    t =   460.24s     Wait for de.barg.familienplaner to idle
+    t =   460.24s     Find the "Tag" Button
+    t =   460.29s     Check for interrupting elements affecting "calendar.day.timeline.left" Button
+    t =   460.35s         Wait for com.apple.springboard to idle
+    t =   460.38s     Synthesize event
+    t =   460.69s     Wait for de.barg.familienplaner to idle
+    t =   466.21s Waiting 5.0s for "toolbar.free" Any to exist
+    t =   467.27s     Checking `Expect predicate `existsNoRetry == 1` for object "toolbar.free" Any`
+    t =   467.27s         Checking existence of `"toolbar.free" Any`
+    t =   471.52s         Capturing element debug description
+    t =   471.52s     Checking existence of `"toolbar.free" Any`
+    t =   482.86s Tap "toolbar.free" Any
+    t =   482.86s     Wait for de.barg.familienplaner to idle
+    t =   482.86s     Find the "toolbar.free" Any
+    t =   483.51s     Check for interrupting elements affecting "toolbar.free" Button
+    t =   483.62s         Wait for com.apple.springboard to idle
+    t =   483.76s     Synthesize event
+    t =   489.30s     Wait for de.barg.familienplaner to idle
+    t =   498.00s Waiting 5.0s for "free.done" Any to exist
+    t =   499.02s     Checking `Expect predicate `existsNoRetry == 1` for object "free.done" Any`
+    t =   499.02s         Checking existence of `"free.done" Any`
+    t =   501.42s Added attachment named '06-Freie-Zeit'
+    t =   501.42s Tap "free.done" Any
+    t =   501.42s     Wait for de.barg.familienplaner to idle
+    t =   501.43s     Find the "free.done" Any
+    t =   503.48s     Check for interrupting elements affecting "free.done" Other
+    t =   503.91s         Wait for com.apple.springboard to idle
+    t =   504.35s     Synthesize event
+    t =   504.88s     Wait for de.barg.familienplaner to idle
+    t =   505.62s Tear Down
+Test Case '-[FamilienplanerUITests.ScreenshotTests testAppStoreScreenshots]' passed (506.484 seconds).
+Test Suite 'ScreenshotTests' passed at 2026-10-11 13:58:00.513.
+	 Executed 1 test, with 0 failures (0 unexpected) in 506.484 (506.488) seconds
+Test Suite 'FamilienplanerUITests.xctest' passed at 2026-10-11 13:58:00.514.
+	 Executed 1 test, with 0 failures (0 unexpected) in 506.484 (506.489) seconds
+Test Suite 'Selected tests' passed at 2026-10-11 13:58:00.514.
+	 Executed 1 test, with 0 failures (0 unexpected) in 506.484 (506.490) seconds
+2026-10-11 14:00:52.279 xcodebuild[23675:75747] [MT] IDETestOperationsObserverDebug: 812.225 elapsed -- Testing started completed.
+2026-10-11 14:00:52.285 xcodebuild[23675:75747] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-11 14:00:52.285 xcodebuild[23675:75747] [MT] IDETestOperationsObserverDebug: 812.226 sec, +812.226 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/familienplaner/familienplaner/ShotsPad.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

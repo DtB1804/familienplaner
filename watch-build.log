@@ -1,0 +1,1119 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild build -project Familienplaner.xcodeproj -target FamilienplanerWatch -sdk watchsimulator -configuration Debug SYMROOT=/Users/runner/work/familienplaner/familienplaner/watchbuild CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    SDKROOT = watchsimulator26.5
+    SYMROOT = /Users/runner/work/familienplaner/familienplaner/watchbuild
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (2 targets)
+    Target 'FamilienplanerWatch' in project 'Familienplaner'
+        ➜ Explicit dependency on target 'FamilienplanerWatchWidgets' in project 'Familienplaner'
+    Target 'FamilienplanerWatchWidgets' in project 'Familienplaner' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: eb2c7264a25cc83010573d80eabbdbc3
+Build description path: /Users/runner/work/familienplaner/familienplaner/watchbuild/XCBuildData/eb2c7264a25cc83010573d80eabbdbc3.xcbuilddata
+CreateBuildDirectory /Users/runner/work/familienplaner/familienplaner/watchbuild
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    builtin-create-build-directory /Users/runner/work/familienplaner/familienplaner/watchbuild
+
+ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -o /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache
+
+CreateBuildDirectory /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    builtin-create-build-directory /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/Familienplaner-b8fda7acccebca4cd45f8325569eae6f-VFS-watchsimulator/all-product-headers.yaml
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/Familienplaner-b8fda7acccebca4cd45f8325569eae6f-VFS-watchsimulator/all-product-headers.yaml
+
+CreateBuildDirectory /Users/runner/work/familienplaner/familienplaner/watchbuild/ExplicitPrecompiledModules
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    builtin-create-build-directory /Users/runner/work/familienplaner/familienplaner/watchbuild/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    builtin-create-build-directory /Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator
+
+CreateBuildDirectory /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator
+    cd /Users/runner/work/familienplaner/familienplaner/Familienplaner.xcodeproj
+    builtin-create-build-directory /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_const_extract_protocols.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftConstValuesFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.LinkFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-OutputFileMap.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_const_extract_protocols.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftConstValuesFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.LinkFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-OutputFileMap.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyStaticMetadataFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyMetadataFileList (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-non-framework-target-headers.hmap (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-non-framework-target-headers.hmap
+
+MkDir /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /bin/mkdir -p /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_const_extract_protocols.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftConstValuesFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.LinkFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-OutputFileMap.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_const_extract_protocols.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftConstValuesFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.LinkFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-OutputFileMap.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyStaticMetadataFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyMetadataFileList (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap
+
+MkDir /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /bin/mkdir -p /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns
+
+WriteAuxiliaryFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-non-framework-target-headers.hmap (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    write-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-non-framework-target-headers.hmap
+
+MkDir /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /bin/mkdir -p /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app
+
+ProcessInfoPlistFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/Info.plist /Users/runner/work/familienplaner/familienplaner/WatchWidgets/Info.plist (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/WatchWidgets/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform watchsimulator -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/Info.plist
+
+SwiftDriver FamilienplanerWatchWidgets normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver FamilienplanerWatchWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_float-2PW4MQ26GSNO9N99DO2FS89AJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stddef-74GKJRW2BRHMFDG3RYIFSRSCL.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdbool-8SER1O9G5D6XTEB831CO8JSDU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_float-1ZX29P018HDI9ARZRY6Y7YIR4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_AvailabilityInternal-5MIH67OSPPYYD0EIFMBRSEVTB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdbool-E08CM4R9N89GBWEO4V075E8ZY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrcheck-9HI83E8GBOLENL5YT7ACOY8JR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdarg-7O2LWXOT50PS8QBIGXOL9PIBF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stddef-6FX0M72L1XLKJ0UJOOZR0KOBL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DeveloperToolsSupport-CYK6HOHB9K1QKC7GR3KDCI5CE.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrauth-7JZD5C5A69IBW6CAEUYG9L54O.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation1-5QRIKFIPBAA3S3K3C2MTQVASY.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_AvailabilityInternal-7CZZJVAXM9HYO6Q0DQPGO5HR2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdarg-94C00FN6GIX8ICJIUXEHFCPME.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftShims-DCSCECLSJ9ZWX1CVCJPT74V3F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrauth-9SWR5HR5YZUF1DB17RT51DXBT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation2-BBV31FMAA9RTJCUGPR0SXDEER.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_limits-55601CAN11ZIS1XE0XENDCTNW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ExtensionFoundation-8OK78N9LQXQI50AXK4S1Y2YE1.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DeveloperToolsSupport-1CGYF0DEKFCL6A7JTJCYMTCNW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftShims-74I101640HMFF3SZS241NGLK2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_SwiftConcurrencyShims-5SHCZJMK88RJA9WBZ1IR50EQ0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/sys_types-9EA4XGOR4P75GM26G8F5ERSPL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdint-7PQIA8VL066U22NBK02UNQC6E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_tgmath-5I53REKJ2DR7NHJJAE5ZHAJQS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_SwiftConcurrencyShims-1P15VEY2YXIVR9S565V48Y8Y.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrcheck-Z1GGYMVJ4YHNV0DYZWU53H40.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdatomic-3W5WHGQ1OEBKSFN6900AQFJ7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation3-1A671NJW0LV77YSJWCZTYIBRT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_intrinsics-3L45SZMZMPU7S9NREFZDSGVAX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation1-738G0WAMNCSIRXL12QRAPB143.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_inttypes-CC5F46SDIDRAA9CJ2GGQVTA19.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_limits-7749C03WN4AGE43MLPV2AQIUK.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation2-5CHG7PJJWXI3EQEI4QN3G9O4I.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ExtensionFoundation-9BAUAZELYTYD6XXT817TYRUGK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Darwin-3VAA80NDC4XDOJDZ7QXXGJEPM.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdint-1QRNQD4DU5XNAYAZ7J83WGMPL.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/sys_types-642T318PC1DSDCVFOPJQC3VTD.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_tgmath-BFP3N3VYLMVDCIIWESLQ4JUL0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/simd-EHIO9UE08JOQNXF745MHH2T6.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation3-4SQBDBUC3SO4RPCVLPWXES6XW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdatomic-65BUN2BXSD0IH4A8PTP7N8LJ7.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_inttypes-EB1GKNMQ9VXI6IWKTBW1QZ1EX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_intrinsics-A0XXDI42K8WZKW5P3FG5KBH3E.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Darwin-9O6KNSJAPUVNJJDLSR47HQQJK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MachO-2NGNYEE3T6DTRSDMYDH2ADCU4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ObjectiveC-D0PNVY7MAT1J9916YL3WPSDHG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MachO-ANEAPZHI2XF8DJDBYHLYRILMV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ObjectiveC-CSKMXRWB2T85NY3IIKJX75WZW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/simd-6F6QP8BOOTEEE2CHCW6W07N85.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_object-EM36T186SMM3K4UEUWIL2M2OD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Spatial-B6Q4TB7SVZL2MOGFNZQMY0ZYE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_object-6OJPN6Z2DTCN6RAMVH90X81EY.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_workgroup-AP86A68RHCFQ037UQ72BM8RL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_workgroup-3WR3YJE3IN0MFUASBEU9QQ1J6.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Dispatch-6NVLL79P8OUHB1SIMPEMPX0FY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Dispatch-7BFXONWO1VBXC50Z0HP3T3H4T.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/XPC-18TLZEJ5Z2U7LDZLR9U951L6R.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreFoundation-BA7RDITNLIF2VRJ53QFR5WPR6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/dnssd-4X8MZEKDONR2YA09XZ2XL4E5X.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os-1IMA70R92VM9AL5356QE4AMCK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/XPC-F0TS7VA7GDV3MRZG5FPJXYVND.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreFoundation-99WD2SDQRYCCV55I1NLJJ9UCO.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreGraphics-M5J1YBHQ8ICYSBF363AW2BSN.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Security-7OTB7W4ETBF5T5CC488H9QC4W.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os-3MCQDC5N15JFXB5L65YZQYKMD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Security-E86NVVYYRZ6ZN0H4GP2KDSX1B.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreGraphics-AZLCGI9HDIQCO1X49CFNUA2VA.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreText-CRRC489BFKPR2FH3DUA0VP75.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreVideo-6FDCB6PKT62K8IE1X4ZTND9UA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Foundation-67C8X8Z55DV6E6I7DC2OSV8A2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Foundation-8M225D1JP6I2FJTJDH09WA1HS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Spatial-B3IYHDGIXF1ZU9C45NOX6V5G1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreText-6C1U6ZFP6WDJ6NFRRD258LNE6.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/dnssd-FVK9A373QSDFTPKKXQIT28P8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreVideo-BEEAWPWKZMOEGKKQAV4KXPDZL.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UniformTypeIdentifiers-6JWQZKFGMV99779VB51FXL02B.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SceneKit-13P6N64CRRBMB3F8J35U9GVXZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Accessibility-4LN6DSZ60G2M3BHLUNTFFFBH9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SceneKit-7XALCQ0S4AIVP5FQY0C0G9A0M.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WidgetKit-CNS0E55WLVP8ME10IR370V98N.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/QuartzCore-CFSWL9OWDSWILM1XESX6O5HZ4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIUtilities-92K5FSU9AK820E8WJ2P96ZYIG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/OSLog-4RF9HYDFE80LTODT68DVGKEO1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Network-81MEQK8GKEBA1T20F1GQ8SQXS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/OSLog-D0MFQ9S8C4L02OL42GQYX579Q.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreData-DEQJXQVXBRXBOLP2A7UP56O9S.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUICore-CIH6AP8HZ3NR6ARY4Y1QMH73S.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Accessibility-2IM5ZZMQAADVKL8XFSUHW0C7N.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/AppIntents-AYCDK6HT71NGZK8PWLRIEWWUX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIUtilities-8PD7TF48E9EYVABRKNI9YF6P5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreTransferable-AYMLC08PDO28TQPMPZ0JKYR2C.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/QuartzCore-484WJTO9K6TCQ6UJL7QL9W1LX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_LocationEssentials-ARBJDJYK0CSCZTUL711ITGM5P.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UserNotifications-AJNU8FTH9NGMETQB7SCTLIFJQ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Symbols-692QK0Y3A70PD1IYPM58IOVHE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/RelevanceKit-B3ZRP1C7ST23EAHCHSESB3YG8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreLocation-9ECMC58ST2Z199JRNNGBZ5Y61.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreData-9HD4W6NHN35EZRFXP98PTOEFU.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIKit-A0K8WBDS86TP7FEY9ZU0DAXI3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WidgetKit-4UFR9AFR79V1CTFO6OUO8BR0Q.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/AppIntents-3B89K8I8YYQR1Z4ESZFSA01WQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UniformTypeIdentifiers-4DGZS8V47OXWH3EAZNG7B3OO0.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Intents-8KG3JW8QD6ODSG8FKJLDHI0TP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UserNotifications-ZHX27RU7ONWLVA8N72UDGPQG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DataDetection-7FHKNKCX2TMDIFUUONXESHQMA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_LocationEssentials-3LTT3TJRAMCWA7XXDEWTW53L9.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DataDetection-EGMX60C758XR4LED888VT18SZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreLocation-5L4DSXTK8WRO0AEK5IGNMF6Z5.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUICore-5JNSPN63UK0A4TS3R0QRVRN4Z.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/RelevanceKit-8OQTL4KAJKOIG9IXBH5U8PBQ4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Network-E3R1GFX5G66PYZRRVB7AYRORS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Intents-9WXONACT4DXUUL026GDCAWYVJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Symbols-DQY8OMH7FZND0EB9II4ISR7K9.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreTransferable-5S6GV3H3SD0RP9LM7GRS0OF3C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIKit-BH347GXO9161NWKVL806DCG5U.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/HomeKit-3TIL92Q0SWSKO5GHGPPSDCG72.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MapKit-5OLB0N3SRJAP2TPIOC2UK5DVW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchKit-BGOPQZUJFJRJWXNJ5Y88EJI4T.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUI-B1257QNC8Y57EUD8CQFT25S5T.pcm
+
+SwiftEmitModule normal x86_64 Emitting\ module\ for\ FamilienplanerWatchWidgets (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+EmitSwiftModule normal x86_64 (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 Compiling\ WatchSnapshot.swift /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 Compiling\ FamilienplanerWatchWidgets.swift,\ SharedInbox.swift /Users/runner/work/familienplaner/familienplaner/WatchWidgets/FamilienplanerWatchWidgets.swift /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/WatchWidgets/FamilienplanerWatchWidgets.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MapKit-8ALILKDG9AHFVT0NQIAUOKP2I.pcm
+
+SwiftDriverJobDiscovery normal x86_64 Emitting module for FamilienplanerWatchWidgets (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftDriver\ Compilation\ Requirements FamilienplanerWatchWidgets normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/HomeKit-6EW6U77O6NT9CQAHK4O80RRTO.pcm
+
+SwiftDriverJobDiscovery normal x86_64 Compiling WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.swiftmodule
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftdoc (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.swiftdoc
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.abi.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/x86_64-apple-watchos-simulator.abi.json
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/Project/x86_64-apple-watchos-simulator.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftsourceinfo (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/Project/x86_64-apple-watchos-simulator.swiftsourceinfo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchKit-5LCZ0HEZYZGQC7IU6I0AZ08M2.pcm
+
+SwiftCompile normal x86_64 Compiling\ WidgetBridge.swift /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUI-2MSZ5MP9TS57E7P5Q7YZ0ZYLT.pcm
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ FamilienplanerWatchWidgets (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+EmitSwiftModule normal arm64 (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 Compiling\ WatchSnapshot.swift /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftCompile normal arm64 Compiling\ FamilienplanerWatchWidgets.swift,\ SharedInbox.swift /Users/runner/work/familienplaner/familienplaner/WatchWidgets/FamilienplanerWatchWidgets.swift /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/WatchWidgets/FamilienplanerWatchWidgets.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for FamilienplanerWatchWidgets (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftDriver\ Compilation\ Requirements FamilienplanerWatchWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal x86_64 Compiling FamilienplanerWatchWidgets.swift, SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftCompile normal arm64 Compiling\ WidgetBridge.swift /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftMergeGeneratedHeaders /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/FamilienplanerWatchWidgets-Swift.h /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-Swift.h /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-Swift.h (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-Swift.h -arch x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-Swift.h -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/FamilienplanerWatchWidgets-Swift.h
+
+SwiftDriverJobDiscovery normal arm64 Compiling WatchSnapshot.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.swiftmodule
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftdoc (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.swiftdoc
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.abi.json (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/arm64-apple-watchos-simulator.abi.json
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/Project/arm64-apple-watchos-simulator.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftsourceinfo (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.swiftmodule/Project/arm64-apple-watchos-simulator.swiftsourceinfo
+
+SwiftDriver\ Compilation FamilienplanerWatchWidgets normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/Binary/FamilienplanerWatchWidgets normal x86_64 (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-watchos26.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -O0 -L/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -L/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -filelist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.LinkFileList -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_dependency_info.dat -e _NSExtensionMain -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/watchsimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.swiftmodule @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets-linker-args.resp -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/Binary/FamilienplanerWatchWidgets
+
+SwiftDriverJobDiscovery normal arm64 Compiling WidgetBridge.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+MkDir /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/unthinned (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /bin/mkdir -p /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/unthinned
+
+MkDir /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /bin/mkdir -p /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned
+
+GenerateAssetSymbols /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets --compile /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device watch --minimum-deployment-target 26.0 --platform watchsimulator --bundle-identifier de.barg.familienplaner.watchkitapp --generate-swift-asset-symbol-extensions NO --generate-swift-asset-symbols /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CompileAssetCatalogVariant thinned /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets --compile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device watch --minimum-deployment-target 26.0 --platform watchsimulator
+/* com.apple.actool.compilation-results */
+/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling FamilienplanerWatchWidgets.swift, SharedInbox.swift (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+
+SwiftDriver\ Compilation FamilienplanerWatchWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatchWidgets -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -application-extension -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver FamilienplanerWatch normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/Binary/FamilienplanerWatchWidgets normal arm64 (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-watchos26.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -O0 -L/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -L/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -filelist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.LinkFileList -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_dependency_info.dat -e _NSExtensionMain -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/watchsimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.swiftmodule @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets-linker-args.resp -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/Binary/FamilienplanerWatchWidgets
+
+SwiftDriver FamilienplanerWatch normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+CreateUniversalBinary /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/FamilienplanerWatchWidgets normal arm64\ x86_64 (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/Binary/FamilienplanerWatchWidgets /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/Binary/FamilienplanerWatchWidgets -output /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/FamilienplanerWatchWidgets
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_AvailabilityInternal-9ZNGGWSQHI4WJUMVQL65BX048.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrcheck-5KQQCDW8JIEZ9R6T1CB55UJVW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_SwiftConcurrencyShims-F0WYT521R9IE6QM7TV044OV39.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_float-9EV1JOAKROMZF9MWUEN4QVOHL.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DeveloperToolsSupport-9PS329BFDSWPP8TKE4JIAFMTV.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdarg-DKLUWPK8621X424RMRU0UOY7F.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stddef-87EUSUPG3TTDRJMYWT9X4ITW2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftShims-DM2E4TLNONWEAVR0CRCBDJZ10.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation1-7NDFV6EP1UQKIHUYM02VL2Q9U.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrauth-85IBC9OH8QKBOU92XK7EQ95R9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdarg-5SAA8CUMBFAGDG9PMX26SYQ8Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdbool-4MAKFOZMFP2Z6MPXVGMAO08KI.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_limits-19K59UZ8WDYO9HKV2RY3AGH23.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_AvailabilityInternal-5YWYTP4PLX7K1ORB35JE6J2ST.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_float-DSDJC0UHFZEEMJ1UO6XEEDGTX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stddef-1W4RXUM0O8YYDSD37YSCHSE2N.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DeveloperToolsSupport-7Y9IOJUSTZDK5NXA13DK28IXD.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ExtensionFoundation-7DYZGRDMUUTRENFD17J5THRC1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrcheck-1QJVJRBQCEBRWH92O46WDY6HP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftShims-CZDZSP72MWHXUJVHVJB4D8PYZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ptrauth-809DMCH7U4NV4WUQAQE4IQWWK.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation2-8CTYYM48ZDGTA34AAA5NU9OWC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation1-7V4Y8VI96FUA3WYH9S48Y4DOW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdbool-3N8IRAKMZC5BUVAT815BK025Q.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ExtensionFoundation-2YQLN4PZIXXYOEVGBRW5XU9D7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_limits-40TQY9CZ4O38ODQPO10C8GWYH.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_tgmath-859SSP7IHP4E28GKXVUQ31TKU.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdint-A5FIFC9POQ8ZYN5YK756M6SC2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/sys_types-3UEFIXYMVWPP5OFEJMIXSW490.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation2-70WDR3J6DEU0ZNY0V2NNIV4IR.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdatomic-2CLVHA0DXP5KYFNOEN6NHW7O8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation3-EDMM490QEZ4LSZUON80HY2H25.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_tgmath-D21BXYSBJYL9KZDPQ37X6GFQM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/sys_types-5MUR9DG80CWE66DNFPIWGE1J8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdint-F2MM10QDFAWKV9AVLVP0IR64I.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_SwiftConcurrencyShims-77UY8E6Q8R0ICVFO8OMREE641.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_intrinsics-ADBCTC7LT18ROB4W694WWHL87.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_stdatomic-2X7MUEJCTTVEIJU5VKBDN6FL6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_DarwinFoundation3-D64WWIEBVHFA3UHJH4Y5XIGLB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_inttypes-8UUV1V76SFXX0WB5OHLVK905P.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_inttypes-EUK0XGF0SI2SZNLXMQRLMY9ZF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Darwin-8XZX5YLKRRK71H4O59MHXJ5KE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Darwin-38JFUB2Y9JDXSB8QPKP9DDNUZ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/simd-2U9KYDQ1FZLY2SNU30V6NY9HA.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MachO-9GBJ70HPNRVEP2D9HUEZSMPDY.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ObjectiveC-4V67NP31KWODBZ1JM4SKO9GU7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/ObjectiveC-BCA46P1VMM0B5F6L25DEEL1BF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_object-AHEI22YVEWDIH0M5C3QMF16QW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MachO-6QF5VF2S2OVPC60XS38FSFX8T.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_workgroup-1UANS9TS5S0V0G9CPPTXQJ3N1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_object-BEKZ9GTC3GMB4OZCL6XFT8W1.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Spatial-B6IBOMX98VJDNXPXHOANMV5Y9.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Dispatch-2ZORLFIV9C6LP3HZHN3YMLIU7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os_workgroup-470U6Y2V6XTJSK35AZ8UDD2JW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreFoundation-W7EE4BDNUEWKXECO1FCT07R2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Dispatch-5O5N9CZ68CFXMYHCCGIO1PY.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/XPC-4XT5M6KF7V1FZ57XZ3V0PB34D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/dnssd-DNKT36RPK2XNRK65BY205H4T8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Security-58WOYUYQ55ZR1JK9FZ13R452U.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreGraphics-E0R52H3UWRYG3MFDSASXX0TUJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os-2PYMGATS193MSQR4RUPJXXYE2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Foundation-9YAPKJZ6EFCJXO0QKB4E34TJV.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreVideo-9XYB3WEIEFXFI24OVH2FMVK32.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreFoundation-7J7KJNCFU3EP9C6A2SN1QOVN7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/XPC-7YCZCV0EJEXHLNG1UAGU3CVGP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreGraphics-BJQ3CJKN2QP1THTMDIR89GEJJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/os-7ZWABPUZEX1B60MALW8YP3A9B.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WidgetKit-9VVKQY6NSUNGY1EJBWTTBRF5P.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_LocationEssentials-C1V0GSXC8VNGOLMQ89ZLR1G6W.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIUtilities-5CUL2VZBAIX1WOZCCR33YI3F8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UniformTypeIdentifiers-PS9O7S6GOQ2SRMDC8ICMVPRJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/RelevanceKit-63QC85OYME0AGLFIKOPHXML3Q.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreLocation-9UM0AS8UCZUEDL9SGZHPG9TWM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreVideo-2BNDISWBNPGTNX6G2EUA1NABF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Symbols-C01B0BMGJ3YH7YDQWRAM42EPA.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DataDetection-7ZWAHHS285I06K9867OTDJSAS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/AppIntents-W9TLAGELUVMD829H3MPCJVY8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreText-7316XDCMQZ18Y4ASYFVW0Z6SB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SceneKit-CHFG27YLNHLMBAI2URHN4DJTU.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreText-CB2CWV8FSUTLFKY47RT19EXZD.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/QuartzCore-6HNV2XGZ0W54VVGSD525HGGXO.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Accessibility-5XJD6T6RDQLBVMEINUAR8VNK9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Security-7KDYPL17RU664BGMAPSJR5YZE.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchConnectivity-7SBIX0O3CTII129T2PMKM9UJP.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUICore-2JNYAKTPW7XH6QQN4A1KAEFQC.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UserNotifications-14ACHA6JMD35DE91C9NZVYIJF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Foundation-BHUT3K2EZYBUEVOQYRII0RLYB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreTransferable-C4JKZBAT2EP4LL6GYJL4UYNZM.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIKit-9QYM00XGV0JTBJ24WCI5UK860.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Intents-EG87UY1FJ7JQY9NJSTYCVLGB7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/DataDetection-5YLPXSPUUZOT5Q138U5FZB716.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchConnectivity-E8EQQR3BZ9MZ4OH1GKC2KAT62.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_LocationEssentials-CQT3IW140XFKBGIKMPNL2ZY0F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreTransferable-4INPR9AZW1FUB8BK1T7MNI12E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UniformTypeIdentifiers-6GBC55MCLE0O1C30DIX7NVOD7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Accessibility-EGASIE5RVRCTGPD79LEG8NBM8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/OSLog-7VJLAHJAV0QUSODC1P2E4ONIF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/HomeKit-EZEU31F7Z2B1HG1MSUAPJV84H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreData-98DAGOQHOE0NW542JWNJQ3NDL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WidgetKit-93ANVVCPD4QYUW6JC9YA8FKJ5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UserNotifications-9J2ICAHR0OI9PXUPLBGV5JS8T.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/QuartzCore-79VVW0XC6DJE1NOQLHY67SPEP.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MapKit-7T66AGQFBT0H27ZIVWL4R22UT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreLocation-8YV9LPERTT6C1SCDZZ05H8A2A.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUICore-3N1T7EBG9PF3R8YBGW2E989C1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Intents-7T02PGNLV6T42FXTU8Z030S4E.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchKit-2NPA2BT9TASNTI1UV6V302B9U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIUtilities-7JVE3XCC61A5PM7F3JL2NAC38.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUI-5TGTAONB9RAKAPDGQ2MSBX6KB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/RelevanceKit-2X4ETVX9OCIXWMI0X88J6LRJM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/AppIntents-78LZP05N5NRPHOEPBG49EAMOW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/CoreData-B46QB3UVUF0AU5YUW9G9PASSN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Network-BKDRZ4S0X4BUSXLU9W5ZLEQYJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/dnssd-177CQDODNH4JXXR55GY26UP9Z.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/OSLog-39H6Z8GTVP4OKEFMZRNTRKT53.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Network-7PSU6JFJ6HTGDK60SBXNOJRR7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Symbols-DB63RG20F3DJQNTCU78UPQFJJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/_Builtin_intrinsics-58AFPXFGFF6SN2XN9BMTOJ16N.pcm
+
+SwiftEmitModule normal x86_64 Emitting\ module\ for\ FamilienplanerWatch (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+EmitSwiftModule normal x86_64 (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/UIKit-6KS6HTR9DCW7R3WHEBFG9ULOP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/simd-AYCRGUB0ZZO483OG2QQHR9YQ0.pcm
+
+SwiftDriverJobDiscovery normal x86_64 Emitting module for FamilienplanerWatch (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftDriver\ Compilation\ Requirements FamilienplanerWatch normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/Spatial-71TZENQX1FMNIKC5NE0FCATHB.pcm
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.swiftmodule
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftdoc (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.swiftdoc
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.abi.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/x86_64-apple-watchos-simulator.abi.json
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/Project/x86_64-apple-watchos-simulator.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftsourceinfo (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/Project/x86_64-apple-watchos-simulator.swiftsourceinfo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/HomeKit-6PKN37RJJAK0SZLCCC85PBWKX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SceneKit-AMD8E83CT6ZUUEEEJFQT52G6N.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/MapKit-7NQUMDRH3AHA6B4XPZ0F5ETKT.pcm
+
+SwiftCompile normal x86_64 Compiling\ FamilienplanerWatchApp.swift,\ SharedInbox.swift,\ WatchContentView.swift /Users/runner/work/familienplaner/familienplaner/Watch/FamilienplanerWatchApp.swift /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift /Users/runner/work/familienplaner/familienplaner/Watch/WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Watch/FamilienplanerWatchApp.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Watch/WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 Compiling\ WatchSnapshot.swift,\ WatchStore.swift /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift /Users/runner/work/familienplaner/familienplaner/Watch/WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Watch/WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/WatchKit-3SL0MSAQ13QWI5RA2ZWOOXN07.pcm
+
+SwiftDriverJobDiscovery normal x86_64 Compiling WatchSnapshot.swift, WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal x86_64 Compiling\ WidgetBridge.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling FamilienplanerWatchApp.swift, SharedInbox.swift, WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules/SwiftUI-BWIMFNEQEHHD6CRR3NH2DXPQA.pcm
+
+ExtractAppIntentsMetadata (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --module-name FamilienplanerWatchWidgets --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk --xcode-version 17F113 --platform-family watchOS --deployment-target 26.0 --bundle-identifier de.barg.familienplaner.watchkitapp.widgets --output /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex --target-triple arm64-apple-watchos26.0-simulator --target-triple x86_64-apple-watchos26.0-simulator --binary-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex/FamilienplanerWatchWidgets --dependency-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets_dependency_info.dat --dependency-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets_dependency_info.dat --stringsdata-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftFileList --source-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftFileList --metadata-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/FamilienplanerWatchWidgets.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/arm64/FamilienplanerWatchWidgets.SwiftConstValuesFileList --swift-const-vals-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatchWidgets.build/Objects-normal/x86_64/FamilienplanerWatchWidgets.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-11 14:08:29.012 appintentsmetadataprocessor[87704:237648] Starting appintentsmetadataprocessor export
+2026-10-11 14:08:29.113 appintentsmetadataprocessor[87704:237648] Extracted no relevant App Intents symbols, skipping writing output
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ FamilienplanerWatch (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+EmitSwiftModule normal arm64 (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling WidgetBridge.swift, GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftDriver\ Compilation FamilienplanerWatch normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target x86_64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ WatchSnapshot.swift,\ WatchStore.swift /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift /Users/runner/work/familienplaner/familienplaner/Watch/WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/WatchSnapshot.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Watch/WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 Compiling\ WidgetBridge.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/WidgetBridge.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for FamilienplanerWatch (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftDriver\ Compilation\ Requirements FamilienplanerWatch normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling WidgetBridge.swift, GeneratedAssetSymbols.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal arm64 Compiling\ FamilienplanerWatchApp.swift,\ SharedInbox.swift,\ WatchContentView.swift /Users/runner/work/familienplaner/familienplaner/Watch/FamilienplanerWatchApp.swift /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift /Users/runner/work/familienplaner/familienplaner/Watch/WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Watch/FamilienplanerWatchApp.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Shared/SharedInbox.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftCompile normal arm64 /Users/runner/work/familienplaner/familienplaner/Watch/WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    
+
+SwiftMergeGeneratedHeaders /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/FamilienplanerWatch-Swift.h /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-Swift.h /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-Swift.h (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-Swift.h -arch x86_64 /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-Swift.h -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/FamilienplanerWatch-Swift.h
+
+SwiftDriverJobDiscovery normal arm64 Compiling WatchSnapshot.swift, WatchStore.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.swiftmodule
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftdoc (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftdoc /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.swiftdoc
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.abi.json (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.abi.json /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/arm64-apple-watchos-simulator.abi.json
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/Project/arm64-apple-watchos-simulator.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftsourceinfo (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftsourceinfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.swiftmodule/Project/arm64-apple-watchos-simulator.swiftsourceinfo
+
+RegisterExecutionPolicyException /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-RegisterExecutionPolicyException /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex
+
+Touch /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /usr/bin/touch -c /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex
+
+Ld /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/Binary/FamilienplanerWatch normal x86_64 (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-watchos26.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -O0 -L/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -L/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -filelist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.LinkFileList -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/watchsimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.swiftmodule @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch-linker-args.resp -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/Binary/FamilienplanerWatch
+
+SwiftDriverJobDiscovery normal arm64 Compiling FamilienplanerWatchApp.swift, SharedInbox.swift, WatchContentView.swift (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+SwiftDriver\ Compilation FamilienplanerWatch normal arm64 com.apple.xcode.tools.swift.compiler (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name FamilienplanerWatch -Onone @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -target arm64-apple-watchos26.0-simulator -g -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode/SDKStatCaches.noindex/watchsimulator26.5-23T570-688ef53f1462e2c8f657fdc38a81448f4ff5b3021fd2b02f145790f94936b2db.sdkstatcache -output-file-map /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/familienplaner/familienplaner/watchbuild/SwiftExplicitPrecompiledModules -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule -validate-clang-modules-once -clang-build-session-file /var/folders/36/tjdph2t965j8snz9_vkdnw0r0000gn/C/org.llvm.clang/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-generated-files.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-own-target-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch-project-headers.hmap -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/include -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-Swift.h -working-directory /Users/runner/work/familienplaner/familienplaner -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/Binary/FamilienplanerWatch normal arm64 (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-watchos26.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk -O0 -L/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -L/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/EagerLinkingTBDs/Debug-watchsimulator -F/Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator -filelist /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.LinkFileList -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/watchsimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.swiftmodule @/Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch-linker-args.resp -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/Binary/FamilienplanerWatch
+
+CreateUniversalBinary /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/FamilienplanerWatch normal arm64\ x86_64 (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/Binary/FamilienplanerWatch /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/Binary/FamilienplanerWatch -output /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/FamilienplanerWatch
+
+LinkAssetCatalog /Users/runner/work/familienplaner/familienplaner/Watch/Assets.xcassets (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-linkAssetCatalog --thinned /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app --plist-output /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Assets.car (in target 'FamilienplanerWatch' from project 'Familienplaner')
+
+Copy /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatchWidgets.appex /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns
+
+ProcessInfoPlistFile /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist /Users/runner/work/familienplaner/familienplaner/Watch/Info.plist (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-infoPlistUtility /Users/runner/work/familienplaner/familienplaner/Watch/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PkgInfo -expandbuildsettings -format binary -platform watchsimulator -additionalcontentfile /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex -o /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist
+
+ExtractAppIntentsMetadata (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --module-name FamilienplanerWatch --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator26.5.sdk --xcode-version 17F113 --platform-family watchOS --deployment-target 26.0 --bundle-identifier de.barg.familienplaner.watchkitapp --output /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app --target-triple arm64-apple-watchos26.0-simulator --target-triple x86_64-apple-watchos26.0-simulator --binary-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/FamilienplanerWatch --dependency-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch_dependency_info.dat --dependency-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch_dependency_info.dat --stringsdata-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftFileList --source-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftFileList --metadata-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/FamilienplanerWatch.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/arm64/FamilienplanerWatch.SwiftConstValuesFileList --swift-const-vals-list /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/Objects-normal/x86_64/FamilienplanerWatch.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-11 14:09:12.478 appintentsmetadataprocessor[89933:243081] Starting appintentsmetadataprocessor export
+2026-10-11 14:09:12.699 appintentsmetadataprocessor[89933:243081] Extracted no relevant App Intents symbols, skipping writing output
+
+CopySwiftLibs /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/FamilienplanerWatch --scan-folder /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Frameworks --scan-folder /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns --scan-folder /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/SystemExtensions --scan-folder /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Extensions --platform watchsimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.a69nau/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/familienplaner/familienplaner/watchbuild/Familienplaner.build/Debug-watchsimulator/FamilienplanerWatch.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ValidateEmbeddedBinary /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/PlugIns/FamilienplanerWatchWidgets.appex -info-plist-path /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app/Info.plist
+
+RegisterExecutionPolicyException /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-RegisterExecutionPolicyException /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app
+
+Validate /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    builtin-validationUtility /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app (in target 'FamilienplanerWatch' from project 'Familienplaner')
+    cd /Users/runner/work/familienplaner/familienplaner
+    /usr/bin/touch -c /Users/runner/work/familienplaner/familienplaner/watchbuild/Debug-watchsimulator/FamilienplanerWatch.app
+
+warning: ONLY_ACTIVE_ARCH=YES requested with multiple ARCHS and no active architecture could be computed; building for all applicable architectures (in target 'FamilienplanerWatchWidgets' from project 'Familienplaner')
+warning: ONLY_ACTIVE_ARCH=YES requested with multiple ARCHS and no active architecture could be computed; building for all applicable architectures (in target 'FamilienplanerWatch' from project 'Familienplaner')
+** BUILD SUCCEEDED **
+
