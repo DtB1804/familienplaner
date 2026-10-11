@@ -5,7 +5,8 @@
 # (Hamburger Zeit) und nur, wenn seit dem letzten Testlauf ein neuer Build auf main entstanden
 # ist. GitHub-Zeitpläne laufen in UTC, deshalb zwei Einträge (Sommer- und Winterzeit); der
 # Prüfschritt lässt nur den Lauf durch, der in Hamburg in die Stunde 2 fällt.
-# Von Hand jederzeit über "Run workflow" (workflow_dispatch), dann ohne Prüfung.
+# Von Hand jederzeit über "Run workflow" (workflow_dispatch) oder per Push auf den Branch
+# `run-tests` (nur auf ausdrücklichen Wunsch von David), dann ohne Prüfung.
 name: Tests
 
 on:
@@ -13,6 +14,8 @@ on:
     - cron: "15 0 * * *"   # 02:15 Sommerzeit (MESZ)
     - cron: "15 1 * * *"   # 02:15 Winterzeit (MEZ)
   workflow_dispatch:
+  push:
+    branches: [run-tests]
 
 permissions:
   contents: write
@@ -27,7 +30,7 @@ jobs:
       - name: Uhrzeit und neuer Build?
         id: decide
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ github.event_name }}" = "push" ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"; echo "Von Hand gestartet"; exit 0
           fi
           HOUR=$(TZ=Europe/Berlin date +%H)

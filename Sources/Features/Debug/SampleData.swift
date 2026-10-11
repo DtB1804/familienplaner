@@ -69,16 +69,40 @@ enum SampleData {
             let d = calendar.date(byAdding: .day, value: offset, to: today) ?? today
             return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: d) ?? d
         }
-        EventService.makeEvent(in: context, household: household,
-                               title: "Fußball", startAt: day(1, 16), endAt: day(1, 17, 30),
-                               createdBy: owner, subjects: [kid1],
-                               requiredRoles: [.driveFrom], tag: tag("Sport"))
-        EventService.makeEvent(in: context, household: household,
-                               title: "Elternabend", startAt: day(2, 19), endAt: day(2, 20, 30),
-                               createdBy: owner, subjects: [owner, partner], locationName: "Grundschule")
-        EventService.makeEvent(in: context, household: household,
-                               title: "Klavier", startAt: day(3, 15), endAt: day(3, 16),
-                               createdBy: owner, subjects: [kid2], requiredRoles: [.driveTo])
+        // Werktage der laufenden Woche füllen, egal auf welchen Tag "heute" fällt. Sonst
+        // bleibt die Wochenansicht der Bildschirmfotos an einem Samstag fast leer (10.10.2026).
+        let weekStart = calendar.dateInterval(of: .weekOfYear, for: today)?.start ?? today
+        let afternoon: [(title: String, hour: Int, minute: Int, endHour: Int, endMinute: Int,
+                         who: [CDMember], roles: [ParticipationRole], tag: String?)] = [
+            ("Fußball", 16, 0, 17, 30, [kid1], [.driveFrom], "Sport"),
+            ("Klavier", 15, 0, 16, 0, [kid2], [.driveTo], nil),
+            ("Elternabend", 19, 0, 20, 30, [owner, partner], [], nil),
+            ("Turnen", 15, 30, 16, 30, [kid2], [.driveFrom], "Sport"),
+            ("Bücherei", 14, 0, 15, 0, [kid1, partner], [], nil),
+        ]
+        for index in 0..<5 {
+            guard let date = calendar.date(byAdding: .day, value: index, to: weekStart),
+                  !calendar.isDate(date, inSameDayAs: today) else { continue }
+            func at(_ hour: Int, _ minute: Int = 0) -> Date {
+                calendar.date(bySettingHour: hour, minute: minute, second: 0, of: date) ?? date
+            }
+            EventService.makeEvent(in: context, household: household,
+                                   title: "Schule", startAt: at(8), endAt: at(13),
+                                   createdBy: owner, subjects: [kid1, kid2],
+                                   tag: tag("Schule"), locationName: "Grundschule")
+            EventService.makeEvent(in: context, household: household,
+                                   title: "Belegt", startAt: at(9), endAt: at(15),
+                                   createdBy: owner, subjects: [owner],
+                                   visibility: .busyOnly, tag: tag("Arbeit"))
+            let item = afternoon[index]
+            EventService.makeEvent(in: context, household: household,
+                                   title: item.title,
+                                   startAt: at(item.hour, item.minute),
+                                   endAt: at(item.endHour, item.endMinute),
+                                   createdBy: owner, subjects: item.who,
+                                   requiredRoles: item.roles,
+                                   tag: item.tag.flatMap(tag))
+        }
         EventService.makeEvent(in: context, household: household,
                                title: "Oma besuchen", startAt: day(5, 14), endAt: day(5, 18),
                                createdBy: owner, subjects: [owner, partner, kid1, kid2])

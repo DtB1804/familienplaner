@@ -212,4 +212,5 @@ schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 - GitHub Pages kommt aus dem Branch `pages` (Inhalt von `docs/`, dazu `adhoc/` vom
   Workflow `AdHoc-Development`). Nach Änderungen an `docs/` den Branch `pages` neu schreiben.
 - Der Workflow `Tests` läuft nur nachts zwischen 2 und 3 Uhr und nur bei neuem Stand
-  auf `main`. Kein Push auf einen Branch, der Tests auslöst.
+  auf `main`. Ausnahme: Auf ausdrücklichen Wunsch von David startet ein Push auf den
+  Branch `run-tests` einen Lauf sofort (eingeführt 11.10.2026). Sonst kein Push dorthin.

@@ -28,9 +28,39 @@ final class SmokeTests: XCTestCase {
         completeSetup(in: app)
         tap("nav.next", in: app)
         createEvent("Schwimmen", roles: ["driveFrom"], in: app)
-        try app.performAccessibilityAudit(for: .all) { issue in self.isNavigationBarTypeIssue(issue, in: app) || self.isHourLabelContrastIssue(issue) }
+        // Alle Meldungen sammeln statt beim ersten Fund abzubrechen (Wunsch David, 11.10.2026).
+        var findings: [String] = []
+        try collectAuditIssues(screen: "Tagesansicht", in: app, into: &findings)
         tap("toolbar.family", in: app)
-        try app.performAccessibilityAudit(for: .all) { issue in self.isNavigationBarTypeIssue(issue, in: app) || self.isHourLabelContrastIssue(issue) }
+        try collectAuditIssues(screen: "Familie", in: app, into: &findings)
+        for finding in findings { XCTFail(finding) }
+        if !findings.isEmpty {
+            let attachment = XCTAttachment(string: findings.joined(separator: "\n"))
+            attachment.name = "Barrierefreiheit – alle Meldungen"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+    }
+
+    /// Führt Apples Prüfung aus und nimmt jede Meldung auf, statt beim ersten Fund abzubrechen.
+    /// Die Prüfung bricht nur ab, wenn der Handler `false` liefert; hier liefert er immer
+    /// `true` und schreibt die nicht hingenommenen Meldungen in `findings`.
+    @MainActor
+    private func collectAuditIssues(screen: String, in app: XCUIApplication,
+                                    into findings: inout [String]) throws {
+        var collected: [String] = []
+        try app.performAccessibilityAudit(for: .all) { issue in
+            if self.isNavigationBarTypeIssue(issue, in: app) || self.isHourLabelContrastIssue(issue) {
+                return true
+            }
+            let element = issue.element
+            let label = element?.label ?? ""
+            let identifier = element?.identifier ?? ""
+            let frame = element.map { "\(Int($0.frame.minX)),\(Int($0.frame.minY)) \(Int($0.frame.width))×\(Int($0.frame.height))" } ?? "?"
+            collected.append("[\(screen)] \(issue.compactDescription) – Element: \"\(label)\" id: \"\(identifier)\" Rahmen: \(frame)")
+            return true
+        }
+        findings += collected
     }
 
     /// Texte und Knöpfe in der Navigationsleiste (Titel, "Heute") begrenzt iOS selbst in der
