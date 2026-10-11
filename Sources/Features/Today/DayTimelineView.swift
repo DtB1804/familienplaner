@@ -313,6 +313,10 @@ public struct DayTimelineView: View {
             if openCount > 0 {
                 Text(width < 140 ? "\(openCount) ?" : openLabel(for: event))
                     .font(.caption2.weight(.bold))
+                    // Bei großer Schrift nicht abschneiden, notfalls über den Rand des kurzen
+                    // Termins hinaus (Nachttest 11.10.: "Dynamic Type teilweise nicht unterstützt").
+                    .lineLimit(1)
+                    .fixedSize()
                     .padding(.horizontal, 5)
                     .padding(.vertical, 1)
                     .background(Palette.color("person5"), in: Capsule())
