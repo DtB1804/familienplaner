@@ -25,7 +25,9 @@ struct WeekTimelineView: View {
     @State private var lastDragEnd = Date.distantPast
     private let snapMinutes = 15
 
-    private let gutterWidth: CGFloat = 36
+    // Wächst mit der Schriftgröße, sonst werden die Stundenzahlen bei großer Schrift
+    // abgeschnitten (Prüfung 11.10.2026: "Dynamic Type teilweise nicht unterstützt").
+    @ScaledMetric(relativeTo: .caption2) private var gutterWidth: CGFloat = 36
     private var startHour: Int { TimelineHours.range(for: events).lowerBound }
     private var endHour: Int { TimelineHours.range(for: events).upperBound }
 
@@ -94,6 +96,8 @@ struct WeekTimelineView: View {
             VStack(spacing: 0) {
                 ForEach(startHour..<endHour, id: \.self) { hour in
                     Text(String(format: "%02d", hour))
+                        .lineLimit(1)
+                        .fixedSize()
                         .id(hour)
                         .font(TypeScale.hourLabel)
                         // Voller Kontrast wie in der Tagesansicht (Nachttest 09.10.).

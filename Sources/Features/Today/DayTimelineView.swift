@@ -40,7 +40,9 @@ public struct DayTimelineView: View {
     /// Raster beim Verschieben.
     private let snapMinutes = 15
     private let laneMinWidth: CGFloat = 64
-    private let gutterWidth: CGFloat = 44
+    // Wächst mit der Schriftgröße, sonst werden die Stundenzahlen bei großer Schrift
+    // abgeschnitten (Prüfung 11.10.2026: "Dynamic Type teilweise nicht unterstützt").
+    @ScaledMetric(relativeTo: .caption2) private var gutterWidth: CGFloat = 44
     /// Normal 6–23 Uhr; frühere oder spätere Termine erweitern den Bereich (UX-Prüfung B8).
     private var startHour: Int { TimelineHours.range(for: events).lowerBound }
     private var endHour: Int { TimelineHours.range(for: events).upperBound }
@@ -176,6 +178,8 @@ public struct DayTimelineView: View {
         VStack(spacing: 0) {
             ForEach(startHour..<endHour, id: \.self) { hour in
                 Text(String(format: "%02d", hour))
+                    .lineLimit(1)
+                    .fixedSize()
                     .id(hour)
                     .font(TypeScale.hourLabel)
                     // Voller Kontrast: .tertiary fiel in der Prüfung durch (Nachttest 09.10.).
