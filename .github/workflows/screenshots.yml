@@ -1,6 +1,7 @@
 # App-Store-Bildschirmfotos mit erfundenen Beispieldaten (Test ScreenshotTests, -sampleData).
 # Start: Push auf den Branch "screenshots" oder von Hand (Run workflow).
-# Ergebnis: JPEGs 1284 x 2778 (6,5"-Größe laut App Store Connect) im Branch ci-screenshots
+# Ergebnis: JPEGs iPhone 1284 x 2778, iPad 13" (iPad-*.jpg) und Apple Watch (Watch-*.jpg)
+# im Branch ci-screenshots
 # und als Artefakt. Kein Einfluss auf Tests oder TestFlight.
 name: Screenshots
 
@@ -81,6 +82,100 @@ jobs:
           done
           sips -g pixelWidth -g pixelHeight out/*.jpg || true
           cp shots.log simulator.txt out/ 2>/dev/null || true
+
+      # iPad: Pflicht, weil die App auf dem iPad läuft (TARGETED_DEVICE_FAMILY 1,2).
+      # Apple verlangt mindestens ein Bild für iPad 13 Zoll (2064 x 2752 oder 2048 x 2732).
+      - name: iPad 13 Zoll wählen und Bildschirmfotos aufnehmen
+        if: always()
+        continue-on-error: true
+        env:
+          TEST_RUNNER_FP_SCREENSHOTS: "1"
+        run: |
+          set -o pipefail
+          PAD=$(xcrun simctl list devices available | grep -E "^\s+iPad Pro 13-inch" | tail -1 | grep -oE "[0-9A-F-]{36}")
+          if [ -z "$PAD" ]; then PAD=$(xcrun simctl list devices available | grep -E "^\s+iPad Pro .*12\.9" | tail -1 | grep -oE "[0-9A-F-]{36}"); fi
+          echo "iPad: $PAD"; xcrun simctl list devices available | grep "$PAD" | tee -a simulator.txt
+          xcrun simctl boot "$PAD" || true
+          xcrun simctl bootstatus "$PAD" -b
+          xcrun simctl status_bar "$PAD" override --time "9:41" --batteryState charged --batteryLevel 100 --wifiBars 3 || true
+          xcodebuild test \
+            -project Familienplaner.xcodeproj \
+            -scheme Familienplaner \
+            -destination "id=$PAD" \
+            -only-testing:FamilienplanerUITests/ScreenshotTests \
+            -resultBundlePath ShotsPad.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee shots-ipad.log
+          mkdir -p rawpad
+          xcrun xcresulttool export attachments --path ShotsPad.xcresult --output-path rawpad || true
+          python3 - <<'PY'
+          import json, os, shutil
+          try:
+              manifest = json.load(open("rawpad/manifest.json"))
+          except Exception as e:
+              print("kein Manifest:", e); manifest = []
+          for test in manifest:
+              for a in test.get("attachments", []):
+                  name = a.get("suggestedHumanReadableName", "")
+                  src = os.path.join("rawpad", a.get("exportedFileName", ""))
+                  if name[:2].isdigit() and os.path.exists(src):
+                      base = name.split("_")[0].rsplit(".", 1)[0]
+                      shutil.copy(src, os.path.join("out", "iPad-" + base + ".png"))
+          PY
+          for f in out/iPad-*.png; do
+            [ -e "$f" ] || continue
+            W=$(sips -g pixelWidth "$f" | awk '/pixelWidth/ {print $2}')
+            if [ "$W" != "2064" ] && [ "$W" != "2048" ]; then
+              sips --resampleWidth 2064 "$f" >/dev/null
+              sips --cropToHeightWidth 2752 2064 "$f" >/dev/null
+            fi
+            sips -s format jpeg -s formatOptions 92 "$f" --out "${f%.png}.jpg" >/dev/null
+            rm "$f"
+          done
+          sips -g pixelWidth -g pixelHeight out/iPad-*.jpg || true
+          cp shots-ipad.log out/ 2>/dev/null || true
+
+      # Apple Watch: Pflicht für Apps mit Watch-App. Watch-App mit Beispieldaten
+      # (-sampleData, WatchStore.sampleSnapshot) im Simulator starten und abfotografieren.
+      - name: Apple Watch Bildschirmfoto
+        if: always()
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          W=$(xcrun simctl list devices available | grep -E "^\s+Apple Watch Series (11|10)" | tail -1 | grep -oE "[0-9A-F-]{36}")
+          if [ -z "$W" ]; then W=$(xcrun simctl list devices available | grep -E "^\s+Apple Watch" | tail -1 | grep -oE "[0-9A-F-]{36}"); fi
+          echo "Watch: $W"; xcrun simctl list devices available | grep "$W" | tee -a simulator.txt
+          xcrun simctl boot "$W" || true
+          xcrun simctl bootstatus "$W" -b
+          xcodebuild build \
+            -project Familienplaner.xcodeproj \
+            -target FamilienplanerWatch \
+            -sdk watchsimulator \
+            -configuration Debug \
+            SYMROOT="$PWD/watchbuild" \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee watch-build.log | tail -5
+          APP=$(find watchbuild -maxdepth 3 -name "FamilienplanerWatch.app" | head -1)
+          echo "App: $APP"
+          xcrun simctl install "$W" "$APP"
+          xcrun simctl launch "$W" de.barg.familienplaner.watchkitapp -sampleData
+          sleep 8
+          xcrun simctl io "$W" screenshot out/Watch-01.png
+          python3 - <<'PY'
+          import subprocess
+          f = "out/Watch-01.png"
+          out = subprocess.run(["sips", "-g", "pixelWidth", "-g", "pixelHeight", f], capture_output=True, text=True).stdout
+          w = int(out.split("pixelWidth:")[1].split()[0]); h = int(out.split("pixelHeight:")[1].split()[0])
+          accepted = [(422, 514), (410, 502), (416, 496), (396, 484), (368, 448), (312, 390)]
+          print("Watch-Simulator:", w, "x", h)
+          if (w, h) not in accepted:
+              tw, th = min(accepted, key=lambda s: abs(s[0] / s[1] - w / h))
+              subprocess.run(["sips", "-z", str(th), str(tw), f], check=True)
+              print("angepasst auf", tw, "x", th)
+          PY
+          sips -s format jpeg -s formatOptions 92 out/Watch-01.png --out out/Watch-01.jpg >/dev/null && rm out/Watch-01.png
+          sips -g pixelWidth -g pixelHeight out/Watch-01.jpg || true
+          cp watch-build.log out/ 2>/dev/null || true
 
       - name: Artefakt
         if: always()
