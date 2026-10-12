@@ -706,12 +706,15 @@ struct OpenResponsibilityBanner: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text("\(items.count) offene \(items.count == 1 ? "Zuständigkeit" : "Zuständigkeiten")")
                     .font(.subheadline.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(items.prefix(2).map { "\($0.role.label): \($0.eventTitle)" }.joined(separator: " · "))
                     .font(TypeScale.eventMeta)
                     // Volle Textfarbe: Grau auf Weiß war der Prüfung zu kontrastarm (03.10.).
                     .foregroundStyle(.primary)
-                    // Bei großer Schrift umbrechen statt abschneiden (Barrierefreiheitsprüfung 02.10.).
-                    .lineLimit(3)
+                    // Bei großer Schrift beliebig umbrechen, nie abschneiden. Die frühere Grenze von
+                    // drei Zeilen meldete die Prüfung am 12.10. als "Dynamic Type teilweise nicht
+                    // unterstützt".
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
