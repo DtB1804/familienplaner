@@ -402,7 +402,7 @@ Das Repository ist öffentlich, die Angaben stehen dann im Netz – so wie es ei
 Datenschutzerklärung ohnehin verlangt.)
 **Zuliefern:** „Pages an“.
 
-### Aufgabe 25: App in App Store Connect vorbereiten
+### Aufgabe 25: App in App Store Connect vorbereiten ✅ erledigt (12.10.2026)
 Texte und Ablauf stehen in `APP-STORE.md`. Schritte: App-Informationen (Name, Kategorie,
 Datenschutz-URL), Preis „kostenlos“, Altersfreigabe-Fragebogen, App-Datenschutz-
 Fragebogen (gemeinsam mit Claude), Bildschirmfotos, Build auswählen, Prüfhinweise
@@ -413,7 +413,7 @@ einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
 mit erfundenen Beispieldaten in 1284 × 2778 (6,5"). Ergebnis im Branch `ci-screenshots`
 (Bilddateien lassen sich nicht ins Projekt spiegeln).
 
-### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen
+### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen ✅ eingereicht (12.10.2026, Build 44, „Warten auf Prüfung“; Antrag gestellt)
 Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
 Antrag: https://developer.apple.com/contact/request/unlisted-app/ (Textvorschlag in
 `APP-STORE.md`).
