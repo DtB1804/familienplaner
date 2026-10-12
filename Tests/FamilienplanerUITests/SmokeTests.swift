@@ -79,7 +79,11 @@ final class SmokeTests: XCTestCase {
     /// zweistellige Zahlen am linken Rand (x < 50 pt) wird hingenommen.
     @MainActor
     private func isHourLabelContrastIssue(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
-        guard issue.auditType == .contrast, let element = issue.element else { return false }
+        // Ebenso "Dynamic Type teilweise nicht unterstützt": Die Zahlen nutzen einen Textstil,
+        // werden nicht gekürzt (fixedSize) und die Spalte wächst mit (@ScaledMetric, eee4c9a).
+        // Die Prüfung meldet "13" trotzdem wechselhaft (11.10. ja, 12.10. nachts nein, 12.10. ja).
+        guard issue.auditType == .contrast || issue.auditType == .dynamicType,
+              let element = issue.element else { return false }
         let label = element.label
         return element.frame.minX < 50
             && (1...2).contains(label.count)
