@@ -66,8 +66,8 @@ Apples Barrierefreiheitsprüfung kontrolliert. Nur ankreuzen, was auf dem Gerät
 
 ## App-Datenschutzangaben (App Store Connect → App-Datenschutz)
 
-Nicht vorab festgelegt; gemeinsam anhand von Apples Fragebogen ausfüllen. Fakten für die
-Beantwortung: kein eigener Server, keine Analyse- oder Werbedienste, keine Weitergabe an
+Entschieden 11.10.2026: „No, we do not collect data from this app“ (Apple zählt nur Daten
+als erhoben, auf die Entwickler oder Partner zugreifen können). Fakten: kein eigener Server, keine Analyse- oder Werbedienste, keine Weitergabe an
 Dritte durch den Entwickler; Speicherung in iCloud des Nutzers (Apple).
 
 ## Antrag „nicht gelistet“ – Textvorschlag
@@ -86,6 +86,9 @@ Quelle: https://developer.apple.com/help/app-store-connect/manage-compliance-inf
 
 ## Screenshots
 
-Erzeugt der Workflow `Screenshots` (Push auf Branch `screenshots` oder manuell):
-6 Bilder 1284 × 2778 (6,5-Zoll-Format) im Branch `ci-screenshots`, nur Beispieldaten.
-Stand 28.09.2026: Lauf für d3f0d7a geprüft, Woche und Monat zeigen Termine.
+Erzeugt der Workflow `Screenshots` (Push auf Branch `screenshots`), nur Beispieldaten:
+- iPhone: Pflichtgröße „iPhone mit Dynamic Island (mittleres Display)“ 1206 × 2622
+  (1284 × 2778 lehnt App Store Connect dort ab, 11.10.2026). 6,9″ 1320 × 2868 optional.
+- iPad 13″: 2064 × 2752 (Pflicht, App läuft auf dem iPad).
+- Apple Watch: 416 × 496 (Pflicht, App hat eine Watch-App).
+Quelle: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications
