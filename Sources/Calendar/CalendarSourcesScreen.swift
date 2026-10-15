@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import EventKit
 import CoreData
 
@@ -28,12 +29,21 @@ struct CalendarSourcesScreen: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     if denied {
-                        Text("Der Zugriff wurde abgelehnt. Du kannst ihn in den iPhone-Einstellungen unter Apps → Family Planner → Kalender erlauben.")
+                        Text("Der Zugriff wurde abgelehnt. Du kannst ihn in den iPhone-Einstellungen unter Apps → Family Planner → Kalender ändern.")
                             .font(.footnote)
+                        Button("Einstellungen öffnen") {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        }
                     } else {
-                        Button("Zugriff auf Kalender erlauben") {
+                        // Neutral beschriftet: App Review 15.10.2026 (Guideline 5.1.1(iv)) verlangt
+                        // "Weiter" statt eines Knopfs, der zum Erlauben auffordert. Die Entscheidung
+                        // fällt allein in Apples Systemabfrage danach.
+                        Button("Weiter") {
                             Task { await requestAccess() }
                         }
+                        .accessibilityIdentifier("calendars.continue")
                     }
                 }
             } else {

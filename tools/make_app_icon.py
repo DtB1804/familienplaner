@@ -1,9 +1,19 @@
 # Erzeugt Assets/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png (Pillow). Entwurf "FP aus Terminblöcken", 24.09.2026.
+# Mit Argument "watch": helle Variante für die Apple Watch nach Watch/Assets.xcassets (App Review
+# 15.10.2026, Guideline 4: schwarzer/dunkler Hintergrund wirkt auf der Watch nicht rund).
+import sys
 from PIL import Image, ImageDraw, ImageFilter, ImageChops
+WATCH = len(sys.argv) > 1 and sys.argv[1] == "watch"
 S=4; W=1024*S
 def sc(v): return v*S
 def bg():
     img=Image.new("RGB",(W,W)); d=ImageDraw.Draw(img)
+    if WATCH:
+        # Heller Verlauf, Weiß nach Hellblau
+        for y in range(W):
+            t=y/W
+            d.line([(0,y),(W,y)],fill=(int(0xFF+(0xDD-0xFF)*t),int(0xFF+(0xE6-0xFF)*t),int(0xFF+(0xF7-0xFF)*t)))
+        return img
     for y in range(W):
         t=y/W
         d.line([(0,y),(W,y)],fill=(int(0x22+(0x0A-0x22)*t),int(0x32+(0x10-0x32)*t),int(0x5E+(0x26-0x5E)*t)))
@@ -13,7 +23,7 @@ def bg():
 def blank(): return Image.new("L",(W,W),0)
 def put(img,m,color):
     sh=m.filter(ImageFilter.GaussianBlur(sc(12))).point(lambda v:int(v*0.5))
-    img.paste((4,8,20),(0,int(sc(10))),sh); img.paste(color,(0,0),m)
+    img.paste((150,160,190) if WATCH else (4,8,20),(0,int(sc(10))),sh); img.paste(color,(0,0),m)
 def capsule(m,x0,y0,x1,y1):
     r=min(x1-x0,y1-y0)/2
     ImageDraw.Draw(m).rounded_rectangle([sc(x0),sc(y0),sc(x1),sc(y1)],radius=sc(r),fill=255); return m
@@ -27,11 +37,11 @@ total=fw+gap_fp+pw
 ox=(1024-total)/2
 img=bg()
 fx=ox
-put(img,capsule(blank(),fx,top,fx+T,bot),(0x6E,0x9B,0xFF))
-put(img,capsule(blank(),fx+T+G,top,fx+T+G+196,top+T),(0x4F,0xD3,0xA0))
-put(img,capsule(blank(),fx+T+G,top+206,fx+T+G+146,top+206+T),(0xFF,0xB4,0x54))
+put(img,capsule(blank(),fx,top,fx+T,bot),((0x2F,0x6F,0xED) if WATCH else (0x6E,0x9B,0xFF)))
+put(img,capsule(blank(),fx+T+G,top,fx+T+G+196,top+T),((0x1E,0x9E,0x6A) if WATCH else (0x4F,0xD3,0xA0)))
+put(img,capsule(blank(),fx+T+G,top+206,fx+T+G+146,top+206+T),((0xE0,0x7A,0x00) if WATCH else (0xFF,0xB4,0x54)))
 px=fx+fw+gap_fp
-put(img,capsule(blank(),px,top,px+T,bot),(0xFF,0x87,0x97))
+put(img,capsule(blank(),px,top,px+T,bot),((0xD1,0x49,0x5B) if WATCH else (0xFF,0x87,0x97)))
 # P-Bogen: zwei Geraden + Halbring
 x0=px+T+G; cx=x0+T/2+70; yc=top+T/2+R
 bowl=blank(); d=ImageDraw.Draw(bowl)
@@ -45,6 +55,8 @@ d=ImageDraw.Draw(bowl)
 for yy in (top, yc+R-T/2):
     d.ellipse([sc(x0),sc(yy),sc(x0+T),sc(yy+T)],fill=255)       # runde linke Kappe
     d.rectangle([sc(x0+T/2),sc(yy),sc(cx+1),sc(yy+T)],fill=255)  # Gerade bis zum Ring
-put(img,bowl,(0xC4,0x9B,0xFF))
-out=img.resize((1024,1024),Image.LANCZOS); out.save("Assets/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png")
+put(img,bowl,((0x9B,0x5D,0xE5) if WATCH else (0xC4,0x9B,0xFF)))
+out=img.resize((1024,1024),Image.LANCZOS)
+out.save("Watch/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png" if WATCH
+         else "Assets/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png")
 print(ox, px+T+G+T/2+70+R+T/2)
