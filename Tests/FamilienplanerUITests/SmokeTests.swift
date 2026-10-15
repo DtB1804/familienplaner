@@ -74,6 +74,18 @@ final class SmokeTests: XCTestCase {
             } else {
                 collected.append(line)
             }
+            // Bildschirmfoto des Elements und des ganzen Bildschirms, damit die Ursache
+            // im Protokoll sichtbar ist (Nachttest 15.10.: "Text clipped" ohne Bild).
+            if let element, element.exists {
+                let shot = XCTAttachment(screenshot: element.screenshot())
+                shot.name = "Element \(label)"
+                shot.lifetime = .keepAlways
+                self.add(shot)
+            }
+            let full = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            full.name = "Bildschirm \(screen) – \(label)"
+            full.lifetime = .keepAlways
+            self.add(full)
             return true
         }
         findings += collected
