@@ -117,6 +117,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Barrierefreiheit | Build 42 | Hinweis offene Zuständigkeiten bricht um und hat vollen Kontrast; Ansicht-Knopf nur mit Symbol |
 | Einladen hängt nicht mehr | Build 43 | Teilen, Freigabe lesen, Einladung annehmen und Haushalt löschen laufen außerhalb des Hauptthreads (Absturzberichte 01.10. und 08.10., 0x8BADF00D); Uhrzeitspalte als Text. Familientest 10.10.2026: Einladung angenommen, Haushalt geteilt (App muss beim Empfänger vorher über TestFlight installiert sein) |
 | Einreich-Build | Build 44 | Barrierefreiheit: Uhrzeitspalte wächst mit der Schrift, Abzeichen „Holt ?“ und Hinweis offene Zuständigkeiten ohne Kürzung; Beispieldaten Mo–Fr; Watch-Beispieldaten für Bildschirmfotos (8a58da5) |
+| Korrektur nach App Review 15.10. | Build 46 | Guideline 4: Watch-Symbol mit hellem Hintergrund; Guideline 5.1.1(iv): Knopf vor Kalender-Abfrage „Weiter“, bei Ablehnung „Einstellungen öffnen“ (1860395) |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
