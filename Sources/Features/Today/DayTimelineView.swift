@@ -283,6 +283,10 @@ public struct DayTimelineView: View {
                     Text(title)
                         .font(TypeScale.eventTitle)
                         .lineLimit(2)
+                        // Volle Zeilenhöhe behalten, auch wenn der Termin kurz ist (30 Min.): Sonst
+                        // staucht SwiftUI den Rahmen auf 15 pt und die Prüfung meldet "Text clipped"
+                        // (Nachttests 15./16.10.). Der Text darf über den Terminrand hinausragen.
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 if duration >= zoom.minimumLabelDuration * 2, let assignments {
                     Text(assignments)
