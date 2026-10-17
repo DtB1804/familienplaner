@@ -1,0 +1,4 @@
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:2:1: warning: add '@preconcurrency' to suppress 'Sendable'-related warnings from module 'CoreData'
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:46:78: warning: capture of 'store' with non-Sendable type 'NSPersistentStore' in a '@Sendable' closure
+<unknown>:0: error: -[FamilienplanerUITests.EndToEndTests testClaimInsideEditor] : Failed to get matching snapshots: Timed out while evaluating UI query.
+2026-10-17 00:56:57.191 appintentsmetadataprocessor[12179:37141] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
