@@ -201,6 +201,8 @@ schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 - **Sicherung** (`ICSExporter`): alle Termine als .ics (RFC 5545), Titel wie für "ich" sichtbar.
 - **Barrierefreiheit:** Schriften über Textstile (Dynamic Type), Termine mit Vorlesetext und
   VoiceOver-Aktionen zum Verschieben; automatische Prüfung im nächtlichen Test.
+- **Kurzanleitung** (`HelpScreen`, Ansicht-Menü → "Kurzanleitung"): Wer eine Funktion neu
+  baut oder ändert, passt den Text dort mit an.
 
 ## 21. Termine aus dem iPhone-Kalender: Bringen oder Holen klären
 

@@ -43,6 +43,7 @@ public struct TodayScreen: View {
     /// Termine aus dem iPhone-Kalender, bei denen Bringen/Holen noch ungeklärt ist (Regel 21).
     @State private var roleChecks: [CDEvent] = []
     @State private var showRoleChecks = false
+    @State private var showHelp = false
     @State private var detailEvent: CDEvent?
     @State private var showPhotoPicker = false
     @State private var photoItem: PhotosPickerItem?
@@ -203,6 +204,9 @@ public struct TodayScreen: View {
             }
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
+            }
+            .sheet(isPresented: $showHelp) {
+                HelpScreen()
             }
             .sheet(isPresented: $showRoleChecks) {
                 RoleCheckSheet(me: me, household: household)
@@ -385,6 +389,12 @@ public struct TodayScreen: View {
                     }
                     .disabled(!zoom.canZoomOut)
                 }
+                Section {
+                    Button { showHelp = true } label: {
+                        Label("Kurzanleitung", systemImage: "questionmark.circle")
+                    }
+                    .accessibilityIdentifier("view.help")
+                }
             } label: {
                 // Nur das Symbol: Die kleine Beschriftung darunter färbt iOS im Menü-Knopf blau
                 // und skaliert sie nicht mit (Barrierefreiheitsprüfung 03.–06.10.). Welche Ansicht
@@ -394,7 +404,7 @@ public struct TodayScreen: View {
                     .frame(minWidth: 44, minHeight: 44)
             }
             .accessibilityLabel("Ansicht: \(mode.label)")
-            .accessibilityHint("Tag, Woche oder Monat wählen, vergrößern oder verkleinern")
+            .accessibilityHint("Tag, Woche oder Monat wählen, vergrößern, verkleinern oder Kurzanleitung öffnen")
             .accessibilityIdentifier("view.menu")
             .padding(.trailing, Spacing.s)
         }

@@ -119,6 +119,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Einreich-Build | Build 44 | Barrierefreiheit: Uhrzeitspalte wächst mit der Schrift, Abzeichen „Holt ?“ und Hinweis offene Zuständigkeiten ohne Kürzung; Beispieldaten Mo–Fr; Watch-Beispieldaten für Bildschirmfotos (8a58da5) |
 | Korrektur nach App Review 15.10. | Build 46 | Guideline 4: Watch-Symbol mit hellem Hintergrund; Guideline 5.1.1(iv): Knopf vor Kalender-Abfrage „Weiter“, bei Ablehnung „Einstellungen öffnen“ (1860395) |
 | Kalendertermine: Bringen oder Holen? | nächster TestFlight-Build | Übernommene Termine mit Uhrzeit tragen „?“, bis „Bringen/Holen/Nicht nötig“ beantwortet ist; Hinweis in der Tagesansicht, Frage im Termin, Mitteilung beim Übernehmenden, Kalenderserien erben die Antwort (CLAUDE.md Regel 21). Kalendertermine per Ziehen in die Spalte eines anderen Mitglieds, bleibt mit dem Kalender verknüpft, Serie auf Wunsch mit (Regel 22) |
+| Kurzanleitung | nächster TestFlight-Build | Ansicht-Menü (Tag/Woche/Monat) → „Kurzanleitung“: wichtigste Funktionen zum Aufklappen |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |

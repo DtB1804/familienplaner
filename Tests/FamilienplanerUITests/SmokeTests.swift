@@ -129,6 +129,19 @@ final class SmokeTests: XCTestCase {
         return element.label.hasSuffix("?") && element.label.count <= 13
     }
 
+    /// Kurzanleitung über das Ansicht-Menü öffnen und schließen.
+    @MainActor
+    func testHelpOpensFromViewMenu() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-uiTesting", "-AppleLanguages", "(de)", "-AppleLocale", "de_DE"]
+        app.launch()
+        completeSetup(in: app)
+        showMode("Kurzanleitung", in: app)
+        XCTAssertTrue(app.navigationBars["Kurzanleitung"].waitForExistence(timeout: 5), "Kurzanleitung fehlt")
+        tap("help.done", in: app)
+        XCTAssertTrue(element("view.menu", in: app).waitForExistence(timeout: 5))
+    }
+
     /// Erste Schritte nach dem Einrichten (im Test nur mit -showOnboarding sichtbar).
     @MainActor
     func testOnboardingAppearsOnceAndCanBeClosed() {
