@@ -120,7 +120,7 @@ struct RoleCheckSheet: View {
             parts.append(start.formatted(.dateTime.weekday(.wide).day().month().hour().minute().locale(de)))
         }
         let names = EventService.subjects(of: event).compactMap(\.displayName)
-        if !names.isEmpty { parts.append("Kalender von " + names.joined(separator: ", ")) }
+        if !names.isEmpty { parts.append("für " + names.joined(separator: ", ")) }
         return parts.joined(separator: " · ")
     }
 

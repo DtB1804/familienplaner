@@ -263,6 +263,9 @@ public struct DayTimelineView: View {
         let needsCheck = ownRoles.contains(.subject) && askRoleCheck(event)
         let isDragging = draggingID == event.objectID
         let movable = canMove(event)
+        // Termine aus dem iPhone-Kalender: Zeit kommt aus dem Kalender, aber die Spalte
+        // (für wen) lässt sich ändern (Regel 22). Ziehen ist dann nur seitlich möglich.
+        let draggable = movable || canReassign(event, from: member)
 
         return VStack(alignment: .leading, spacing: Spacing.hair) {
             if isDragging {
@@ -346,14 +349,14 @@ public struct DayTimelineView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture { onSelect?(event) }
-        .gesture(moveGesture(for: event, member: member, laneWidth: width), including: movable ? .all : .subviews)
+        .gesture(moveGesture(for: event, member: member, laneWidth: width), including: draggable ? .all : .subviews)
         // Halten bedeutet immer Ziehen; Details gibt es per Tippen (UX-Prüfung B9).
         .shadow(color: .black.opacity(isDragging ? 0.25 : 0), radius: 6, y: 2)
         .scaleEffect(isDragging ? 1.03 : 1)
         .zIndex(isDragging ? 1 : 0)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(spokenLabel(event, title: title))
-        .accessibilityHint(movable ? "Doppeltippen für Details. Weitere Aktionen zum Verschieben." : "Doppeltippen für Details.")
+        .accessibilityHint(draggable ? "Doppeltippen für Details. Weitere Aktionen zum Verschieben." : "Doppeltippen für Details.")
         .accessibilityAddTraits(.isButton)
         .accessibilityAction { onSelect?(event) }
         .accessibilityActions {
@@ -362,6 +365,13 @@ public struct DayTimelineView: View {
                 Button("15 Minuten früher") { onMove?(event, -15 * 60) }
                 Button("1 Stunde später") { onMove?(event, 3600) }
                 Button("1 Stunde früher") { onMove?(event, -3600) }
+            }
+            if canReassign(event, from: member) {
+                ForEach(members.filter { $0.objectID != member.objectID }, id: \.objectID) { target in
+                    Button("Zu \(target.displayName ?? "anderer Person") verschieben") {
+                        onReassign?(event, member, target)
+                    }
+                }
             }
         }
         .accessibilityIdentifier("event.\(baseTitle)")
@@ -400,8 +410,11 @@ public struct DayTimelineView: View {
                     draggingMemberID = member.objectID
                     let translation = drag?.translation ?? .zero
                     if dragAxis == nil, translation.width * translation.width + translation.height * translation.height > 144 {
-                        dragAxis = abs(translation.width) > abs(translation.height) && canReassign(event, from: member)
-                            ? .horizontal : .vertical
+                        if abs(translation.width) > abs(translation.height) && canReassign(event, from: member) {
+                            dragAxis = .horizontal
+                        } else if canMove(event) {
+                            dragAxis = .vertical
+                        }
                     }
                     dragDY = dragAxis == .vertical ? translation.height : 0
                     dragDX = dragAxis == .horizontal ? translation.width : 0

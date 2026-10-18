@@ -183,6 +183,18 @@ public enum EventService {
             .filter { $0.objectID != event.objectID && needsRoleCheck($0, now: now) }
     }
 
+    /// Alle kommenden Vorkommen derselben Kalenderserie außer diesem (Regel 22).
+    public static func importSeriesSiblings(of event: CDEvent,
+                                            in context: NSManagedObjectContext) -> [CDEvent] {
+        guard let base = importSeriesBase(event.externalIdentifier) else { return [] }
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "deletedAt == nil AND originRaw == %@ AND externalIdentifier BEGINSWITH %@ AND endAt > %@",
+            EventOrigin.imported.rawValue, base + "|", Date() as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(key: "startAt", ascending: true)]
+        return ((try? context.fetch(request)) ?? []).filter { $0.objectID != event.objectID }
+    }
+
     /// Schlüssel übernommener Termine: "<Kalenderkennung>|<Unix-Zeit des Vorkommens>" (Regel 14).
     public static func importSeriesBase(_ key: String?) -> String? {
         guard let key, let bar = key.lastIndex(of: "|") else { return nil }

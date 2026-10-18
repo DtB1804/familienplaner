@@ -124,6 +124,17 @@ final class CalendarImportService {
             if let known = seriesAnswers[base], known.start >= start { continue }
             seriesAnswers[base] = (start, RequiredRoles.encode(roles, checked: true))
         }
+        // Ebenso, für wen die Serie ist: Neue Vorkommen landen in derselben Spalte wie das
+        // späteste vorhandene Vorkommen (Regel 22).
+        var seriesSubjects: [String: (start: Date, members: [CDMember])] = [:]
+        for event in byKey.values.joined() where event.deletedAt == nil {
+            let members = EventService.subjects(of: event)
+            guard !members.isEmpty,
+                  let base = EventService.importSeriesBase(event.externalIdentifier),
+                  let start = event.startAt else { continue }
+            if let known = seriesSubjects[base], known.start >= start { continue }
+            seriesSubjects[base] = (start, members)
+        }
 
         for source in sources {
             guard let sourceID = source.id else { continue }
@@ -166,7 +177,9 @@ final class CalendarImportService {
                         || event.isAllDay != ekEvent.isAllDay {
                         EventService.update(event, in: context,
                                             title: title, startAt: start, endAt: end,
-                                            subjects: Array(Set(EventService.subjects(of: event)).union([member])),
+                                            // Für wen der Termin ist, bleibt wie in der App eingestellt
+                                            // (z. B. in Joshs Spalte gezogen, Regel 22).
+                                            subjects: subjectsKeeping(event, fallback: member),
                                             // In der App ergänzte Zuständigkeiten (Bringt/Holt) behalten;
                                             // ganztägige Termine haben keine (CLAUDE.md Regel 18).
                                             requiredRoles: ekEvent.isAllDay ? [] : RequiredRoles.decode(event.requiredRolesRaw),
@@ -187,7 +200,9 @@ final class CalendarImportService {
                 } else {
                     let event = EventService.makeEvent(in: context, household: household,
                                                        title: title, startAt: start, endAt: end,
-                                                       createdBy: member, subjects: [member],
+                                                       createdBy: member,
+                                                       subjects: EventService.importSeriesBase(key)
+                                                           .flatMap { seriesSubjects[$0]?.members } ?? [member],
                                                        visibility: eventVisibility,
                                                        locationName: ekEvent.location,
                                                        isAllDay: ekEvent.isAllDay)
@@ -255,6 +270,13 @@ final class CalendarImportService {
     /// nur so lassen sich Termine aus gemeinsamen Kalendern verschiedener Mitglieder
     /// zusammenführen. Bei Wiederholungen ist sie für alle Vorkommen gleich, deshalb
     /// kommt das Datum des Vorkommens dazu. Ausnahme laut Apple: Exchange-Kalender.
+    /// Betroffene eines übernommenen Termins beim Abgleich: wie in der App eingestellt,
+    /// nur wenn niemand mehr eingetragen ist, wieder der Kalenderbesitzer.
+    private func subjectsKeeping(_ event: CDEvent, fallback member: CDMember) -> [CDMember] {
+        let current = EventService.subjects(of: event)
+        return current.isEmpty ? [member] : current
+    }
+
     static func occurrenceKey(_ event: EKEvent) -> String {
         let occurrence = event.occurrenceDate ?? event.startDate ?? Date.distantPast
         let base = event.calendarItemExternalIdentifier ?? event.calendarItemIdentifier

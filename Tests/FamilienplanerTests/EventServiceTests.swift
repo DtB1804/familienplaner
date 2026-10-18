@@ -296,4 +296,18 @@ final class EventServiceTests: XCTestCase {
         XCTAssertNil(EventService.importSeriesBase("ohne"))
         XCTAssertEqual(EventService.pendingSeriesSiblings(of: first, in: fx.context).map(\.objectID), [second.objectID])
     }
+
+    // MARK: Termine aus dem iPhone-Kalender in eine andere Spalte (Regel 22)
+
+    func testImportedEventCanMoveToOtherMemberAndSeriesSiblingsAreFound() throws {
+        let fx = try Fixture()
+        let josh = fx.member("Tom", role: .child)
+        let first = imported(fx, "Tennis", key: "T|1")
+        let second = imported(fx, "Tennis", key: "T|2", inHours: 24 * 8)
+        _ = imported(fx, "Vorbei", key: "T|0", inHours: -24 * 6)
+        XCTAssertTrue(EventService.reassignSubject(first, from: fx.owner, to: josh, in: fx.context))
+        XCTAssertEqual(EventService.subjects(of: first).map(\.objectID), [josh.objectID])
+        XCTAssertEqual(EventService.importSeriesSiblings(of: first, in: fx.context).map(\.objectID),
+                       [second.objectID], "Nur kommende Vorkommen derselben Serie")
+    }
 }

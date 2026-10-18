@@ -57,6 +57,8 @@ public struct TodayScreen: View {
     @State private var pendingEdit: CDEvent?
     /// Letzte Verschiebung per Ziehen, einige Sekunden lang rückgängig zu machen.
     @State private var undo: UndoAction?
+    /// Kalenderserie seitlich verschoben: auch die übrigen Termine der Serie? (Regel 22)
+    @State private var seriesReassign: SeriesReassign?
     @ObservedObject private var syncStatus = SyncStatus.shared
 
     @FetchRequest(fetchRequest: SuggestionService.pendingRequest())
@@ -132,6 +134,19 @@ public struct TodayScreen: View {
                 dayEvents.nsPredicate = EventService.eventsRequest(on: new).predicate
                 weekEvents.nsPredicate = Self.weekRequest(for: new).predicate
                 monthEvents.nsPredicate = Self.monthRequest(for: new).predicate
+            }
+            .confirmationDialog(seriesReassign.map { "Auch die anderen \($0.siblings.count) Termine zu \($0.to.displayName ?? "")?" } ?? "",
+                                isPresented: Binding(get: { seriesReassign != nil },
+                                                     set: { if !$0 { seriesReassign = nil } }),
+                                titleVisibility: .visible) {
+                if let pending = seriesReassign {
+                    Button("Ja, alle Termine der Serie") { reassignSeries(pending) }
+                        .accessibilityIdentifier("reassign.series")
+                    Button("Nur diesen Termin", role: .cancel) { seriesReassign = nil }
+                        .accessibilityIdentifier("reassign.single")
+                }
+            } message: {
+                Text("Der Termin wiederholt sich im Kalender. Später neu übernommene Termine der Serie landen dann ebenfalls dort.")
             }
             .alert("Nichts kopiert", isPresented: $pasteEmpty) {
                 Button("OK", role: .cancel) {}
@@ -433,7 +448,6 @@ public struct TodayScreen: View {
                         },
                         onSwipeDay: { offset in shiftDay(offset) },
                         onReassign: canEdit ? { event, from, to in
-                            guard EventOrigin(rawValue: event.originRaw ?? "") != .imported else { return }
                             reassign(event, from: from, to: to)
                         } : nil)
     }
@@ -669,6 +683,30 @@ public struct TodayScreen: View {
             }
             PersistenceController.shared.save(context)
         }
+        // Termin aus dem iPhone-Kalender, der sich wiederholt: Serie mitnehmen? (Regel 22)
+        if EventService.isImported(event) {
+            let siblings = EventService.importSeriesSiblings(of: event, in: context)
+                .filter { EventService.subjects(of: $0).contains { $0.objectID == from.objectID } }
+            if !siblings.isEmpty {
+                seriesReassign = SeriesReassign(from: from, to: to, siblings: siblings)
+            }
+        }
+    }
+
+    private func reassignSeries(_ pending: SeriesReassign) {
+        seriesReassign = nil
+        var moved: [CDEvent] = []
+        for sibling in pending.siblings
+        where EventService.reassignSubject(sibling, from: pending.from, to: pending.to, in: context) {
+            moved.append(sibling)
+        }
+        PersistenceController.shared.save(context)
+        undo = UndoAction(text: "\(moved.count + 1) Termine → \(pending.to.displayName ?? "")") {
+            for sibling in moved {
+                _ = EventService.reassignSubject(sibling, from: pending.to, to: pending.from, in: context)
+            }
+            PersistenceController.shared.save(context)
+        }
     }
 
     private func shortTitle(_ event: CDEvent) -> String {
@@ -832,6 +870,12 @@ enum CalendarMode: Hashable {
 }
 
 // MARK: - Rückgängig nach dem Ziehen
+
+struct SeriesReassign {
+    let from: CDMember
+    let to: CDMember
+    let siblings: [CDEvent]
+}
 
 struct UndoAction: Identifiable {
     let id = UUID()

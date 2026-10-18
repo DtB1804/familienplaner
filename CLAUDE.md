@@ -221,6 +221,20 @@ Ausgenommen: ganztägige (Regel 18), nur als "Belegt" übernommene (Regel 2) und
   übernommene Vorkommen erben die letzte Antwort. Die Mitteilung kommt je Serie nur einmal.
 - Danach gilt der normale Weg: nötige Rollen erscheinen als offene Zuständigkeit (Regel 5).
 
+## 22. Termine aus dem iPhone-Kalender einer anderen Person zuordnen
+
+Titel und Zeit eines übernommenen Termins kommen aus dem Kalender, die Zuordnung (für wen)
+legt die Familie im Family Planner fest (Wunsch David, 18.10.2026): Seitlich in eine andere
+Spalte ziehen (oder VoiceOver-Aktion "Zu … verschieben") ersetzt den Betroffenen über
+`EventService.reassignSubject`. Hoch/runter ziehen bleibt gesperrt.
+
+- Der Abgleich (Regel 14) behält die Betroffenen, wie sie in der App stehen; nur wenn niemand
+  mehr eingetragen ist, setzt er den Kalenderbesitzer ein. Titel, Zeit und Ort ändern sich weiter
+  mit dem Kalender, Löschen im Kalender löscht weiter im Planer.
+- Kalenderserie: Nach dem Ziehen fragt die App, ob die übrigen kommenden Vorkommen mitgehen.
+  Neu übernommene Vorkommen bekommen die Betroffenen des spätesten vorhandenen Vorkommens.
+- Mitteilung und "?" (Regel 21) bleiben beim Gerät, das den Termin übernommen hat.
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).
