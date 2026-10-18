@@ -53,6 +53,9 @@ struct EventDetailSheet: View {
                     }
                 }
 
+                // Noch ungeklärt (Regel 21): Frage steht oben, ohne Scrollen sichtbar.
+                if needsRoleCheck { importedRolesSection }
+
                 Section {
                     LabeledContent("Datum", value: dateText)
                     LabeledContent("Zeit", value: timeText)
@@ -81,20 +84,7 @@ struct EventDetailSheet: View {
                     }
                 }
 
-                // Termine aus dem iPhone-Kalender: Titel und Zeit kommen aus dem Kalender,
-                // ob jemand bringt oder holt, wird hier ergänzt (Test 01.10.2026).
-                if isImported && canClaim && !event.isAllDay {
-                    Section {
-                        ForEach(ParticipationRole.responsibilityRoles) { role in
-                            Toggle(role.editorQuestion, isOn: requiredRoleBinding(role))
-                                .accessibilityIdentifier("detail.role.\(role.rawValue)")
-                        }
-                    } header: {
-                        Text("Bringen und Holen")
-                    } footer: {
-                        Text("Titel und Zeit änderst du in der Kalender-App. Bringen und Holen gilt nur in Family Planner.")
-                    }
-                }
+                if !needsRoleCheck { importedRolesSection }
 
                 if !hidesDetails, let notes = event.notes, !notes.isEmpty {
                     Section("Notizen") { Text(notes) }
@@ -127,6 +117,33 @@ struct EventDetailSheet: View {
         .modifier(ClaimDialogs(pendingRole: $pendingClaimRole, message: $claimMessage,
                                identifierPrefix: "detail", onClaim: claim))
     }
+
+    /// Termine aus dem iPhone-Kalender: Titel und Zeit kommen aus dem Kalender,
+    /// ob jemand bringt oder holt, wird hier ergänzt (Test 01.10.2026, Regel 21).
+    @ViewBuilder
+    private var importedRolesSection: some View {
+        if isImported && canClaim && !event.isAllDay {
+            Section {
+                ForEach(ParticipationRole.responsibilityRoles) { role in
+                    Toggle(role.editorQuestion, isOn: requiredRoleBinding(role))
+                        .accessibilityIdentifier("detail.role.\(role.rawValue)")
+                }
+                if needsRoleCheck {
+                    Button("Nicht nötig") {
+                        EventService.answerRoleCheck(event, roles: [])
+                        PersistenceController.shared.save(context)
+                    }
+                    .accessibilityIdentifier("detail.roleCheck.none")
+                }
+            } header: {
+                Text(needsRoleCheck ? "Muss jemand bringen oder holen?" : "Bringen und Holen")
+            } footer: {
+                Text("Titel und Zeit änderst du in der Kalender-App. Bringen und Holen gilt nur in Family Planner.")
+            }
+        }
+    }
+
+    private var needsRoleCheck: Bool { EventService.needsRoleCheck(event) }
 
     private func requiredRoleBinding(_ role: ParticipationRole) -> Binding<Bool> {
         Binding(

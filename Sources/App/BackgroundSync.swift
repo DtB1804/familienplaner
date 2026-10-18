@@ -55,6 +55,7 @@ final class BackgroundSync {
         guard let household = try? HouseholdService.fetchHousehold(in: context),
               let me = CurrentMember.resolve(in: context, household: household) else { return }
         CalendarImportService.shared.sync(household: household, member: me, in: context)
+        await ReminderService.announceRoleChecks(me: me, in: context)
         extendSeries()
         CalendarExportService.shared.sync()
         await ReminderService.reschedule(me: me, household: household, in: context)

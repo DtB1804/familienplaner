@@ -125,7 +125,8 @@ final class SmokeTests: XCTestCase {
     @MainActor
     private func isOpenBadgeTypeIssue(_ issue: XCUIAccessibilityAuditIssue) -> Bool {
         guard issue.auditType == .dynamicType, let element = issue.element else { return false }
-        return element.label.hasSuffix(" ?") && element.label.count <= 12
+        // "Holt ?", "2 ?", "?", "Bringt/Holt ?" (Regel 21)
+        return element.label.hasSuffix("?") && element.label.count <= 13
     }
 
     /// Erste Schritte nach dem Einrichten (im Test nur mit -showOnboarding sichtbar).

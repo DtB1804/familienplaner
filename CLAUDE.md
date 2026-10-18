@@ -202,6 +202,25 @@ schreibt den vom iPhone empfangenen Ausschnitt in die App Group der Watch.
 - **Barrierefreiheit:** Schriften über Textstile (Dynamic Type), Termine mit Vorlesetext und
   VoiceOver-Aktionen zum Verschieben; automatische Prüfung im nächtlichen Test.
 
+## 21. Termine aus dem iPhone-Kalender: Bringen oder Holen klären
+
+Ein übernommener Termin (Regel 14) mit Uhrzeit trägt ein "?", bis ein Erwachsener sagt, ob
+jemand bringen oder holen muss oder ob das nicht nötig ist (Wunsch David, 18.10.2026).
+Ausgenommen: ganztägige (Regel 18), nur als "Belegt" übernommene (Regel 2) und vergangene.
+
+- **Speicherung ohne Modelländerung:** Die Antwort steht im vorhandenen Feld
+  `requiredRolesRaw` als zusätzliches Kennwort `checked` (`RequiredRoles.encode(_:checked:)`).
+  `decode` überspringt unbekannte Kennwörter, ältere App-Stände lesen das Feld also weiter.
+  Ungeklärt = keine Rollen und kein `checked`. Wer das Feld schreibt, erhält `checked`
+  (`EventService.update` behält es, `setRequiredRoles` setzt es bei übernommenen Terminen).
+- **Wo gefragt wird:** Hinweis oben in der Tagesansicht (`RoleCheckSheet`, 14 Tage), oben im
+  Termin-Detail ("Nicht nötig" oder Schalter) und einmal als Mitteilung auf dem Gerät, das den
+  Termin übernommen hat (Knöpfe wie `RoleCheckChoice`; Schalter "neue offene Zuständigkeiten").
+- **Kalenderserien:** Vorkommen teilen die Kalenderkennung vor dem "|" im Schlüssel. Nach einer
+  Antwort bietet die Liste an, sie für die übrigen ungeklärten Vorkommen zu übernehmen; neu
+  übernommene Vorkommen erben die letzte Antwort. Die Mitteilung kommt je Serie nur einmal.
+- Danach gilt der normale Weg: nötige Rollen erscheinen als offene Zuständigkeit (Regel 5).
+
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 
 - Claude wartet nicht blockierend auf Workflows (keine Warteschleifen mit `sleep`).

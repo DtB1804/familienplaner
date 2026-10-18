@@ -158,8 +158,10 @@ struct WeekTimelineView: View {
         let tint = busy ? Palette.busy : Palette.color(token)
 
         let isDragging = draggingID == event.objectID
+        // Offene Zuständigkeit oder (für Erwachsene) ungeklärt, ob jemand bringt/holt (Regel 21).
         let hasOpen = !RequiredRoles.decode(event.requiredRolesRaw)
             .filter { !EventService.coveredRoles(of: event).contains($0) }.isEmpty
+            || (viewer?.role == .adult && EventService.needsRoleCheck(event))
 
         return VStack(alignment: .leading, spacing: 1) {
             if isDragging {
@@ -207,6 +209,9 @@ struct WeekTimelineView: View {
         }
         let open = RequiredRoles.decode(event.requiredRolesRaw).filter { !EventService.coveredRoles(of: event).contains($0) }
         if !open.isEmpty { parts.append(open.map { "\($0.label) offen" }.joined(separator: ", ")) }
+        if viewer?.role == .adult && EventService.needsRoleCheck(event) {
+            parts.append("Bringen oder Holen noch ungeklärt")
+        }
         return parts.joined(separator: ", ")
     }
 

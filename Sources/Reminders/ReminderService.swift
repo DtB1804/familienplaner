@@ -12,6 +12,8 @@ enum ReminderSettings {
     static let newOpenEnabledKey = "reminders.newOpen.enabled"
     /// Bereits gemeldete offene Zuständigkeiten ("<Termin-UUID>.<Rolle>"), damit jede nur einmal kommt.
     static let announcedKey = "reminders.newOpen.announced"
+    /// Bereits gestellte Fragen "Bringen oder Holen?" (Kalenderserie oder Termin-UUID).
+    static let roleCheckAnnouncedKey = "reminders.roleCheck.announced"
 
     static var eventsEnabled: Bool { UserDefaults.standard.bool(forKey: eventsEnabledKey) }
     static var leadMinutes: Int {
@@ -207,12 +209,64 @@ enum ReminderService {
         }
     }
 
+    // MARK: - Termine aus dem eigenen Kalender: Bringen oder Holen? (Regel 21)
+
+    /// Fragt auf dem Gerät, das den Termin aus dem iPhone-Kalender übernommen hat, einmal
+    /// nach, ob jemand bringen oder holen muss. Bei Kalenderserien nur einmal je Serie.
+    /// Gleicher Schalter wie "neue offene Zuständigkeiten melden".
+    static func announceRoleChecks(me: CDMember?, in context: NSManagedObjectContext) async {
+        guard let me, me.role == .adult, let myID = me.id else { return }
+        let defaults = UserDefaults.standard
+        let pending = EventService.pendingRoleChecks(within: 14, in: context)
+            .filter { $0.createdByMemberID == myID && ($0.startAt ?? .distantPast) > Date() }
+        var firstPerKey: [(key: String, event: CDEvent)] = []
+        var seenKeys = Set<String>()
+        for event in pending {
+            guard let key = EventService.importSeriesBase(event.externalIdentifier) ?? event.id?.uuidString,
+                  !seenKeys.contains(key) else { continue }
+            seenKeys.insert(key)
+            firstPerKey.append((key, event))
+        }
+        let keys = firstPerKey.map { $0.key }
+        // Erster Lauf nach dem Update: Bestehendes nur merken, nicht alles auf einmal fragen.
+        guard let known = defaults.stringArray(forKey: ReminderSettings.roleCheckAnnouncedKey) else {
+            defaults.set(keys, forKey: ReminderSettings.roleCheckAnnouncedKey)
+            return
+        }
+        defaults.set(Array(Set(keys)), forKey: ReminderSettings.roleCheckAnnouncedKey)
+        guard ReminderSettings.newOpenEnabled else { return }
+        let center = UNUserNotificationCenter.current()
+        let status = await center.notificationSettings().authorizationStatus
+        guard status == .authorized || status == .provisional else { return }
+
+        let knownSet = Set(known)
+        var sent = 0
+        for (key, event) in firstPerKey where !knownSet.contains(key) && sent < 5 {
+            guard let id = event.id, let start = event.startAt else { continue }
+            let day = start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated)
+                .locale(Locale(identifier: "de_DE")))
+            let content = UNMutableNotificationContent()
+            content.title = "Bringen oder Holen?"
+            content.body = "\(event.title ?? "Termin"), \(day) um \(start.formatted(date: .omitted, time: .shortened)) – neu aus deinem Kalender"
+            content.sound = .default
+            content.categoryIdentifier = roleCheckCategory
+            content.userInfo = [dayKey: Calendar.current.startOfDay(for: start).timeIntervalSince1970,
+                                eventIDKey: id.uuidString]
+            let request = UNNotificationRequest(identifier: "fpcheck.\(id.uuidString)", content: content, trigger: nil)
+            do { try await center.add(request); sent += 1 } catch {
+                logger.error("Abfrage Bringen/Holen nicht gemeldet: \(error.localizedDescription, privacy: .public)")
+            }
+        }
+    }
+
     // MARK: - Aktionen in Mitteilungen
 
     static let openCategory = "fp.open"
     static let openSeriesCategory = "fp.open.series"
     static let claimAction = "fp.claim"
     static let claimSeriesAction = "fp.claimSeries"
+    static let roleCheckCategory = "fp.roleCheck"
+    static let roleCheckActionPrefix = "fp.roleCheck."
     static let eventIDKey = "fp.eventID"
     static let roleKey = "fp.role"
     private static let maxOpenPerEvening = 6
@@ -221,14 +275,22 @@ enum ReminderService {
     static func registerCategories() {
         let claim = UNNotificationAction(identifier: claimAction, title: "Übernehme ich", options: [])
         let series = UNNotificationAction(identifier: claimSeriesAction, title: "Für die ganze Serie", options: [])
+        let checks = RoleCheckChoice.allCases.map {
+            UNNotificationAction(identifier: roleCheckActionPrefix + $0.rawValue, title: $0.label, options: [])
+        }
         UNUserNotificationCenter.current().setNotificationCategories([
             UNNotificationCategory(identifier: openCategory, actions: [claim], intentIdentifiers: []),
-            UNNotificationCategory(identifier: openSeriesCategory, actions: [claim, series], intentIdentifiers: [])
+            UNNotificationCategory(identifier: openSeriesCategory, actions: [claim, series], intentIdentifiers: []),
+            UNNotificationCategory(identifier: roleCheckCategory, actions: checks, intentIdentifiers: [])
         ])
     }
 
     /// Knopf in der Mitteilung gedrückt: übernehmen und das Ergebnis als kurze Mitteilung zeigen.
     static func handleAction(_ actionIdentifier: String, userInfo: [AnyHashable: Any]) async {
+        if actionIdentifier.hasPrefix(roleCheckActionPrefix) {
+            await handleRoleCheck(actionIdentifier, userInfo: userInfo)
+            return
+        }
         guard actionIdentifier == claimAction || actionIdentifier == claimSeriesAction,
               let rawID = userInfo[eventIDKey] as? String, let eventID = UUID(uuidString: rawID),
               let rawRole = userInfo[roleKey] as? String, let role = ParticipationRole(rawValue: rawRole)
@@ -241,6 +303,18 @@ enum ReminderService {
         try? await UNUserNotificationCenter.current().add(
             UNNotificationRequest(identifier: "\(identifierPrefix)result.\(UUID().uuidString)",
                                   content: content, trigger: nil))
+    }
+
+    /// Antwort auf "Bringen oder Holen?" aus der Mitteilung speichern.
+    private static func handleRoleCheck(_ actionIdentifier: String, userInfo: [AnyHashable: Any]) async {
+        let raw = String(actionIdentifier.dropFirst(roleCheckActionPrefix.count))
+        guard let choice = RoleCheckChoice(rawValue: raw),
+              let rawID = userInfo[eventIDKey] as? String, let eventID = UUID(uuidString: rawID) else { return }
+        let context = PersistenceController.shared.viewContext
+        guard let event = fetchEvent(eventID, in: context) else { return }
+        EventService.answerRoleCheck(event, roles: choice.roles)
+        PersistenceController.shared.save(context)
+        NotificationCenter.default.post(name: .remindersNeedReschedule, object: nil)
     }
 
     private static func fetchEvent(_ id: UUID, in context: NSManagedObjectContext) -> CDEvent? {

@@ -124,10 +124,70 @@ public enum EventService {
 
     /// Nur die nötigen Zuständigkeiten ändern (z. B. bei Terminen aus dem iPhone-Kalender,
     /// deren Titel und Zeit der Kalender vorgibt). Übernahmen bleiben unberührt (Regel 5).
+    /// Bei Terminen aus dem iPhone-Kalender gilt die Frage nach Bringen/Holen damit als
+    /// beantwortet (Regel 21), auch wenn alle Schalter wieder aus sind.
     public static func setRequiredRoles(_ roles: [ParticipationRole], of event: CDEvent) {
         guard !event.isAllDay else { return }
-        event.requiredRolesRaw = RequiredRoles.encode(roles)
+        event.requiredRolesRaw = RequiredRoles.encode(roles, checked: isImported(event))
         event.updatedAt = Date()
+    }
+
+    // MARK: - Abfrage Bringen/Holen bei Terminen aus dem iPhone-Kalender (Regel 21)
+
+    public static func isImported(_ event: CDEvent) -> Bool {
+        EventOrigin(rawValue: event.originRaw ?? "") == .imported
+    }
+
+    /// Termin aus dem iPhone-Kalender, bei dem noch niemand gesagt hat, ob jemand bringen
+    /// oder holen muss. Ganztägige (Regel 18), nur als "Belegt" übernommene (Regel 2) und
+    /// vergangene Termine fragen nicht.
+    public static func needsRoleCheck(_ event: CDEvent, now: Date = Date()) -> Bool {
+        guard isImported(event), !event.isAllDay, event.deletedAt == nil,
+              EventVisibility(rawValue: event.visibilityRaw ?? "") != .busyOnly,
+              let end = event.endAt, end > now else { return false }
+        return RequiredRoles.decode(event.requiredRolesRaw).isEmpty
+            && !RequiredRoles.isChecked(event.requiredRolesRaw)
+    }
+
+    /// Antwort auf die Abfrage: welche Zuständigkeiten nötig sind (leer = nicht nötig).
+    public static func answerRoleCheck(_ event: CDEvent, roles: [ParticipationRole]) {
+        guard !event.isAllDay else { return }
+        event.requiredRolesRaw = RequiredRoles.encode(roles, checked: true)
+        event.updatedAt = Date()
+    }
+
+    /// Ungeklärte Termine aus dem iPhone-Kalender der nächsten Tage, früheste zuerst.
+    public static func pendingRoleChecks(within days: Int = 14,
+                                         in context: NSManagedObjectContext) -> [CDEvent] {
+        let now = Date()
+        let horizon = Calendar.current.date(byAdding: .day, value: days, to: now) ?? now
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "deletedAt == nil AND originRaw == %@ AND endAt > %@ AND startAt <= %@",
+            EventOrigin.imported.rawValue, now as NSDate, horizon as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(key: "startAt", ascending: true)]
+        return ((try? context.fetch(request)) ?? []).filter { needsRoleCheck($0, now: now) }
+    }
+
+    /// Weitere kommende Vorkommen derselben Kalenderserie (gleiche Kalenderkennung,
+    /// anderes Datum), die noch ungeklärt sind.
+    public static func pendingSeriesSiblings(of event: CDEvent,
+                                             in context: NSManagedObjectContext) -> [CDEvent] {
+        guard let base = importSeriesBase(event.externalIdentifier) else { return [] }
+        let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
+        request.predicate = NSPredicate(
+            format: "deletedAt == nil AND originRaw == %@ AND externalIdentifier BEGINSWITH %@",
+            EventOrigin.imported.rawValue, base + "|")
+        let now = Date()
+        return ((try? context.fetch(request)) ?? [])
+            .filter { $0.objectID != event.objectID && needsRoleCheck($0, now: now) }
+    }
+
+    /// Schlüssel übernommener Termine: "<Kalenderkennung>|<Unix-Zeit des Vorkommens>" (Regel 14).
+    public static func importSeriesBase(_ key: String?) -> String? {
+        guard let key, let bar = key.lastIndex(of: "|") else { return nil }
+        let base = String(key[..<bar])
+        return base.isEmpty ? nil : base
     }
 
     /// Ändert einen vorhandenen Termin. Betroffene Personen werden abgeglichen:
@@ -153,7 +213,9 @@ public enum EventService {
         event.startAt = span.0
         event.endAt = span.1
         event.tag = tag
-        event.requiredRolesRaw = RequiredRoles.encode(requiredRoles)
+        // Eine beantwortete Abfrage Bringen/Holen bleibt beantwortet (Regel 21).
+        event.requiredRolesRaw = RequiredRoles.encode(requiredRoles,
+                                                      checked: RequiredRoles.isChecked(event.requiredRolesRaw))
         applyContent(to: event, title: title, visibility: visibility,
                      locationName: locationName, notes: notes)
         event.updatedAt = Date()

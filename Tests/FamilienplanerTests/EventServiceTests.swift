@@ -224,4 +224,76 @@ final class EventServiceTests: XCTestCase {
         XCTAssertFalse(EventService.reassignSubject(event, from: mia, to: fx.owner, in: fx.context))
         XCTAssertFalse(EventService.reassignSubject(event, from: tom, to: tom, in: fx.context))
     }
+
+    // MARK: Abfrage Bringen/Holen bei Terminen aus dem iPhone-Kalender (Regel 21)
+
+    private func imported(_ fx: Fixture, _ title: String, key: String, inHours: Double = 24,
+                          visibility: EventVisibility = .household) -> CDEvent {
+        let event = fx.event(title, inHours: inHours, visibility: visibility)
+        event.originRaw = EventOrigin.imported.rawValue
+        event.externalIdentifier = key
+        return event
+    }
+
+    func testCheckedTokenIsIgnoredByDecode() {
+        XCTAssertEqual(RequiredRoles.encode([], checked: true), "checked")
+        XCTAssertEqual(RequiredRoles.encode([.driveFrom], checked: true), "driveFrom,checked")
+        XCTAssertEqual(RequiredRoles.decode("driveFrom,checked"), [.driveFrom])
+        XCTAssertTrue(RequiredRoles.isChecked("checked"))
+        XCTAssertFalse(RequiredRoles.isChecked(""))
+        XCTAssertFalse(RequiredRoles.isChecked(nil))
+    }
+
+    func testImportedEventAsksUntilAnswered() throws {
+        let fx = try Fixture()
+        let manual = fx.event("Schwimmen")
+        XCTAssertFalse(EventService.needsRoleCheck(manual), "Eigene Termine fragt der Editor")
+        let tennis = imported(fx, "Josh Tennis", key: "A|1")
+        XCTAssertTrue(EventService.needsRoleCheck(tennis))
+        XCTAssertEqual(EventService.pendingRoleChecks(in: fx.context).map(\.objectID), [tennis.objectID])
+
+        EventService.answerRoleCheck(tennis, roles: [])
+        XCTAssertFalse(EventService.needsRoleCheck(tennis), "\"Nicht nötig\" beantwortet die Frage")
+        XCTAssertTrue(try EventService.openResponsibilities(in: fx.context).isEmpty)
+    }
+
+    func testRoleToggleAnswersAndStaysAnsweredWhenSwitchedOff() throws {
+        let fx = try Fixture()
+        let tennis = imported(fx, "Josh Tennis", key: "A|1")
+        EventService.setRequiredRoles([.driveFrom], of: tennis)
+        XCTAssertFalse(EventService.needsRoleCheck(tennis))
+        XCTAssertEqual(try EventService.openResponsibilities(in: fx.context).map(\.role), [.driveFrom])
+        EventService.setRequiredRoles([], of: tennis)
+        XCTAssertFalse(EventService.needsRoleCheck(tennis), "Einmal beantwortet bleibt beantwortet")
+    }
+
+    func testCalendarUpdateKeepsAnswer() throws {
+        let fx = try Fixture()
+        let tennis = imported(fx, "Tennis", key: "A|1")
+        EventService.answerRoleCheck(tennis, roles: [])
+        EventService.update(tennis, in: fx.context, title: "Tennis (verlegt)",
+                            startAt: tennis.startAt!.addingTimeInterval(3600), endAt: tennis.endAt!.addingTimeInterval(3600),
+                            subjects: [fx.owner], requiredRoles: RequiredRoles.decode(tennis.requiredRolesRaw),
+                            kind: .appointment, visibility: .household, tag: nil, locationName: nil, notes: nil)
+        XCTAssertFalse(EventService.needsRoleCheck(tennis), "Abgleich mit dem Kalender darf die Antwort nicht löschen")
+    }
+
+    func testNoQuestionForBusyAllDayOrPastEvents() throws {
+        let fx = try Fixture()
+        XCTAssertFalse(EventService.needsRoleCheck(imported(fx, "Dienst", key: "B|1", visibility: .busyOnly)))
+        let allDay = imported(fx, "Urlaub", key: "C|1")
+        allDay.isAllDay = true
+        XCTAssertFalse(EventService.needsRoleCheck(allDay))
+        XCTAssertFalse(EventService.needsRoleCheck(imported(fx, "Gestern", key: "D|1", inHours: -26)))
+    }
+
+    func testSeriesSiblingsShareCalendarIdentifier() throws {
+        let fx = try Fixture()
+        let first = imported(fx, "Tennis", key: "S1|1000")
+        let second = imported(fx, "Tennis", key: "S1|2000", inHours: 24 * 8)
+        _ = imported(fx, "Klavier", key: "S2|1000")
+        XCTAssertEqual(EventService.importSeriesBase("S1|1000"), "S1")
+        XCTAssertNil(EventService.importSeriesBase("ohne"))
+        XCTAssertEqual(EventService.pendingSeriesSiblings(of: first, in: fx.context).map(\.objectID), [second.objectID])
+    }
 }

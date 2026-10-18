@@ -259,6 +259,8 @@ public struct DayTimelineView: View {
             : ownRoles.map(\.label).joined(separator: ", ") + " · " + baseTitle
         let assignments = ownRoles.contains(.subject) ? assignmentLine(for: event) : nil
         let openCount = ownRoles.contains(.subject) ? openRoleCount(for: event) : 0
+        // Aus dem iPhone-Kalender und noch nicht geklärt, ob jemand bringt/holt (Regel 21).
+        let needsCheck = ownRoles.contains(.subject) && askRoleCheck(event)
         let isDragging = draggingID == event.objectID
         let movable = canMove(event)
 
@@ -330,6 +332,16 @@ public struct DayTimelineView: View {
                     .background(Palette.color("person5"), in: Capsule())
                     .foregroundStyle(.black)
                     .padding(3)
+            } else if needsCheck {
+                Text(width < 140 ? "?" : "Bringt/Holt ?")
+                    .font(.caption2.weight(.bold))
+                    .lineLimit(1)
+                    .fixedSize()
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 1)
+                    .background(Palette.color("person5"), in: Capsule())
+                    .foregroundStyle(.black)
+                    .padding(3)
             }
         }
         .contentShape(RoundedRectangle(cornerRadius: 6))
@@ -369,6 +381,7 @@ public struct DayTimelineView: View {
         if !names.isEmpty { parts.append(names.joined(separator: ", ")) }
         let open = openRoles(for: event)
         if !open.isEmpty { parts.append(open.map { "\($0.label) offen" }.joined(separator: ", ")) }
+        if askRoleCheck(event) { parts.append("Bringen oder Holen noch ungeklärt") }
         if SeriesService.isSeries(event) { parts.append("wiederholt sich") }
         return parts.joined(separator: ", ")
     }
@@ -469,6 +482,11 @@ public struct DayTimelineView: View {
     }
 
     private func openRoleCount(for event: CDEvent) -> Int { openRoles(for: event).count }
+
+    /// "?" nur für Erwachsene: Kinder können die Frage nicht beantworten.
+    private func askRoleCheck(_ event: CDEvent) -> Bool {
+        viewer?.role == .adult && EventService.needsRoleCheck(event)
+    }
 
     private func openLabel(for event: CDEvent) -> String {
         openRoles(for: event).map { "\($0.label) ?" }.joined(separator: " · ")

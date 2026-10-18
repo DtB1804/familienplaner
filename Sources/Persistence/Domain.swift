@@ -162,4 +162,20 @@ public enum RequiredRoles {
         guard let raw, !raw.isEmpty else { return [] }
         return raw.split(separator: ",").compactMap { ParticipationRole(rawValue: String($0)) }
     }
+
+    /// Termine aus dem iPhone-Kalender: Hat ein Erwachsener schon beantwortet, ob jemand
+    /// bringen oder holen muss? Steht als eigenes Kennwort im selben Feld, damit keine
+    /// Modelländerung nötig ist (CLAUDE.md Regel 21). `decode` überspringt es.
+    public static let checkedToken = "checked"
+
+    public static func encode(_ roles: [ParticipationRole], checked: Bool) -> String {
+        let base = encode(roles)
+        guard checked else { return base }
+        return base.isEmpty ? checkedToken : base + "," + checkedToken
+    }
+
+    public static func isChecked(_ raw: String?) -> Bool {
+        guard let raw, !raw.isEmpty else { return false }
+        return raw.split(separator: ",").contains { $0 == checkedToken }
+    }
 }

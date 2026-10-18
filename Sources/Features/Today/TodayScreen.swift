@@ -40,6 +40,9 @@ public struct TodayScreen: View {
     @State private var showMembers = false
     @State private var editorTarget: EditorTarget?
     @State private var showResponsibilities = false
+    /// Termine aus dem iPhone-Kalender, bei denen Bringen/Holen noch ungeklärt ist (Regel 21).
+    @State private var roleChecks: [CDEvent] = []
+    @State private var showRoleChecks = false
     @State private var detailEvent: CDEvent?
     @State private var showPhotoPicker = false
     @State private var photoItem: PhotosPickerItem?
@@ -185,6 +188,9 @@ public struct TodayScreen: View {
             }
             .sheet(isPresented: $showResponsibilities) {
                 ResponsibilitiesSheet(me: me)
+            }
+            .sheet(isPresented: $showRoleChecks) {
+                RoleCheckSheet(me: me, household: household)
             }
             .sheet(item: $detailEvent, onDismiss: {
                 if let event = pendingEdit {
@@ -391,6 +397,13 @@ public struct TodayScreen: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("banner.open")
+        }
+        if canEdit && !roleChecks.isEmpty {
+            Button { showRoleChecks = true } label: {
+                RoleCheckBanner(items: roleChecks, viewer: me, household: household)
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("banner.roleCheck")
         }
         if canEdit && !pendingSuggestions.isEmpty {
             Button { showSuggestions = true } label: {
@@ -687,10 +700,52 @@ public struct TodayScreen: View {
     private func syncCalendars() {
         guard let household, let me else { return }
         CalendarImportService.shared.sync(household: household, member: me, in: context)
+        Task { await ReminderService.announceRoleChecks(me: me, in: context) }
     }
 
     private func reloadResponsibilities() async {
         openResponsibilities = (try? EventService.openResponsibilities(in: context)) ?? []
+        roleChecks = EventService.pendingRoleChecks(in: context)
+    }
+}
+
+// MARK: - Termine aus dem Kalender: Bringen oder Holen? (Regel 21)
+
+struct RoleCheckBanner: View {
+    let items: [CDEvent]
+    let viewer: CDMember?
+    let household: CDHousehold?
+
+    var body: some View {
+        HStack(spacing: Spacing.s) {
+            Image(systemName: "questionmark.circle.fill")
+                .foregroundStyle(Palette.color("person5"))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(items.count == 1
+                     ? "1 Termin aus dem Kalender: Bringen oder Holen?"
+                     : "\(items.count) Termine aus dem Kalender: Bringen oder Holen?")
+                    .font(.subheadline.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(items.prefix(2).map { EventPresentation.title(of: $0, for: viewer, in: household) }
+                    .joined(separator: " · "))
+                    .font(TypeScale.eventMeta)
+                    .foregroundStyle(.primary)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.tertiary)
+                .accessibilityHidden(true)
+        }
+        .padding(.horizontal, Spacing.l)
+        .padding(.vertical, Spacing.m)
+        .background(Palette.surface)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Palette.hairline).frame(height: 0.5)
+        }
     }
 }
 

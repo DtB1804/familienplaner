@@ -112,6 +112,18 @@ final class CalendarImportService {
         // die ein anderes Mitglied schon übernommen hat.
         var byKey = importedByKey(from: windowStart, to: windowEnd, in: context)
         var seenAll = Set<String>()
+        // Wiederkehrende Kalendertermine: Neue Vorkommen übernehmen die zuletzt gegebene
+        // Antwort auf "Bringen oder Holen?" derselben Serie (CLAUDE.md Regel 21).
+        var seriesAnswers: [String: (start: Date, raw: String)] = [:]
+        for event in byKey.values.joined() where event.deletedAt == nil {
+            let raw = event.requiredRolesRaw
+            let roles = RequiredRoles.decode(raw)
+            guard RequiredRoles.isChecked(raw) || !roles.isEmpty,
+                  let base = EventService.importSeriesBase(event.externalIdentifier),
+                  let start = event.startAt else { continue }
+            if let known = seriesAnswers[base], known.start >= start { continue }
+            seriesAnswers[base] = (start, RequiredRoles.encode(roles, checked: true))
+        }
 
         for source in sources {
             guard let sourceID = source.id else { continue }
@@ -182,6 +194,11 @@ final class CalendarImportService {
                     event.originRaw = EventOrigin.imported.rawValue
                     event.sourceCalendarSourceID = sourceID
                     event.externalIdentifier = key
+                    if !ekEvent.isAllDay, eventVisibility == .household,
+                       let base = EventService.importSeriesBase(key),
+                       let answer = seriesAnswers[base] {
+                        event.requiredRolesRaw = answer.raw
+                    }
                     byKey[key, default: []].append(event)
                     upsertMirror(&mirrors, key: key, eventID: event.id, memberID: memberID,
                                  state: .synced, in: context)
