@@ -16,6 +16,7 @@ struct EventDetailSheet: View {
     @Environment(\.managedObjectContext) private var context
 
     @State private var pendingClaimRole: ParticipationRole?
+    @FetchRequest(fetchRequest: HouseholdService.activeMembersRequest()) private var members: FetchedResults<CDMember>
     @State private var claimMessage: String?
 
     private let de = Locale(identifier: "de_DE")
@@ -70,9 +71,13 @@ struct EventDetailSheet: View {
                     }
                 }
 
-                Section("Für wen") {
-                    let names = EventService.subjects(of: event).compactMap(\.displayName)
-                    Text(names.isEmpty ? "–" : names.joined(separator: ", "))
+                if isImported && canClaim {
+                    subjectPicker
+                } else {
+                    Section("Für wen") {
+                        let names = EventService.subjects(of: event).compactMap(\.displayName)
+                        Text(names.isEmpty ? "–" : names.joined(separator: ", "))
+                    }
                 }
 
                 let listed = canClaim ? assignments.filter { $0.who != nil } : assignments
@@ -141,6 +146,48 @@ struct EventDetailSheet: View {
                 Text("Titel und Zeit änderst du in der Kalender-App. Bringen und Holen gilt nur in Family Planner.")
             }
         }
+    }
+
+    /// Termine aus dem iPhone-Kalender: Weitere Personen hinzufügen oder entfernen (Regel 23).
+    /// Der Termin bleibt mit dem Kalender verknüpft; wer hinzukommt, bekommt ihn auf seinem
+    /// iPhone gemeldet und, wenn eingeschaltet, in seinen eigenen Kalender eingetragen.
+    private var subjectPicker: some View {
+        let current = Set(EventService.subjects(of: event).map(\.objectID))
+        return Section {
+            ForEach(members, id: \.objectID) { member in
+                let isOn = current.contains(member.objectID)
+                Button {
+                    toggleSubject(member, isOn: isOn, current: current)
+                } label: {
+                    HStack {
+                        Text(member.displayName ?? "–").foregroundStyle(.primary)
+                        Spacer()
+                        if isOn {
+                            Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
+                        }
+                    }
+                }
+                .disabled(isOn && current.count == 1)
+                .accessibilityAddTraits(isOn ? .isSelected : [])
+                .accessibilityIdentifier("detail.subject.\(member.displayName ?? "")")
+            }
+        } header: {
+            Text("Für wen")
+        } footer: {
+            Text("Antippen fügt eine Person hinzu oder entfernt sie. Hat sie „In meinen iPhone-Kalender eintragen“ eingeschaltet, steht der Termin dann auch in ihrem Kalender.")
+        }
+    }
+
+    private func toggleSubject(_ member: CDMember, isOn: Bool, current: Set<NSManagedObjectID>) {
+        var chosen = members.filter { current.contains($0.objectID) }
+        if isOn {
+            chosen.removeAll { $0.objectID == member.objectID }
+        } else {
+            chosen.append(member)
+            if member.objectID == viewer?.objectID { ReminderService.markKnownForMe(event.id) }
+        }
+        guard EventService.setSubjects(chosen, of: event, in: context) else { return }
+        PersistenceController.shared.save(context)
     }
 
     private var needsRoleCheck: Bool { EventService.needsRoleCheck(event) }

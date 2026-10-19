@@ -3,15 +3,15 @@ import EventKit
 import UIKit
 import os
 
-/// Trägt Familientermine in einen eigenen Kalender "Family Planner" der Apple-Kalender-App
-/// ein und hält ihn aktuell (Einbahnstraße: bearbeitet wird in Family Planner).
+/// Trägt Familientermine in den eigenen Kalender der Apple-Kalender-App ein (Standardkalender
+/// für neue Termine oder ein gewählter) und hält sie aktuell (Einbahnstraße: bearbeitet wird
+/// in Family Planner). Kein zusätzlicher Kalender (Wunsch David, 19.10.2026, Regel 23).
 ///
 /// - Jeder eingetragene Termin trägt als URL `familyplanner://event/<UUID>`. Daran erkennt
 ///   der Abgleich seine Einträge wieder, auch wenn der Kalender in iCloud liegt und ein
 ///   zweites Gerät derselben Apple-ID (iPhone und iPad) ebenfalls einträgt. Doppelte werden
-///   entfernt.
-/// - Der Kalender "Family Planner" wird von der Kalenderübernahme ausgenommen, sonst kämen
-///   die Termine als Kopie zurück.
+///   entfernt. Termine ohne diese URL fasst der Abgleich nie an.
+/// - Die Kalenderübernahme überspringt Termine mit dieser URL, sonst kämen sie als Kopie zurück.
 /// - Termine, die aus den eigenen Kalendern dieses Mitglieds stammen, werden nicht
 ///   eingetragen: Sie stehen dort schon.
 /// - Titel und Ort folgen der Kinderansicht und "nur Belegt" (Regel 2).
@@ -33,8 +33,11 @@ final class CalendarExportService {
     }
 
     static let scopeKey = "export.scope"
+    /// Früher: eigener Kalender "Family Planner" (bis Build 48). Wird beim nächsten Abgleich aufgeräumt.
     static let calendarIDKey = "export.calendarID"
     static let calendarTitle = "Family Planner"
+    /// Vom Nutzer gewählter Zielkalender; leer = Standardkalender für neue Termine.
+    static let targetIDKey = "export.targetCalendarID"
     static let urlPrefix = "familyplanner://event/"
 
     static var scope: Scope {
@@ -50,9 +53,49 @@ final class CalendarExportService {
     private let daysBack = 7
     private let daysAhead = 180
 
-    /// Kennung des Ausgabekalenders auf diesem Gerät (für die Übernahme ausgeschlossen).
-    var exportCalendarIdentifier: String? {
-        UserDefaults.standard.string(forKey: Self.calendarIDKey)
+    /// Ist der Termin ein Eintrag von Family Planner? (Übernahme überspringt ihn.)
+    static func isOwnEntry(_ event: EKEvent) -> Bool {
+        event.url?.absoluteString.hasPrefix(urlPrefix) == true
+    }
+
+    /// Kalender, in die eingetragen werden kann (für die Auswahl in "Meine Kalender").
+    func writableCalendars() -> [EKCalendar] {
+        store.calendars(for: .event)
+            .filter { $0.allowsContentModifications && $0.title != Self.calendarTitle }
+            .sorted { ($0.source?.title ?? "", $0.title) < ($1.source?.title ?? "", $1.title) }
+    }
+
+    /// Name des Standardkalenders für neue Termine (für die Auswahl).
+    var defaultCalendarTitle: String {
+        store.defaultCalendarForNewEvents?.title ?? "Kalender"
+    }
+
+    /// Zielkalender: gewählter oder Standardkalender für neue Termine.
+    func targetCalendar() -> EKCalendar? {
+        if let id = UserDefaults.standard.string(forKey: Self.targetIDKey),
+           let calendar = store.calendar(withIdentifier: id), calendar.allowsContentModifications {
+            return calendar
+        }
+        if let calendar = store.defaultCalendarForNewEvents, calendar.allowsContentModifications,
+           calendar.title != Self.calendarTitle {
+            return calendar
+        }
+        return writableCalendars().first
+    }
+
+    /// Anderen Zielkalender wählen (nil = Standardkalender). Einträge im bisherigen
+    /// Kalender werden entfernt, der nächste Abgleich trägt im neuen ein.
+    func setTarget(_ calendarID: String?) {
+        let old = targetCalendar()
+        if let calendarID {
+            UserDefaults.standard.set(calendarID, forKey: Self.targetIDKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: Self.targetIDKey)
+        }
+        if let old, old.calendarIdentifier != targetCalendar()?.calendarIdentifier {
+            removeEntries(in: old)
+        }
+        sync()
     }
 
     // MARK: - Start und Auslöser
@@ -150,8 +193,9 @@ final class CalendarExportService {
         let context = PersistenceController.shared.viewContext
         guard let household = try? HouseholdService.fetchHousehold(in: context),
               let me = CurrentMember.resolve(in: context, household: household),
-              let memberID = me.id,
-              let calendar = ensureCalendar() else { return }
+              let memberID = me.id else { return }
+        retireLegacyCalendar()
+        guard let calendar = targetCalendar() else { return }
 
         let cal = Calendar.current
         let today = cal.startOfDay(for: Date())
@@ -217,16 +261,52 @@ final class CalendarExportService {
         }
     }
 
-    /// Ausschalten: Einträge dieses Geräts aus dem Kalender "Family Planner" entfernen.
+    /// Ausschalten: alle Einträge von Family Planner aus dem Zielkalender entfernen.
+    /// Eigene Termine (ohne Family-Planner-URL) bleiben unberührt.
     func removeAll() {
-        guard CalendarImportService.shared.hasFullAccess,
-              let id = exportCalendarIdentifier, let calendar = store.calendar(withIdentifier: id) else { return }
+        guard CalendarImportService.shared.hasFullAccess else { return }
+        retireLegacyCalendar()
+        if let calendar = targetCalendar() { removeEntries(in: calendar) }
+    }
+
+    /// Nur Einträge mit Family-Planner-URL entfernen, ein Jahr zurück bis zwei Jahre voraus
+    /// (EventKit sucht höchstens vier Jahre am Stück).
+    private func removeEntries(in calendar: EKCalendar) {
+        let cal = Calendar.current
+        let from = cal.date(byAdding: .year, value: -1, to: Date()) ?? Date()
+        let to = cal.date(byAdding: .year, value: 2, to: Date()) ?? Date()
+        let predicate = store.predicateForEvents(withStart: from, end: to, calendars: [calendar])
         do {
-            try store.removeCalendar(calendar, commit: true)
+            var removed = 0
+            for ekEvent in store.events(matching: predicate) where Self.isOwnEntry(ekEvent) {
+                try store.remove(ekEvent, span: .thisEvent, commit: false)
+                removed += 1
+            }
+            if removed > 0 { try store.commit() }
         } catch {
-            logger.error("Kalender nicht entfernt: \(error.localizedDescription, privacy: .public)")
+            store.reset()
+            logger.error("Einträge nicht entfernt: \(error.localizedDescription, privacy: .public)")
         }
-        UserDefaults.standard.removeObject(forKey: Self.calendarIDKey)
+    }
+
+    /// Bis Build 48 legte die App einen eigenen Kalender "Family Planner" an. Er wird gelöscht,
+    /// wenn er nur Einträge von Family Planner enthält; sonst werden nur diese entfernt.
+    private func retireLegacyCalendar() {
+        guard let id = UserDefaults.standard.string(forKey: Self.calendarIDKey) else { return }
+        defer { UserDefaults.standard.removeObject(forKey: Self.calendarIDKey) }
+        guard let calendar = store.calendar(withIdentifier: id),
+              calendar.title == Self.calendarTitle else { return }
+        let cal = Calendar.current
+        let from = cal.date(byAdding: .year, value: -1, to: Date()) ?? Date()
+        let to = cal.date(byAdding: .year, value: 2, to: Date()) ?? Date()
+        let events = store.events(matching: store.predicateForEvents(withStart: from, end: to, calendars: [calendar]))
+        if events.allSatisfy(Self.isOwnEntry) {
+            do { try store.removeCalendar(calendar, commit: true) } catch {
+                logger.error("Alter Kalender nicht entfernt: \(error.localizedDescription, privacy: .public)")
+            }
+        } else {
+            removeEntries(in: calendar)
+        }
     }
 
     // MARK: - Intern
@@ -247,36 +327,5 @@ final class CalendarExportService {
         return ekEvent.title != content.title
             || (ekEvent.location ?? "") != (content.location ?? "")
             || (ekEvent.notes ?? "") != content.notes
-    }
-
-    /// Kalender "Family Planner" finden oder anlegen. Bevorzugt in der Quelle, in der
-    /// neue Termine landen (meist iCloud), damit iPhone und iPad denselben Kalender teilen.
-    private func ensureCalendar() -> EKCalendar? {
-        if let id = exportCalendarIdentifier, let calendar = store.calendar(withIdentifier: id),
-           calendar.allowsContentModifications {
-            return calendar
-        }
-        if let existing = store.calendars(for: .event).first(where: {
-            $0.title == Self.calendarTitle && $0.allowsContentModifications
-        }) {
-            UserDefaults.standard.set(existing.calendarIdentifier, forKey: Self.calendarIDKey)
-            return existing
-        }
-        let calendar = EKCalendar(for: .event, eventStore: store)
-        calendar.title = Self.calendarTitle
-        calendar.cgColor = UIColor(Palette.color("person1")).cgColor
-        let candidates = [store.defaultCalendarForNewEvents?.source]
-            + store.sources.filter { $0.sourceType == .calDAV || $0.sourceType == .local }.map(Optional.some)
-        for source in candidates.compactMap({ $0 }) {
-            calendar.source = source
-            do {
-                try store.saveCalendar(calendar, commit: true)
-                UserDefaults.standard.set(calendar.calendarIdentifier, forKey: Self.calendarIDKey)
-                return calendar
-            } catch {
-                logger.error("Kalender in \(source.title, privacy: .public) nicht angelegt: \(error.localizedDescription, privacy: .public)")
-            }
-        }
-        return nil
     }
 }

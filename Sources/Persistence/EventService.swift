@@ -303,6 +303,27 @@ public enum EventService {
         return true
     }
 
+    /// Für wen ein Termin ist, neu festlegen, z. B. weitere Personen zu einem Termin aus dem
+    /// iPhone-Kalender hinzufügen (Regel 23). Mindestens eine Person; Zuständigkeiten bleiben.
+    @discardableResult
+    public static func setSubjects(_ members: [CDMember], of event: CDEvent,
+                                   in context: NSManagedObjectContext) -> Bool {
+        guard !members.isEmpty else { return false }
+        let wanted = Set(members.map(\.objectID))
+        let current = ((event.participations as? Set<CDEventParticipation>) ?? [])
+            .filter { $0.roleRaw == ParticipationRole.subject.rawValue }
+        for participation in current where !wanted.contains(participation.member?.objectID ?? NSManagedObjectID()) {
+            participation.event = nil
+            context.delete(participation)
+        }
+        let present = Set(current.compactMap { $0.member?.objectID }).intersection(wanted)
+        for member in members where !present.contains(member.objectID) {
+            addParticipation(in: context, event: event, member: member, role: .subject)
+        }
+        event.updatedAt = Date()
+        return true
+    }
+
     /// Betroffene Personen eines Termins (Rolle "Betrifft").
     public static func subjects(of event: CDEvent) -> [CDMember] {
         ((event.participations as? Set<CDEventParticipation>) ?? [])

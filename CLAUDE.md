@@ -163,10 +163,10 @@ den Knöpfen "Übernehme ich" und bei Serien "Für die ganze Serie"; gespeichert
 `ClaimActions` (gleicher Weg wie die Watch).
 
 **iPhone-Kalender:** Pro Gerät einstellbar (Aus / meine / alle). `CalendarExportService`
-schreibt in einen eigenen Kalender "Family Planner", nur in diese Richtung. Erkennung über
-die URL `familyplanner://event/<UUID>`; Doppelte (iPhone und iPad derselben Apple-ID im
-selben iCloud-Kalender) werden entfernt. Dieser Kalender ist von der Übernahme
-ausgenommen (Schleife). Eigene übernommene Termine werden nicht zurückgeschrieben.
+schreibt in den eigenen Kalender (Standardkalender oder gewählt, Regel 23), nur in diese
+Richtung. Erkennung über die URL `familyplanner://event/<UUID>`; Doppelte (iPhone und iPad
+derselben Apple-ID im selben iCloud-Kalender) werden entfernt. Die Übernahme überspringt
+Termine mit dieser URL (Schleife). Eigene übernommene Termine werden nicht zurückgeschrieben.
 Zeitvergleich mit 1 Sekunde Toleranz, sonst schaukeln sich Übernahme und Eintrag auf.
 
 ## 18. Ganztägige Termine
@@ -236,6 +236,24 @@ Spalte ziehen (oder VoiceOver-Aktion "Zu … verschieben") ersetzt den Betroffen
 - Kalenderserie: Nach dem Ziehen fragt die App, ob die übrigen kommenden Vorkommen mitgehen.
   Neu übernommene Vorkommen bekommen die Betroffenen des spätesten vorhandenen Vorkommens.
 - Mitteilung und "?" (Regel 21) bleiben beim Gerät, das den Termin übernommen hat.
+
+## 23. Schlank: eigener Kalender plus Family Planner, kein Zusatzkalender
+
+Jede Person behält ihren eigenen Kalender; gemeinsame Termine organisiert der Family Planner
+(Vorgabe David, 19.10.2026). Daraus folgt:
+
+- **Kein Kalender "Family Planner" mehr.** Eingetragen wird in den Standardkalender für neue
+  Termine oder einen in "Meine Kalender" gewählten. Der Abgleich fasst nur Termine mit
+  Family-Planner-URL an, nie andere. Der bis Build 48 angelegte Kalender "Family Planner"
+  wird beim ersten Abgleich gelöscht, wenn er nur eigene Einträge enthält, sonst geleert.
+- **Weitere Personen zu einem Termin aus dem iPhone-Kalender:** Im Termin unter "Für wen"
+  (`EventService.setSubjects`), mindestens eine Person. Bleibt verknüpft wie Regel 22.
+- **Hinzugefügte erfahren es:** Mitteilung "Neu für dich" auf ihrem Gerät
+  (`ReminderService.announceNewForMe`, Schalter in Erinnerungen, nur Termine anderer, ohne
+  angehängte aus dem eigenen Kalender). Ist Eintragen aus oder fehlt der Kalenderzugriff,
+  zeigt die Tagesansicht einen ausblendbaren Hinweis mit Weg zu "Meine Kalender". Ob eine
+  andere Person eingetragen hat, ist gerätelokal (Regel 12) und für andere nicht sichtbar.
+- Echte Kalendereinladungen (Teilnehmer) kann eine App über EventKit nicht verschicken.
 
 ## Arbeitsweise mit GitHub Actions (Vorgabe David, 26.09.2026)
 

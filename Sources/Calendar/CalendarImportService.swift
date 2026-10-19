@@ -46,12 +46,11 @@ final class CalendarImportService {
         }
     }
 
-    /// Kalender zur Auswahl, ohne den Ausgabekalender "Family Planner" (sonst kämen die
-    /// eingetragenen Familientermine als Kopie zurück).
+    /// Kalender zur Auswahl, ohne den früheren Ausgabekalender "Family Planner". Einträge von
+    /// Family Planner in den eigenen Kalendern überspringt der Abgleich (Regel 23).
     func calendars() -> [EKCalendar] {
-        let exportID = CalendarExportService.shared.exportCalendarIdentifier
-        return store.calendars(for: .event).filter {
-            $0.calendarIdentifier != exportID && $0.title != CalendarExportService.calendarTitle
+        store.calendars(for: .event).filter {
+            $0.title != CalendarExportService.calendarTitle
         }.sorted {
             ($0.source?.title ?? "", $0.title) < ($1.source?.title ?? "", $1.title)
         }
@@ -143,7 +142,6 @@ final class CalendarImportService {
 
             guard source.isEnabled, visibility != .hidden,
                   let identifier = source.ekCalendarIdentifier,
-                  identifier != CalendarExportService.shared.exportCalendarIdentifier,
                   let ekCalendar = store.calendar(withIdentifier: identifier),
                   ekCalendar.title != CalendarExportService.calendarTitle else {
                 // Kalender abgewählt oder auf dem Gerät nicht mehr vorhanden.
@@ -157,7 +155,9 @@ final class CalendarImportService {
             var seen = Set<String>()
 
             for ekEvent in store.events(matching: predicate) {
-                guard let ekStart = ekEvent.startDate, let ekEnd = ekEvent.endDate else { continue }
+                // Von Family Planner selbst eingetragen (Regel 23): nicht als Kopie zurückholen.
+                guard !CalendarExportService.isOwnEntry(ekEvent),
+                      let ekStart = ekEvent.startDate, let ekEnd = ekEvent.endDate else { continue }
                 // Ganztägig: auf ganze Tage 0 Uhr bis 0 Uhr normalisieren (EventKit liefert
                 // das Ende je nach Kalender als 23:59:59 oder als 0 Uhr des Folgetags).
                 let (start, end) = ekEvent.isAllDay ? EventService.allDaySpan(from: ekStart, to: ekEnd) : (ekStart, ekEnd)
@@ -291,7 +291,8 @@ final class CalendarImportService {
         let now = Date()
         let end = Calendar.current.date(byAdding: .day, value: daysAhead, to: now) ?? now
         let predicate = store.predicateForEvents(withStart: now, end: end, calendars: [calendar])
-        let keys = store.events(matching: predicate).prefix(200).map(Self.occurrenceKey)
+        let keys = store.events(matching: predicate).filter { !CalendarExportService.isOwnEntry($0) }
+            .prefix(200).map(Self.occurrenceKey)
         guard !keys.isEmpty else { return [] }
         let request = NSFetchRequest<CDEvent>(entityName: "CDEvent")
         request.predicate = NSPredicate(

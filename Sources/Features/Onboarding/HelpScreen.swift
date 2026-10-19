@@ -70,10 +70,12 @@ struct HelpScreen: View {
                 "Unter Familie → Meine Kalender je Kalender wählen: nicht zeigen, nur als „Belegt“ oder mit Titel.",
                 "Übernommene Termine ändert man in der Kalender-App. Im Family Planner bleiben sie damit verknüpft.",
                 "Ein „?“ heißt: Noch offen, ob jemand bringen oder holen muss. Antippen und beantworten, auch „Nicht nötig“.",
-                "In eine andere Spalte ziehen, wenn der Termin für jemand anderen ist, z. B. „Tennis“ aus Mamas Kalender zum Kind."
+                "In eine andere Spalte ziehen, wenn der Termin für jemand anderen ist, z. B. „Tennis“ aus Mamas Kalender zum Kind.",
+                "Betrifft er mehrere: Termin antippen und unter „Für wen“ weitere Personen hinzufügen. Sie bekommen „Neu für dich“ gemeldet."
             ]),
-            HelpTopic(symbol: "calendar.badge.plus", title: "Familientermine im iPhone-Kalender", points: [
-                "Unter Familie → Meine Kalender lassen sich die Familientermine in einen eigenen Kalender „Family Planner“ eintragen."
+            HelpTopic(symbol: "calendar.badge.plus", title: "Familientermine im eigenen Kalender", points: [
+                "Unter Familie → Meine Kalender → „In meinen iPhone-Kalender eintragen“: Termine, die dich betreffen (oder alle), erscheinen direkt in deinem eigenen Kalender. Kein zusätzlicher Kalender nötig.",
+                "Bearbeitet werden sie im Family Planner. Deine übrigen Termine bleiben unberührt."
             ])
         ]),
         HelpGroup(title: "Familie", topics: [

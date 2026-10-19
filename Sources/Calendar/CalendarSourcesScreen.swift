@@ -18,6 +18,9 @@ struct CalendarSourcesScreen: View {
     @State private var selection: [String: CalendarVisibility] = [:]
     @State private var otherImporters: [String: [String]] = [:]
     @State private var exportScope = CalendarExportService.scope
+    /// Zielkalender für "Eintragen"; leer = Standardkalender für neue Termine.
+    @State private var exportTarget = UserDefaults.standard.string(forKey: CalendarExportService.targetIDKey) ?? ""
+    @State private var writable: [EKCalendar] = []
 
     private var service: CalendarImportService { .shared }
 
@@ -52,12 +55,21 @@ struct CalendarSourcesScreen: View {
                         ForEach(CalendarExportService.Scope.allCases) { Text($0.label).tag($0) }
                     }
                     .accessibilityIdentifier("export.scope")
+                    if exportScope != .off {
+                        Picker("In Kalender", selection: $exportTarget) {
+                            Text("Standard (\(CalendarExportService.shared.defaultCalendarTitle))").tag("")
+                            ForEach(writable, id: \.calendarIdentifier) { calendar in
+                                Text("\(calendar.title) · \(calendar.source?.title ?? "")").tag(calendar.calendarIdentifier)
+                            }
+                        }
+                        .accessibilityIdentifier("export.target")
+                    }
                 } header: {
-                    Text("In den iPhone-Kalender eintragen")
+                    Text("In meinen iPhone-Kalender eintragen")
                 } footer: {
                     Text(exportScope == .off
-                         ? "Family Planner kann die Familientermine in einen eigenen Kalender „Family Planner“ der Kalender-App eintragen und aktuell halten."
-                         : "Kalender „Family Planner“ in der Kalender-App: \(exportScope == .mine ? "Termine, die dich betreffen oder die du übernommen hast" : "alle Termine der Familie"), eine Woche zurück bis sechs Monate voraus. Änderungen, auch an einzelnen Terminen einer Serie, erscheinen dort automatisch. Bearbeite Termine in Family Planner, im Kalender werden Änderungen überschrieben.")
+                         ? "Family Planner kann Familientermine direkt in deinen eigenen Kalender eintragen und aktuell halten, ohne zusätzlichen Kalender."
+                         : "\(exportScope == .mine ? "Termine, die dich betreffen oder die du übernommen hast" : "Alle Termine der Familie"), eine Woche zurück bis sechs Monate voraus. Termine aus deinen eigenen Kalendern stehen dort schon und werden nicht doppelt eingetragen. Änderungen erscheinen automatisch. Bearbeite diese Termine in Family Planner, im Kalender werden Änderungen überschrieben. Deine übrigen Termine fasst Family Planner nicht an.")
                 }
                 ForEach(groupedSources, id: \.0) { sourceTitle, items in
                     Section(sourceTitle) {
@@ -76,6 +88,9 @@ struct CalendarSourcesScreen: View {
         .navigationTitle("Meine Kalender")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: reload)
+        .onChange(of: exportTarget) { _, target in
+            CalendarExportService.shared.setTarget(target.isEmpty ? nil : target)
+        }
         .onChange(of: exportScope) { _, scope in
             CalendarExportService.scope = scope
             if scope == .off {
@@ -139,6 +154,7 @@ struct CalendarSourcesScreen: View {
     private func reload() {
         guard hasAccess else { return }
         calendars = service.calendars()
+        writable = CalendarExportService.shared.writableCalendars()
         selection = Dictionary(uniqueKeysWithValues: calendars.map {
             ($0.calendarIdentifier, service.visibility(of: $0, member: member, in: context))
         })

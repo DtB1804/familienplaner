@@ -85,6 +85,7 @@ final class BackgroundSync {
             let me = CurrentMember.resolve(in: context, household: household)
             await ReminderService.reschedule(me: me, household: household, in: context)
             await ReminderService.announceNewOpenResponsibilities(me: me, in: context)
+            await ReminderService.announceNewForMe(me: me, household: household, in: context)
         }
     }
 }

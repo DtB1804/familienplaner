@@ -44,6 +44,10 @@ public struct TodayScreen: View {
     @State private var roleChecks: [CDEvent] = []
     @State private var showRoleChecks = false
     @State private var showHelp = false
+    /// Termine für mich von anderen, aber Eintragen in den eigenen Kalender aus (Regel 23).
+    @State private var exportHintCount = 0
+    @State private var showCalendarSettings = false
+    @AppStorage("hint.export.dismissed") private var exportHintDismissed = false
     @State private var detailEvent: CDEvent?
     @State private var showPhotoPicker = false
     @State private var photoItem: PhotosPickerItem?
@@ -207,6 +211,20 @@ public struct TodayScreen: View {
             }
             .sheet(isPresented: $showHelp) {
                 HelpScreen()
+            }
+            .sheet(isPresented: $showCalendarSettings, onDismiss: {
+                Task { await reloadResponsibilities() }
+            }) {
+                if let household, let me {
+                    NavigationStack {
+                        CalendarSourcesScreen(household: household, member: me)
+                            .toolbar {
+                                ToolbarItem(placement: .confirmationAction) {
+                                    Button("Fertig") { showCalendarSettings = false }
+                                }
+                            }
+                    }
+                }
             }
             .sheet(isPresented: $showRoleChecks) {
                 RoleCheckSheet(me: me, household: household)
@@ -429,6 +447,29 @@ public struct TodayScreen: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("banner.roleCheck")
+        }
+        if canEdit && exportHintCount > 0 && !exportHintDismissed {
+            HStack(spacing: 0) {
+                Button { showCalendarSettings = true } label: {
+                    HintBanner(symbol: "calendar.badge.plus",
+                               title: exportHintCount == 1
+                                   ? "1 Termin für dich – auch in deinem Kalender?"
+                                   : "\(exportHintCount) Termine für dich – auch in deinem Kalender?",
+                               detail: CalendarImportService.shared.hasFullAccess
+                                   ? "Family Planner kann sie in deinen eigenen iPhone-Kalender eintragen."
+                                   : "Dafür braucht Family Planner Zugriff auf deine Kalender.")
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("banner.exportHint")
+                Button { exportHintDismissed = true } label: {
+                    Image(systemName: "xmark")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel("Hinweis ausblenden")
+                .background(Palette.surface)
+            }
         }
         if canEdit && !pendingSuggestions.isEmpty {
             Button { showSuggestions = true } label: {
@@ -754,6 +795,10 @@ public struct TodayScreen: View {
     private func reloadResponsibilities() async {
         openResponsibilities = (try? EventService.openResponsibilities(in: context)) ?? []
         roleChecks = EventService.pendingRoleChecks(in: context)
+        let exportOff = CalendarExportService.scope == .off || !CalendarImportService.shared.hasFullAccess
+        exportHintCount = exportOff && !exportHintDismissed
+            ? me.map { ReminderService.eventsNewForMe(me: $0, in: context).count } ?? 0
+            : 0
     }
 }
 

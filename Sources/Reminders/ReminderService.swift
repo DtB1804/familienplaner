@@ -12,6 +12,10 @@ enum ReminderSettings {
     static let newOpenEnabledKey = "reminders.newOpen.enabled"
     /// Bereits gemeldete offene Zuständigkeiten ("<Termin-UUID>.<Rolle>"), damit jede nur einmal kommt.
     static let announcedKey = "reminders.newOpen.announced"
+    /// Neue Termine für mich, die jemand anderes eingetragen oder mir zugeordnet hat (Regel 23).
+    static let newForMeEnabledKey = "reminders.newForMe.enabled"
+    static let newForMeAnnouncedKey = "reminders.newForMe.announced"
+    static var newForMeEnabled: Bool { UserDefaults.standard.object(forKey: newForMeEnabledKey) as? Bool ?? true }
     /// Bereits gestellte Fragen "Bringen oder Holen?" (Kalenderserie oder Termin-UUID).
     static let roleCheckAnnouncedKey = "reminders.roleCheck.announced"
 
@@ -205,6 +209,77 @@ enum ReminderService {
             let request = UNNotificationRequest(identifier: "fpnew.\(key)", content: content, trigger: nil)
             do { try await center.add(request); sent += 1 } catch {
                 logger.error("Neue Zuständigkeit nicht gemeldet: \(error.localizedDescription, privacy: .public)")
+            }
+        }
+    }
+
+    // MARK: - Neu für mich (Regel 23)
+
+    /// Kommende Termine (14 Tage), die mich betreffen und die jemand anderes eingetragen hat,
+    /// z. B. Jana fügt mich zu einem Termin aus ihrem Kalender hinzu. Termine, die schon in
+    /// meinem eigenen Kalender stehen (angehängt, Regel 14), zählen nicht.
+    static func eventsNewForMe(me: CDMember, in context: NSManagedObjectContext) -> [CDEvent] {
+        guard let myID = me.id else { return [] }
+        let now = Date()
+        let horizon = Calendar.current.date(byAdding: .day, value: 14, to: now) ?? now
+        let mirrors = NSFetchRequest<CDLocalEventMirror>(entityName: "CDLocalEventMirror")
+        mirrors.predicate = NSPredicate(format: "memberID == %@ AND stateRaw == %@",
+                                        myID as CVarArg, MirrorState.joined.rawValue)
+        let joined = Set(((try? context.fetch(mirrors)) ?? []).compactMap(\.eventID))
+        let events = (try? context.fetch(EventService.eventsRequest(from: now, to: horizon))) ?? []
+        return events.filter { event in
+            guard let id = event.id, !joined.contains(id),
+                  event.createdByMemberID != myID,
+                  (event.startAt ?? .distantPast) > now else { return false }
+            return EventService.subjects(of: event).contains { $0.objectID == me.objectID }
+        }
+    }
+
+    /// Eigene Änderung auf diesem Gerät: dafür keine Mitteilung.
+    static func markKnownForMe(_ eventID: UUID?) {
+        guard let eventID else { return }
+        let defaults = UserDefaults.standard
+        var known = defaults.stringArray(forKey: ReminderSettings.newForMeAnnouncedKey) ?? []
+        if !known.contains(eventID.uuidString) { known.append(eventID.uuidString) }
+        defaults.set(known, forKey: ReminderSettings.newForMeAnnouncedKey)
+    }
+
+    /// Meldet "Neu für dich: …", sobald ein solcher Termin auf diesem iPhone ankommt.
+    static func announceNewForMe(me: CDMember?, household: CDHousehold?,
+                                 in context: NSManagedObjectContext) async {
+        guard let me else { return }
+        let defaults = UserDefaults.standard
+        let events = eventsNewForMe(me: me, in: context)
+        let keys = events.compactMap { $0.id?.uuidString }
+        guard let known = defaults.stringArray(forKey: ReminderSettings.newForMeAnnouncedKey) else {
+            defaults.set(keys, forKey: ReminderSettings.newForMeAnnouncedKey)
+            return
+        }
+        let knownSet = Set(known)
+        // Nur noch Kommende merken, damit die Liste nicht wächst.
+        defaults.set(Array(Set(keys)), forKey: ReminderSettings.newForMeAnnouncedKey)
+        guard ReminderSettings.newForMeEnabled else { return }
+        let center = UNUserNotificationCenter.current()
+        let status = await center.notificationSettings().authorizationStatus
+        guard status == .authorized || status == .provisional else { return }
+
+        let members = (household?.members as? Set<CDMember>) ?? []
+        var sent = 0
+        for event in events where sent < 5 {
+            guard let id = event.id, !knownSet.contains(id.uuidString), let start = event.startAt else { continue }
+            let author = members.first { $0.id == event.createdByMemberID }?.displayName
+            let day = start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated)
+                .locale(Locale(identifier: "de_DE")))
+            let time = event.isAllDay ? "" : " um \(start.formatted(date: .omitted, time: .shortened))"
+            let content = UNMutableNotificationContent()
+            content.title = "Neu für dich" + (author.map { " von \($0)" } ?? "")
+            content.body = "\(EventPresentation.title(of: event, for: me, in: household)), \(day)\(time)"
+                + (CalendarExportService.scope == .off ? " – auch in deinen Kalender? Familie → Meine Kalender" : "")
+            content.sound = .default
+            content.userInfo = [dayKey: Calendar.current.startOfDay(for: start).timeIntervalSince1970]
+            let request = UNNotificationRequest(identifier: "fpforme.\(id.uuidString)", content: content, trigger: nil)
+            do { try await center.add(request); sent += 1 } catch {
+                logger.error("Neuer Termin nicht gemeldet: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

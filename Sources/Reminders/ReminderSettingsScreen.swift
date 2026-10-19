@@ -11,6 +11,7 @@ struct ReminderSettingsScreen: View {
     @AppStorage(ReminderSettings.leadMinutesKey) private var leadMinutes = 15
     @AppStorage(ReminderSettings.openEnabledKey) private var openEnabled = false
     @AppStorage(ReminderSettings.newOpenEnabledKey) private var newOpenEnabled = true
+    @AppStorage(ReminderSettings.newForMeEnabledKey) private var newForMeEnabled = true
     @AppStorage(ReminderSettings.openHourKey) private var openHour = 19
 
     @State private var denied = false
@@ -60,6 +61,13 @@ struct ReminderSettingsScreen: View {
             }
 
             Section {
+                Toggle("Neue Termine für mich melden", isOn: $newForMeEnabled)
+                    .accessibilityIdentifier("reminders.newForMe")
+            } footer: {
+                Text("Trägt jemand aus der Familie einen Termin für dich ein oder fügt dich zu einem Termin aus seinem Kalender hinzu, meldet sich Family Planner mit „Neu für dich“.")
+            }
+
+            Section {
                 EmptyView()
             } footer: {
                 Text("Die Erinnerungen werden auf diesem Gerät geplant. Änderungen anderer Familienmitglieder übernimmt Family Planner im Hintergrund; wann das passiert, entscheidet iOS. Spätestens beim nächsten Öffnen ist alles aktuell.")
@@ -70,6 +78,7 @@ struct ReminderSettingsScreen: View {
         .onChange(of: eventsEnabled) { _, on in if on { Task { await ensurePermission() } }; onChange() }
         .onChange(of: openEnabled) { _, on in if on { Task { await ensurePermission() } }; onChange() }
         .onChange(of: newOpenEnabled) { _, on in if on { Task { await ensurePermission() } } }
+        .onChange(of: newForMeEnabled) { _, on in if on { Task { await ensurePermission() } } }
         .onChange(of: leadMinutes) { _, _ in onChange() }
         .onChange(of: openHour) { _, _ in onChange() }
         .task { await refreshDenied() }

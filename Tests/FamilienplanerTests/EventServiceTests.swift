@@ -310,4 +310,18 @@ final class EventServiceTests: XCTestCase {
         XCTAssertEqual(EventService.importSeriesSiblings(of: first, in: fx.context).map(\.objectID),
                        [second.objectID], "Nur kommende Vorkommen derselben Serie")
     }
+
+    // MARK: Weitere Personen zu einem Termin aus dem iPhone-Kalender (Regel 23)
+
+    func testSetSubjectsAddsAndRemovesButKeepsOne() throws {
+        let fx = try Fixture()
+        let anna = fx.member("Anna", role: .adult)
+        let event = imported(fx, "Elternabend", key: "E|1")
+        XCTAssertTrue(EventService.setSubjects([fx.owner, anna], of: event, in: fx.context))
+        XCTAssertEqual(Set(EventService.subjects(of: event).map(\.objectID)), [fx.owner.objectID, anna.objectID])
+        XCTAssertTrue(EventService.setSubjects([anna], of: event, in: fx.context))
+        XCTAssertEqual(EventService.subjects(of: event).map(\.objectID), [anna.objectID])
+        XCTAssertFalse(EventService.setSubjects([], of: event, in: fx.context), "Mindestens eine Person")
+        XCTAssertEqual(EventService.subjects(of: event).count, 1)
+    }
 }
