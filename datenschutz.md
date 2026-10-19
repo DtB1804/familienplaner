@@ -43,7 +43,9 @@ Alle Zugriffe sind freiwillig. Die App funktioniert auch ohne sie.
 - **Kalender:** Du wählst je Kalender, ob die Familie Termine mit Titel, nur als „Belegt“
   oder gar nicht sieht. Bei „Belegt“ werden Titel, Ort und Notizen **vor dem Speichern
   entfernt** und verlassen dein Gerät nicht. Auf Wunsch trägt die App Familientermine in
-  einen eigenen Kalender „Family Planner“ auf deinem Gerät ein.
+  einen Kalender deiner Wahl auf deinem Gerät ein (Standard: dein Kalender für neue Termine).
+  Liegt dieser Kalender bei einem Anbieter wie iCloud oder Google, gleicht dieser Anbieter
+  die Einträge wie deine übrigen Termine ab.
 - **Fotos und Kamera:** Nur das Foto, das du auswählst oder aufnimmst, wird gelesen. Die
   Texterkennung läuft **auf dem Gerät**. Ist Apple Intelligence verfügbar, wertet das
   Sprachmodell den Text ebenfalls auf dem Gerät aus.
