@@ -120,7 +120,7 @@ und warum eine übernommene Zuständigkeit angelegt und nicht geändert wird.
 | Korrektur nach App Review 15.10. | Build 46 | Guideline 4: Watch-Symbol mit hellem Hintergrund; Guideline 5.1.1(iv): Knopf vor Kalender-Abfrage „Weiter“, bei Ablehnung „Einstellungen öffnen“ (1860395) |
 | Kalendertermine: Bringen oder Holen? | Build 48 | Übernommene Termine mit Uhrzeit tragen „?“, bis „Bringen/Holen/Nicht nötig“ beantwortet ist; Hinweis in der Tagesansicht, Frage im Termin, Mitteilung beim Übernehmenden, Kalenderserien erben die Antwort (CLAUDE.md Regel 21). Kalendertermine per Ziehen in die Spalte eines anderen Mitglieds, bleibt mit dem Kalender verknüpft, Serie auf Wunsch mit (Regel 22) |
 | Kurzanleitung | Build 48 | Ansicht-Menü (Tag/Woche/Monat) → „Kurzanleitung“: wichtigste Funktionen zum Aufklappen |
-| Eigener Kalender statt Zusatzkalender | nächster TestFlight-Build | Eintragen direkt in den eigenen Kalender (alter Kalender „Family Planner“ wird aufgeräumt); bei Kalenderterminen weitere Personen unter „Für wen“; Mitteilung „Neu für dich“ und Hinweis, wenn Eintragen aus ist (Regel 23) |
+| Eigener Kalender statt Zusatzkalender | Build 49 | Eintragen direkt in den eigenen Kalender (alter Kalender „Family Planner“ wird aufgeräumt); bei Kalenderterminen weitere Personen unter „Für wen“; Mitteilung „Neu für dich“ und Hinweis, wenn Eintragen aus ist (Regel 23) |
 | Veröffentlichung „nicht gelistet“ | Vorbereitung | Texte in APP-STORE.md, Support- und Datenschutzseite in docs/ (GitHub Pages), Aufgaben 23–26 |
 | Einladungstest mit zweitem Erwachsenen | wartet auf zweites Gerät | Aufgabe 16 |
 | Kinderansicht auf Kindergerät testen | wartet auf Kindergerät | |
