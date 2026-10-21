@@ -431,6 +431,14 @@ Ohne auf eine dieser Aufgaben zu warten:
 Blockiert sind nur: erster lauffähiger Build (Aufgaben 1 bis 3), die konkrete
 Kinder-UI (Aufgabe 6) und alles rund um Verteilung (Aufgabe 2).
 
+### Aufgabe 27: GitHub-Zugangsschlüssel verlängern (wiederkehrend)
+
+Der Personal Access Token, mit dem Claude hochlädt und Builds startet, wurde am 21.10.2026
+erneuert und **läuft am 19.01.2027 ab**. Etwa eine Woche vorher: github.com → Profilbild →
+Settings → Developer settings → Personal access tokens → Token öffnen → **Regenerate token**,
+neue Laufzeit wählen, neuen Token an Claude geben. Der Token kommt nie ins Repository.
+**Zuliefern:** den neuen Token.
+
 ---
 
 ## Kürzestfassung
