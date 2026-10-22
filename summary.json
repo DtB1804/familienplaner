@@ -1,0 +1,56 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "B34C2F57-B98B-4C84-96E2-3170887BA2DB",
+        "deviceName" : "iPhone 17 Pro",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23C54",
+        "osVersion" : "26.2",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 125,
+      "skippedTests" : 2,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Familienplaner · Built with macOS 26.6.2",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792631800.171,
+  "passedTests" : 125,
+  "result" : "Failed",
+  "skippedTests" : 2,
+  "startTime" : 1792630619.12,
+  "statistics" : [
+    {
+      "subtitle" : "1 test run",
+      "title" : "1 test collected performance metrics"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed - [Familie] Contrast failed – Element: \"\" id: \"\" Rahmen: ?",
+      "targetName" : "FamilienplanerUITests",
+      "testIdentifier" : 125,
+      "testIdentifierString" : "SmokeTests/testAccessibilityAudit()",
+      "testIdentifierURL" : "test://com.apple.xcode/Familienplaner/FamilienplanerUITests/SmokeTests/testAccessibilityAudit",
+      "testName" : "testAccessibilityAudit()"
+    }
+  ],
+  "title" : "Test - Familienplaner",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "69% of duration",
+      "text" : "3 longest test runs with outlier durations exceeding 0.36s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 128
+}

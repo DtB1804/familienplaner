@@ -1,0 +1,4 @@
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:2:1: warning: add '@preconcurrency' to suppress 'Sendable'-related warnings from module 'CoreData'
+/Users/runner/work/familienplaner/familienplaner/Sources/Persistence/HouseholdRemoval.swift:46:78: warning: capture of 'store' with non-Sendable type 'NSPersistentStore' in a '@Sendable' closure
+/Users/runner/work/familienplaner/familienplaner/Tests/FamilienplanerUITests/SmokeTests.swift:37: error: -[FamilienplanerUITests.SmokeTests testAccessibilityAudit] : failed - [Familie] Contrast failed – Element: "" id: "" Rahmen: ?
+2026-10-22 00:58:11.476 appintentsmetadataprocessor[3908:15886] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
