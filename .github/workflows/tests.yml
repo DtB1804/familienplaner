@@ -4,7 +4,8 @@
 # Zeitplan (Vorgabe David, 26.09.2026): höchstens einmal täglich nachts zwischen 2 und 3 Uhr
 # (Hamburger Zeit) und nur, wenn seit dem letzten Testlauf ein neuer Build auf main entstanden
 # ist. GitHub-Zeitpläne laufen in UTC, deshalb zwei Einträge (Sommer- und Winterzeit); der
-# Prüfschritt lässt nur den Lauf durch, der in Hamburg in die Stunde 2 fällt.
+# Prüfschritt lässt nur den Lauf durch, der in Hamburg in die Stunde 2 fällt. Reine Text- und
+# Dokumentationsänderungen (*.md, docs/) lösen keinen Lauf aus (Vorgabe David, 23.10.2026).
 # Von Hand jederzeit über "Run workflow" (workflow_dispatch) oder per Push auf den Branch
 # `run-tests` (nur auf ausdrücklichen Wunsch von David), dann ohne Prüfung.
 name: Tests
@@ -27,6 +28,8 @@ jobs:
       run: ${{ steps.decide.outputs.run }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # für den Vergleich mit dem zuletzt getesteten Stand
       - name: Uhrzeit und neuer Build?
         id: decide
         run: |
@@ -43,6 +46,9 @@ jobs:
           fi
           if [ "$LAST" = "$GITHUB_SHA" ]; then
             echo "run=false" >> "$GITHUB_OUTPUT"; echo "Kein neuer Build seit dem letzten Testlauf ($LAST)"
+          elif [ -n "$LAST" ] && git cat-file -e "$LAST^{commit}" 2>/dev/null \
+               && [ -z "$(git diff --name-only "$LAST" "$GITHUB_SHA" | grep -v -E '\.md$|^docs/')" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "Seit $LAST nur Text/Dokumentation geändert, kein Testlauf"
           else
             echo "run=true" >> "$GITHUB_OUTPUT"; echo "Neuer Stand $GITHUB_SHA (zuletzt getestet: ${LAST:-nie})"
           fi

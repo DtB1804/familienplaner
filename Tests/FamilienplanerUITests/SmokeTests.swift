@@ -68,7 +68,9 @@ final class SmokeTests: XCTestCase {
             let label = element?.label ?? ""
             let identifier = element?.identifier ?? ""
             let frame = element.map { "\(Int($0.frame.minX)),\(Int($0.frame.minY)) \(Int($0.frame.width))×\(Int($0.frame.height))" } ?? "?"
-            let line = "[\(screen)] \(issue.compactDescription) – Element: \"\(label)\" id: \"\(identifier)\" Rahmen: \(frame)"
+            // Ausführliche Beschreibung mit: Bei Meldungen ohne Element (22.10.2026) ist sie
+            // der einzige Hinweis, welche Stelle gemeint ist.
+            let line = "[\(screen)] \(issue.compactDescription) – Element: \"\(label)\" id: \"\(identifier)\" Rahmen: \(frame) – \(issue.detailedDescription)"
             if issue.auditType == .dynamicType {
                 collectedNotes.append(line)
             } else {

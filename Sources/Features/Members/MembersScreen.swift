@@ -77,6 +77,8 @@ struct MembersScreen: View {
                         }
                     } footer: {
                         Text("Einstellungen für dieses Gerät: Termine aus den eigenen Kalendern übernehmen (z. B. den Dienstkalender nur als „Belegt“) und Erinnerungen.")
+                            // Ohne das kürzte die Liste den Text nach drei Zeilen ("Erinne…").
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
 
@@ -310,14 +312,18 @@ private struct MemberRow: View {
     var body: some View {
         HStack(spacing: Spacing.m) {
             let tint = Palette.color(member.colorToken ?? "person1")
+            // Kürzel in Textfarbe auf der hellen Personenfarbe: Farbiger Text auf derselben
+            // Farbe hatte nur 3,6:1 Kontrast (Nachttest 21./22.10.2026, gefordert 4,5:1).
+            // Rein schmückend, der Name steht daneben: für VoiceOver ausgeblendet.
             Circle()
-                .fill(tint.opacity(0.18))
+                .fill(tint.opacity(0.22))
                 .frame(width: 30, height: 30)
                 .overlay(
                     Text(member.shortName ?? "")
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
-                        .foregroundStyle(tint)
+                        .foregroundStyle(.primary)
                 )
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(isMe ? "\(member.displayName ?? "") (ich)" : (member.displayName ?? ""))
                 Text("\(member.role.label) · \(member.accountKind.label)")
