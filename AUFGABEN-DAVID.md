@@ -413,7 +413,7 @@ einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
 mit erfundenen Beispieldaten in 1284 × 2778 (6,5"). Ergebnis im Branch `ci-screenshots`
 (Bilddateien lassen sich nicht ins Projekt spiegeln).
 
-### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen ✅ eingereicht (12.10.2026, Build 44, „Warten auf Prüfung“; Antrag gestellt)
+### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen ✅ erledigt („nicht gelistet“ genehmigt 21.10.2026, Fall 102994477684; App von App Review freigegeben 23.10.2026)
 Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
 Antrag: https://developer.apple.com/contact/request/unlisted-app/ (Textvorschlag in
 `APP-STORE.md`).
@@ -437,7 +437,8 @@ Der Personal Access Token, mit dem Claude hochlädt und Builds startet, wurde am
 erneuert und **läuft am 19.01.2027 ab**. Etwa eine Woche vorher: github.com → Profilbild →
 Settings → Developer settings → Personal access tokens → Token öffnen → **Regenerate token**,
 neue Laufzeit wählen, neuen Token an Claude geben. Der Token kommt nie ins Repository.
-**Zuliefern:** den neuen Token.
+**Zuliefern:** den neuen Token. Auch nach einem Neustart von Claudes Arbeitsumgebung (nach
+längerer Pause) wird der Token erneut gebraucht; derselbe gilt bis zum Ablauf weiter.
 
 ---
 
