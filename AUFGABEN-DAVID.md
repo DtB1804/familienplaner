@@ -413,7 +413,7 @@ einfügen, DSA-Händlerstatus angeben (deine Entscheidung).
 mit erfundenen Beispieldaten in 1284 × 2778 (6,5"). Ergebnis im Branch `ci-screenshots`
 (Bilddateien lassen sich nicht ins Projekt spiegeln).
 
-### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen ✅ erledigt („nicht gelistet“ genehmigt 21.10.2026, Fall 102994477684; App von App Review freigegeben 23.10.2026)
+### Aufgabe 26: Einreichen und „nicht gelistet“ beantragen ✅ erledigt („nicht gelistet“ genehmigt 21.10.2026, Fall 102994477684; App von App Review freigegeben 23.10.2026; DSA-Status „kein Händler“ 23.10.; im App Store (nicht gelistet, Deutschland) abrufbar seit 28.10.2026)
 Erst nach dem Zwei-Geräte-Test (Aufgabe 23) und grünen Nachttests. Einreichen, dann
 Antrag: https://developer.apple.com/contact/request/unlisted-app/ (Textvorschlag in
 `APP-STORE.md`).
